@@ -29,8 +29,8 @@ namespace Naos.Protocol.Domain.Test
 
             // MERGED RUNNER
             resultBuilder.AppendLine(Invariant($"public class {serviceName}Runner : "));
-            var runnerInterfaces = operationTypes.Select(_ => typeof(IRunOperations<,>).MakeGenericType(_, _.BaseType.GetGenericArguments().Single())).ToList();
-            var interfaceImplementationLines = operationTypes.ToList().Select(_ => Invariant($"IRunOperations<{_.FullName}, {_.BaseType.GetGenericArguments().Single().FullName}>")).ToList();
+            var runnerInterfaces = operationTypes.Select(_ => typeof(IHandleOperations<,>).MakeGenericType(_, _.BaseType.GetGenericArguments().Single())).ToList();
+            var interfaceImplementationLines = operationTypes.ToList().Select(_ => Invariant($"IHandleOperations<{_.FullName}, {_.BaseType.GetGenericArguments().Single().FullName}>")).ToList();
             resultBuilder.AppendLine(string.Join("," + Environment.NewLine, interfaceImplementationLines));
 
             resultBuilder.AppendLine("{");
@@ -41,7 +41,7 @@ namespace Naos.Protocol.Domain.Test
                 var genericArguments = runnerInterface.GetGenericArguments();
                 var operationType = genericArguments[0];
                 var returnType = genericArguments[1];
-                resultBuilder.AppendLine(Invariant($"private readonly IRunOperations<{operationType}, {returnType}> {operationType.Name.WithLowercaseFirstLetter()}Runner;"));
+                resultBuilder.AppendLine(Invariant($"private readonly IHandleOperations<{operationType}, {returnType}> {operationType.Name.WithLowercaseFirstLetter()}Runner;"));
             }
 
             resultBuilder.AppendLine();
@@ -52,7 +52,7 @@ namespace Naos.Protocol.Domain.Test
                 var genericArguments = runnerInterface.GetGenericArguments();
                 var operationType = genericArguments[0];
                 var returnType = genericArguments[1];
-                return Invariant($"IRunOperations<{operationType}, {returnType}> {operationType.Name.WithLowercaseFirstLetter()}Runner ");
+                return Invariant($"IHandleOperations<{operationType}, {returnType}> {operationType.Name.WithLowercaseFirstLetter()}Runner ");
             });
 
             resultBuilder.AppendLine(Invariant($"public {serviceName}Runner("));
@@ -73,16 +73,20 @@ namespace Naos.Protocol.Domain.Test
             {
                 var localBuilder = new StringBuilder();
                 var returnType = operationType.BaseType.GetGenericArguments().Single();
-                localBuilder.AppendLine(Invariant($"public async Task<{returnType.FullName}> RunAsync({operationType.FullName} operation)"));
+                localBuilder.AppendLine(Invariant($"public async Task<{returnType.FullName}> HandleAsync({operationType.FullName} operation)"));
                 localBuilder.AppendLine("{");
-                localBuilder.AppendLine(Invariant($"var result = await this.{operationType.Name.WithLowercaseFirstLetter()}Runner.RunAsync(operation);"));
+                localBuilder.AppendLine(Invariant($"var result = await this.{operationType.Name.WithLowercaseFirstLetter()}Runner.HandleAsync(operation);"));
                 localBuilder.AppendLine("return result;");
                 localBuilder.AppendLine("}");
                 return localBuilder.ToString();
             });
 
             resultBuilder.Append(string.Join(Environment.NewLine, methodsLines));
-
+            resultBuilder.AppendLine();
+            resultBuilder.AppendLine(Invariant($"public I{serviceName} ToInterface()"));
+            resultBuilder.AppendLine("{");
+            resultBuilder.AppendLine(Invariant($"return new {serviceName}(this);"));
+            resultBuilder.AppendLine("}");
             resultBuilder.AppendLine("}");
 
             // INTERFACE
@@ -151,7 +155,7 @@ namespace Naos.Protocol.Domain.Test
                 });
 
                 localBuilder.AppendLine(Invariant($"var operation = new {operationType.FullName}({string.Join(",", constructorParamsForNewLines)});"));
-                localBuilder.AppendLine(Invariant($"var result = await this.runner.RunAsync(operation);"));
+                localBuilder.AppendLine(Invariant($"var result = await this.runner.HandleAsync(operation);"));
                 localBuilder.AppendLine("return result;");
                 localBuilder.AppendLine("}");
                 return localBuilder.ToString();

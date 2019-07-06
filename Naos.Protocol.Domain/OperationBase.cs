@@ -6,6 +6,10 @@
 
 namespace Naos.Protocol.Domain
 {
+    using System;
+    using System.Linq.Expressions;
+    using OBeautifulCode.Validation.Recipes;
+
     /// <summary>
     /// Abstract base of an operation.
     /// </summary>
@@ -16,16 +20,14 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// An <see cref="OperationBase" /> that does NOT mutate state.
     /// </summary>
-    /// <typeparam name="TReturn">Return type of the operation.</typeparam>
-    public abstract class ReadOperationBase<TReturn> : OperationBase
+    public abstract class ReadOperationBase : OperationBase
     {
     }
 
     /// <summary>
     /// An <see cref="OperationBase" /> that DOES mutate state.
     /// </summary>
-    /// <typeparam name="TReturn">Return type of the operation.</typeparam>
-    public abstract class WriteOperationBase<TReturn> : OperationBase
+    public abstract class WriteOperationBase : OperationBase
     {
     }
 
@@ -34,5 +36,37 @@ namespace Naos.Protocol.Domain
     /// </summary>
     public class NoReturnType
     {
+    }
+
+    /// <summary>
+    /// Prototype of an operation that can inflated into an operation with a <see cref="Locker" /> of necessary inputs.
+    /// </summary>
+    public class OperationPrototype
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OperationPrototype"/> class.
+        /// </summary>
+        /// <param name="description">Description of the operation.</param>
+        /// <param name="operationBuilder">Builder taking in the locker of output from previous runs.</param>
+        public OperationPrototype(
+            string description,
+            Expression<Func<Locker, OperationBase>> operationBuilder)
+        {
+            new { description }.Must().NotBeNullNorWhiteSpace();
+            new { operationBuilder }.Must().NotBeNull();
+
+            this.Description = description;
+            this.OperationBuilder = operationBuilder;
+        }
+
+        /// <summary>
+        /// Gets the description of the operation.
+        /// </summary>
+        public string Description { get; private set; }
+
+        /// <summary>
+        /// Gets the builder for the operation.
+        /// </summary>
+        public Expression<Func<Locker, OperationBase>> OperationBuilder { get; private set; }
     }
 }

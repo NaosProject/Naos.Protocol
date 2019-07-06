@@ -96,10 +96,11 @@
     <Compile Include=".recipes\OBeautifulCode.Validation\ParameterValidator.cs" />
     <Compile Include=".recipes\OBeautifulCode.Validation\Range.cs" />
     <Compile Include=".recipes\OBeautifulCode.Validation\ValidatedNotNullAttribute.cs" />
+    <Compile Include="DiscoverLatestBackupFile.cs" />
+    <Compile Include="MemberReaderWriterRunner.cs" />
     <Compile Include="ProxyBuilderTest.cs" />
     <Compile Include="ProxyBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleReadWriteRunner.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />
