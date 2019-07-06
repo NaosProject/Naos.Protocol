@@ -6,6 +6,7 @@
 
 namespace Naos.Protocol.Domain.Test
 {
+    using OBeautifulCode.Validation.Recipes;
     using static System.FormattableString;
 
     /// <summary>
@@ -39,6 +40,14 @@ namespace Naos.Protocol.Domain.Test
     /// </summary>
     public class CloseGate : WriteOperationBase
     {
+        public CloseGate(string gateId)
+        {
+            new { gateId }.Must().NotBeNullNorWhiteSpace();
+
+            this.GateId = gateId;
+        }
+
+        public string GateId { get; private set; }
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = "Prefer an interface.")]
