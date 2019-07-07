@@ -7,8 +7,6 @@
 // </auto-generated>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 namespace Naos.Bootstrapper.Test
 {
     /// <summary>
@@ -20,14 +18,5 @@ namespace Naos.Bootstrapper.Test
     #endif
     public class EqualityCodeGenerationHelper
     {
-        /// <summary>
-        /// Creates the necessary code to implement <see cref="IEquatable{T}" /> for the supplied type.
-        /// </summary>
-        /// <param name="objectType"></param>
-        /// <returns></returns>
-        public string GenerateEqualityLogic(Type objectType)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

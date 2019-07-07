@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naos.Protocol.Domain", "Nao
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naos.Protocol.Domain.Test", "Naos.Protocol.Domain.Test\Naos.Protocol.Domain.Test.csproj", "{C9E73DB4-9E83-4C6F-A8E3-01A046244739}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naos.Protocol.Serialization.Json", "Naos.Protocol.Serialization.Json\Naos.Protocol.Serialization.Json.csproj", "{29DE9384-8E02-4546-9127-2B10F84BF6A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C9E73DB4-9E83-4C6F-A8E3-01A046244739}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9E73DB4-9E83-4C6F-A8E3-01A046244739}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9E73DB4-9E83-4C6F-A8E3-01A046244739}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29DE9384-8E02-4546-9127-2B10F84BF6A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29DE9384-8E02-4546-9127-2B10F84BF6A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29DE9384-8E02-4546-9127-2B10F84BF6A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29DE9384-8E02-4546-9127-2B10F84BF6A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

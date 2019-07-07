@@ -6,7 +6,7 @@
 
 namespace Naos.Protocol.Domain
 {
-    using OBeautifulCode.Validation.Recipes;
+    using System;
 
     /// <summary>
     /// Channel to route a <see cref="DispatchedOperationSequence" />.
@@ -19,7 +19,10 @@ namespace Naos.Protocol.Domain
         /// <param name="name">Name of the channel.</param>
         public Channel(string name)
         {
-            new { name }.Must().NotBeNullNorWhiteSpace();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Cannot be null or whitespace.", nameof(name));
+            }
 
             this.Name = name;
         }

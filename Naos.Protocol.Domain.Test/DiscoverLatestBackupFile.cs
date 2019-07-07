@@ -6,8 +6,7 @@
 
 namespace Naos.Protocol.Domain.Test
 {
-    using OBeautifulCode.Validation.Recipes;
-    using static System.FormattableString;
+    using System;
 
     /// <summary>
     /// Discover latest backup file.
@@ -42,7 +41,10 @@ namespace Naos.Protocol.Domain.Test
     {
         public CloseGate(string gateId)
         {
-            new { gateId }.Must().NotBeNullNorWhiteSpace();
+            if (string.IsNullOrWhiteSpace(gateId))
+            {
+                throw new ArgumentException("Cannot be null or whitespace.", nameof(gateId));
+            }
 
             this.GateId = gateId;
         }

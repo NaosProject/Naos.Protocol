@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CC842AE0-9125-4124-A4B2-3976595B6197}</ProjectGuid>
+    <ProjectGuid>{29DE9384-8E02-4546-9127-2B10F84BF6A3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Naos.Protocol.Domain</RootNamespace>
-    <AssemblyName>Naos.Protocol.Domain</AssemblyName>
+    <RootNamespace>Naos.Protocol.Serialization.Json</RootNamespace>
+    <AssemblyName>Naos.Protocol.Serialization.Json</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -24,7 +24,7 @@
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Naos.Protocol.Domain.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Naos.Protocol.Serialization.Json.xml</DocumentationFile>
     <CodeAnalysisRuleSet />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -35,7 +35,7 @@
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Naos.Protocol.Domain.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Naos.Protocol.Serialization.Json.xml</DocumentationFile>
     <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
@@ -45,58 +45,22 @@
     <Reference Include="Naos.Serialization.Domain, Version=1.0.131.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Naos.Serialization.Domain.1.0.131\lib\net462\Naos.Serialization.Domain.dll</HintPath>
     </Reference>
+    <Reference Include="Naos.Serialization.Json, Version=1.0.131.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Naos.Serialization.Json.1.0.131\lib\net462\Naos.Serialization.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OBeautifulCode.Type, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Type.1.0.5\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include=".recipes\OBeautifulCode.Enum\EnumExtensions.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Attribute.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Enum.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Field.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Property.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Reflection\TypeHelper.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Validation\ApplyBecause.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Validation\Parameter.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Validation\ParameterShould.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Validation\ParameterValidation.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Validation\ParameterValidation.Internal.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Validation\ParameterValidation.Strings.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Validation\ParameterValidation.TypeValidation.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Validation\ParameterValidation.Utility.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Validation\ParameterValidator.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Validation\Range.cs" />
-    <Compile Include=".recipes\OBeautifulCode.Validation\ValidatedNotNullAttribute.cs" />
-    <Compile Include="Channel.cs" />
-    <Compile Include="IHandleOperations.cs" />
-    <Compile Include="LockerKey.cs" />
-    <Compile Include="OperationBase.cs" />
-    <Compile Include="SerializableExpression\MethodInfoDescription.cs" />
-    <Compile Include="SerializableExpression\SerializableBinaryExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableConditionalExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableConstantExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableExpressionBase.cs" />
-    <Compile Include="SerializableExpression\SerializableInvocationExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableLambdaExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableListInitExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableMemberExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableMemberInitExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableMethodCallExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableNewArrayExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableNewExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableParameterExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableTypeBinaryExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableUnaryExpression.cs" />
-    <Compile Include="SerializableExpression\SerializableMemberAssignment.cs" />
-    <Compile Include="SerializableExpression\SerializableMemberBindingBase.cs" />
-    <Compile Include="SerializableExpression\SerializableMemberListBinding.cs" />
-    <Compile Include="SerializableExpression\SerializableMemberMemberBinding.cs" />
-    <Compile Include="SerializableExpression\SerializableElementInit.cs" />
-    <Compile Include="OperationSequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtocolJsonConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />
@@ -109,6 +73,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Naos.Protocol.Domain\Naos.Protocol.Domain.csproj">
+      <Project>{CC842AE0-9125-4124-A4B2-3976595B6197}</Project>
+      <Name>Naos.Protocol.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Naos.Build.Analyzers.1.55.1\build\Naos.Build.Analyzers.targets" Condition="Exists('..\packages\Naos.Build.Analyzers.1.55.1\build\Naos.Build.Analyzers.targets')" />

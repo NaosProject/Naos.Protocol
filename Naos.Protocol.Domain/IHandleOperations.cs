@@ -22,6 +22,21 @@ namespace Naos.Protocol.Domain
         /// <param name="operation">Operation to run.</param>
         /// <returns>Appropriate return of operation.</returns>
         Task<TReturn> HandleAsync(TOperation operation);
+
+        /// <summary>
+        /// Run the operation and returns as appropriate.
+        /// </summary>
+        /// <param name="operation">Operation to run.</param>
+        /// <returns>Appropriate return of operation.</returns>
+        TReturn Handle(TOperation operation);
+
+        /// <summary>
+        /// Run the operation and returns as appropriate in the specific type.
+        /// </summary>
+        /// <typeparam name="TSpecificReturn">Type of return (overriding TReturn).</typeparam>
+        /// <param name="operation">Operation to run.</param>
+        /// <returns>Appropriate return of operation.</returns>
+        TSpecificReturn HandleWithSpecificReturn<TSpecificReturn>(TOperation operation);
     }
 
     /*

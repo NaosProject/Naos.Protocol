@@ -7,8 +7,11 @@
 namespace Naos.Protocol.Domain
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Linq.Expressions;
-    using OBeautifulCode.Validation.Recipes;
+    using System.Reflection;
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// Abstract base of an operation.
@@ -50,13 +53,15 @@ namespace Naos.Protocol.Domain
         /// <param name="operationBuilder">Builder taking in the locker of output from previous runs.</param>
         public OperationPrototype(
             string description,
-            Expression<Func<Locker, OperationBase>> operationBuilder)
+            SerializableLambdaExpression operationBuilder)
         {
-            new { description }.Must().NotBeNullNorWhiteSpace();
-            new { operationBuilder }.Must().NotBeNull();
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                throw new ArgumentException("Cannot be null or whitespace.", nameof(description));
+            }
 
             this.Description = description;
-            this.OperationBuilder = operationBuilder;
+            this.OperationBuilder = operationBuilder ?? throw new ArgumentNullException(nameof(operationBuilder));
         }
 
         /// <summary>
@@ -67,6 +72,17 @@ namespace Naos.Protocol.Domain
         /// <summary>
         /// Gets the builder for the operation.
         /// </summary>
-        public Expression<Func<Locker, OperationBase>> OperationBuilder { get; private set; }
+        public SerializableLambdaExpression OperationBuilder { get; private set; }
+
+        /// <summary>Builds the specified description.</summary>
+        /// <param name="description">The description.</param>
+        /// <param name="operationBuilder">The operation builder.</param>
+        /// <returns>Prototype version of an operation.</returns>
+        public static OperationPrototype Build(string description, Expression<Func<ILocker, OperationBase>> operationBuilder)
+        {
+            var operationBuilderDescription = operationBuilder.ToSerializable();
+            var result = new OperationPrototype(description, operationBuilderDescription);
+            return result;
+        }
     }
 }

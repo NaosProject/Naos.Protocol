@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include=".recipes\Naos.Bootstrapper.Test\EqualityCodeGenerationHelper.cs" />
     <Compile Include=".recipes\Naos.Bootstrapper.Test\ExampleDummyFactory.cs" />
+    <Compile Include=".recipes\Naos.InitializeTestProject\ExampleDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.AutoFakeItEasy\AutoFakeItEasyBootstrapper.cs" />
     <Compile Include=".recipes\OBeautifulCode.Enum\EnumExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Attribute.cs" />
@@ -131,6 +132,7 @@
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\test.ruleset" />
     <None Include="packages.config" />
+    <None Include="Temp.json" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.Unstable.1.1.0.47\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
@@ -140,6 +142,10 @@
     <ProjectReference Include="..\Naos.Protocol.Domain\Naos.Protocol.Domain.csproj">
       <Project>{CC842AE0-9125-4124-A4B2-3976595B6197}</Project>
       <Name>Naos.Protocol.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Naos.Protocol.Serialization.Json\Naos.Protocol.Serialization.Json.csproj">
+      <Project>{29DE9384-8E02-4546-9127-2B10F84BF6A3}</Project>
+      <Name>Naos.Protocol.Serialization.Json</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -6,8 +6,12 @@
 
 namespace Naos.Protocol.Domain.Test
 {
+    using System;
+    using System.Linq.Expressions;
+    using FluentAssertions;
+    using Naos.Protocol.Serialization.Json;
+    using Naos.Serialization.Domain;
     using Naos.Serialization.Json;
-    using Newtonsoft.Json;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -33,17 +37,27 @@ namespace Naos.Protocol.Domain.Test
             this.testOutputHelper.WriteLine(text);
         }
 
-        [Fact(Skip = "Need to figure out how to deal with this.")]
+        [Fact ]
+        //[Fact(Skip = "Need to figure out how to deal with this.")]
         public void TestSerialization()
         {
-            // var serializer = new NaosJsonSerializer();
+            var serializer = new NaosJsonSerializer(typeof(ProtocolJsonConfiguration), UnregisteredTypeEncounteredStrategy.Attempt);
             var gateIdKey = "gateId";
-            var input = new OperationPrototype(
-                "Hello",
-                _ => new CloseGate(_.Get<string>(new LockerKey(gateIdKey))));
 
-            var json = JsonConvert.SerializeObject(input);
+            Expression<Func<ILocker, OperationBase>> operationBuilder = _ => new CloseGate(_.HandleWithSpecificReturn<string>(new LockerKey(gateIdKey)));
+            var sequence = new DispatchedOperationSequence(
+                new[]
+                {
+                    OperationPrototype.Build(
+                        "Hello",
+                        operationBuilder),
+                },
+                new Channel("channel"));
+
+            var json = serializer.SerializeToString(sequence);
             this.testOutputHelper.WriteLine(json);
+            var actual = serializer.Deserialize<DispatchedOperationSequence>(json);
+            actual.Should().NotBeNull();
         }
     }
 }

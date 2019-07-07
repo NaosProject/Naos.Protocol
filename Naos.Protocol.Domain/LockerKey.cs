@@ -6,6 +6,7 @@
 
 namespace Naos.Protocol.Domain
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Naos.Compression.Domain;
@@ -23,7 +24,10 @@ namespace Naos.Protocol.Domain
         /// <param name="keyId">Key id.</param>
         public LockerKey(string keyId)
         {
-            new { keyId }.Must().NotBeNullNorWhiteSpace();
+            if (string.IsNullOrWhiteSpace(keyId))
+            {
+                throw new ArgumentException("Cannot be null or whitespace.", nameof(keyId));
+            }
 
             this.KeyId = keyId;
         }
@@ -45,9 +49,7 @@ namespace Naos.Protocol.Domain
         /// <param name="contents">Contents of the locker.</param>
         public LockerContents(DescribedSerialization contents)
         {
-            new { contents }.Must().NotBeNull();
-
-            this.Contents = contents;
+            this.Contents = contents ?? throw new ArgumentNullException(nameof(contents));
         }
 
         /// <summary>
@@ -62,12 +64,6 @@ namespace Naos.Protocol.Domain
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = "Prefer an interface.")]
     public interface ILocker : IHandleOperations<LockerKey, DescribedSerialization>
     {
-        /// <summary>
-        /// Handle the operation synchronously.
-        /// </summary>
-        /// <param name="operation">Operation to handle.</param>
-        /// <returns>Result.</returns>
-        DescribedSerialization Handle(LockerKey operation);
     }
 
     /// <summary>
@@ -77,19 +73,19 @@ namespace Naos.Protocol.Domain
     {
         private readonly IReadOnlyDictionary<LockerKey, DescribedSerialization> keyToContentsMap;
         private readonly ISerializerFactory serializerFactory;
+        private readonly ICompressorFactory compressorFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Locker"/> class.
         /// </summary>
         /// <param name="keyToContentsMap">Key to contents map.</param>
-        /// <param name="serializerFactory">Serializer factory.</param>
-        public Locker(IReadOnlyDictionary<LockerKey, DescribedSerialization> keyToContentsMap, ISerializerFactory serializerFactory)
+        /// <param name="serializerFactory">Serializer factory for opening <see cref="DescribedSerialization" />.</param>
+        /// <param name="compressorFactory">Compressor factory for opening <see cref="DescribedSerialization" />.</param>
+        public Locker(IReadOnlyDictionary<LockerKey, DescribedSerialization> keyToContentsMap, ISerializerFactory serializerFactory, ICompressorFactory compressorFactory = null)
         {
-            new { keyToContentsMap }.Must().NotBeNull();
-            new { serializerFactory }.Must().NotBeNull();
-
-            this.keyToContentsMap = keyToContentsMap;
-            this.serializerFactory = serializerFactory;
+            this.keyToContentsMap = keyToContentsMap ?? throw new ArgumentNullException(nameof(keyToContentsMap));
+            this.serializerFactory = serializerFactory ?? throw new ArgumentNullException(nameof(serializerFactory));
+            this.compressorFactory = compressorFactory ?? CompressorFactory.Instance;
         }
 
         /// <inheritdoc />
@@ -101,19 +97,14 @@ namespace Naos.Protocol.Domain
         /// <inheritdoc />
         public DescribedSerialization Handle(LockerKey operation)
         {
-            return this.keyToContentsMap[operation];
+            throw new System.NotImplementedException();
         }
 
-        /// <summary>
-        /// Gets the deserialized contents.
-        /// </summary>
-        /// <typeparam name="TReturn">Return type.</typeparam>
-        /// <param name="key">Key object.</param>
-        /// <returns>Deserialized contents.</returns>
-        public TReturn Get<TReturn>(LockerKey key)
+        /// <inheritdoc />
+        public TSpecificReturn HandleWithSpecificReturn<TSpecificReturn>(LockerKey operation)
         {
-            var entry = this.keyToContentsMap[key];
-            var result = entry.DeserializePayloadUsingSpecificFactory<TReturn>(this.serializerFactory, CompressorFactory.Instance);
+            var entry = this.keyToContentsMap[operation];
+            var result = entry.DeserializePayloadUsingSpecificFactory<TSpecificReturn>(this.serializerFactory, this.compressorFactory);
             return result;
         }
     }
