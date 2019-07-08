@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableListInitExpression.cs" company="Naos Project">
+// <copyright file="ListInitExpressionDescription.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,51 +11,51 @@ namespace Naos.Protocol.Domain
     using System.Linq.Expressions;
     using OBeautifulCode.Type;
 
-    public class SerializableListInitExpression : SerializableExpressionBase
+    public class ListInitExpressionDescription : ExpressionDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableListInitExpression"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ListInitExpressionDescription"/> class.</summary>
         /// <param name="type">The type of expression.</param>
         /// <param name="initializers">The initializers.</param>
-        public SerializableListInitExpression(
+        public ListInitExpressionDescription(
             TypeDescription type,
-            SerializableNewExpression newExpression,
+            NewExpressionDescription newExpressionDescription,
             IReadOnlyCollection<SerializableElementInit> initializers)
             : base(type, ExpressionType.ListInit)
         {
-            this.NewExpression = newExpression;
+            this.NewExpressionDescription = newExpressionDescription;
             this.Initializers = initializers;
         }
 
-        public SerializableNewExpression NewExpression { get; private set; }
+        public NewExpressionDescription NewExpressionDescription { get; private set; }
 
         public IReadOnlyCollection<SerializableElementInit> Initializers { get; private set; }
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableListInitExpression" />.
+    /// Extensions to <see cref="ListInitExpressionDescription" />.
     /// </summary>
     public static class SerializableListInitExpressionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="listInitExpression">The listInit expression.</param>
         /// <returns>Serializable expression.</returns>
-        public static SerializableListInitExpression ToSerializable(this ListInitExpression listInitExpression)
+        public static ListInitExpressionDescription ToDescription(this ListInitExpression listInitExpression)
         {
             var type = listInitExpression.Type.ToTypeDescription();
-            var newExpresion = listInitExpression.NewExpression.ToSerializable();
-            var initializers = listInitExpression.Initializers.ToSerializable();
-            var result = new SerializableListInitExpression(type, newExpresion, initializers);
+            var newExpresion = listInitExpression.NewExpression.ToDescription();
+            var initializers = listInitExpression.Initializers.ToDescription();
+            var result = new ListInitExpressionDescription(type, newExpresion, initializers);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="listInitExpression">The listInit expression.</param>
+        /// <param name="listInitExpressionDescription">The listInit expression.</param>
         /// <returns>Converted expression.</returns>
-        public static ListInitExpression FromSerializable(this SerializableListInitExpression listInitExpression)
+        public static ListInitExpression FromDescription(this ListInitExpressionDescription listInitExpressionDescription)
         {
             var result = Expression.ListInit(
-                listInitExpression.NewExpression.FromSerializable(),
-                listInitExpression.Initializers.FromSerializable().ToArray());
+                listInitExpressionDescription.NewExpressionDescription.FromDescription(),
+                listInitExpressionDescription.Initializers.FromDescription().ToArray());
 
             return result;
         }

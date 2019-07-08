@@ -50,19 +50,19 @@ namespace Naos.Protocol.Domain
         /// <summary>Converts to serializable.</summary>
         /// <param name="memberBinding">The memberBindings.</param>
         /// <returns>Serializable version.</returns>
-        public static SerializableMemberBindingBase ToSerializable(this MemberBinding memberBinding)
+        public static SerializableMemberBindingBase ToDescription(this MemberBinding memberBinding)
         {
             if (memberBinding is MemberAssignment memberAssignment)
             {
-                return memberAssignment.ToSerializable();
+                return memberAssignment.ToDescription();
             }
             else if (memberBinding is MemberListBinding memberListBinding)
             {
-                return memberListBinding.ToSerializable();
+                return memberListBinding.ToDescription();
             }
             else if (memberBinding is MemberMemberBinding memberMemberBinding)
             {
-                return memberMemberBinding.ToSerializable();
+                return memberMemberBinding.ToDescription();
             }
             else
             {
@@ -73,19 +73,19 @@ namespace Naos.Protocol.Domain
         /// <summary>From the serializable.</summary>
         /// <param name="memberBinding">The memberBindings.</param>
         /// <returns>Converted version.</returns>
-        public static MemberBinding FromSerializable(this SerializableMemberBindingBase memberBinding)
+        public static MemberBinding FromDescription(this SerializableMemberBindingBase memberBinding)
         {
             if (memberBinding is SerializableMemberAssignment memberAssignment)
             {
-                return memberAssignment.FromSerializable();
+                return memberAssignment.FromDescription();
             }
             else if (memberBinding is SerializableMemberListBinding memberListBinding)
             {
-                return memberListBinding.FromSerializable();
+                return memberListBinding.FromDescription();
             }
             else if (memberBinding is SerializableMemberMemberBinding memberMemberBinding)
             {
-                return memberMemberBinding.FromSerializable();
+                return memberMemberBinding.FromDescription();
             }
             else
             {
@@ -96,18 +96,18 @@ namespace Naos.Protocol.Domain
         /// <summary>Converts to serializable.</summary>
         /// <param name="memberBindings">The memberBindings.</param>
         /// <returns>Serializable version.</returns>
-        public static IReadOnlyCollection<SerializableMemberBindingBase> ToSerializable(this IReadOnlyCollection<MemberBinding> memberBindings)
+        public static IReadOnlyCollection<SerializableMemberBindingBase> ToDescription(this IReadOnlyCollection<MemberBinding> memberBindings)
         {
-            var result = memberBindings.Select(_ => _.ToSerializable()).ToList();
+            var result = memberBindings.Select(_ => _.ToDescription()).ToList();
             return result;
         }
 
         /// <summary>From the serializable.</summary>
         /// <param name="memberBindings">The memberBindings.</param>
         /// <returns>Converted version.</returns>
-        public static IReadOnlyCollection<MemberBinding> FromSerializable(this IReadOnlyCollection<SerializableMemberBindingBase> memberBindings)
+        public static IReadOnlyCollection<MemberBinding> FromDescription(this IReadOnlyCollection<SerializableMemberBindingBase> memberBindings)
         {
-            var result = memberBindings.Select(_ => _.FromSerializable()).ToList();
+            var result = memberBindings.Select(_ => _.FromDescription()).ToList();
             return result;
         }
     }

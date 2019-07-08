@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableInvocationExpression.cs" company="Naos Project">
+// <copyright file="InvocationExpressionDescription.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -14,52 +14,52 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Serializable version of <see cref="InvocationExpression" />.
     /// </summary>
-    public class SerializableInvocationExpression : SerializableExpressionBase
+    public class InvocationExpressionDescription : ExpressionDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableInvocationExpression"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="InvocationExpressionDescription"/> class.</summary>
         /// <param name="type">The type of expression.</param>
-        /// <param name="expression">The expression to invoke.</param>
+        /// <param name="expressionDescription">The expression to invoke.</param>
         /// <param name="arguments">The arguments to invoke with.</param>
-        public SerializableInvocationExpression(TypeDescription type, SerializableExpressionBase expression, IReadOnlyCollection<SerializableExpressionBase> arguments)
+        public InvocationExpressionDescription(TypeDescription type, ExpressionDescriptionBase expressionDescription, IReadOnlyCollection<ExpressionDescriptionBase> arguments)
             : base(type, ExpressionType.Invoke)
         {
-            this.Expression = expression;
+            this.ExpressionDescription = expressionDescription;
             this.Arguments = arguments;
         }
 
         /// <summary>Gets the expression to invoke.</summary>
         /// <value>The expression to invoke.</value>
-        public SerializableExpressionBase Expression { get; private set; }
+        public ExpressionDescriptionBase ExpressionDescription { get; private set; }
 
         /// <summary>Gets the arguments for the expression.</summary>
         /// <value>The arguments for the expression.</value>
-        public IReadOnlyCollection<SerializableExpressionBase> Arguments { get; private set; }
+        public IReadOnlyCollection<ExpressionDescriptionBase> Arguments { get; private set; }
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableInvocationExpression" />.
+    /// Extensions to <see cref="InvocationExpressionDescription" />.
     /// </summary>
     public static class SerializableInvocationExpressionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="invocationExpression">The invocation expression.</param>
         /// <returns>Serializable expression.</returns>
-        public static SerializableInvocationExpression ToSerializable(this InvocationExpression invocationExpression)
+        public static InvocationExpressionDescription ToDescription(this InvocationExpression invocationExpression)
         {
             var type = invocationExpression.Type.ToTypeDescription();
-            var expression = invocationExpression.Expression.ToSerializable();
-            var arguments = invocationExpression.Arguments.ToSerializable();
-            var result = new SerializableInvocationExpression(type, expression, arguments);
+            var expression = invocationExpression.Expression.ToDescription();
+            var arguments = invocationExpression.Arguments.ToDescription();
+            var result = new InvocationExpressionDescription(type, expression, arguments);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="invocationExpression">The invocation expression.</param>
+        /// <param name="invocationExpressionDescription">The invocation expression.</param>
         /// <returns>Converted expression.</returns>
-        public static InvocationExpression FromSerializable(this SerializableInvocationExpression invocationExpression)
+        public static InvocationExpression FromDescription(this InvocationExpressionDescription invocationExpressionDescription)
         {
-            var expression = invocationExpression.Expression.FromSerializable();
-            var arguments = invocationExpression.Arguments.FromSerializable();
+            var expression = invocationExpressionDescription.ExpressionDescription.FromDescription();
+            var arguments = invocationExpressionDescription.Arguments.FromDescription();
             var result = Expression.Invoke(expression, arguments);
 
             return result;

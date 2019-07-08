@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableMemberExpression.cs" company="Naos Project">
+// <copyright file="MemberExpressionDescription.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -16,22 +16,22 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Serializable version of <see cref="MemberExpression" />.
     /// </summary>
-    public class SerializableMemberExpression : SerializableExpressionBase
+    public class MemberExpressionDescription : ExpressionDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableMemberExpression"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MemberExpressionDescription"/> class.</summary>
         /// <param name="type">The type.</param>
-        /// <param name="expression">The expresion.</param>
+        /// <param name="expressionDescription">The expresion.</param>
         /// <param name="memberHash">The member hash.</param>
-        public SerializableMemberExpression(TypeDescription type, SerializableExpressionBase expression, string memberHash)
+        public MemberExpressionDescription(TypeDescription type, ExpressionDescriptionBase expressionDescription, string memberHash)
             : base(type, ExpressionType.MemberAccess)
         {
-            this.Expression = expression;
+            this.ExpressionDescription = expressionDescription;
             this.MemberHash = memberHash;
         }
 
         /// <summary>Gets the expression.</summary>
         /// <value>The expression.</value>
-        public SerializableExpressionBase Expression { get; private set; }
+        public ExpressionDescriptionBase ExpressionDescription { get; private set; }
 
         /// <summary>Gets the member hash.</summary>
         /// <value>The member hash.</value>
@@ -39,7 +39,7 @@ namespace Naos.Protocol.Domain
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableMemberExpression" />.
+    /// Extensions to <see cref="MemberExpressionDescription" />.
     /// </summary>
     public static class SerializableMemberExpressionExtensions
     {
@@ -57,23 +57,23 @@ namespace Naos.Protocol.Domain
         /// <summary>Converts to serializable.</summary>
         /// <param name="memberExpression">The member expression.</param>
         /// <returns>Serializable expression.</returns>
-        public static SerializableMemberExpression ToSerializable(this MemberExpression memberExpression)
+        public static MemberExpressionDescription ToDescription(this MemberExpression memberExpression)
         {
             var type = memberExpression.Type.ToTypeDescription();
-            var expression = memberExpression.Expression.ToSerializable();
+            var expression = memberExpression.Expression.ToDescription();
             var memberHash = memberExpression.Member.GetSignatureHash();
-            var result = new SerializableMemberExpression(type, expression, memberHash);
+            var result = new MemberExpressionDescription(type, expression, memberHash);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="memberExpression">The member expression.</param>
+        /// <param name="memberExpressionDescription">The member expression.</param>
         /// <returns>Converted expression.</returns>
-        public static MemberExpression FromSerializable(this SerializableMemberExpression memberExpression)
+        public static MemberExpression FromDescription(this MemberExpressionDescription memberExpressionDescription)
         {
-            var expression = memberExpression.Expression.FromSerializable();
-            var type = memberExpression.Type.ResolveFromLoadedTypes();
-            var member = type.GetMembers().Single(_ => _.GetSignatureHash().Equals(memberExpression.MemberHash, StringComparison.OrdinalIgnoreCase));
+            var expression = memberExpressionDescription.ExpressionDescription.FromDescription();
+            var type = memberExpressionDescription.Type.ResolveFromLoadedTypes();
+            var member = type.GetMembers().Single(_ => _.GetSignatureHash().Equals(memberExpressionDescription.MemberHash, StringComparison.OrdinalIgnoreCase));
             var result = Expression.MakeMemberAccess(expression, member);
 
             return result;

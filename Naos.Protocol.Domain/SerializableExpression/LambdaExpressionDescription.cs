@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableLambdaExpression.cs" company="Naos Project">
+// <copyright file="LambdaExpressionDescription.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -14,13 +14,13 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Serializable version of <see cref="LambdaExpression" />.
     /// </summary>
-    public class SerializableLambdaExpression : SerializableExpressionBase
+    public class LambdaExpressionDescription : ExpressionDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableLambdaExpression"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LambdaExpressionDescription"/> class.</summary>
         /// <param name="type">The type of expression.</param>
         /// <param name="body">The body.</param>
         /// <param name="parameters">The parameters.</param>
-        public SerializableLambdaExpression(TypeDescription type, SerializableExpressionBase body, IReadOnlyCollection<SerializableParameterExpression> parameters)
+        public LambdaExpressionDescription(TypeDescription type, ExpressionDescriptionBase body, IReadOnlyCollection<ParameterExpressionDescription> parameters)
         : base(type, ExpressionType.Lambda)
         {
             this.Body = body;
@@ -29,39 +29,39 @@ namespace Naos.Protocol.Domain
 
         /// <summary>Gets the body.</summary>
         /// <value>The body.</value>
-        public SerializableExpressionBase Body { get; private set; }
+        public ExpressionDescriptionBase Body { get; private set; }
 
         /// <summary>Gets the parameters.</summary>
         /// <value>The parameters.</value>
-        public IReadOnlyCollection<SerializableParameterExpression> Parameters { get; private set; }
+        public IReadOnlyCollection<ParameterExpressionDescription> Parameters { get; private set; }
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableLambdaExpression" />.
+    /// Extensions to <see cref="LambdaExpressionDescription" />.
     /// </summary>
     public static class SerializableLambdaExpressionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="lambdaExpression">The lambda expression.</param>
         /// <returns>Serializable expression.</returns>
-        public static SerializableLambdaExpression ToSerializable(this LambdaExpression lambdaExpression)
+        public static LambdaExpressionDescription ToDescription(this LambdaExpression lambdaExpression)
         {
             var type = lambdaExpression.Type.ToTypeDescription();
-            var body = lambdaExpression.Body.ToSerializable();
-            var parameters = lambdaExpression.Parameters.ToSerializable();
-            var result = new SerializableLambdaExpression(type, body, parameters);
+            var body = lambdaExpression.Body.ToDescription();
+            var parameters = lambdaExpression.Parameters.ToDescription();
+            var result = new LambdaExpressionDescription(type, body, parameters);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="lambdaExpression">The lambda expression.</param>
+        /// <param name="lambdaExpressionDescription">The lambda expression.</param>
         /// <returns>Converted expression.</returns>
-        public static LambdaExpression FromSerializable(this SerializableLambdaExpression lambdaExpression)
+        public static LambdaExpression FromDescription(this LambdaExpressionDescription lambdaExpressionDescription)
         {
-            var body = lambdaExpression.Body.FromSerializable();
-            var parameters = lambdaExpression.Parameters.FromSerializable();
+            var body = lambdaExpressionDescription.Body.FromDescription();
+            var parameters = lambdaExpressionDescription.Parameters.FromDescription();
 
-            var result = Expression.Lambda(lambdaExpression.Type.ResolveFromLoadedTypes(), body, parameters);
+            var result = Expression.Lambda(lambdaExpressionDescription.Type.ResolveFromLoadedTypes(), body, parameters);
             return result;
         }
     }

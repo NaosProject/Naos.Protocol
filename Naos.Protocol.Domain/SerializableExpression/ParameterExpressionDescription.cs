@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableParameterExpression.cs" company="Naos Project">
+// <copyright file="ParameterExpressionDescription.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -16,13 +16,13 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Serializable version of <see cref="ParameterExpression" />.
     /// </summary>
-    public class SerializableParameterExpression : SerializableExpressionBase
+    public class ParameterExpressionDescription : ExpressionDescriptionBase
     {
 
-        /// <summary>Initializes a new instance of the <see cref="SerializableParameterExpression"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ParameterExpressionDescription"/> class.</summary>
         /// <param name="type">The type.</param>
         /// <param name="name">The name.</param>
-        public SerializableParameterExpression(TypeDescription type, string name)
+        public ParameterExpressionDescription(TypeDescription type, string name)
             : base(type, ExpressionType.Parameter)
         {
             this.Name = name;
@@ -34,29 +34,29 @@ namespace Naos.Protocol.Domain
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableParameterExpression" />.
+    /// Extensions to <see cref="ParameterExpressionDescription" />.
     /// </summary>
     public static class SerializableParameterExpressionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="parameterExpression">The parameter expression.</param>
         /// <returns>Serializable expression.</returns>
-        public static SerializableParameterExpression ToSerializable(this ParameterExpression parameterExpression)
+        public static ParameterExpressionDescription ToDescription(this ParameterExpression parameterExpression)
         {
             var type = parameterExpression.Type.ToTypeDescription();
             var name = parameterExpression.Name;
 
-            var result = new SerializableParameterExpression(type, name);
+            var result = new ParameterExpressionDescription(type, name);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="parameterExpression">The parameter expression.</param>
+        /// <param name="parameterExpressionDescription">The parameter expression.</param>
         /// <returns>Converted expression.</returns>
-        public static ParameterExpression FromSerializable(this SerializableParameterExpression parameterExpression)
+        public static ParameterExpression FromDescription(this ParameterExpressionDescription parameterExpressionDescription)
         {
-            var type = parameterExpression.Type.ResolveFromLoadedTypes();
-            var name = parameterExpression.Name;
+            var type = parameterExpressionDescription.Type.ResolveFromLoadedTypes();
+            var name = parameterExpressionDescription.Name;
 
             var result = Expression.Parameter(type, name);
             return result;
@@ -66,20 +66,20 @@ namespace Naos.Protocol.Domain
         /// <summary>Converts to serializable.</summary>
         /// <param name="expressions">The expressions.</param>
         /// <returns>Converted expressions.</returns>
-        public static IReadOnlyCollection<SerializableParameterExpression> ToSerializable(
+        public static IReadOnlyCollection<ParameterExpressionDescription> ToDescription(
             this IReadOnlyCollection<ParameterExpression> expressions)
         {
-            var result = expressions.Select(_ => _.ToSerializable()).ToList();
+            var result = expressions.Select(_ => _.ToDescription()).ToList();
             return result;
         }
 
         /// <summary>From the serializable.</summary>
         /// <param name="expressions">The expressions.</param>
         /// <returns>Converted expressions.</returns>
-        public static IReadOnlyCollection<ParameterExpression> FromSerializable(
-            this IReadOnlyCollection<SerializableParameterExpression> expressions)
+        public static IReadOnlyCollection<ParameterExpression> FromDescription(
+            this IReadOnlyCollection<ParameterExpressionDescription> expressions)
         {
-            var result = expressions.Select(_ => _.FromSerializable()).ToList();
+            var result = expressions.Select(_ => _.FromDescription()).ToList();
             return result;
         }
     }

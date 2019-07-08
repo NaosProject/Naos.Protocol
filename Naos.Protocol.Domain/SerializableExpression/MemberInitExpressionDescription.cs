@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableMemberInitExpression.cs" company="Naos Project">
+// <copyright file="MemberInitExpressionDescription.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -13,22 +13,22 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Serializable version of <see cref="MemberInitExpression" />.
     /// </summary>
-    public class SerializableMemberInitExpression : SerializableExpressionBase
+    public class MemberInitExpressionDescription : ExpressionDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableMemberInitExpression"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MemberInitExpressionDescription"/> class.</summary>
         /// <param name="type">The type.</param>
-        /// <param name="newExpression">The new expression.</param>
+        /// <param name="newExpressionDescription">The new expression.</param>
         /// <param name="bindings">The bindings.</param>
-        public SerializableMemberInitExpression(TypeDescription type, SerializableNewExpression newExpression, IReadOnlyCollection<SerializableMemberBindingBase> bindings)
+        public MemberInitExpressionDescription(TypeDescription type, NewExpressionDescription newExpressionDescription, IReadOnlyCollection<SerializableMemberBindingBase> bindings)
             : base(type, ExpressionType.MemberInit)
         {
-            this.NewExpression = newExpression;
+            this.NewExpressionDescription = newExpressionDescription;
             this.Bindings = bindings;
         }
 
         /// <summary>Gets the new expression.</summary>
         /// <value>The new expression.</value>
-        public SerializableNewExpression NewExpression { get; private set; }
+        public NewExpressionDescription NewExpressionDescription { get; private set; }
 
         /// <summary>Gets the bindings.</summary>
         /// <value>The bindings.</value>
@@ -36,29 +36,29 @@ namespace Naos.Protocol.Domain
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableMemberInitExpression" />.
+    /// Extensions to <see cref="MemberInitExpressionDescription" />.
     /// </summary>
     public static class SerializableMemberInitExpressionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="memberInitExpression">The memberInit expression.</param>
         /// <returns>Serializable expression.</returns>
-        public static SerializableMemberInitExpression ToSerializable(this MemberInitExpression memberInitExpression)
+        public static MemberInitExpressionDescription ToDescription(this MemberInitExpression memberInitExpression)
         {
             var type = memberInitExpression.Type.ToTypeDescription();
-            var newExpression = memberInitExpression.NewExpression.ToSerializable();
-            var bindings = memberInitExpression.Bindings.ToSerializable();
-            var result = new SerializableMemberInitExpression(type, newExpression, bindings);
+            var newExpression = memberInitExpression.NewExpression.ToDescription();
+            var bindings = memberInitExpression.Bindings.ToDescription();
+            var result = new MemberInitExpressionDescription(type, newExpression, bindings);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="memberInitExpression">The memberInit expression.</param>
+        /// <param name="memberInitExpressionDescription">The memberInit expression.</param>
         /// <returns>Converted expression.</returns>
-        public static MemberInitExpression FromSerializable(this SerializableMemberInitExpression memberInitExpression)
+        public static MemberInitExpression FromDescription(this MemberInitExpressionDescription memberInitExpressionDescription)
         {
-            var newExpression = memberInitExpression.NewExpression.FromSerializable();
-            var bindings = memberInitExpression.Bindings.FromSerializable();
+            var newExpression = memberInitExpressionDescription.NewExpressionDescription.FromDescription();
+            var bindings = memberInitExpressionDescription.Bindings.FromDescription();
             var result = Expression.MemberInit(newExpression, bindings);
 
             return result;

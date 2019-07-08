@@ -40,11 +40,11 @@ namespace Naos.Protocol.Domain
         /// <summary>Converts to serializable.</summary>
         /// <param name="memberListBinding">The member list binding.</param>
         /// <returns>Serializable version.</returns>
-        public static SerializableMemberListBinding ToSerializable(this MemberListBinding memberListBinding)
+        public static SerializableMemberListBinding ToDescription(this MemberListBinding memberListBinding)
         {
             var type = memberListBinding.Member.DeclaringType.ToTypeDescription();
             var memberHash = memberListBinding.Member.GetSignatureHash();
-            var initializers = memberListBinding.Initializers.ToSerializable();
+            var initializers = memberListBinding.Initializers.ToDescription();
             var result = new SerializableMemberListBinding(type, memberHash, initializers);
             return result;
         }
@@ -52,11 +52,11 @@ namespace Naos.Protocol.Domain
         /// <summary>From the serializable.</summary>
         /// <param name="memberListBinding">The memberListBinding.</param>
         /// <returns>Converted version.</returns>
-        public static MemberListBinding FromSerializable(this SerializableMemberListBinding memberListBinding)
+        public static MemberListBinding FromDescription(this SerializableMemberListBinding memberListBinding)
         {
             var type = memberListBinding.Type.ResolveFromLoadedTypes();
             var member = type.GetMembers().Single(_ => _.GetSignatureHash().Equals(memberListBinding.MemberHash, StringComparison.OrdinalIgnoreCase));
-            var initializers = memberListBinding.Initializers.FromSerializable();
+            var initializers = memberListBinding.Initializers.FromDescription();
 
             var result = Expression.ListBind(member, initializers);
             return result;

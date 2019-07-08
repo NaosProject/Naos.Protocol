@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableTypeBinaryExpression.cs" company="Naos Project">
+// <copyright file="TypeBinaryExpressionDescription.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -12,45 +12,45 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Serializable version of <see cref="TypeBinaryExpression" />.
     /// </summary>
-    public class SerializableTypeBinaryExpression : SerializableExpressionBase
+    public class TypeBinaryExpressionDescription : ExpressionDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableTypeBinaryExpression"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TypeBinaryExpressionDescription"/> class.</summary>
         /// <param name="type">The type.</param>
-        /// <param name="expression">The expression.</param>
-        public SerializableTypeBinaryExpression(TypeDescription type, SerializableExpressionBase expression)
+        /// <param name="expressionDescription">The expression.</param>
+        public TypeBinaryExpressionDescription(TypeDescription type, ExpressionDescriptionBase expressionDescription)
             : base(type, ExpressionType.TypeIs)
         {
-            this.Expression = expression;
+            this.ExpressionDescription = expressionDescription;
         }
 
         /// <summary>Gets the expression.</summary>
         /// <value>The expression.</value>
-        public SerializableExpressionBase Expression { get; private set; }
+        public ExpressionDescriptionBase ExpressionDescription { get; private set; }
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableTypeBinaryExpression" />.
+    /// Extensions to <see cref="TypeBinaryExpressionDescription" />.
     /// </summary>
     public static class SerializableTypeBinaryExpressionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="typeBinaryExpression">The typeBinary expression.</param>
         /// <returns>Serializable expression.</returns>
-        public static SerializableTypeBinaryExpression ToSerializable(this TypeBinaryExpression typeBinaryExpression)
+        public static TypeBinaryExpressionDescription ToDescription(this TypeBinaryExpression typeBinaryExpression)
         {
             var type = typeBinaryExpression.Type.ToTypeDescription();
-            var expression = typeBinaryExpression.Expression.ToSerializable();
-            var result = new SerializableTypeBinaryExpression(type, expression);
+            var expression = typeBinaryExpression.Expression.ToDescription();
+            var result = new TypeBinaryExpressionDescription(type, expression);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="typeBinaryExpression">The typeBinary expression.</param>
+        /// <param name="typeBinaryExpressionDescription">The typeBinary expression.</param>
         /// <returns>Converted expression.</returns>
-        public static Expression FromSerializable(this SerializableTypeBinaryExpression typeBinaryExpression)
+        public static Expression FromDescription(this TypeBinaryExpressionDescription typeBinaryExpressionDescription)
         {
-            var type = typeBinaryExpression.Type.ResolveFromLoadedTypes();
-            var expression = typeBinaryExpression.Expression.FromSerializable();
+            var type = typeBinaryExpressionDescription.Type.ResolveFromLoadedTypes();
+            var expression = typeBinaryExpressionDescription.ExpressionDescription.FromDescription();
             var result = Expression.TypeIs(expression, type);
 
             return result;

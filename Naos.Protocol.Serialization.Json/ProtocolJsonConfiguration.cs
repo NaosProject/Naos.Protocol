@@ -18,6 +18,10 @@ namespace Naos.Protocol.Serialization.Json
     {
         /// <inheritdoc />
         protected override IReadOnlyCollection<Type> TypesToAutoRegisterWithDiscovery =>
-            new[] { typeof(OperationSequence) };
+            new[]
+            {
+                typeof(OperationSequence),
+                typeof(ConstantExpressionDescription<string>),
+            };
     }
 }

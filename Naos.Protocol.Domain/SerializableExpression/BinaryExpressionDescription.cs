@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableBinaryExpression.cs" company="Naos Project">
+// <copyright file="BinaryExpressionDescription.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -10,14 +10,14 @@ namespace Naos.Protocol.Domain
     using OBeautifulCode.Type;
 
     /// <summary>Serializable version of <see cref="BinaryExpression" />.</summary>
-    public class SerializableBinaryExpression : SerializableExpressionBase
+    public class BinaryExpressionDescription : ExpressionDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableBinaryExpression"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BinaryExpressionDescription"/> class.</summary>
         /// <param name="type">The type of expression.</param>
         /// <param name="nodeType">Type of the node.</param>
         /// <param name="left">The left expression.</param>
         /// <param name="right">The right expression.</param>
-        public SerializableBinaryExpression(TypeDescription type, ExpressionType nodeType, SerializableExpressionBase left, SerializableExpressionBase right)
+        public BinaryExpressionDescription(TypeDescription type, ExpressionType nodeType, ExpressionDescriptionBase left, ExpressionDescriptionBase right)
             : base(type, nodeType)
         {
             this.Left = left;
@@ -26,39 +26,39 @@ namespace Naos.Protocol.Domain
 
         /// <summary>Gets the left expression.</summary>
         /// <value>The left expression.</value>
-        public SerializableExpressionBase Left { get; private set; }
+        public ExpressionDescriptionBase Left { get; private set; }
 
         /// <summary>Gets the right expression.</summary>
         /// <value>The right expression.</value>
-        public SerializableExpressionBase Right { get; private set; }
+        public ExpressionDescriptionBase Right { get; private set; }
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableBinaryExpression" />.
+    /// Extensions to <see cref="BinaryExpressionDescription" />.
     /// </summary>
     public static class SerializableBinaryExpressionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="binaryExpression">The binary expression.</param>
         /// <returns>The real expression</returns>
-        public static SerializableBinaryExpression ToSerializable(this BinaryExpression binaryExpression)
+        public static BinaryExpressionDescription ToDescription(this BinaryExpression binaryExpression)
         {
             var type = binaryExpression.Type.ToTypeDescription();
             var nodeType = binaryExpression.NodeType;
-            var left = binaryExpression.Left.ToSerializable();
-            var right = binaryExpression.Right.ToSerializable();
-            var result = new SerializableBinaryExpression(type, nodeType, left, right);
+            var left = binaryExpression.Left.ToDescription();
+            var right = binaryExpression.Right.ToDescription();
+            var result = new BinaryExpressionDescription(type, nodeType, left, right);
             return result;
         }
 
         /// <summary>
         /// Converts from serializable.
         /// </summary>
-        /// <param name="binaryExpression">The binary expression.</param>
+        /// <param name="binaryExpressionDescription">The binary expression.</param>
         /// <returns>The real expression.</returns>
-        public static BinaryExpression FromSerializable(this SerializableBinaryExpression binaryExpression)
+        public static BinaryExpression FromDescription(this BinaryExpressionDescription binaryExpressionDescription)
         {
-            return Expression.MakeBinary(binaryExpression.NodeType, binaryExpression.Left.FromSerializable(), binaryExpression.Right.FromSerializable());
+            return Expression.MakeBinary(binaryExpressionDescription.NodeType, binaryExpressionDescription.Left.FromDescription(), binaryExpressionDescription.Right.FromDescription());
         }
     }
 }

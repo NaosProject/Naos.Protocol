@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableUnaryExpression.cs" company="Naos Project">
+// <copyright file="UnaryExpressionDescription.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -12,13 +12,13 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Serializable version of <see cref="UnaryExpression" />.
     /// </summary>
-    public class SerializableUnaryExpression : SerializableExpressionBase
+    public class UnaryExpressionDescription : ExpressionDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableUnaryExpression"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UnaryExpressionDescription"/> class.</summary>
         /// <param name="type">The type.</param>
         /// <param name="nodeType">Type of the node.</param>
         /// <param name="operand">The operand.</param>
-        public SerializableUnaryExpression(TypeDescription type, ExpressionType nodeType, SerializableExpressionBase operand)
+        public UnaryExpressionDescription(TypeDescription type, ExpressionType nodeType, ExpressionDescriptionBase operand)
             : base(type, nodeType)
         {
             this.Operand = operand;
@@ -26,39 +26,39 @@ namespace Naos.Protocol.Domain
 
         /// <summary>Gets the operand.</summary>
         /// <value>The operand.</value>
-        public SerializableExpressionBase Operand { get; private set; }
+        public ExpressionDescriptionBase Operand { get; private set; }
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableUnaryExpression" />.
+    /// Extensions to <see cref="UnaryExpressionDescription" />.
     /// </summary>
     public static class SerializableUnaryExpressionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="unaryExpression">The unary expression.</param>
         /// <returns>Serializable expression.</returns>
-        public static SerializableUnaryExpression ToSerializable(this UnaryExpression unaryExpression)
+        public static UnaryExpressionDescription ToDescription(this UnaryExpression unaryExpression)
         {
             var type = unaryExpression.Type.ToTypeDescription();
             var nodeType = unaryExpression.NodeType;
-            var operand = unaryExpression.Operand.ToSerializable();
+            var operand = unaryExpression.Operand.ToDescription();
 
-            var result = new SerializableUnaryExpression(type, nodeType, operand);
+            var result = new UnaryExpressionDescription(type, nodeType, operand);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="unaryExpression">The unary expression.</param>
+        /// <param name="unaryExpressionDescription">The unary expression.</param>
         /// <returns>Converted expression.</returns>
-        public static Expression FromSerializable(this SerializableUnaryExpression unaryExpression)
+        public static Expression FromDescription(this UnaryExpressionDescription unaryExpressionDescription)
         {
-            var nodeType = unaryExpression.NodeType;
+            var nodeType = unaryExpressionDescription.NodeType;
             switch (nodeType)
             {
                 case ExpressionType.UnaryPlus:
-                    return Expression.UnaryPlus(unaryExpression.Operand.FromSerializable());
+                    return Expression.UnaryPlus(unaryExpressionDescription.Operand.FromDescription());
                 default:
-                    return Expression.MakeUnary(nodeType, unaryExpression.Operand.FromSerializable(), unaryExpression.Type.ResolveFromLoadedTypes());
+                    return Expression.MakeUnary(nodeType, unaryExpressionDescription.Operand.FromDescription(), unaryExpressionDescription.Type.ResolveFromLoadedTypes());
             }
         }
     }

@@ -7,6 +7,9 @@
 namespace Naos.Protocol.Domain.Test
 {
     using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Linq.Expressions;
     using FluentAssertions;
     using Naos.Protocol.Serialization.Json;
@@ -37,14 +40,33 @@ namespace Naos.Protocol.Domain.Test
             this.testOutputHelper.WriteLine(text);
         }
 
+        [Fact]
+        public void RoundTripMemberInfoDescription()
+        {
+            var serializer = new NaosJsonSerializer(typeof(ProtocolJsonConfiguration), UnregisteredTypeEncounteredStrategy.Attempt);
+            var allMethodsInfos = typeof(ILocker).GetAllMethodInfos();
+            var memberInfo = allMethodsInfos.First(_ =>
+            {
+                return _.ToString()
+                        .Contains(
+                            "TSpecificReturn HandleWithSpecificReturn[TSpecificReturn](Naos.Protocol.Domain.LockerKey)");
+            });
+            memberInfo.Should().NotBeNull();
+
+            var description = memberInfo.ToDescription();
+            var serialized = serializer.SerializeToString(description);
+            this.testOutputHelper.WriteLine(serialized);
+            var deserialized = serializer.Deserialize<MethodInfoDescription>(serialized);
+            var actual = deserialized.FromDescription();
+        }
+
         [Fact ]
         //[Fact(Skip = "Need to figure out how to deal with this.")]
         public void TestSerialization()
         {
             var serializer = new NaosJsonSerializer(typeof(ProtocolJsonConfiguration), UnregisteredTypeEncounteredStrategy.Attempt);
-            var gateIdKey = "gateId";
 
-            Expression<Func<ILocker, OperationBase>> operationBuilder = _ => new CloseGate(_.HandleWithSpecificReturn<string>(new LockerKey(gateIdKey)));
+            Expression<Func<ILocker, OperationBase>> operationBuilder = _ => new CloseGate(_.HandleWithSpecificReturn<string>(new LockerKey("gateId")));
             var sequence = new DispatchedOperationSequence(
                 new[]
                 {
@@ -58,6 +80,16 @@ namespace Naos.Protocol.Domain.Test
             this.testOutputHelper.WriteLine(json);
             var actual = serializer.Deserialize<DispatchedOperationSequence>(json);
             actual.Should().NotBeNull();
+
+            actual.OperationPrototypes.Single().OperationBuilder.FromDescription().Compile().DynamicInvoke(new Locker(
+                new Dictionary<LockerKey, DescribedSerialization>
+                {
+                    {
+                        new LockerKey("gateId"),
+                        "monkey".ToDescribedSerializationUsingSpecificSerializer(new SerializationDescription(SerializationKind.Json, SerializationFormat.String), serializer)
+                    },
+                },
+                JsonSerializerFactory.Instance));
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Naos.Protocol.Domain
         /// <param name="operationBuilder">Builder taking in the locker of output from previous runs.</param>
         public OperationPrototype(
             string description,
-            SerializableLambdaExpression operationBuilder)
+            LambdaExpressionDescription operationBuilder)
         {
             if (string.IsNullOrWhiteSpace(description))
             {
@@ -72,7 +72,7 @@ namespace Naos.Protocol.Domain
         /// <summary>
         /// Gets the builder for the operation.
         /// </summary>
-        public SerializableLambdaExpression OperationBuilder { get; private set; }
+        public LambdaExpressionDescription OperationBuilder { get; private set; }
 
         /// <summary>Builds the specified description.</summary>
         /// <param name="description">The description.</param>
@@ -80,7 +80,7 @@ namespace Naos.Protocol.Domain
         /// <returns>Prototype version of an operation.</returns>
         public static OperationPrototype Build(string description, Expression<Func<ILocker, OperationBase>> operationBuilder)
         {
-            var operationBuilderDescription = operationBuilder.ToSerializable();
+            var operationBuilderDescription = operationBuilder.ToDescription();
             var result = new OperationPrototype(description, operationBuilderDescription);
             return result;
         }

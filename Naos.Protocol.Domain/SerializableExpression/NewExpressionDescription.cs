@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableNewExpression.cs" company="Naos Project">
+// <copyright file="NewExpressionDescription.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -17,16 +17,16 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Serializable version of <see cref="NewExpression" />.
     /// </summary>
-    public class SerializableNewExpression : SerializableExpressionBase
+    public class NewExpressionDescription : ExpressionDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableNewExpression"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="NewExpressionDescription"/> class.</summary>
         /// <param name="type">The type.</param>
         /// <param name="constructorHash">The constructor hash.</param>
         /// <param name="arguments">The arguments.</param>
-        public SerializableNewExpression(
+        public NewExpressionDescription(
             TypeDescription type,
             string constructorHash,
-            IReadOnlyCollection<SerializableExpressionBase> arguments)
+            IReadOnlyCollection<ExpressionDescriptionBase> arguments)
             : base(type, ExpressionType.New)
         {
             this.ConstructorHash = constructorHash;
@@ -39,11 +39,11 @@ namespace Naos.Protocol.Domain
 
         /// <summary>Gets the arguments.</summary>
         /// <value>The arguments.</value>
-        public IReadOnlyCollection<SerializableExpressionBase> Arguments { get; private set; }
+        public IReadOnlyCollection<ExpressionDescriptionBase> Arguments { get; private set; }
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableNewExpression" />.
+    /// Extensions to <see cref="NewExpressionDescription" />.
     /// </summary>
     public static class SerializableNewExpressionExtensions
     {
@@ -64,27 +64,27 @@ namespace Naos.Protocol.Domain
         /// <summary>Converts to serializable.</summary>
         /// <param name="newExpression">The new expression.</param>
         /// <returns>Serializable expression.</returns>
-        public static SerializableNewExpression ToSerializable(this NewExpression newExpression)
+        public static NewExpressionDescription ToDescription(this NewExpression newExpression)
         {
             var type = newExpression.Type.ToTypeDescription();
             var constructorHash = newExpression.Constructor.GetSignatureHash();
-            var arguments = newExpression.Arguments.ToSerializable();
-            var result = new SerializableNewExpression(type, constructorHash, arguments);
+            var arguments = newExpression.Arguments.ToDescription();
+            var result = new NewExpressionDescription(type, constructorHash, arguments);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="newExpression">The new expression.</param>
+        /// <param name="newExpressionDescription">The new expression.</param>
         /// <returns>Converted expression.</returns>
-        public static NewExpression FromSerializable(this SerializableNewExpression newExpression)
+        public static NewExpression FromDescription(this NewExpressionDescription newExpressionDescription)
         {
-            var type = newExpression.Type.ResolveFromLoadedTypes();
+            var type = newExpressionDescription.Type.ResolveFromLoadedTypes();
 
             NewExpression result;
-            if (!string.IsNullOrWhiteSpace(newExpression.ConstructorHash))
+            if (!string.IsNullOrWhiteSpace(newExpressionDescription.ConstructorHash))
             {
-                var constructor = type.GetConstructors().Single(_ => _.GetSignatureHash().Equals(newExpression.ConstructorHash, StringComparison.OrdinalIgnoreCase));
-                var arguments = newExpression.Arguments.FromSerializable();
+                var constructor = type.GetConstructors().Single(_ => _.GetSignatureHash().Equals(newExpressionDescription.ConstructorHash, StringComparison.OrdinalIgnoreCase));
+                var arguments = newExpressionDescription.Arguments.FromDescription();
                 result = Expression.New(constructor, arguments);
             }
             else

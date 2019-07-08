@@ -21,7 +21,7 @@ namespace Naos.Protocol.Domain
         /// <param name="type">Type with method.</param>
         /// <param name="addMethodHash">The add method.</param>
         /// <param name="arguments">The arguments.</param>
-        public SerializableElementInit(TypeDescription type, string addMethodHash, IReadOnlyCollection<SerializableExpressionBase> arguments)
+        public SerializableElementInit(TypeDescription type, string addMethodHash, IReadOnlyCollection<ExpressionDescriptionBase> arguments)
         {
             this.Type = type;
             this.AddMethodHash = addMethodHash;
@@ -38,7 +38,7 @@ namespace Naos.Protocol.Domain
 
         /// <summary>Gets the arguments.</summary>
         /// <value>The arguments.</value>
-        public IReadOnlyCollection<SerializableExpressionBase> Arguments { get; private set; }
+        public IReadOnlyCollection<ExpressionDescriptionBase> Arguments { get; private set; }
     }
 
     /// <summary>
@@ -49,11 +49,11 @@ namespace Naos.Protocol.Domain
         /// <summary>Converts to serializable.</summary>
         /// <param name="elementInit">The elementInit.</param>
         /// <returns>Serializable version.</returns>
-        public static SerializableElementInit ToSerializable(this ElementInit elementInit)
+        public static SerializableElementInit ToDescription(this ElementInit elementInit)
         {
             var type = elementInit.AddMethod.DeclaringType.ToTypeDescription();
             var addMethodHash = elementInit.AddMethod.GetSignatureHash();
-            var arguments = elementInit.Arguments.ToSerializable();
+            var arguments = elementInit.Arguments.ToDescription();
             var result = new SerializableElementInit(type, addMethodHash, arguments);
             return result;
         }
@@ -61,11 +61,11 @@ namespace Naos.Protocol.Domain
         /// <summary>From the serializable.</summary>
         /// <param name="elementInit">The elementInit.</param>
         /// <returns>Converted version.</returns>
-        public static ElementInit FromSerializable(this SerializableElementInit elementInit)
+        public static ElementInit FromDescription(this SerializableElementInit elementInit)
         {
             var type = elementInit.Type.ResolveFromLoadedTypes();
             var addMethod = type.GetMethods().Single(_ => _.GetSignatureHash().Equals(elementInit.AddMethodHash, StringComparison.OrdinalIgnoreCase));
-            var arguments = elementInit.Arguments.FromSerializable();
+            var arguments = elementInit.Arguments.FromDescription();
 
             var result = Expression.ElementInit(addMethod, arguments);
             return result;
@@ -74,18 +74,18 @@ namespace Naos.Protocol.Domain
         /// <summary>Converts to serializable.</summary>
         /// <param name="elementInits">The elementInit.</param>
         /// <returns>Serializable version.</returns>
-        public static IReadOnlyCollection<SerializableElementInit> ToSerializable(this IReadOnlyCollection<ElementInit> elementInits)
+        public static IReadOnlyCollection<SerializableElementInit> ToDescription(this IReadOnlyCollection<ElementInit> elementInits)
         {
-            var result = elementInits.Select(_ => _.ToSerializable()).ToList();
+            var result = elementInits.Select(_ => _.ToDescription()).ToList();
             return result;
         }
 
         /// <summary>From the serializable.</summary>
         /// <param name="elementInits">The elementInit.</param>
         /// <returns>Converted version.</returns>
-        public static IReadOnlyCollection<ElementInit> FromSerializable(this IReadOnlyCollection<SerializableElementInit> elementInits)
+        public static IReadOnlyCollection<ElementInit> FromDescription(this IReadOnlyCollection<SerializableElementInit> elementInits)
         {
-            var result = elementInits.Select(_ => _.FromSerializable()).ToList();
+            var result = elementInits.Select(_ => _.FromDescription()).ToList();
             return result;
         }
     }

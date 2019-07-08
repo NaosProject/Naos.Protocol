@@ -40,11 +40,11 @@ namespace Naos.Protocol.Domain
         /// <summary>Converts to serializable.</summary>
         /// <param name="memberMemberBinding">The memberMemberBinding.</param>
         /// <returns>Serializable version.</returns>
-        public static SerializableMemberMemberBinding ToSerializable(this MemberMemberBinding memberMemberBinding)
+        public static SerializableMemberMemberBinding ToDescription(this MemberMemberBinding memberMemberBinding)
         {
             var type = memberMemberBinding.Member.DeclaringType.ToTypeDescription();
             var memberHash = memberMemberBinding.Member.GetSignatureHash();
-            var bindings = memberMemberBinding.Bindings.ToSerializable();
+            var bindings = memberMemberBinding.Bindings.ToDescription();
             var result = new SerializableMemberMemberBinding(type, memberHash, bindings);
             return result;
         }
@@ -52,11 +52,11 @@ namespace Naos.Protocol.Domain
         /// <summary>From the serializable.</summary>
         /// <param name="memberMemberBinding">The memberMemberBinding.</param>
         /// <returns>Converted version.</returns>
-        public static MemberMemberBinding FromSerializable(this SerializableMemberMemberBinding memberMemberBinding)
+        public static MemberMemberBinding FromDescription(this SerializableMemberMemberBinding memberMemberBinding)
         {
             var type = memberMemberBinding.Type.ResolveFromLoadedTypes();
             var member = type.GetMembers().Single(_ => _.GetSignatureHash().Equals(memberMemberBinding.MemberHash, StringComparison.OrdinalIgnoreCase));
-            var bindings = memberMemberBinding.Bindings.FromSerializable();
+            var bindings = memberMemberBinding.Bindings.FromDescription();
 
             var result = Expression.MemberBind(member, bindings);
             return result;
