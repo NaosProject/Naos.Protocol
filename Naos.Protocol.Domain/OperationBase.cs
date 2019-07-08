@@ -12,6 +12,7 @@ namespace Naos.Protocol.Domain
     using System.Linq.Expressions;
     using System.Reflection;
     using OBeautifulCode.Type;
+    using static System.FormattableString;
 
     /// <summary>
     /// Abstract base of an operation.
@@ -30,7 +31,14 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// An <see cref="OperationBase" /> that DOES mutate state.
     /// </summary>
-    public abstract class WriteOperationBase : OperationBase
+    public abstract class MutatingOperationBase : OperationBase
+    {
+    }
+
+    /// <summary>
+    /// An <see cref="OperationBase" /> that does something but will not query any sources OR mutate any state.
+    /// </summary>
+    public abstract class BehavioralOperationBase : OperationBase
     {
     }
 
@@ -42,7 +50,7 @@ namespace Naos.Protocol.Domain
     }
 
     /// <summary>
-    /// Prototype of an operation that can inflated into an operation with a <see cref="Locker" /> of necessary inputs.
+    /// Prototype of an operation that can inflated into an operation with a <see cref="LockerOpener" /> of necessary inputs.
     /// </summary>
     public class OperationPrototype
     {
@@ -50,10 +58,12 @@ namespace Naos.Protocol.Domain
         /// Initializes a new instance of the <see cref="OperationPrototype"/> class.
         /// </summary>
         /// <param name="description">Description of the operation.</param>
-        /// <param name="operationBuilder">Builder taking in the locker of output from previous runs.</param>
+        /// <param name="builder">Builder taking in the locker of output from previous runs.</param>
+        /// <param name="outputKeyId">The output key identifier; IF NULL then output will not be saved.</param>
         public OperationPrototype(
             string description,
-            LambdaExpressionDescription operationBuilder)
+            LambdaExpressionDescription builder,
+            LockerKey outputKeyId)
         {
             if (string.IsNullOrWhiteSpace(description))
             {
@@ -61,7 +71,8 @@ namespace Naos.Protocol.Domain
             }
 
             this.Description = description;
-            this.OperationBuilder = operationBuilder ?? throw new ArgumentNullException(nameof(operationBuilder));
+            this.Builder = builder ?? throw new ArgumentNullException(nameof(builder));
+            this.OutputKeyId = outputKeyId;
         }
 
         /// <summary>
@@ -72,16 +83,21 @@ namespace Naos.Protocol.Domain
         /// <summary>
         /// Gets the builder for the operation.
         /// </summary>
-        public LambdaExpressionDescription OperationBuilder { get; private set; }
+        public LambdaExpressionDescription Builder { get; private set; }
+
+        /// <summary>Gets the output key identifier.</summary>
+        /// <value>The output key identifier.</value>
+        public LockerKey OutputKeyId { get; private set; }
 
         /// <summary>Builds the specified description.</summary>
         /// <param name="description">The description.</param>
         /// <param name="operationBuilder">The operation builder.</param>
+        /// <param name="outputKey">The output key identifier.</param>
         /// <returns>Prototype version of an operation.</returns>
-        public static OperationPrototype Build(string description, Expression<Func<ILocker, OperationBase>> operationBuilder)
+        public static OperationPrototype Build(string description, Expression<Func<ILockerOpener, OperationBase>> operationBuilder, LockerKey outputKey = null)
         {
             var operationBuilderDescription = operationBuilder.ToDescription();
-            var result = new OperationPrototype(description, operationBuilderDescription);
+            var result = new OperationPrototype(description, operationBuilderDescription, outputKey);
             return result;
         }
     }

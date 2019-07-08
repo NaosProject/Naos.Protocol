@@ -58,10 +58,11 @@ namespace Naos.Protocol.Domain
         /// <returns>Converted expression.</returns>
         public static LambdaExpression FromDescription(this LambdaExpressionDescription lambdaExpressionDescription)
         {
+            var type = lambdaExpressionDescription.Type.ResolveFromLoadedTypes();
             var body = lambdaExpressionDescription.Body.FromDescription();
             var parameters = lambdaExpressionDescription.Parameters.FromDescription();
 
-            var result = Expression.Lambda(lambdaExpressionDescription.Type.ResolveFromLoadedTypes(), body, parameters);
+            var result = Expression.Lambda(type, body, parameters);
             return result;
         }
     }

@@ -62,26 +62,41 @@ namespace Naos.Protocol.Domain
     /// Friendly interface for the handler.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = "Prefer an interface.")]
-    public interface ILocker : IHandleOperations<LockerKey, DescribedSerialization>
+    public interface ILockerOpener : IHandleOperations<LockerKey, DescribedSerialization>
     {
+        /// <summary>
+        /// Run the operation and returns as appropriate in the specific type.
+        /// </summary>
+        /// <typeparam name="TSpecificReturn">Type of return (overriding TReturn).</typeparam>
+        /// <param name="operation">Operation to run.</param>
+        /// <returns>Appropriate return of operation.</returns>
+        TSpecificReturn Handle<TSpecificReturn>(LockerKey operation);
+
+        /// <summary>
+        /// Run the operation and returns as appropriate in the specific type.
+        /// </summary>
+        /// <typeparam name="TSpecificReturn">Type of return (overriding TReturn).</typeparam>
+        /// <param name="operation">Operation to run.</param>
+        /// <returns>Appropriate return of operation.</returns>
+        Task<TSpecificReturn> HandleAsync<TSpecificReturn>(LockerKey operation);
     }
 
     /// <summary>
     /// Container of <see cref="DescribedSerialization" /> keyed by a <see cref="LockerKey" />.
     /// </summary>
-    public class Locker : ILocker
+    public class LockerOpener : ILockerOpener
     {
         private readonly IReadOnlyDictionary<LockerKey, DescribedSerialization> keyToContentsMap;
         private readonly ISerializerFactory serializerFactory;
         private readonly ICompressorFactory compressorFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Locker"/> class.
+        /// Initializes a new instance of the <see cref="LockerOpener"/> class.
         /// </summary>
         /// <param name="keyToContentsMap">Key to contents map.</param>
         /// <param name="serializerFactory">Serializer factory for opening <see cref="DescribedSerialization" />.</param>
         /// <param name="compressorFactory">Compressor factory for opening <see cref="DescribedSerialization" />.</param>
-        public Locker(IReadOnlyDictionary<LockerKey, DescribedSerialization> keyToContentsMap, ISerializerFactory serializerFactory, ICompressorFactory compressorFactory = null)
+        public LockerOpener(IReadOnlyDictionary<LockerKey, DescribedSerialization> keyToContentsMap, ISerializerFactory serializerFactory, ICompressorFactory compressorFactory = null)
         {
             this.keyToContentsMap = keyToContentsMap ?? throw new ArgumentNullException(nameof(keyToContentsMap));
             this.serializerFactory = serializerFactory ?? throw new ArgumentNullException(nameof(serializerFactory));
@@ -91,21 +106,28 @@ namespace Naos.Protocol.Domain
         /// <inheritdoc />
         public async Task<DescribedSerialization> HandleAsync(LockerKey operation)
         {
-            return await Task.FromResult(this.keyToContentsMap[operation]);
+            return await Task.FromResult(this.Handle(operation));
         }
 
         /// <inheritdoc />
         public DescribedSerialization Handle(LockerKey operation)
         {
-            throw new System.NotImplementedException();
+            var result = this.keyToContentsMap[operation];
+            return result;
         }
 
         /// <inheritdoc />
-        public TSpecificReturn HandleWithSpecificReturn<TSpecificReturn>(LockerKey operation)
+        public TSpecificReturn Handle<TSpecificReturn>(LockerKey operation)
         {
             var entry = this.keyToContentsMap[operation];
             var result = entry.DeserializePayloadUsingSpecificFactory<TSpecificReturn>(this.serializerFactory, this.compressorFactory);
             return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<TSpecificReturn> HandleAsync<TSpecificReturn>(LockerKey operation)
+        {
+            return await Task.FromResult(this.Handle<TSpecificReturn>(operation));
         }
     }
 }

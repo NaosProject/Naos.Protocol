@@ -25,8 +25,42 @@ namespace Naos.Protocol.Domain.Test
     /// <summary>
     /// Open gate.
     /// </summary>
-    public class OpenGate : WriteOperationBase
+    public class CreateGate : MutatingOperationBase
     {
+        public CreateGate(string gateId)
+        {
+            if (string.IsNullOrWhiteSpace(gateId))
+            {
+                throw new ArgumentException("Cannot be null or whitespace.", nameof(gateId));
+            }
+
+            this.GateId = gateId;
+        }
+
+        public string GateId { get; private set; }
+    }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = "Prefer an interface.")]
+    public interface ICreateGate : IHandleOperations<CreateGate, NoReturnType>
+    {
+    }
+
+    /// <summary>
+    /// Open gate.
+    /// </summary>
+    public class OpenGate : MutatingOperationBase
+    {
+        public OpenGate(string gateId)
+        {
+            if (string.IsNullOrWhiteSpace(gateId))
+            {
+                throw new ArgumentException("Cannot be null or whitespace.", nameof(gateId));
+            }
+
+            this.GateId = gateId;
+        }
+
+        public string GateId { get; private set; }
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = "Prefer an interface.")]
@@ -37,7 +71,7 @@ namespace Naos.Protocol.Domain.Test
     /// <summary>
     /// Close gate.
     /// </summary>
-    public class CloseGate : WriteOperationBase
+    public class CloseGate : MutatingOperationBase
     {
         public CloseGate(string gateId)
         {
@@ -60,7 +94,7 @@ namespace Naos.Protocol.Domain.Test
     /// <summary>
     /// Restore database.
     /// </summary>
-    public class RestoreDatabase : WriteOperationBase
+    public class RestoreDatabase : MutatingOperationBase
     {
     }
 

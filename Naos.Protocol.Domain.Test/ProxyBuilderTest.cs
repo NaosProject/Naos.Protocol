@@ -15,6 +15,7 @@ namespace Naos.Protocol.Domain.Test
     using Naos.Protocol.Serialization.Json;
     using Naos.Serialization.Domain;
     using Naos.Serialization.Json;
+    using OBeautifulCode.Type;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -44,12 +45,12 @@ namespace Naos.Protocol.Domain.Test
         public void RoundTripMemberInfoDescription()
         {
             var serializer = new NaosJsonSerializer(typeof(ProtocolJsonConfiguration), UnregisteredTypeEncounteredStrategy.Attempt);
-            var allMethodsInfos = typeof(ILocker).GetAllMethodInfos();
+            var allMethodsInfos = typeof(ILockerOpener).GetAllMethodInfos();
             var memberInfo = allMethodsInfos.First(_ =>
             {
                 return _.ToString()
                         .Contains(
-                            "TSpecificReturn HandleWithSpecificReturn[TSpecificReturn](Naos.Protocol.Domain.LockerKey)");
+                            "TSpecificReturn Handle[TSpecificReturn](Naos.Protocol.Domain.LockerKey)");
             });
             memberInfo.Should().NotBeNull();
 
@@ -66,13 +67,19 @@ namespace Naos.Protocol.Domain.Test
         {
             var serializer = new NaosJsonSerializer(typeof(ProtocolJsonConfiguration), UnregisteredTypeEncounteredStrategy.Attempt);
 
-            Expression<Func<ILocker, OperationBase>> operationBuilder = _ => new CloseGate(_.HandleWithSpecificReturn<string>(new LockerKey("gateId")));
             var sequence = new DispatchedOperationSequence(
                 new[]
                 {
                     OperationPrototype.Build(
-                        "Hello",
-                        operationBuilder),
+                        "Create",
+                        _ => new CreateGate(_.Handle<string>(new LockerKey("gateCreationOutput"))),
+                        new LockerKey("gateCreationOutput")),
+                    OperationPrototype.Build(
+                        "Open",
+                        _ => new OpenGate(_.Handle<string>(new LockerKey("gateCreationOutput")))),
+                    OperationPrototype.Build(
+                        "Close",
+                        _ => new CloseGate(_.Handle<string>(new LockerKey("gateCreationOutput")))),
                 },
                 new Channel("channel"));
 
@@ -81,15 +88,27 @@ namespace Naos.Protocol.Domain.Test
             var actual = serializer.Deserialize<DispatchedOperationSequence>(json);
             actual.Should().NotBeNull();
 
-            actual.OperationPrototypes.Single().OperationBuilder.FromDescription().Compile().DynamicInvoke(new Locker(
-                new Dictionary<LockerKey, DescribedSerialization>
+            var serializationDescription = new SerializationDescription(
+                SerializationKind.Json,
+                SerializationFormat.String,
+                typeof(ProtocolJsonConfiguration).ToTypeDescription());
+
+            var keyToContentsMap = new Dictionary<LockerKey, DescribedSerialization>
+            {
                 {
-                    {
-                        new LockerKey("gateId"),
-                        "monkey".ToDescribedSerializationUsingSpecificSerializer(new SerializationDescription(SerializationKind.Json, SerializationFormat.String), serializer)
-                    },
+                    new LockerKey("gateId"),
+                    "monkey".ToDescribedSerializationUsingSpecificSerializer(
+                        serializationDescription,
+                        serializer)
                 },
-                JsonSerializerFactory.Instance));
+            };
+
+            var lockerOpener = new LockerOpener(
+                keyToContentsMap,
+                JsonSerializerFactory.Instance);
+
+            var realLambdas = actual.OperationPrototypes.Select(_ => _.Builder.FromDescription()).ToList();
+            realLambdas.ForEach(_ => _.Compile().DynamicInvoke(lockerOpener));
         }
     }
 }

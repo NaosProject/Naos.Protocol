@@ -10,6 +10,7 @@ namespace Naos.Protocol.Domain
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
@@ -123,8 +124,16 @@ namespace Naos.Protocol.Domain
             }
             else if (expressionDescription.GetType().IsGenericType && expressionDescription.GetType().GetGenericTypeDefinition() == typeof(ConstantExpressionDescription<>))
             {
-                throw new NotImplementedException();
-                //return constantExpression.FromDescription();
+                var type = expressionDescription.Type.ResolveFromLoadedTypes();
+                var conversionMethodGeneric =
+                    typeof(SerializableConstantExpressionExtensions).GetMethod(
+                        nameof(SerializableConstantExpressionExtensions.FromDescription)) ??
+                    throw new ArgumentException(Invariant(
+                        $"Method '{nameof(SerializableConstantExpressionExtensions)}.{nameof(SerializableConstantExpressionExtensions.FromDescription)}' should be there."));
+
+                var conversionMethodReal = conversionMethodGeneric.MakeGenericMethod(type);
+                var resultRaw = conversionMethodReal.Invoke(null, new[] { expressionDescription });
+                return (ConstantExpression)resultRaw;
             }
             else if (expressionDescription is InvocationExpressionDescription invocationExpression)
             {

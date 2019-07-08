@@ -51,7 +51,6 @@ namespace Naos.Protocol.Domain
         {
             var methodHash = methodInfo.GetSignatureHash();
             var genericArguments = methodInfo.GetGenericArguments().Select(_ => _.ToTypeDescription()).ToList();
-            var def = methodInfo.GetGenericMethodDefinition();
             var result = new MethodInfoDescription(methodInfo.DeclaringType.ToTypeDescription(), methodHash, genericArguments);
             return result;
         }
@@ -59,13 +58,21 @@ namespace Naos.Protocol.Domain
         public static MethodInfo FromDescription(this MethodInfoDescription description)
         {
             var methodHash = description.MethodHash;
+            var genericArguments = description.GenericArguments.Select(_ => _.ResolveFromLoadedTypes()).ToArray();
             var type = description.Type.ResolveFromLoadedTypes();
             var methodInfos = type.GetAllMethodInfos();
 
-            return methodInfos.Single(methodInfo =>
+            var methodHashAndInfoTupleSet = methodInfos.Select(methodInfo =>
             {
-                return methodInfo.GetSignatureHash().Equals(methodHash, StringComparison.OrdinalIgnoreCase);
+                var localMethodInfo = methodInfo.IsGenericMethod
+                    ? methodInfo.MakeGenericMethod(genericArguments)
+                    : methodInfo;
+                var localMethodHash = localMethodInfo.GetSignatureHash();
+                return new Tuple<string, MethodInfo>(localMethodHash, localMethodInfo);
             });
+
+            var result = methodHashAndInfoTupleSet.Single(_ => _.Item1.Equals(methodHash, StringComparison.OrdinalIgnoreCase));
+            return result.Item2;
         }
 
         public static IReadOnlyCollection<MethodInfo> GetAllMethodInfos(this Type type)
