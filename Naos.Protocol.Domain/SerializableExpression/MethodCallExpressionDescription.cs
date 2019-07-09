@@ -54,7 +54,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="MethodCallExpressionDescription" />.
     /// </summary>
-    public static class SerializableMethodCallExpressionExtensions
+    public static class MethodCallExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="methodCallExpression">The methodCall expression.</param>

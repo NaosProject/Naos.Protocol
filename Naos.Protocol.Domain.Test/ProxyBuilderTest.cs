@@ -96,7 +96,7 @@ namespace Naos.Protocol.Domain.Test
             var keyToContentsMap = new Dictionary<LockerKey, DescribedSerialization>
             {
                 {
-                    new LockerKey("gateId"),
+                    new LockerKey("gateCreationOutput"),
                     "monkey".ToDescribedSerializationUsingSpecificSerializer(
                         serializationDescription,
                         serializer)
@@ -108,7 +108,19 @@ namespace Naos.Protocol.Domain.Test
                 JsonSerializerFactory.Instance);
 
             var realLambdas = actual.OperationPrototypes.Select(_ => _.Builder.FromDescription()).ToList();
-            realLambdas.ForEach(_ => _.Compile().DynamicInvoke(lockerOpener));
+            var realObjects = realLambdas.Select(expression =>
+            {
+                var compiled = expression.Compile();
+                return compiled.DynamicInvoke(lockerOpener);
+            }).ToList();
+
+            var operations = realObjects.Cast<OperationBase>().ToList();
+            operations[0].Should().BeOfType<CreateGate>();
+            ((CreateGate)operations[0]).GateId.Should().Be("monkey");
+            operations[1].Should().BeOfType<OpenGate>();
+            ((OpenGate)operations[1]).GateId.Should().Be("monkey");
+            operations[2].Should().BeOfType<CloseGate>();
+            ((CloseGate)operations[2]).GateId.Should().Be("monkey");
         }
     }
 }

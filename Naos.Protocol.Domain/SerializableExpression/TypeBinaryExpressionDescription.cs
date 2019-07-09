@@ -31,7 +31,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="TypeBinaryExpressionDescription" />.
     /// </summary>
-    public static class SerializableTypeBinaryExpressionExtensions
+    public static class TypeBinaryExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="typeBinaryExpression">The typeBinary expression.</param>

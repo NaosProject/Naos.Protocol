@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableMemberAssignment.cs" company="Naos Project">
+// <copyright file="MemberAssignment.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -12,15 +12,15 @@ namespace Naos.Protocol.Domain
     using OBeautifulCode.Type;
 
     /// <summary>
-    /// Serializable version of <see cref="MemberAssignment" />.
+    /// Serializable version of <see cref="System.Linq.Expressions.MemberAssignment" />.
     /// </summary>
-    public class SerializableMemberAssignment : SerializableMemberBindingBase
+    public class MemberAssignment : MemberBindingDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableMemberAssignment"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MemberAssignment"/> class.</summary>
         /// <param name="type">The type.</param>
         /// <param name="memberHash">The member hash.</param>
         /// <param name="expressionDescription">The expression.</param>
-        public SerializableMemberAssignment(TypeDescription type, string memberHash, ExpressionDescriptionBase expressionDescription)
+        public MemberAssignment(TypeDescription type, string memberHash, ExpressionDescriptionBase expressionDescription)
             : base(type, memberHash, MemberBindingType.Assignment)
         {
             this.ExpressionDescription = expressionDescription;
@@ -32,26 +32,26 @@ namespace Naos.Protocol.Domain
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableMemberAssignment" />.
+    /// Extensions to <see cref="MemberAssignment" />.
     /// </summary>
-    public static class SerializableMemberAssignmentExtensions
+    public static class MemberAssignmentDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="memberAssignment">The memberAssignment.</param>
         /// <returns>Serializable version.</returns>
-        public static SerializableMemberAssignment ToDescription(this MemberAssignment memberAssignment)
+        public static MemberAssignment ToDescription(this System.Linq.Expressions.MemberAssignment memberAssignment)
         {
             var type = memberAssignment.Member.DeclaringType.ToTypeDescription();
             var expression = memberAssignment.Expression.ToDescription();
             var memberHash = memberAssignment.Member.GetSignatureHash();
-            var result = new SerializableMemberAssignment(type, memberHash, expression);
+            var result = new MemberAssignment(type, memberHash, expression);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
         /// <param name="memberAssignment">The memberAssignment.</param>
         /// <returns>Converted version.</returns>
-        public static MemberAssignment FromDescription(this SerializableMemberAssignment memberAssignment)
+        public static System.Linq.Expressions.MemberAssignment FromDescription(this MemberAssignment memberAssignment)
         {
             var type = memberAssignment.Type.ResolveFromLoadedTypes();
             var member = type.GetMembers().Single(_ => _.GetSignatureHash().Equals(memberAssignment.MemberHash, StringComparison.OrdinalIgnoreCase));

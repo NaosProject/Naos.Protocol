@@ -36,7 +36,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="ParameterExpressionDescription" />.
     /// </summary>
-    public static class SerializableParameterExpressionExtensions
+    public static class ParameterExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="parameterExpression">The parameter expression.</param>

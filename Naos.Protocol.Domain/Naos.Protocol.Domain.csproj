@@ -74,6 +74,8 @@
     <Compile Include="IHandleOperations.cs" />
     <Compile Include="LockerKey.cs" />
     <Compile Include="OperationBase.cs" />
+    <Compile Include="SerializableExpression\ExpressionCrawler.cs" />
+    <Compile Include="SerializableExpression\MemberAssignment.cs" />
     <Compile Include="SerializableExpression\MethodInfoDescription.cs" />
     <Compile Include="SerializableExpression\BinaryExpressionDescription.cs" />
     <Compile Include="SerializableExpression\ConditionalExpressionDescription.cs" />
@@ -90,11 +92,10 @@
     <Compile Include="SerializableExpression\ParameterExpressionDescription.cs" />
     <Compile Include="SerializableExpression\TypeBinaryExpressionDescription.cs" />
     <Compile Include="SerializableExpression\UnaryExpressionDescription.cs" />
-    <Compile Include="SerializableExpression\SerializableMemberAssignment.cs" />
-    <Compile Include="SerializableExpression\SerializableMemberBindingBase.cs" />
-    <Compile Include="SerializableExpression\SerializableMemberListBinding.cs" />
-    <Compile Include="SerializableExpression\SerializableMemberMemberBinding.cs" />
-    <Compile Include="SerializableExpression\SerializableElementInit.cs" />
+    <Compile Include="SerializableExpression\MemberBindingDescriptionBase.cs" />
+    <Compile Include="SerializableExpression\MemberListBindingDescription.cs" />
+    <Compile Include="SerializableExpression\MemberMemberBindingDescription.cs" />
+    <Compile Include="SerializableExpression\ElementInitDescription.cs" />
     <Compile Include="OperationSequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

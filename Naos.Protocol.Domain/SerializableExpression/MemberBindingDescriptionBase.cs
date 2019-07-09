@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableMemberBindingBase.cs" company="Naos Project">
+// <copyright file="MemberBindingDescriptionBase.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -16,13 +16,13 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Serializable version of <see cref="MemberBinding" />.
     /// </summary>
-    public abstract class SerializableMemberBindingBase
+    public abstract class MemberBindingDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableMemberBindingBase"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MemberBindingDescriptionBase"/> class.</summary>
         /// <param name="type">The type with member.</param>
         /// <param name="memberHash">The member hash.</param>
         /// <param name="bindingType">Type of the binding.</param>
-        protected SerializableMemberBindingBase(TypeDescription type, string memberHash, MemberBindingType bindingType)
+        protected MemberBindingDescriptionBase(TypeDescription type, string memberHash, MemberBindingType bindingType)
         {
             this.Type = type;
             this.MemberHash = memberHash;
@@ -43,16 +43,16 @@ namespace Naos.Protocol.Domain
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableMemberBindingBase" />.
+    /// Extensions to <see cref="MemberBindingDescriptionBase" />.
     /// </summary>
-    public static class SerializableMemberBindingExtensions
+    public static class MemberBindingDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="memberBinding">The memberBindings.</param>
         /// <returns>Serializable version.</returns>
-        public static SerializableMemberBindingBase ToDescription(this MemberBinding memberBinding)
+        public static MemberBindingDescriptionBase ToDescription(this MemberBinding memberBinding)
         {
-            if (memberBinding is MemberAssignment memberAssignment)
+            if (memberBinding is System.Linq.Expressions.MemberAssignment memberAssignment)
             {
                 return memberAssignment.ToDescription();
             }
@@ -71,32 +71,32 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="memberBinding">The memberBindings.</param>
+        /// <param name="memberBindingDescription">The memberBindings.</param>
         /// <returns>Converted version.</returns>
-        public static MemberBinding FromDescription(this SerializableMemberBindingBase memberBinding)
+        public static MemberBinding FromDescription(this MemberBindingDescriptionBase memberBindingDescription)
         {
-            if (memberBinding is SerializableMemberAssignment memberAssignment)
+            if (memberBindingDescription is MemberAssignment memberAssignment)
             {
                 return memberAssignment.FromDescription();
             }
-            else if (memberBinding is SerializableMemberListBinding memberListBinding)
+            else if (memberBindingDescription is MemberListBindingDescription memberListBinding)
             {
                 return memberListBinding.FromDescription();
             }
-            else if (memberBinding is SerializableMemberMemberBinding memberMemberBinding)
+            else if (memberBindingDescription is MemberMemberBindingDescription memberMemberBinding)
             {
                 return memberMemberBinding.FromDescription();
             }
             else
             {
-                throw new NotSupportedException(Invariant($"Type of {nameof(SerializableMemberBindingBase)} '{memberBinding.GetType()}' is not supported."));
+                throw new NotSupportedException(Invariant($"Type of {nameof(MemberBindingDescriptionBase)} '{memberBindingDescription.GetType()}' is not supported."));
             }
         }
 
         /// <summary>Converts to serializable.</summary>
         /// <param name="memberBindings">The memberBindings.</param>
         /// <returns>Serializable version.</returns>
-        public static IReadOnlyCollection<SerializableMemberBindingBase> ToDescription(this IReadOnlyCollection<MemberBinding> memberBindings)
+        public static IReadOnlyCollection<MemberBindingDescriptionBase> ToDescription(this IReadOnlyCollection<MemberBinding> memberBindings)
         {
             var result = memberBindings.Select(_ => _.ToDescription()).ToList();
             return result;
@@ -105,7 +105,7 @@ namespace Naos.Protocol.Domain
         /// <summary>From the serializable.</summary>
         /// <param name="memberBindings">The memberBindings.</param>
         /// <returns>Converted version.</returns>
-        public static IReadOnlyCollection<MemberBinding> FromDescription(this IReadOnlyCollection<SerializableMemberBindingBase> memberBindings)
+        public static IReadOnlyCollection<MemberBinding> FromDescription(this IReadOnlyCollection<MemberBindingDescriptionBase> memberBindings)
         {
             var result = memberBindings.Select(_ => _.FromDescription()).ToList();
             return result;

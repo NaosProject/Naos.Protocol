@@ -38,7 +38,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="NewArrayExpressionDescription" />.
     /// </summary>
-    public static class SerializableNewArrayExpressionExtensions
+    public static class NewArrayExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="newArrayExpression">The newArray expression.</param>

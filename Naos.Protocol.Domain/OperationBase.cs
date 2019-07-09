@@ -49,6 +49,8 @@ namespace Naos.Protocol.Domain
     {
     }
 
+    public delegate OperationBase BuildOperationWithOptionalLockerInput(ILockerOpener lockerOpener);
+
     /// <summary>
     /// Prototype of an operation that can inflated into an operation with a <see cref="LockerOpener" /> of necessary inputs.
     /// </summary>
@@ -94,7 +96,7 @@ namespace Naos.Protocol.Domain
         /// <param name="operationBuilder">The operation builder.</param>
         /// <param name="outputKey">The output key identifier.</param>
         /// <returns>Prototype version of an operation.</returns>
-        public static OperationPrototype Build(string description, Expression<Func<ILockerOpener, OperationBase>> operationBuilder, LockerKey outputKey = null)
+        public static OperationPrototype Build(string description, Expression<BuildOperationWithOptionalLockerInput> operationBuilder, LockerKey outputKey = null)
         {
             var operationBuilderDescription = operationBuilder.ToDescription();
             var result = new OperationPrototype(description, operationBuilderDescription, outputKey);

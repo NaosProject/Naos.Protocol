@@ -16,7 +16,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Key to get saved output.
     /// </summary>
-    public class LockerKey : ReadOperationBase
+    public class LockerKey : ReadOperationBase, IEquatable<LockerKey>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LockerKey"/> class.
@@ -36,6 +36,36 @@ namespace Naos.Protocol.Domain
         /// Gets the key id.
         /// </summary>
         public string KeyId { get; private set; }
+
+        public bool Equals(LockerKey other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return string.Equals(this.KeyId, other.KeyId);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((LockerKey)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (this.KeyId != null ? this.KeyId.GetHashCode() : 0);
+        }
+
+        public static bool operator ==(LockerKey left, LockerKey right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(LockerKey left, LockerKey right)
+        {
+            return !Equals(left, right);
+        }
     }
 
     /// <summary>

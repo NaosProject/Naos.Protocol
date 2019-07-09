@@ -19,7 +19,7 @@ namespace Naos.Protocol.Domain
         /// <param name="type">The type.</param>
         /// <param name="newExpressionDescription">The new expression.</param>
         /// <param name="bindings">The bindings.</param>
-        public MemberInitExpressionDescription(TypeDescription type, NewExpressionDescription newExpressionDescription, IReadOnlyCollection<SerializableMemberBindingBase> bindings)
+        public MemberInitExpressionDescription(TypeDescription type, NewExpressionDescription newExpressionDescription, IReadOnlyCollection<MemberBindingDescriptionBase> bindings)
             : base(type, ExpressionType.MemberInit)
         {
             this.NewExpressionDescription = newExpressionDescription;
@@ -32,13 +32,13 @@ namespace Naos.Protocol.Domain
 
         /// <summary>Gets the bindings.</summary>
         /// <value>The bindings.</value>
-        public IReadOnlyCollection<SerializableMemberBindingBase> Bindings { get; private set; }
+        public IReadOnlyCollection<MemberBindingDescriptionBase> Bindings { get; private set; }
     }
 
     /// <summary>
     /// Extensions to <see cref="MemberInitExpressionDescription" />.
     /// </summary>
-    public static class SerializableMemberInitExpressionExtensions
+    public static class MemberInitExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="memberInitExpression">The memberInit expression.</param>

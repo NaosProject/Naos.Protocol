@@ -41,7 +41,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="MemberExpressionDescription" />.
     /// </summary>
-    public static class SerializableMemberExpressionExtensions
+    public static class MemberExpressionDescriptionExtensions
     {
         /// <summary>Gets the signature hash.</summary>
         /// <param name="memberInfo">The member information.</param>

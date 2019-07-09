@@ -9,6 +9,7 @@ namespace Naos.Protocol.Domain
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Runtime.InteropServices;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -39,7 +40,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="LambdaExpressionDescription" />.
     /// </summary>
-    public static class SerializableLambdaExpressionExtensions
+    public static class LambdaExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="lambdaExpression">The lambda expression.</param>
@@ -60,9 +61,32 @@ namespace Naos.Protocol.Domain
         {
             var type = lambdaExpressionDescription.Type.ResolveFromLoadedTypes();
             var body = lambdaExpressionDescription.Body.FromDescription();
-            var parameters = lambdaExpressionDescription.Parameters.FromDescription();
+            var parameters = lambdaExpressionDescription.Parameters.FromDescription().ToList();
 
-            var result = Expression.Lambda(type, body, parameters);
+            var allParametersFromBody = body.VisitAllNodes().Where(_ => _ is ParameterExpression).Cast<ParameterExpression>().ToList();
+
+            var matchingParametersFromBody = new List<ParameterExpression>();
+            foreach (var parameter in parameters)
+            {
+                var parameterFromBody = allParametersFromBody.SingleOrDefault(allParameter =>
+                    parameter.Name == allParameter.Name && parameter.Type == allParameter.Type);
+
+                if (parameterFromBody != null)
+                {
+                    matchingParametersFromBody.Add(parameterFromBody);
+                }
+            }
+
+            LambdaExpression result;
+            if (matchingParametersFromBody.Any())
+            {
+                result = Expression.Lambda(type, body, matchingParametersFromBody);
+            }
+            else
+            {
+                result = Expression.Lambda(type, body);
+            }
+
             return result;
         }
     }

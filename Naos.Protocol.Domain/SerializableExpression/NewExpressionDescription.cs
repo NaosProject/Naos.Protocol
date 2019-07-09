@@ -45,7 +45,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="NewExpressionDescription" />.
     /// </summary>
-    public static class SerializableNewExpressionExtensions
+    public static class NewExpressionDescriptionExtensions
     {
         /// <summary>Gets the signature hash.</summary>
         /// <param name="constructorInfo">The constructor information.</param>

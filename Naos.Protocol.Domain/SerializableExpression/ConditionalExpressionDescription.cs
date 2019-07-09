@@ -44,7 +44,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="ConditionalExpressionDescription" />.
     /// </summary>
-    public static class SerializableConditionalExpressionExtensions
+    public static class ConditionalExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="conditionalExpression">The conditional expression.</param>

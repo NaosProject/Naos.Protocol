@@ -39,7 +39,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="InvocationExpressionDescription" />.
     /// </summary>
-    public static class SerializableInvocationExpressionExtensions
+    public static class InvocationExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="invocationExpression">The invocation expression.</param>

@@ -36,11 +36,11 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="BinaryExpressionDescription" />.
     /// </summary>
-    public static class SerializableBinaryExpressionExtensions
+    public static class BinaryExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="binaryExpression">The binary expression.</param>
-        /// <returns>The real expression</returns>
+        /// <returns>The real expression.</returns>
         public static BinaryExpressionDescription ToDescription(this BinaryExpression binaryExpression)
         {
             var type = binaryExpression.Type.ToTypeDescription();

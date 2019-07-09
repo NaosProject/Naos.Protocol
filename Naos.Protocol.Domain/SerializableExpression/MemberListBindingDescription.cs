@@ -15,13 +15,13 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Serializable version of <see cref="MemberListBinding" />.
     /// </summary>
-    public class SerializableMemberListBinding : SerializableMemberBindingBase
+    public class MemberListBindingDescription : MemberBindingDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableMemberListBinding"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MemberListBindingDescription"/> class.</summary>
         /// <param name="type">The type.</param>
         /// <param name="memberHash">The member hash.</param>
         /// <param name="initializers">The initializers.</param>
-        public SerializableMemberListBinding(TypeDescription type, string memberHash, IReadOnlyCollection<SerializableElementInit> initializers)
+        public MemberListBindingDescription(TypeDescription type, string memberHash, IReadOnlyCollection<ElementInitDescription> initializers)
             : base(type, memberHash, MemberBindingType.ListBinding)
         {
             this.Initializers = initializers;
@@ -29,34 +29,34 @@ namespace Naos.Protocol.Domain
 
         /// <summary>Gets the initializers.</summary>
         /// <value>The initializers.</value>
-        public IReadOnlyCollection<SerializableElementInit> Initializers { get; private set; }
+        public IReadOnlyCollection<ElementInitDescription> Initializers { get; private set; }
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableMemberListBinding" />.
+    /// Extensions to <see cref="MemberListBindingDescription" />.
     /// </summary>
-    public static class SerializableMemberListBindingExtensions
+    public static class MemberListBindingDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="memberListBinding">The member list binding.</param>
         /// <returns>Serializable version.</returns>
-        public static SerializableMemberListBinding ToDescription(this MemberListBinding memberListBinding)
+        public static MemberListBindingDescription ToDescription(this MemberListBinding memberListBinding)
         {
             var type = memberListBinding.Member.DeclaringType.ToTypeDescription();
             var memberHash = memberListBinding.Member.GetSignatureHash();
             var initializers = memberListBinding.Initializers.ToDescription();
-            var result = new SerializableMemberListBinding(type, memberHash, initializers);
+            var result = new MemberListBindingDescription(type, memberHash, initializers);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="memberListBinding">The memberListBinding.</param>
+        /// <param name="memberListBindingDescription">The memberListBindingDescription.</param>
         /// <returns>Converted version.</returns>
-        public static MemberListBinding FromDescription(this SerializableMemberListBinding memberListBinding)
+        public static MemberListBinding FromDescription(this MemberListBindingDescription memberListBindingDescription)
         {
-            var type = memberListBinding.Type.ResolveFromLoadedTypes();
-            var member = type.GetMembers().Single(_ => _.GetSignatureHash().Equals(memberListBinding.MemberHash, StringComparison.OrdinalIgnoreCase));
-            var initializers = memberListBinding.Initializers.FromDescription();
+            var type = memberListBindingDescription.Type.ResolveFromLoadedTypes();
+            var member = type.GetMembers().Single(_ => _.GetSignatureHash().Equals(memberListBindingDescription.MemberHash, StringComparison.OrdinalIgnoreCase));
+            var initializers = memberListBindingDescription.Initializers.FromDescription();
 
             var result = Expression.ListBind(member, initializers);
             return result;

@@ -11,30 +11,39 @@ namespace Naos.Protocol.Domain
     using System.Linq.Expressions;
     using OBeautifulCode.Type;
 
+    /// <summary>
+    /// Serializable version of <see cref="ListInitExpression" />.
+    /// </summary>
+    /// <seealso cref="Naos.Protocol.Domain.ExpressionDescriptionBase" />
     public class ListInitExpressionDescription : ExpressionDescriptionBase
     {
         /// <summary>Initializes a new instance of the <see cref="ListInitExpressionDescription"/> class.</summary>
         /// <param name="type">The type of expression.</param>
+        /// <param name="newExpressionDescription">The new expression.</param>
         /// <param name="initializers">The initializers.</param>
         public ListInitExpressionDescription(
             TypeDescription type,
             NewExpressionDescription newExpressionDescription,
-            IReadOnlyCollection<SerializableElementInit> initializers)
+            IReadOnlyCollection<ElementInitDescription> initializers)
             : base(type, ExpressionType.ListInit)
         {
             this.NewExpressionDescription = newExpressionDescription;
             this.Initializers = initializers;
         }
 
+        /// <summary>Creates new expression description.</summary>
+        /// <value>The new expression description.</value>
         public NewExpressionDescription NewExpressionDescription { get; private set; }
 
-        public IReadOnlyCollection<SerializableElementInit> Initializers { get; private set; }
+        /// <summary>Gets the initializers.</summary>
+        /// <value>The initializers.</value>
+        public IReadOnlyCollection<ElementInitDescription> Initializers { get; private set; }
     }
 
     /// <summary>
     /// Extensions to <see cref="ListInitExpressionDescription" />.
     /// </summary>
-    public static class SerializableListInitExpressionExtensions
+    public static class ListInitExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="listInitExpression">The listInit expression.</param>
@@ -42,9 +51,9 @@ namespace Naos.Protocol.Domain
         public static ListInitExpressionDescription ToDescription(this ListInitExpression listInitExpression)
         {
             var type = listInitExpression.Type.ToTypeDescription();
-            var newExpresion = listInitExpression.NewExpression.ToDescription();
+            var newExpression = listInitExpression.NewExpression.ToDescription();
             var initializers = listInitExpression.Initializers.ToDescription();
-            var result = new ListInitExpressionDescription(type, newExpresion, initializers);
+            var result = new ListInitExpressionDescription(type, newExpression, initializers);
             return result;
         }
 

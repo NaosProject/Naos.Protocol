@@ -33,7 +33,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="ConstantExpressionDescription{T}" />.
     /// </summary>
-    public static class SerializableConstantExpressionExtensions
+    public static class ConstantExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="constantExpression">The constant expression.</param>

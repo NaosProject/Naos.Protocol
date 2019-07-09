@@ -40,7 +40,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="ExpressionDescriptionBase" />.
     /// </summary>
-    public static class SerializableExpressionExtensions
+    public static class ExpressionDescriptionExtensions
     {
         /// <summary>Converts to a serializable.</summary>
         /// <param name="expression">The expression.</param>
@@ -126,10 +126,10 @@ namespace Naos.Protocol.Domain
             {
                 var type = expressionDescription.Type.ResolveFromLoadedTypes();
                 var conversionMethodGeneric =
-                    typeof(SerializableConstantExpressionExtensions).GetMethod(
-                        nameof(SerializableConstantExpressionExtensions.FromDescription)) ??
+                    typeof(ConstantExpressionDescriptionExtensions).GetMethod(
+                        nameof(ConstantExpressionDescriptionExtensions.FromDescription)) ??
                     throw new ArgumentException(Invariant(
-                        $"Method '{nameof(SerializableConstantExpressionExtensions)}.{nameof(SerializableConstantExpressionExtensions.FromDescription)}' should be there."));
+                        $"Method '{nameof(ConstantExpressionDescriptionExtensions)}.{nameof(ConstantExpressionDescriptionExtensions.FromDescription)}' should be there."));
 
                 var conversionMethodReal = conversionMethodGeneric.MakeGenericMethod(type);
                 var resultRaw = conversionMethodReal.Invoke(null, new[] { expressionDescription });

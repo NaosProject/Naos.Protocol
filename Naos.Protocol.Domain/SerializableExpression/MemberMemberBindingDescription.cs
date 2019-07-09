@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SerializableMemberMemberBinding.cs" company="Naos Project">
+// <copyright file="MemberMemberBindingDescription.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,13 +15,13 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Serializable version of <see cref="MemberMemberBinding" />.
     /// </summary>
-    public class SerializableMemberMemberBinding : SerializableMemberBindingBase
+    public class MemberMemberBindingDescription : MemberBindingDescriptionBase
     {
-        /// <summary>Initializes a new instance of the <see cref="SerializableMemberMemberBinding"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MemberMemberBindingDescription"/> class.</summary>
         /// <param name="type">The type.</param>
         /// <param name="memberHash">The member hash.</param>
         /// <param name="bindings">The bindings.</param>
-        public SerializableMemberMemberBinding(TypeDescription type, string memberHash, IReadOnlyCollection<SerializableMemberBindingBase> bindings)
+        public MemberMemberBindingDescription(TypeDescription type, string memberHash, IReadOnlyCollection<MemberBindingDescriptionBase> bindings)
         : base(type, memberHash, MemberBindingType.MemberBinding)
         {
             this.Bindings = bindings;
@@ -29,34 +29,34 @@ namespace Naos.Protocol.Domain
 
         /// <summary>Gets the bindings.</summary>
         /// <value>The bindings.</value>
-        public IReadOnlyCollection<SerializableMemberBindingBase> Bindings { get; private set; }
+        public IReadOnlyCollection<MemberBindingDescriptionBase> Bindings { get; private set; }
     }
 
     /// <summary>
-    /// Extensions to <see cref="SerializableMemberMemberBinding" />.
+    /// Extensions to <see cref="MemberMemberBindingDescription" />.
     /// </summary>
-    public static class SerializableMemberMemberBindingExtensions
+    public static class MemberMemberBindingDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
-        /// <param name="memberMemberBinding">The memberMemberBinding.</param>
+        /// <param name="memberMemberBinding">The memberMemberBindingDescription.</param>
         /// <returns>Serializable version.</returns>
-        public static SerializableMemberMemberBinding ToDescription(this MemberMemberBinding memberMemberBinding)
+        public static MemberMemberBindingDescription ToDescription(this MemberMemberBinding memberMemberBinding)
         {
             var type = memberMemberBinding.Member.DeclaringType.ToTypeDescription();
             var memberHash = memberMemberBinding.Member.GetSignatureHash();
             var bindings = memberMemberBinding.Bindings.ToDescription();
-            var result = new SerializableMemberMemberBinding(type, memberHash, bindings);
+            var result = new MemberMemberBindingDescription(type, memberHash, bindings);
             return result;
         }
 
         /// <summary>From the serializable.</summary>
-        /// <param name="memberMemberBinding">The memberMemberBinding.</param>
+        /// <param name="memberMemberBindingDescription">The memberMemberBindingDescription.</param>
         /// <returns>Converted version.</returns>
-        public static MemberMemberBinding FromDescription(this SerializableMemberMemberBinding memberMemberBinding)
+        public static MemberMemberBinding FromDescription(this MemberMemberBindingDescription memberMemberBindingDescription)
         {
-            var type = memberMemberBinding.Type.ResolveFromLoadedTypes();
-            var member = type.GetMembers().Single(_ => _.GetSignatureHash().Equals(memberMemberBinding.MemberHash, StringComparison.OrdinalIgnoreCase));
-            var bindings = memberMemberBinding.Bindings.FromDescription();
+            var type = memberMemberBindingDescription.Type.ResolveFromLoadedTypes();
+            var member = type.GetMembers().Single(_ => _.GetSignatureHash().Equals(memberMemberBindingDescription.MemberHash, StringComparison.OrdinalIgnoreCase));
+            var bindings = memberMemberBindingDescription.Bindings.FromDescription();
 
             var result = Expression.MemberBind(member, bindings);
             return result;

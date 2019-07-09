@@ -32,7 +32,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Extensions to <see cref="UnaryExpressionDescription" />.
     /// </summary>
-    public static class SerializableUnaryExpressionExtensions
+    public static class UnaryExpressionDescriptionExtensions
     {
         /// <summary>Converts to serializable.</summary>
         /// <param name="unaryExpression">The unary expression.</param>
