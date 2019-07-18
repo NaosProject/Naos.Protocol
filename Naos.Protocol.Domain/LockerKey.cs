@@ -16,7 +16,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Key to get saved output.
     /// </summary>
-    public class LockerKey : ReadOperationBase, IEquatable<LockerKey>
+    public class LockerKey : ReadOperationBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LockerKey"/> class.
@@ -36,36 +36,6 @@ namespace Naos.Protocol.Domain
         /// Gets the key id.
         /// </summary>
         public string KeyId { get; private set; }
-
-        public bool Equals(LockerKey other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return string.Equals(this.KeyId, other.KeyId);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((LockerKey)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return (this.KeyId != null ? this.KeyId.GetHashCode() : 0);
-        }
-
-        public static bool operator ==(LockerKey left, LockerKey right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(LockerKey left, LockerKey right)
-        {
-            return !Equals(left, right);
-        }
     }
 
     /// <summary>
@@ -92,7 +62,7 @@ namespace Naos.Protocol.Domain
     /// Friendly interface for the handler.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = "Prefer an interface.")]
-    public interface ILockerOpener : IHandleOperations<LockerKey, DescribedSerialization>
+    public interface ILockerValet : IHandleOperations<LockerKey, DescribedSerialization>
     {
         /// <summary>
         /// Run the operation and returns as appropriate in the specific type.
@@ -114,19 +84,19 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Container of <see cref="DescribedSerialization" /> keyed by a <see cref="LockerKey" />.
     /// </summary>
-    public class LockerOpener : ILockerOpener
+    public class LockerValet : ILockerValet
     {
         private readonly IReadOnlyDictionary<LockerKey, DescribedSerialization> keyToContentsMap;
         private readonly ISerializerFactory serializerFactory;
         private readonly ICompressorFactory compressorFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LockerOpener"/> class.
+        /// Initializes a new instance of the <see cref="LockerValet"/> class.
         /// </summary>
         /// <param name="keyToContentsMap">Key to contents map.</param>
         /// <param name="serializerFactory">Serializer factory for opening <see cref="DescribedSerialization" />.</param>
         /// <param name="compressorFactory">Compressor factory for opening <see cref="DescribedSerialization" />.</param>
-        public LockerOpener(IReadOnlyDictionary<LockerKey, DescribedSerialization> keyToContentsMap, ISerializerFactory serializerFactory, ICompressorFactory compressorFactory = null)
+        public LockerValet(IReadOnlyDictionary<LockerKey, DescribedSerialization> keyToContentsMap, ISerializerFactory serializerFactory, ICompressorFactory compressorFactory = null)
         {
             this.keyToContentsMap = keyToContentsMap ?? throw new ArgumentNullException(nameof(keyToContentsMap));
             this.serializerFactory = serializerFactory ?? throw new ArgumentNullException(nameof(serializerFactory));

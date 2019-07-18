@@ -3,7 +3,6 @@
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Naos.Protocol.Domain
 {
     using System;
@@ -16,7 +15,7 @@ namespace Naos.Protocol.Domain
         /// <summary>
         /// Initializes a new instance of the <see cref="Channel"/> class.
         /// </summary>
-        /// <param name="name">Name of the channel.</param>
+        /// <param name="name">The name.</param>
         public Channel(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -28,8 +27,9 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Gets the channel name.
+        /// Gets the name.
         /// </summary>
+        /// <value>The name.</value>
         public string Name { get; private set; }
     }
 }

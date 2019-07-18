@@ -11,6 +11,7 @@ namespace Naos.Protocol.Domain
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using OBeautifulCode.Representation;
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
@@ -49,10 +50,15 @@ namespace Naos.Protocol.Domain
     {
     }
 
-    public delegate OperationBase BuildOperationWithOptionalLockerInput(ILockerOpener lockerOpener);
+    /// <summary>
+    /// Delegate for getting an operation back with provided ILockerValet to transport information from previous steps.
+    /// </summary>
+    /// <param name="lockerValet">The locker valet.</param>
+    /// <returns>Operation built.</returns>
+    public delegate OperationBase BuildOperationWithOptionalLockerInput(ILockerValet lockerValet);
 
     /// <summary>
-    /// Prototype of an operation that can inflated into an operation with a <see cref="LockerOpener" /> of necessary inputs.
+    /// Prototype of an operation that can inflated into an operation with a <see cref="LockerValet" /> of necessary inputs.
     /// </summary>
     public class OperationPrototype
     {
@@ -64,7 +70,7 @@ namespace Naos.Protocol.Domain
         /// <param name="outputKeyId">The output key identifier; IF NULL then output will not be saved.</param>
         public OperationPrototype(
             string description,
-            LambdaExpressionDescription builder,
+            LambdaExpressionRepresentation builder,
             LockerKey outputKeyId)
         {
             if (string.IsNullOrWhiteSpace(description))
@@ -85,7 +91,7 @@ namespace Naos.Protocol.Domain
         /// <summary>
         /// Gets the builder for the operation.
         /// </summary>
-        public LambdaExpressionDescription Builder { get; private set; }
+        public LambdaExpressionRepresentation Builder { get; private set; }
 
         /// <summary>Gets the output key identifier.</summary>
         /// <value>The output key identifier.</value>
@@ -96,9 +102,10 @@ namespace Naos.Protocol.Domain
         /// <param name="operationBuilder">The operation builder.</param>
         /// <param name="outputKey">The output key identifier.</param>
         /// <returns>Prototype version of an operation.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Want this form to convert.")]
         public static OperationPrototype Build(string description, Expression<BuildOperationWithOptionalLockerInput> operationBuilder, LockerKey outputKey = null)
         {
-            var operationBuilderDescription = operationBuilder.ToDescription();
+            var operationBuilderDescription = operationBuilder.ToRepresentation();
             var result = new OperationPrototype(description, operationBuilderDescription, outputKey);
             return result;
         }

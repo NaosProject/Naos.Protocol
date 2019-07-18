@@ -21,7 +21,6 @@ namespace Naos.Protocol.Serialization.Json
             new[]
             {
                 typeof(OperationSequence),
-                typeof(ConstantExpressionDescription<string>),
             };
     }
 }

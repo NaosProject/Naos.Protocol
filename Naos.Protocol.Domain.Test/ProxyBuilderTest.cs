@@ -15,6 +15,7 @@ namespace Naos.Protocol.Domain.Test
     using Naos.Protocol.Serialization.Json;
     using Naos.Serialization.Domain;
     using Naos.Serialization.Json;
+    using OBeautifulCode.Representation;
     using OBeautifulCode.Type;
     using Xunit;
     using Xunit.Abstractions;
@@ -42,26 +43,6 @@ namespace Naos.Protocol.Domain.Test
         }
 
         [Fact]
-        public void RoundTripMemberInfoDescription()
-        {
-            var serializer = new NaosJsonSerializer(typeof(ProtocolJsonConfiguration), UnregisteredTypeEncounteredStrategy.Attempt);
-            var allMethodsInfos = typeof(ILockerOpener).GetAllMethodInfos();
-            var memberInfo = allMethodsInfos.First(_ =>
-            {
-                return _.ToString()
-                        .Contains(
-                            "TSpecificReturn Handle[TSpecificReturn](Naos.Protocol.Domain.LockerKey)");
-            });
-            memberInfo.Should().NotBeNull();
-
-            var description = memberInfo.ToDescription();
-            var serialized = serializer.SerializeToString(description);
-            this.testOutputHelper.WriteLine(serialized);
-            var deserialized = serializer.Deserialize<MethodInfoDescription>(serialized);
-            var actual = deserialized.FromDescription();
-        }
-
-        [Fact ]
         //[Fact(Skip = "Need to figure out how to deal with this.")]
         public void TestSerialization()
         {
@@ -91,7 +72,7 @@ namespace Naos.Protocol.Domain.Test
             var serializationDescription = new SerializationDescription(
                 SerializationKind.Json,
                 SerializationFormat.String,
-                typeof(ProtocolJsonConfiguration).ToTypeDescription());
+                typeof(ProtocolJsonConfiguration).ToRepresentation());
 
             var keyToContentsMap = new Dictionary<LockerKey, DescribedSerialization>
             {
@@ -103,11 +84,11 @@ namespace Naos.Protocol.Domain.Test
                 },
             };
 
-            var lockerOpener = new LockerOpener(
+            var lockerOpener = new LockerValet(
                 keyToContentsMap,
                 JsonSerializerFactory.Instance);
 
-            var realLambdas = actual.OperationPrototypes.Select(_ => _.Builder.FromDescription()).ToList();
+            var realLambdas = actual.OperationPrototypes.Select(_ => _.Builder.FromRepresentation()).ToList();
             var realObjects = realLambdas.Select(expression =>
             {
                 var compiled = expression.Compile();
