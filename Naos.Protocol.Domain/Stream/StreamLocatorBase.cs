@@ -8,7 +8,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Locator to get the necessary connection information for the vault.
     /// </summary>
-    public class StreamLocator
+    public abstract class StreamLocatorBase
     {
         //connection to get to a stream (all shard targeting info needs to be in here)
     }

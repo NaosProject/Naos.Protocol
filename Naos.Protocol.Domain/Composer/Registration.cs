@@ -13,9 +13,11 @@ namespace Naos.Protocol.Domain {
     {
     }
 
-    public class ProtocolPrototype<TOperation>: ProtocolPrototype where TOperation: OperationBase
+    public class Registration<TOperation> : ProtocolPrototype
+        where TOperation : OperationBase
     {
-        public ProtocolPrototype(Func<ProtocolComposerBase, IProtocol<TOperation>> protocolBuilder)
+        public Registration(
+            Func<ProtocolComposerBase, IProtocol<TOperation>> protocolBuilder)
         {
             throw new System.NotImplementedException();
         }

@@ -30,29 +30,26 @@ namespace Naos.Protocol.Domain
         }
     }
 
-    public class SeededDiscovery<TInput, TOutput> : IProtocol<Discover<TInput, TOutput>, TOutput>
+    public class SeededDetermineStreamLocator<TInput, TLocator> : IProtocol<DetermineStreamLocatorByKey<TInput, TLocator>, TLocator>
         where TInput : class
-        where TOutput : class
+        where TLocator : StreamLocatorBase
     {
-        public SeededDiscovery(
-            IProtocol<GetLatest<TOutput>, TOutput> returnProtocol)
+        public SeededDetermineStreamLocator(
+            IProtocol<GetLatest<TLocator>, TLocator> returnProtocol)
         {
             this.ReturnProtocol = returnProtocol ?? throw new ArgumentNullException(nameof(returnProtocol));
         }
 
-        public IProtocol<GetLatest<TOutput>, TOutput> ReturnProtocol { get; set; }
+        public IProtocol<GetLatest<TLocator>, TLocator> ReturnProtocol { get; set; }
 
-        public void Execute(
-            Discover<TInput, TOutput> operation)
+        public TReturn Execute<TReturn>(DetermineStreamLocatorByKey<TInput, TLocator> operation)
         {
-            throw new NotImplementedException();
+            return this.ReturnProtocol.Execute<TReturn>(new GetLatest<TLocator>());
         }
 
-        /// <inheritdoc />
-        public TReturn Execute<TReturn>(
-            Discover<TInput, TOutput> operation)
+        public void Execute(DetermineStreamLocatorByKey<TInput, TLocator> operation)
         {
-            return this.ReturnProtocol.Execute<TReturn>(new GetLatest<TOutput>());
+            throw new NotImplementedException();
         }
     }
 }

@@ -33,9 +33,7 @@ namespace Naos.Protocol.Domain
         /// Gets the dependent factory types.
         /// </summary>
         /// <value>The dependent factory types.</value>
-        public virtual IReadOnlyCollection<Type> DependentFactoryTypes => new Type[0];
-
-        public abstract IReadOnlyCollection<ProtocolPrototype> ProtocolRegistrations { get; }
+        public virtual IReadOnlyCollection<Type> DependentComposerTypes => new Type[0];
 
         public void Execute<TOperation>(
             TOperation operation)
@@ -74,6 +72,27 @@ namespace Naos.Protocol.Domain
 
                 return (IProtocol<TOperation, TReturn>)result.GetBuiltProtocol(this);
             }
+        }
+
+        //public IComposeProtocol<TOperation> ComposeFor(TOperation)
+
+        public TComposer GetDependentComposer<TComposer>()
+            where TComposer : ProtocolComposerBase
+        {
+            throw new NotImplementedException();
+        }
+
+        protected IProtocol<TObject> ComposeFromRegistrations<TObject>()
+            where TObject : OperationBase
+        {
+            throw new NotImplementedException();
+        }
+
+        protected IProtocol<TOperation, TReturn> ReCompose<TOperation, TReturn>()
+            where TOperation : OperationBase<TReturn>
+        {
+            var actual = ((IComposeProtocol<TOperation>)this).Compose();
+            return (IProtocol<TOperation, TReturn>)actual;
         }
     }
 }

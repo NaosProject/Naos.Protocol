@@ -8,28 +8,27 @@ namespace Naos.Protocol.Domain.Test
 {
     using System.Collections.Generic;
 
-    public class PortfolioViewModel
+    public class EntityViewModel
     {
-        public PortfolioViewModel(
-            PortfolioDescriptionViewModel description,
+        public EntityViewModel(
+            EntityDescriptionViewModel description,
             IReadOnlyCollection<EntityViewModel> entities)
         {
             throw new System.NotImplementedException();
         }
     }
 
-    public class PortfolioDescriptionViewModel{}
-
-
-    public class PortfolioStreamLocator { }
-
-    public class EntityViewModel {}
+    public class EntityDescriptionViewModel{}
 
     public class EntityMembershipViewModel
     {
         public IReadOnlyCollection<EntityViewModel> Entities { get; private set; }
     }
 
-    public class EntityStreamLocator : StreamLocator { }
+    public class EntityStreamLocator : StreamLocatorBase { }
 
+    public class EntityMembershipViewModelUpdated : EventBase
+    {
+
+    }
 }
