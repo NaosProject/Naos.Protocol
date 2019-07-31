@@ -30,26 +30,25 @@ namespace Naos.Protocol.Domain
         }
     }
 
-    public class SeededDetermineStreamLocator<TInput, TLocator> : IProtocol<DetermineStreamLocatorByKey<TInput, TLocator>, TLocator>
+    public class SeededDetermineLocator<TInput, TLocator> : IProtocolWithReturn<DetermineLocatorByKey<TInput, TLocator>, TLocator>
         where TInput : class
-        where TLocator : StreamLocatorBase
+        where TLocator : LocatorBase
     {
-        public SeededDetermineStreamLocator(
-            IProtocol<GetLatest<TLocator>, TLocator> returnProtocol)
+        public SeededDetermineLocator(
+            IProtocolWithReturn<GetLatest<TLocator>, TLocator> returnProtocol)
         {
             this.ReturnProtocol = returnProtocol ?? throw new ArgumentNullException(nameof(returnProtocol));
         }
 
-        public IProtocol<GetLatest<TLocator>, TLocator> ReturnProtocol { get; set; }
+        public IProtocolWithReturn<GetLatest<TLocator>, TLocator> ReturnProtocol { get; set; }
 
-        public TReturn Execute<TReturn>(DetermineStreamLocatorByKey<TInput, TLocator> operation)
+        /// <inheritdoc />
+        public TReturn ExecuteScalar<TReturn>(
+            DetermineLocatorByKey<TInput, TLocator> operation)
         {
-            return this.ReturnProtocol.Execute<TReturn>(new GetLatest<TLocator>());
-        }
-
-        public void Execute(DetermineStreamLocatorByKey<TInput, TLocator> operation)
-        {
-            throw new NotImplementedException();
+            var actualOperation = new GetLatest<TLocator>();
+            var result = this.ReturnProtocol.ExecuteScalar<TReturn>(actualOperation);
+            return result;
         }
     }
 }

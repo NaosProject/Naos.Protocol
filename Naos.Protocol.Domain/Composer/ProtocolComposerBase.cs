@@ -35,30 +35,8 @@ namespace Naos.Protocol.Domain
         /// <value>The dependent factory types.</value>
         public virtual IReadOnlyCollection<Type> DependentComposerTypes => new Type[0];
 
-        public void Execute<TOperation>(
-            TOperation operation)
-            where TOperation : OperationBase
-        {
-            var protocol = this.GetProtocol<TOperation>();
-            protocol.Execute(operation);
-        }
-
-        public TReturn Execute<TOperation, TReturn>(
-            TOperation operation)
-            where TOperation : OperationBase<TReturn>
-        {
-            var protocol = this.GetProtocol<TOperation, TReturn>();
-            return protocol.Execute<TReturn>(operation);
-        }
-
         public IProtocol<TOperation> GetProtocol<TOperation>()
             where TOperation : OperationBase
-        {
-            throw new NotImplementedException();
-        }
-
-        public IProtocol<TOperation, TReturn> GetProtocol<TOperation, TReturn>()
-            where TOperation : OperationBase<TReturn>
         {
             lock (SyncOperationToProtocolMap)
             {
@@ -70,11 +48,15 @@ namespace Naos.Protocol.Domain
 
                 var result = OperationToProtocolMap[operationType];
 
-                return (IProtocol<TOperation, TReturn>)result.GetBuiltProtocol(this);
+                return (IProtocol<TOperation>)result.GetBuiltProtocol(this);
             }
         }
 
-        //public IComposeProtocol<TOperation> ComposeFor(TOperation)
+        public IProtocol<TOperation> ReCompose<TOperation>()
+            where TOperation : OperationBase
+        {
+            throw new NotImplementedException();
+        }
 
         public TComposer GetDependentComposer<TComposer>()
             where TComposer : ProtocolComposerBase
@@ -82,17 +64,42 @@ namespace Naos.Protocol.Domain
             throw new NotImplementedException();
         }
 
-        protected IProtocol<TObject> ComposeFromRegistrations<TObject>()
-            where TObject : OperationBase
-        {
-            throw new NotImplementedException();
-        }
-
-        protected IProtocol<TOperation, TReturn> ReCompose<TOperation, TReturn>()
-            where TOperation : OperationBase<TReturn>
+        public IProtocol<TOperation> Compose<TOperation>()
+            where TOperation : OperationBase
         {
             var actual = ((IComposeProtocol<TOperation>)this).Compose();
-            return (IProtocol<TOperation, TReturn>)actual;
+            return (IProtocol<TOperation>)actual;
+        }
+
+        public void ExecuteNoReturn<TOperation>(
+            TOperation operation)
+            where TOperation : OperationBase
+        {
+            var protocol = this.ReCompose<TOperation>();
+            if (protocol is IProtocolWithoutReturn<TOperation> protocolWithoutReturn)
+            {
+                protocolWithoutReturn.ExecuteNoReturn(operation);
+            }
+            else
+            {
+                throw new ArgumentException(Invariant($"Cannot '{nameof(this.ExecuteNoReturn)}' unless the protocol '{protocol}' implements '{nameof(IProtocolWithoutReturn<TOperation>)}'."));
+            }
+        }
+
+        public TReturn ExecuteScalar<TOperation, TReturn>(
+            TOperation operation)
+            where TOperation : OperationBase<TReturn>
+        {
+            var protocol = this.ReCompose<TOperation>();
+            if (protocol is IProtocolWithReturn<TOperation, TReturn> protocolWithoutReturn)
+            {
+                var result = protocolWithoutReturn.ExecuteScalar<TReturn>(operation);
+                return result;
+            }
+            else
+            {
+                throw new ArgumentException(Invariant($"Cannot '{nameof(this.ExecuteScalar)}' unless the protocol '{protocol}' implements '{nameof(IProtocolWithReturn<TOperation, TReturn>)}'."));
+            }
         }
     }
 }

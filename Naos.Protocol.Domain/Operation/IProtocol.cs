@@ -16,8 +16,16 @@ namespace Naos.Protocol.Domain
     public interface IProtocol<in TOperation>
         where TOperation : OperationBase
     {
-        void Execute(
-            TOperation operation);
+    }
+
+    /// <summary>
+    /// Interface for protocol execution.
+    /// </summary>
+    /// <typeparam name="TOperation">Type of the operation it runs.</typeparam>
+    public interface IProtocolWithoutReturn<in TOperation> : IProtocol<TOperation>
+        where TOperation : OperationBase
+    {
+        void ExecuteNoReturn(TOperation operation);
     }
 
     /// <summary>
@@ -25,9 +33,9 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TOperation">Type of the operation it runs.</typeparam>
     /// <typeparam name="TReturn">Type of return.</typeparam>
-    public interface IProtocol<in TOperation, TReturn> : IProtocol<TOperation>
+    public interface IProtocolWithReturn<in TOperation, TReturn> : IProtocol<TOperation>
         where TOperation : OperationBase<TReturn>
     {
-        TReturn Execute<TReturn>(TOperation operation);
+        TReturn ExecuteScalar<TReturn>(TOperation operation);
     }
 }

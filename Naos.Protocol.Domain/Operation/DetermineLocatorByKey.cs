@@ -15,10 +15,10 @@ namespace Naos.Protocol.Domain
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
-    public class DetermineStreamLocatorByKey<TKey, TLocator> : OperationBase<TLocator>
-        where TLocator : StreamLocatorBase
+    public class DetermineLocatorByKey<TKey, TLocator> : OperationBase<TLocator>
+        where TLocator : LocatorBase
     {
-        public DetermineStreamLocatorByKey(
+        public DetermineLocatorByKey(
             TKey key)
         {
             this.Key = key;

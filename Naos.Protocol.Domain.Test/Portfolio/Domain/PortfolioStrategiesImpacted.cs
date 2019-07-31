@@ -22,9 +22,17 @@
         public IProtocol<GetLatest<EntityMembershipViewModel>> EntityProtocol { get; }
 
         /// <inheritdoc />
-        public void Execute(Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted> operation)
+        void IProtocol<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>>.Execute(
+            Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted> operation)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public TReturn Execute<TReturn>(
+            Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted> operation)
+        {
+            throw new NotImplementedException();
         }
     }
 }
