@@ -7,7 +7,7 @@
         public IReadOnlyCollection<PortfolioDescriptionViewModel> Descriptions { get; set; }
     }
 
-    public class EntityImpactDiscover : IProtocol<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>>
+    public class EntityImpactDiscover : IProtocolWithReturn<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted>
     {
         public EntityImpactDiscover(
             IProtocol<GetLatest<PortfolioDescriptionViewModel>> portfolioProtocol,
@@ -22,16 +22,12 @@
         public IProtocol<GetLatest<EntityMembershipViewModel>> EntityProtocol { get; }
 
         /// <inheritdoc />
-        void IProtocol<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>>.Execute(
+        public TReturn ExecuteScalar<TReturn>(
             Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted> operation)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public TReturn Execute<TReturn>(
-            Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted> operation)
-        {
+            // basically do some kind of query across these two data sets and conclude the impact space and return it.
+            // presently these are small enough that this can just be done in memory, you can imagine this breaking out into a 
+            // stream and chunking it out if it became too big to do this way...
             throw new NotImplementedException();
         }
     }

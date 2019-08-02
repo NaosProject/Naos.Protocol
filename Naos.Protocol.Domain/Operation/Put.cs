@@ -19,7 +19,7 @@ namespace Naos.Protocol.Domain
     /// Abstract base of an operation.
     /// </summary>
     /// <typeparam name="TObject">Type of data being written.</typeparam>
-    public class Put<TObject> : OperationBase
+    public class Put<TObject> : OperationNoReturnBase
         where TObject : class
     {
         /// <summary>

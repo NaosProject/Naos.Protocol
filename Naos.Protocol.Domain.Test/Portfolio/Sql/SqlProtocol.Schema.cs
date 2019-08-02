@@ -24,13 +24,13 @@
         }
 
         private static ExecuteProcedure<TObject> DetermineDatabaseOperation<TOperation>(TOperation operation)
-            where TOperation : OperationBase<TObject>
+            where TOperation : OperationWithReturnBase<TObject>
         {
             throw new NotImplementedException();
         }
     }
 
-    internal class ExecuteProcedure<TResult> : OperationBase<TResult>
+    internal class ExecuteProcedure<TResult> : OperationWithReturnBase<TResult>
     {
 
     }

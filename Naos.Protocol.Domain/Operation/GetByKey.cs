@@ -15,7 +15,7 @@ namespace Naos.Protocol.Domain
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
-    public class GetByKey<TKey, TObject> : OperationBase<TObject>
+    public class GetByKey<TKey, TObject> : OperationWithReturnBase<TObject>
         where TObject : class
     {
         public GetByKey(TKey key)

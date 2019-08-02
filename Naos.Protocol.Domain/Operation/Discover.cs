@@ -20,7 +20,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TObject">Type of data being written.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Discover", Justification = "Name/Spelling is correct.")]
-    public class Discover<TObject, TReturn> : OperationBase<TReturn>
+    public class Discover<TObject, TReturn> : OperationWithReturnBase<TReturn>
         where TObject : class
     {
         public Discover(

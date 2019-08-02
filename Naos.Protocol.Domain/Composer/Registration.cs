@@ -14,7 +14,7 @@ namespace Naos.Protocol.Domain {
     }
 
     public class Registration<TOperation> : ProtocolPrototype
-        where TOperation : OperationBase
+        where TOperation : OperationNoReturnBase
     {
         public Registration(
             Func<ProtocolComposerBase, IProtocol<TOperation>> protocolBuilder)

@@ -1,7 +1,7 @@
 ﻿namespace Naos.Protocol.Domain.Test {
     using System;
 
-    public class PortfolioViewModelProjector : IProtocolWithoutReturn<Handle<EntityMembershipViewModelUpdated>>
+    public class PortfolioViewModelProjector : IProtocolNoReturn<Handle<EntityMembershipViewModelUpdated>>
     {
         private readonly PortfolioProtocolComposer composer;
 

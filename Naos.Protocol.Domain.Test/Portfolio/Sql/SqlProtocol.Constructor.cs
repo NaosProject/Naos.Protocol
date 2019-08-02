@@ -6,10 +6,10 @@
         where TObject : class
         where TLocator : StreamLocatorBase
     {
-        private readonly IProtocol<DetermineLocatorByKey<TKey, TLocator>> streamLocatorByKeyProtocol;
+        private readonly IProtocolWithReturn<DetermineLocatorByKey<TKey, TLocator>, TLocator> streamLocatorByKeyProtocol;
 
         public SqlProtocol(
-            IProtocol<DetermineLocatorByKey<TKey, TLocator>> streamLocatorByKeyProtocol)
+            IProtocolWithReturn<DetermineLocatorByKey<TKey, TLocator>, TLocator> streamLocatorByKeyProtocol)
         {
             this.streamLocatorByKeyProtocol = streamLocatorByKeyProtocol;
         }

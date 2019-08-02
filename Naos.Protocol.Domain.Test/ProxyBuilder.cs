@@ -18,7 +18,7 @@ namespace Naos.Protocol.Domain.Test
     public static class ProxyBuilder
     {
         /// <summary>
-        /// Builds the proxies to contain a set of <see cref="OperationBase" />'s.
+        /// Builds the proxies to contain a set of <see cref="OperationNoReturnBase" />'s.
         /// </summary>
         /// <param name="serviceName">Name of the service.</param>
         /// <param name="operationTypes">Operation types to consolidate into an operational contract.</param>
@@ -29,7 +29,7 @@ namespace Naos.Protocol.Domain.Test
 
             // MERGED RUNNER
             resultBuilder.AppendLine(Invariant($"public class {serviceName}Runner : "));
-            var runnerInterfaces = operationTypes.Select(_ => typeof(IProtocol<,>).MakeGenericType(_, _.BaseType.GetGenericArguments().Single())).ToList();
+            var runnerInterfaces = operationTypes.Select(_ => typeof(IProtocolWithReturn<,>).MakeGenericType(_, _.BaseType.GetGenericArguments().Single())).ToList();
             var interfaceImplementationLines = operationTypes.ToList().Select(_ => Invariant($"IProtocol<{_.FullName}, {_.BaseType.GetGenericArguments().Single().FullName}>")).ToList();
             resultBuilder.AppendLine(string.Join("," + Environment.NewLine, interfaceImplementationLines));
 

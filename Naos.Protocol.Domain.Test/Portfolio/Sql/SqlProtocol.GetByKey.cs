@@ -10,7 +10,7 @@
         public TReturn Execute<TReturn>(
             GetByKey<TKey, TObject> operation)
         {
-            var streamLocator = this.streamLocatorByKeyProtocol.Execute<TLocator>(new DetermineLocatorByKey<TKey, TLocator>(operation.Key));
+            var streamLocator = this.streamLocatorByKeyProtocol.ExecuteScalar<TLocator>(new DetermineLocatorByKey<TKey, TLocator>(operation.Key));
 
             // operations? run procedure?
 

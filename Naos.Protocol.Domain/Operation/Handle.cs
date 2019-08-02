@@ -20,7 +20,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TEvent">Type of data being written.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "ExecuteScalar", Justification = "Name/Spelling is correct.")]
-    public class Handle<TEvent> : OperationBase
+    public class Handle<TEvent> : OperationNoReturnBase
         where TEvent : EventBase
     {
         /// <summary>

@@ -15,7 +15,7 @@ namespace Naos.Protocol.Domain
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
-    public class DetermineLocatorByKey<TKey, TLocator> : OperationBase<TLocator>
+    public class DetermineLocatorByKey<TKey, TLocator> : OperationWithReturnBase<TLocator>
         where TLocator : LocatorBase
     {
         public DetermineLocatorByKey(

@@ -17,7 +17,7 @@
             {
                 if (this.sqlProtocol == null)
                 {
-                    var streamLocatorByKeyProtocol = this.GetProtocol<DetermineLocatorByKey<TKey, TLocator>>();
+                    var streamLocatorByKeyProtocol = this.ReComposeWithReturn<DetermineLocatorByKey<TKey, TLocator>, TLocator>();
                     this.sqlProtocol = new SqlProtocol<TKey, TObject, TLocator>(streamLocatorByKeyProtocol);
                 }
 

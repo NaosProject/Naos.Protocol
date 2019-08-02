@@ -19,11 +19,27 @@ namespace Naos.Protocol.Domain
     {
     }
 
+    public abstract class OperationNoReturnBase
+    {
+        public void Execute<TOperation>(
+            IProtocolNoReturn<TOperation> protocol)
+            where TOperation : OperationNoReturnBase
+        {
+            protocol.ExecuteNoReturn((TOperation)this);
+        }
+    }
+
     /// <summary>
     /// Abstract base of an operation.
     /// </summary>
-    public abstract class OperationBase<TReturn> : OperationBase
+    public abstract class OperationWithReturnBase<TReturn> : OperationNoReturnBase
     {
+        public TReturn Execute<TOperation>(
+            IProtocolWithReturn<TOperation, TReturn> protocol)
+            where TOperation : OperationWithReturnBase<TReturn>
+        {
+            return protocol.ExecuteScalar<TReturn>((TOperation)this);
+        }
     }
 
     /// <summary>
