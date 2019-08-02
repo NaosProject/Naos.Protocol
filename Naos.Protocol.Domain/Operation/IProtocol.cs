@@ -33,9 +33,9 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TOperation">Type of the operation it runs.</typeparam>
     /// <typeparam name="TReturn">Type of return.</typeparam>
-    public interface IProtocolWithReturn<in TOperation, TReturn> : IProtocol<TOperation>
+    public interface IProtocolWithReturn<in TOperation, out TReturn> : IProtocol<TOperation>
         where TOperation : OperationWithReturnBase<TReturn>
     {
-        TReturn ExecuteScalar<TReturn>(TOperation operation);
+        TReturn ExecuteScalar(TOperation operation);
     }
 }

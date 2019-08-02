@@ -3,6 +3,8 @@
 
     public class PortfolioViewModelProjector : IProtocolNoReturn<Handle<EntityMembershipViewModelUpdated>>
     {
+        private readonly IComposeProtocolWithReturn<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted> composerSpecific;
+
         private readonly IProtocolWithReturn<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted> composed;
 
         private readonly PortfolioProtocolComposer composer;
@@ -20,8 +22,10 @@
             this.composed.ExecuteScalar(discoverImpactOperation); // can we put TOperation on OperationWithReturnBase?
             discoverImpactOperation.ExecuteScalarExtension(this.composer);
             this.composer.ExecuteScalarExtension(discoverImpactOperation);
-            var portfolioStrategiesImpacted = discoverImpactOperation.Execute(this.composer);
+            var portfolioStrategiesImpacted = discoverImpactOperation.ExecuteScalar(this.composer);
             this.composer.ExecuteScalar(discoverImpactOperation);
+
+            discoverImpactOperation.ExecuteScalar(this.composerSpecific);
 
             foreach (var impacted in portfolioStrategiesImpacted.Descriptions)
             {
