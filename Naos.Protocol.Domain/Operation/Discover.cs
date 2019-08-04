@@ -43,11 +43,11 @@ namespace Naos.Protocol.Domain
         public IProtocolWithReturn<GetLatest<TLocator>, TLocator> ReturnProtocol { get; set; }
 
         /// <inheritdoc />
-        public TReturn ExecuteScalar<TReturn>(
+        public TLocator ExecuteScalar(
             DetermineLocatorByKey<TInput, TLocator> operation)
         {
             var actualOperation = new GetLatest<TLocator>();
-            var result = this.ReturnProtocol.ExecuteScalar<TReturn>(actualOperation);
+            var result = this.ReturnProtocol.ExecuteScalar(actualOperation);
             return result;
         }
     }

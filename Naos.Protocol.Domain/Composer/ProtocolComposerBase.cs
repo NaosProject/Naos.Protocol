@@ -29,6 +29,12 @@ namespace Naos.Protocol.Domain
             // build the world here
         }
 
+        public void LoadRequiredProtocols(
+            ProtocolComposerBase composer)
+        {
+            //this.requiredComposer = composer;
+        }
+
         /// <summary>
         /// Gets the dependent factory types.
         /// </summary>
@@ -50,6 +56,12 @@ namespace Naos.Protocol.Domain
 
                 return (IProtocol<TOperation>)result.GetBuiltProtocol(this);
             }
+        }
+
+        public IProtocolWithReturn<TOperation, TReturn> GetProtocol<TOperation, TReturn>()
+            where TOperation : OperationWithReturnBase<TReturn>
+        {
+            throw new NotImplementedException();
         }
 
         public TComposer GetDependentComposer<TComposer>()
@@ -99,7 +111,7 @@ namespace Naos.Protocol.Domain
             var protocol = this.ReComposeWithReturn<TOperation, TReturn>();
             if (protocol is IProtocolWithReturn<TOperation, TReturn> protocolWithoutReturn)
             {
-                var result = protocolWithoutReturn.ExecuteScalar<TReturn>(operation);
+                var result = protocolWithoutReturn.ExecuteScalar(operation);
                 return result;
             }
             else

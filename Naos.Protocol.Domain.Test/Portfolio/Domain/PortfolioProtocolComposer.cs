@@ -11,21 +11,20 @@ namespace Naos.Protocol.Domain.Test
     using System.Collections.Generic;
 
     public class PortfolioProtocolComposer : ProtocolComposerBase,
-                                          IRequireProtocolWithReturn<GetLatest<PortfolioStreamLocator>, PortfolioStreamLocator>, //-- where do we share things
-                                          IRequireProtocolWithReturn<DetermineLocatorByKey<string, PortfolioStreamLocator>, PortfolioStreamLocator>, //-- where do we share these, another interface ILocatePortfolioStreams or just ILocateStreams<tkey, tstream>
-                                          IComposeProtocolWithReturn<GetLatest<PortfolioViewModel>, PortfolioViewModel>,
-                                          IComposeProtocolWithReturn<GetLatest<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>,
-                                          IComposeProtocolWithReturn<GetLatest<EntityMembershipViewModel>, EntityMembershipViewModel>,
+                                          IRequireProtocolWithReturn<GetLatest<PortfolioStreamLocator>, PortfolioStreamLocator>,
+                                          IRequireProtocolWithReturn<GetLatest<PortfolioViewModel>, PortfolioViewModel>,
+                                          IRequireProtocolWithReturn<GetLatest<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>,
+                                          IRequireProtocolWithReturn<GetLatest<EntityMembershipViewModel>, EntityMembershipViewModel>,
+                                          IComposeProtocolWithReturn<DetermineLocatorByKey<string, PortfolioStreamLocator>, PortfolioStreamLocator>,
                                           IComposeProtocolWithReturn<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted>
     {
         IProtocolWithReturn<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted> IComposeProtocolWithReturn<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted>.Compose()
         {
             var entityProtocolComposer = this.GetDependentComposer<EntityProtocolComposer>(); // is this better to connect the ideas?
-            var portfolioProtocol = this.GetProtocol<GetLatest<PortfolioDescriptionViewModel>>();
-            var entityProtocol = this.GetProtocol<GetLatest<EntityMembershipViewModel>>();
-            return new EntityImpactDiscover(
-                portfolioProtocol,
-                entityProtocol);
+            var entityProtocol = this.GetProtocol<GetLatest<EntityMembershipViewModel>, EntityMembershipViewModel>();
+
+            var portfolioProtocol = this.GetProtocol<GetLatest<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>();
+            return new EntityImpactDiscover(portfolioProtocol, entityProtocol);
         }
 
         /// <inheritdoc />

@@ -10,8 +10,8 @@
     public class EntityImpactDiscover : IProtocolWithReturn<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted>
     {
         public EntityImpactDiscover(
-            IProtocol<GetLatest<PortfolioDescriptionViewModel>> portfolioProtocol,
-            IProtocol<GetLatest<EntityMembershipViewModel>> entityProtocol)
+            IProtocolWithReturn<GetLatest<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel> portfolioProtocol,
+            IProtocolWithReturn<GetLatest<EntityMembershipViewModel>, EntityMembershipViewModel> entityProtocol)
         {
             this.PortfolioProtocol = portfolioProtocol ?? throw new ArgumentNullException(nameof(portfolioProtocol));
             this.EntityProtocol = entityProtocol ?? throw new ArgumentNullException(nameof(entityProtocol));
@@ -22,7 +22,7 @@
         public IProtocol<GetLatest<EntityMembershipViewModel>> EntityProtocol { get; }
 
         /// <inheritdoc />
-        public TReturn ExecuteScalar<TReturn>(
+        public PortfolioStrategiesImpacted ExecuteScalar(
             Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted> operation)
         {
             // basically do some kind of query across these two data sets and conclude the impact space and return it.

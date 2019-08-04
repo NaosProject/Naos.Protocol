@@ -77,6 +77,11 @@
     <Compile Include="Composer\IRequireProtocol.cs" />
     <Compile Include="Composer\IComposeProtocol.cs" />
     <Compile Include="Composer\RegisteredProtocol.cs" />
+    <Compile Include="Event\CancelBlock.cs" />
+    <Compile Include="Event\Block.cs" />
+    <Compile Include="Event\Pruned.cs" />
+    <Compile Include="Event\Pruning.cs" />
+    <Compile Include="Event\PruneRequested.cs" />
     <Compile Include="Event\Created.cs" />
     <Compile Include="Event\EventBase.cs" />
     <Compile Include="Composer\ProtocolComposerBase.cs" />
@@ -90,7 +95,7 @@
     <Compile Include="Operation\Handle.cs" />
     <Compile Include="Operation\GetByKey.cs" />
     <Compile Include="Operation\Put.cs" />
-    <Compile Include="Stream\StreamLocatorBase.cs" />
+    <Compile Include="Location\StreamLocatorBase.cs" />
     <Compile Include="Operation\IProtocol.cs" />
     <Compile Include="Operation\OperationBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
