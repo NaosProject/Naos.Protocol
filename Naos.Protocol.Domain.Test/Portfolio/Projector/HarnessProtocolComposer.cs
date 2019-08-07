@@ -10,8 +10,8 @@ namespace Naos.Protocol.Domain.Test
     using System.Collections.Generic;
 
     public class HarnessProtocolComposer : ProtocolComposerBase,
-                                           IComposeProtocolNoReturn<Handle<EntityMembershipViewModelUpdated>>,
-                                           IComposeProtocolWithReturn<GetLatest<PortfolioStreamLocator>, PortfolioStreamLocator>
+                                           IGetVoidProtocol<HandleEventOp<EntityMembershipViewModelUpdated>>,
+                                           IGetReturningProtocol<GetLatestOp<PortfolioStreamLocator>, PortfolioStreamLocator>
     {
         /// <inheritdoc />
         public override IReadOnlyCollection<Type> DependentComposerTypes => new[]
@@ -23,14 +23,14 @@ namespace Naos.Protocol.Domain.Test
                                                                             };
 
         /// <inheritdoc />
-        public IProtocolNoReturn<Handle<EntityMembershipViewModelUpdated>> Compose()
+        public IVoidProtocol<HandleEventOp<EntityMembershipViewModelUpdated>> Get()
         {
-            return new PortfolioViewModelProjector(this.GetDependentComposer<PortfolioProtocolComposer>());
+            return new HandleEventEntityMembershipViewModelUpdated(this.GetDependentComposer<PortfolioProtocolComposer>());
         }
 
         /// <inheritdoc />
-        IProtocolWithReturn<GetLatest<PortfolioStreamLocator>, PortfolioStreamLocator>
-            IComposeProtocolWithReturn<GetLatest<PortfolioStreamLocator>, PortfolioStreamLocator>.Compose()
+        IReturningProtocol<GetLatestOp<PortfolioStreamLocator>, PortfolioStreamLocator>
+            IGetReturningProtocol<GetLatestOp<PortfolioStreamLocator>, PortfolioStreamLocator>.Get()
         {
             return new ConfigGet<PortfolioStreamLocator>();
         }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ExecuteScalar.cs" company="Naos Project">
+// <copyright file="HandleOp.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -20,14 +20,14 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TEvent">Type of data being written.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "ExecuteScalar", Justification = "Name/Spelling is correct.")]
-    public class Handle<TEvent> : OperationNoReturnBase
+    public class HandleEventOp<TEvent> : VoidOperationBase
         where TEvent : EventBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Handle{TEvent}"/> class.
+        /// Initializes a new instance of the <see cref="HandleEventOp{TEvent}"/> class.
         /// </summary>
         /// <param name="eventToHandle">The eventToHandle to operate on.</param>
-        public Handle(TEvent eventToHandle)
+        public HandleEventOp(TEvent eventToHandle)
         {
             this.EventToHandle = eventToHandle ?? throw new ArgumentNullException(nameof(eventToHandle));
         }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Get.cs" company="Naos Project">
+// <copyright file="DetermineLocatorByKeyOp.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,10 +15,10 @@ namespace Naos.Protocol.Domain
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
-    public class DetermineLocatorByKey<TKey, TLocator> : OperationWithReturnBase<TLocator>
+    public class DetermineLocatorByKeyOp<TKey, TLocator> : ReturningOperationBase<TLocator>
         where TLocator : LocatorBase
     {
-        public DetermineLocatorByKey(
+        public DetermineLocatorByKeyOp(
             TKey key)
         {
             this.Key = key;

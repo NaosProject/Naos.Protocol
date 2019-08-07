@@ -18,7 +18,12 @@ namespace Naos.Protocol.Domain.Test
         }
     }
 
-    public class PortfolioDescriptionViewModel{}
+    public class PortfolioDescriptionViewModel{
+        public PortfolioDescriptionViewModel(string name)
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
     public class PortfolioStreamLocator:StreamLocatorBase{ }
 

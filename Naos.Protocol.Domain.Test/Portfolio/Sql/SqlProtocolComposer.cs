@@ -2,8 +2,8 @@
     using System;
 
     public class SqlProtocolComposer<TKey, TObject, TLocator> : ProtocolComposerBase,
-                                                IComposeProtocol<GetLatest<TObject>>,
-                                                IComposeProtocol<GetByKey<TKey, TObject>>
+                                                IGetProtocol<GetLatestOp<TObject>>,
+                                                IGetProtocol<GetByKeyOp<TKey, TObject>>
         where TLocator : StreamLocatorBase
         where TObject : class
         where TKey : class
@@ -17,7 +17,7 @@
             {
                 if (this.sqlProtocol == null)
                 {
-                    var streamLocatorByKeyProtocol = this.ReComposeWithReturn<DetermineLocatorByKey<TKey, TLocator>, TLocator>();
+                    var streamLocatorByKeyProtocol = this.DelegatedGet<DetermineLocatorByKeyOp<TKey, TLocator>, TLocator>();
                     this.sqlProtocol = new SqlProtocol<TKey, TObject, TLocator>(streamLocatorByKeyProtocol);
                 }
 
@@ -26,13 +26,13 @@
         }
 
         /// <inheritdoc />
-        IProtocol<GetLatest<TObject>> IComposeProtocol<GetLatest<TObject>>.Compose()
+        IProtocol<GetLatestOp<TObject>> IGetProtocol<GetLatestOp<TObject>>.Get()
         {
             return this.GetSqlProtocolInstance();
         }
 
         /// <inheritdoc />
-        IProtocol<GetByKey<TKey, TObject>> IComposeProtocol<GetByKey<TKey, TObject>>.Compose()
+        IProtocol<GetByKeyOp<TKey, TObject>> IGetProtocol<GetByKeyOp<TKey, TObject>>.Get()
         {
             return this.GetSqlProtocolInstance();
         }

@@ -13,7 +13,7 @@ namespace Naos.Protocol.SqlServer
     /// TODO: Starting point for new project.
     /// </summary>
     /// <typeparam name="TObject">Type of payload.</typeparam>
-    public partial class CrudOperationHandlers<TObject> : IProtocol<Put<TObject>>
+    public partial class CrudOperationHandlers<TObject> : IProtocol<PutOp<TObject>>
         where TObject : class
     {
     }

@@ -12,54 +12,54 @@ namespace Naos.Protocol.Domain.Test
     using System.Runtime.InteropServices;
 
     public interface INeedSpecificEntityProtocolCompoosition :
-        IComposeProtocol<GetLatest<EntityStreamLocator>>,
-        IComposeProtocol<DetermineLocatorByKey<string, EntityStreamLocator>>,
-        IComposeProtocol<GetLatest<EntityViewModel>>
+        IGetProtocol<GetLatestOp<EntityStreamLocator>>,
+        IGetProtocol<DetermineLocatorByKeyOp<string, EntityStreamLocator>>,
+        IGetProtocol<GetLatestOp<EntityViewModel>>
     { }
 
     public class EntityProtocolComposer : ProtocolComposerBase,
-                                          IRequireProtocolWithReturn<GetLatest<EntityStreamLocator>, EntityStreamLocator>,
-                                          IComposeProtocolWithReturn<DetermineLocatorByKey<string, EntityStreamLocator>, EntityStreamLocator>,
-                                          IComposeProtocolWithReturn<GetLatest<EntityViewModel>, EntityViewModel>,
-                                          IComposeProtocolWithReturn<GetLatest<EntityDescriptionViewModel>, EntityDescriptionViewModel>,
-                                          IComposeProtocolWithReturn<GetLatest<EntityMembershipViewModel>, EntityMembershipViewModel>
+                                          IRequireProtocolWithReturn<GetLatestOp<EntityStreamLocator>, EntityStreamLocator>,
+                                          IGetReturningProtocol<DetermineLocatorByKeyOp<string, EntityStreamLocator>, EntityStreamLocator>,
+                                          IGetReturningProtocol<GetLatestOp<EntityViewModel>, EntityViewModel>,
+                                          IGetReturningProtocol<GetLatestOp<EntityDescriptionViewModel>, EntityDescriptionViewModel>,
+                                          IGetReturningProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel>
     {
         /// <inheritdoc />
-        IProtocolWithReturn<GetLatest<EntityStreamLocator>, EntityStreamLocator>
-            IComposeProtocolWithReturn<GetLatest<EntityStreamLocator>, EntityStreamLocator>.Compose()
+        IReturningProtocol<GetLatestOp<EntityStreamLocator>, EntityStreamLocator>
+            IGetReturningProtocol<GetLatestOp<EntityStreamLocator>, EntityStreamLocator>.Get()
         {
-            var result = this.ReComposeWithReturn<GetLatest<EntityStreamLocator>, EntityStreamLocator>();
+            var result = this.DelegatedGet<GetLatestOp<EntityStreamLocator>, EntityStreamLocator>();
             return result;
         }
 
         /// <inheritdoc />
-        IProtocolWithReturn<DetermineLocatorByKey<string, EntityStreamLocator>, EntityStreamLocator>
-            IComposeProtocolWithReturn<DetermineLocatorByKey<string, EntityStreamLocator>, EntityStreamLocator>.Compose()
+        IReturningProtocol<DetermineLocatorByKeyOp<string, EntityStreamLocator>, EntityStreamLocator>
+            IGetReturningProtocol<DetermineLocatorByKeyOp<string, EntityStreamLocator>, EntityStreamLocator>.Get()
         {
-            var returnProtocol      = this.ReComposeWithReturn<GetLatest<EntityStreamLocator>, EntityStreamLocator>();
+            var returnProtocol      = this.DelegatedGet<GetLatestOp<EntityStreamLocator>, EntityStreamLocator>();
             var seededDetermination = new SeededDetermineLocator<string, EntityStreamLocator>(returnProtocol);
             return seededDetermination;
         }
 
         /// <inheritdoc />
-        IProtocolWithReturn<GetLatest<EntityViewModel>, EntityViewModel> IComposeProtocolWithReturn<GetLatest<EntityViewModel>, EntityViewModel>.
-            Compose()
+        IReturningProtocol<GetLatestOp<EntityViewModel>, EntityViewModel> IGetReturningProtocol<GetLatestOp<EntityViewModel>, EntityViewModel>.
+            Get()
         {
-            var result = this.ReComposeWithReturn<GetLatest<EntityViewModel>, EntityViewModel>();
+            var result = this.DelegatedGet<GetLatestOp<EntityViewModel>, EntityViewModel>();
             return result;
         }
 
         /// <inheritdoc />
-        IProtocolWithReturn<GetLatest<EntityDescriptionViewModel>, EntityDescriptionViewModel>
-            IComposeProtocolWithReturn<GetLatest<EntityDescriptionViewModel>, EntityDescriptionViewModel>.Compose()
+        IReturningProtocol<GetLatestOp<EntityDescriptionViewModel>, EntityDescriptionViewModel>
+            IGetReturningProtocol<GetLatestOp<EntityDescriptionViewModel>, EntityDescriptionViewModel>.Get()
         {
-            var result = this.ReComposeWithReturn<GetLatest<EntityDescriptionViewModel>, EntityDescriptionViewModel>();
+            var result = this.DelegatedGet<GetLatestOp<EntityDescriptionViewModel>, EntityDescriptionViewModel>();
             return result;
         }
 
         /// <inheritdoc />
-        IProtocolWithReturn<GetLatest<EntityMembershipViewModel>, EntityMembershipViewModel>
-            IComposeProtocolWithReturn<GetLatest<EntityMembershipViewModel>, EntityMembershipViewModel>.Compose()
+        IReturningProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel>
+            IGetReturningProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel>.Get()
         {
             throw new NotImplementedException();
         }

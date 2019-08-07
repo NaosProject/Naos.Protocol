@@ -14,20 +14,20 @@ namespace Naos.Protocol.SqlServer
     /// TODO: Starting point for new project.
     /// </summary>
     /// <typeparam name="TObject">The type of payload.</typeparam>
-    public partial class CrudOperationHandlers<TObject> : IProtocol<GetLatest<TObject>>
+    public partial class CrudOperationHandlers<TObject> : IProtocol<GetLatestOp<TObject>>
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
         where TObject : class
     {
         /// <inheritdoc />
         public void Execute(
-            GetLatest<TObject> operation)
+            GetLatestOp<TObject> operation)
         {
             throw new System.NotImplementedException();
         }
 
         /// <inheritdoc />
         public void Execute(
-            Put<TObject> operation)
+            PutOp<TObject> operation)
         {
             throw new System.NotImplementedException();
         }

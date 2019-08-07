@@ -29,10 +29,11 @@ namespace Naos.Protocol.Domain
             // build the world here
         }
 
-        public void LoadRequiredProtocols(
-            ProtocolComposerBase composer)
+        public ProtocolComposerBase LoadRequiredProtocols(params 
+            ProtocolComposerBase[] composer)
         {
             //this.requiredComposer = composer;
+            return this;
         }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace Naos.Protocol.Domain
         public virtual IReadOnlyCollection<Type> DependentComposerTypes => new Type[0];
 
         public IProtocol<TOperation> GetProtocol<TOperation>()
-            where TOperation : OperationNoReturnBase
+            where TOperation : VoidOperationBase
         {
             lock (SyncOperationToProtocolMap)
             {
@@ -58,8 +59,8 @@ namespace Naos.Protocol.Domain
             }
         }
 
-        public IProtocolWithReturn<TOperation, TReturn> GetProtocol<TOperation, TReturn>()
-            where TOperation : OperationWithReturnBase<TReturn>
+        public IReturningProtocol<TOperation, TReturn> GetProtocol<TOperation, TReturn>()
+            where TOperation : ReturningOperationBase<TReturn>
         {
             throw new NotImplementedException();
         }
@@ -71,52 +72,52 @@ namespace Naos.Protocol.Domain
         }
 
         public IProtocol<TOperation> Compose<TOperation>()
-            where TOperation : OperationNoReturnBase
+            where TOperation : VoidOperationBase
         {
-            var actual = ((IComposeProtocol<TOperation>)this).Compose();
+            var actual = ((IGetProtocol<TOperation>)this).Get();
             return (IProtocol<TOperation>)actual;
         }
 
-        public IProtocolWithReturn<TOperation, TReturn> ReComposeWithReturn<TOperation, TReturn>()
-            where TOperation : OperationWithReturnBase<TReturn>
+        public IReturningProtocol<TOperation, TReturn> DelegatedGet<TOperation, TReturn>()
+            where TOperation : ReturningOperationBase<TReturn>
         {
             throw new NotImplementedException();
         }
 
-        public IProtocolNoReturn<TOperation> ReComposeNoReturn<TOperation>()
-            where TOperation : OperationNoReturnBase
+        public IVoidProtocol<TOperation> ReComposeNoReturn<TOperation>()
+            where TOperation : VoidOperationBase
         {
             throw new NotImplementedException();
         }
 
         public void ExecuteNoReturn<TOperation>(
             TOperation operation)
-            where TOperation : OperationNoReturnBase
+            where TOperation : VoidOperationBase
         {
             var protocol = this.ReComposeNoReturn<TOperation>();
-            if (protocol is IProtocolNoReturn<TOperation> protocolWithoutReturn)
+            if (protocol is IVoidProtocol<TOperation> protocolWithoutReturn)
             {
-                protocolWithoutReturn.ExecuteNoReturn(operation);
+                protocolWithoutReturn.Execute(operation);
             }
             else
             {
-                throw new ArgumentException(Invariant($"Cannot '{nameof(this.ExecuteNoReturn)}' unless the protocol '{protocol}' implements '{nameof(IProtocolNoReturn<TOperation>)}'."));
+                throw new ArgumentException(Invariant($"Cannot '{nameof(this.ExecuteNoReturn)}' unless the protocol '{protocol}' implements '{nameof(IVoidProtocol<TOperation>)}'."));
             }
         }
 
         public TReturn ExecuteScalar<TOperation, TReturn>(
             TOperation operation)
-            where TOperation : OperationWithReturnBase<TReturn>
+            where TOperation : ReturningOperationBase<TReturn>
         {
-            var protocol = this.ReComposeWithReturn<TOperation, TReturn>();
-            if (protocol is IProtocolWithReturn<TOperation, TReturn> protocolWithoutReturn)
+            var protocol = this.DelegatedGet<TOperation, TReturn>();
+            if (protocol is IReturningProtocol<TOperation, TReturn> protocolWithoutReturn)
             {
-                var result = protocolWithoutReturn.ExecuteScalar(operation);
+                var result = protocolWithoutReturn.Execute(operation);
                 return result;
             }
             else
             {
-                throw new ArgumentException(Invariant($"Cannot '{nameof(this.ExecuteScalar)}' unless the protocol '{protocol}' implements '{nameof(IProtocolWithReturn<TOperation, TReturn>)}'."));
+                throw new ArgumentException(Invariant($"Cannot '{nameof(this.ExecuteScalar)}' unless the protocol '{protocol}' implements '{nameof(IReturningProtocol<TOperation, TReturn>)}'."));
             }
         }
     }

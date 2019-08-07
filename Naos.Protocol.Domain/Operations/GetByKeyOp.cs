@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Get.cs" company="Naos Project">
+// <copyright file="GetByKeyOp.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,10 +15,10 @@ namespace Naos.Protocol.Domain
     using OBeautifulCode.Type;
     using static System.FormattableString;
 
-    public class GetByKey<TKey, TObject> : OperationWithReturnBase<TObject>
+    public class GetByKeyOp<TKey, TObject> : ReturningOperationBase<TObject>
         where TObject : class
     {
-        public GetByKey(TKey key)
+        public GetByKeyOp(TKey key)
         {
             this.Key = key;
         }

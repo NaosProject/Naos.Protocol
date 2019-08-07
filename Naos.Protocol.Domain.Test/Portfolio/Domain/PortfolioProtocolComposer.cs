@@ -11,53 +11,55 @@ namespace Naos.Protocol.Domain.Test
     using System.Collections.Generic;
 
     public class PortfolioProtocolComposer : ProtocolComposerBase,
-                                          IRequireProtocolWithReturn<GetLatest<PortfolioStreamLocator>, PortfolioStreamLocator>,
-                                          IRequireProtocolWithReturn<GetLatest<PortfolioViewModel>, PortfolioViewModel>,
-                                          IRequireProtocolWithReturn<GetLatest<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>,
-                                          IRequireProtocolWithReturn<GetLatest<EntityMembershipViewModel>, EntityMembershipViewModel>,
-                                          IComposeProtocolWithReturn<DetermineLocatorByKey<string, PortfolioStreamLocator>, PortfolioStreamLocator>,
-                                          IComposeProtocolWithReturn<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted>
+                                          IRequireProtocolWithReturn<GetLatestOp<PortfolioStreamLocator>, PortfolioStreamLocator>,
+                                          IRequireProtocolWithReturn<GetLatestOp<PortfolioViewModel>, PortfolioViewModel>,
+                                          IRequireProtocolWithReturn<GetLatestOp<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>,
+                                          IRequireProtocolWithReturn<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel>,
+                                          IGetReturningProtocol<DetermineLocatorByKeyOp<string, PortfolioStreamLocator>, PortfolioStreamLocator>,
+                                          IGetReturningProtocol<DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesOp, PortfolioStrategiesImpacted>
     {
-        IProtocolWithReturn<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted> IComposeProtocolWithReturn<Discover<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted>.Compose()
+        public IReturningProtocol<DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesOp, PortfolioStrategiesImpacted> Get()
         {
             var entityProtocolComposer = this.GetDependentComposer<EntityProtocolComposer>(); // is this better to connect the ideas?
-            var entityProtocol = this.GetProtocol<GetLatest<EntityMembershipViewModel>, EntityMembershipViewModel>();
+            var entityProtocol = this.GetProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel>();
 
-            var portfolioProtocol = this.GetProtocol<GetLatest<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>();
-            return new EntityImpactDiscover(portfolioProtocol, entityProtocol);
+            var portfolioProtocol = this.GetProtocol<GetLatestOp<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>();
+            return new DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesProtocol(portfolioProtocol, entityProtocol);
         }
 
         /// <inheritdoc />
-        IProtocolWithReturn<GetLatest<PortfolioStreamLocator>, PortfolioStreamLocator>
-            IComposeProtocolWithReturn<GetLatest<PortfolioStreamLocator>, PortfolioStreamLocator>.Compose()
+        IReturningProtocol<GetLatestOp<PortfolioStreamLocator>, PortfolioStreamLocator>
+            IGetReturningProtocol<GetLatestOp<PortfolioStreamLocator>, PortfolioStreamLocator>.Get()
+        {
+            var result = this.DelegatedGet<GetLatestOp<PortfolioStreamLocator>, PortfolioStreamLocator>();
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        IReturningProtocol<DetermineLocatorByKeyOp<string, PortfolioStreamLocator>, PortfolioStreamLocator>
+            IGetReturningProtocol<DetermineLocatorByKeyOp<string, PortfolioStreamLocator>, PortfolioStreamLocator>.Get()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
-        IProtocolWithReturn<DetermineLocatorByKey<string, PortfolioStreamLocator>, PortfolioStreamLocator>
-            IComposeProtocolWithReturn<DetermineLocatorByKey<string, PortfolioStreamLocator>, PortfolioStreamLocator>.Compose()
+        IReturningProtocol<GetLatestOp<PortfolioViewModel>, PortfolioViewModel>
+            IGetReturningProtocol<GetLatestOp<PortfolioViewModel>, PortfolioViewModel>.Get()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
-        IProtocolWithReturn<GetLatest<PortfolioViewModel>, PortfolioViewModel>
-            IComposeProtocolWithReturn<GetLatest<PortfolioViewModel>, PortfolioViewModel>.Compose()
+        IReturningProtocol<GetLatestOp<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>
+            IGetReturningProtocol<GetLatestOp<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>.Get()
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
-        IProtocolWithReturn<GetLatest<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>
-            IComposeProtocolWithReturn<GetLatest<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>.Compose()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        IProtocolWithReturn<GetLatest<EntityMembershipViewModel>, EntityMembershipViewModel>
-            IComposeProtocolWithReturn<GetLatest<EntityMembershipViewModel>, EntityMembershipViewModel>.Compose()
+        IReturningProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel>
+            IGetReturningProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel>.Get()
         {
             throw new NotImplementedException();
         }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Discover.cs" company="Naos Project">
+// <copyright file="DiscoverOp.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -8,6 +8,7 @@ namespace Naos.Protocol.Domain
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
@@ -19,35 +20,35 @@ namespace Naos.Protocol.Domain
     /// Abstract base of an operation.
     /// </summary>
     /// <typeparam name="TObject">Type of data being written.</typeparam>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Discover", Justification = "Name/Spelling is correct.")]
-    public class Discover<TObject, TReturn> : OperationWithReturnBase<TReturn>
+    [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Discover", Justification = "Name/Spelling is correct.")]
+    public class DiscoverOp<TObject, TReturn> : ReturningOperationBase<TReturn>
         where TObject : class
     {
-        public Discover(
+        public DiscoverOp(
             TObject operationKey)
         {
             throw new NotImplementedException();
         }
     }
 
-    public class SeededDetermineLocator<TInput, TLocator> : IProtocolWithReturn<DetermineLocatorByKey<TInput, TLocator>, TLocator>
+    public class SeededDetermineLocator<TInput, TLocator> : IReturningProtocol<DetermineLocatorByKeyOp<TInput, TLocator>, TLocator>
         where TInput : class
         where TLocator : LocatorBase
     {
         public SeededDetermineLocator(
-            IProtocolWithReturn<GetLatest<TLocator>, TLocator> returnProtocol)
+            IReturningProtocol<GetLatestOp<TLocator>, TLocator> returnProtocol)
         {
             this.ReturnProtocol = returnProtocol ?? throw new ArgumentNullException(nameof(returnProtocol));
         }
 
-        public IProtocolWithReturn<GetLatest<TLocator>, TLocator> ReturnProtocol { get; set; }
+        public IReturningProtocol<GetLatestOp<TLocator>, TLocator> ReturnProtocol { get; set; }
 
         /// <inheritdoc />
-        public TLocator ExecuteScalar(
-            DetermineLocatorByKey<TInput, TLocator> operation)
+        public TLocator Execute(
+            DetermineLocatorByKeyOp<TInput, TLocator> operation)
         {
-            var actualOperation = new GetLatest<TLocator>();
-            var result = this.ReturnProtocol.ExecuteScalar(actualOperation);
+            var actualOperation = new GetLatestOp<TLocator>();
+            var result = this.ReturnProtocol.Execute(actualOperation);
             return result;
         }
     }

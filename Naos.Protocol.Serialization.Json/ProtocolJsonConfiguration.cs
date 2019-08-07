@@ -22,7 +22,7 @@ namespace Naos.Protocol.Serialization.Json
             {
                 typeof(ProtocolComposerBase),
                 typeof(EventBase),
-                typeof(OperationWithReturnBase<>),
+                typeof(ReturningOperationBase<>),
                 typeof(StreamLocatorBase),
             };
     }
