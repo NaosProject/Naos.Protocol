@@ -9,8 +9,15 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Gets a protocol.
     /// </summary>
+    public interface IGetProtocol
+    {
+    }
+
+    /// <summary>
+    /// Gets a protocol.
+    /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
-    public interface IGetProtocol<in TOperation>
+    public interface IGetProtocol<in TOperation> : IGetProtocol
         where TOperation : IOperation
     {
         /// <summary>
@@ -26,7 +33,7 @@ namespace Naos.Protocol.Domain
     /// Gets a protocol that executes a <see cref="VoidOperationBase"/>.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
-    public interface IGetVoidProtocol<in TOperation>
+    public interface IGetVoidProtocol<in TOperation> : IGetProtocol
         where TOperation : VoidOperationBase
     {
         /// <summary>
@@ -43,7 +50,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     /// <typeparam name="TReturn">The type that the operation return.</typeparam>
-    public interface IGetReturningProtocol<in TOperation, out TReturn>
+    public interface IGetReturningProtocol<in TOperation, out TReturn> : IGetProtocol
         where TOperation : ReturningOperationBase<TReturn>
     {
         /// <summary>

@@ -10,22 +10,26 @@ namespace Naos.Protocol.Domain.Test
     using System.Collections;
     using System.Collections.Generic;
 
-    public class PortfolioProtocolComposer : ProtocolComposerBase,
-                                          IRequireProtocolWithReturn<GetLatestOp<PortfolioStreamLocator>, PortfolioStreamLocator>,
-                                          IAggregateReadProtocol<string, PortfolioViewModel> aggregateReadProtocol,
-                                          IRequireProtocolWithReturn<GetLatestOp<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>,
-                                          IRequireProtocolWithReturn<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel>,
+    //public class PortfolioProtocolSetttings
+    //{
+    //    public IGetProtocol[] MyProtocolGetters { get; set; } = new[] { typeof() };
+
+    //    public PortfolioProtocolSetttings[] DependentProtocolSettings { get; set; }
+    //}
+
+    public class PortfolioProtocolComposer : 
+                                          ProtocolComposerBase,
+                                          IGetIAggregateReadProtocol<string, PortfolioViewModel>,
                                           IGetReturningProtocol<DetermineLocatorByKeyOp<string, PortfolioStreamLocator>, PortfolioStreamLocator>,
                                           IGetReturningProtocol<DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesOp, PortfolioStrategiesImpacted>
     {
-        // concept 1
-        public override IReadOnlyCollection<Type> DependentComposerTypes => base.DependentComposerTypes;
+        public PortfolioProtocolComposer(
+            IGetReturningProtocol<GetLatestOp<PortfolioStreamLocator>, PortfolioStreamLocator> test1,
+            IGetReturningProtocol<GetLatestOp<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel> test2,
+            IGetReturningProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel> test3)
+        {
 
-        // concept 2
-        // IRequireProtocolWithReturn
-
-        // concept 3
-        // IGetReturningProtocol
+        }
 
         public IReturningProtocol<DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesOp, PortfolioStrategiesImpacted> Get()
         {

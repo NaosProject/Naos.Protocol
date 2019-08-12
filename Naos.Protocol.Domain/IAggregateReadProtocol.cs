@@ -6,7 +6,6 @@
     }
 
     public interface IGetIAggregateReadProtocol<K, T>
-        : IGetReturningProtocol<GetLatestOp<T>, T>, IGetReturningProtocol<GetByKeyOp<K, T>, T>
         where T : class
     {
         IAggregateReadProtocol<K, T> Get();
