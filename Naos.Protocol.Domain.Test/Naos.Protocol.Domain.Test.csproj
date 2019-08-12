@@ -137,8 +137,8 @@
     <Compile Include="Portfolio\Projector\HarnessProtocolComposer.cs" />
     <Compile Include="Portfolio\Domain\PortfolioProtocolComposer.cs" />
     <Compile Include="Portfolio\Domain\Protocols\DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesProtocol.cs" />
-    <Compile Include="Portfolio\Domain\PortfolioViewModel.cs" />
-    <Compile Include="Portfolio\Domain\HandleEventEntityMembershipViewModelUpdated.cs" />
+    <Compile Include="Portfolio\Domain\Models\PortfolioViewModel.cs" />
+    <Compile Include="Portfolio\Domain\Protocols\HandleEventEntityMembershipViewModelUpdatedProtocol.cs" />
     <Compile Include="Portfolio\Sql\SqlProtocolComposer.cs" />
     <Compile Include="Portfolio\Sql\SqlProtocol.Schema.cs" />
     <Compile Include="Portfolio\Sql\SqlProtocol.GetLatest.cs" />

@@ -1,29 +1,29 @@
 ﻿namespace Naos.Protocol.Domain.Test {
     using System;
 
-    public class HandleEventEntityMembershipViewModelUpdated : IVoidProtocol<HandleEventOp<EntityMembershipViewModelUpdated>>
+    public class HandleEventEntityMembershipViewModelUpdatedProtocol : IVoidProtocol<HandleEventOp<EntityMembershipViewModelUpdated>>
     {
         private readonly PortfolioProtocolComposer composer;
 
         private readonly IGetReturningProtocol<DiscoverOp<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted> composerSpecific;
 
         private readonly IReturningProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel> composedEntity;
-        private readonly IReturningProtocol<DiscoverOp<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted> composedDiscovery;
+        private readonly IReturningProtocol<DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesOp, PortfolioStrategiesImpacted> composedDiscovery;
 
-        public HandleEventEntityMembershipViewModelUpdated(PortfolioProtocolComposer composer)
+        public HandleEventEntityMembershipViewModelUpdatedProtocol(PortfolioProtocolComposer composer)
             : this(composer, composer)
         {
             this.composer = composer ?? throw new ArgumentNullException(nameof(composer));
         }
 
-        public HandleEventEntityMembershipViewModelUpdated(
+        public HandleEventEntityMembershipViewModelUpdatedProtocol(
             IGetReturningProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel> composerEntity,
             IGetReturningProtocol<DiscoverOp<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted> composerDiscovery)
             : this(composerEntity.Get(), composerDiscovery.Get())
         {
         }
 
-        public HandleEventEntityMembershipViewModelUpdated(
+        public HandleEventEntityMembershipViewModelUpdatedProtocol(
             IReturningProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel> composedEntity,
             IReturningProtocol<DiscoverOp<EntityMembershipViewModel, PortfolioStrategiesImpacted>, PortfolioStrategiesImpacted> composedDiscovery)
         {

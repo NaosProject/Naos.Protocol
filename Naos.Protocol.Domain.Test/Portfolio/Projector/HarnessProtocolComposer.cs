@@ -25,7 +25,7 @@ namespace Naos.Protocol.Domain.Test
         /// <inheritdoc />
         public IVoidProtocol<HandleEventOp<EntityMembershipViewModelUpdated>> Get()
         {
-            return new HandleEventEntityMembershipViewModelUpdated(this.GetDependentComposer<PortfolioProtocolComposer>());
+            return new HandleEventEntityMembershipViewModelUpdatedProtocol(this.GetDependentComposer<PortfolioProtocolComposer>());
         }
 
         /// <inheritdoc />

@@ -12,12 +12,21 @@ namespace Naos.Protocol.Domain.Test
 
     public class PortfolioProtocolComposer : ProtocolComposerBase,
                                           IRequireProtocolWithReturn<GetLatestOp<PortfolioStreamLocator>, PortfolioStreamLocator>,
-                                          IRequireProtocolWithReturn<GetLatestOp<PortfolioViewModel>, PortfolioViewModel>,
+                                          IAggregateReadProtocol<string, PortfolioViewModel> aggregateReadProtocol,
                                           IRequireProtocolWithReturn<GetLatestOp<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel>,
                                           IRequireProtocolWithReturn<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel>,
                                           IGetReturningProtocol<DetermineLocatorByKeyOp<string, PortfolioStreamLocator>, PortfolioStreamLocator>,
                                           IGetReturningProtocol<DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesOp, PortfolioStrategiesImpacted>
     {
+        // concept 1
+        public override IReadOnlyCollection<Type> DependentComposerTypes => base.DependentComposerTypes;
+
+        // concept 2
+        // IRequireProtocolWithReturn
+
+        // concept 3
+        // IGetReturningProtocol
+
         public IReturningProtocol<DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesOp, PortfolioStrategiesImpacted> Get()
         {
             var entityProtocolComposer = this.GetDependentComposer<EntityProtocolComposer>(); // is this better to connect the ideas?

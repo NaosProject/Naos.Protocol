@@ -6,16 +6,16 @@
         IReturningProtocol<DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesOp, PortfolioStrategiesImpacted>
     {
         public DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesProtocol(
-            IGetReturningProtocol<GetLatestOp<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel> portfolioProtocol,
+            IAggregateReadProtocol<string, PortfolioViewModel> portfolioProtocol,
             IGetReturningProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel> entityProtocol)
         {
             this.PortfolioProtocol = portfolioProtocol?.Get() ?? throw new ArgumentNullException(nameof(portfolioProtocol));
             this.EntityProtocol = entityProtocol?.Get() ?? throw new ArgumentNullException(nameof(entityProtocol));
         }
 
-        public IProtocol<GetLatestOp<PortfolioDescriptionViewModel>> PortfolioProtocol { get; }
+        public IReturningProtocol<GetLatestOp<PortfolioDescriptionViewModel>, PortfolioDescriptionViewModel> PortfolioProtocol { get; }
 
-        public IProtocol<GetLatestOp<EntityMembershipViewModel>> EntityProtocol { get; }
+        public IReturningProtocol<GetLatestOp<EntityMembershipViewModel>, EntityMembershipViewModel> EntityProtocol { get; }
 
         /// <inheritdoc />
         public PortfolioStrategiesImpacted Execute(DiscoverPortfolioStrategiesImpactedByEntityMembershipViewModelChangesOp operation)
@@ -25,5 +25,11 @@
             // stream and chunking it out if it became too big to do this way...
             throw new NotImplementedException();
         }
+    }
+
+    public interface IAggregateReadProtocol<K, T>
+    : IReturningProtocol<GetLatestOp<T>, T>, IReturningProtocol<GetByKeyOp<K, T>, T>
+    where T : class
+    {
     }
 }
