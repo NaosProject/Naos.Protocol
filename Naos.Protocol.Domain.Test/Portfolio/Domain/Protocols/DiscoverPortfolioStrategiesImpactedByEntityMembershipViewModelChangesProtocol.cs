@@ -26,10 +26,4 @@
             throw new NotImplementedException();
         }
     }
-
-    public interface IAggregateReadProtocol<K, T>
-    : IReturningProtocol<GetLatestOp<T>, T>, IReturningProtocol<GetByKeyOp<K, T>, T>
-    where T : class
-    {
-    }
 }

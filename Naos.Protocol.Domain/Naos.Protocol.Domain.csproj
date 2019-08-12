@@ -74,6 +74,7 @@
     <Compile Include=".recipes\OBeautifulCode.Validation\ParameterValidator.cs" />
     <Compile Include=".recipes\OBeautifulCode.Validation\Range.cs" />
     <Compile Include=".recipes\OBeautifulCode.Validation\ValidatedNotNullAttribute.cs" />
+    <Compile Include="IAggregateReadProtocol.cs" />
     <Compile Include="IRequireProtocol.cs" />
     <Compile Include="IGetProtocol.cs" />
     <Compile Include="Composer\RegisteredProtocol.cs" />
