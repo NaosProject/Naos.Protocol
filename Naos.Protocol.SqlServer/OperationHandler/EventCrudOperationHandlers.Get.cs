@@ -15,7 +15,6 @@ namespace Naos.Protocol.SqlServer
     /// </summary>
     /// <typeparam name="TObject">The type of payload.</typeparam>
     public partial class CrudOperationHandlers<TObject> : IReturningProtocol<GetLatestOp<TObject>, TObject>
-#pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
         where TObject : class
     {
         /// <inheritdoc />

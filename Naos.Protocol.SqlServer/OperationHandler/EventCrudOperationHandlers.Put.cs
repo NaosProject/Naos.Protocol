@@ -9,6 +9,7 @@ namespace Naos.Protocol.SqlServer
     using System.Threading.Tasks;
     using Naos.Protocol.Domain;
 
+#pragma warning disable CS1710 // XML comment has a duplicate typeparam tag
     /// <summary>
     /// TODO: Starting point for new project.
     /// </summary>
