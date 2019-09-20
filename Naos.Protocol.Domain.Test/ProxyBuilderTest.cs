@@ -29,7 +29,8 @@ namespace Naos.Protocol.Domain.Test
 
         public ProxyBuilderTest(ITestOutputHelper testOutputHelper)
         {
-            this.testOutputHelper = testOutputHelper;
+            this.testOutputHelper = testOutputHelper ?? throw new ArgumentNullException(nameof(testOutputHelper));
+            this.testOutputHelper.WriteLine("Constructed.");
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DiscoverOp.cs" company="Naos Project">
-//    Copyright (c) Naos Project 2019. All rights reserved.
+//     Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -17,39 +17,29 @@ namespace Naos.Protocol.Domain
     using static System.FormattableString;
 
     /// <summary>
-    /// Abstract base of an operation.
+    /// Implements the <see cref="Naos.Protocol.Domain.ReturningOperationBase{TReturn}" /> to discover something using some input.
     /// </summary>
     /// <typeparam name="TObject">Type of data being written.</typeparam>
+    /// <typeparam name="TReturn">The type of the t return.</typeparam>
+    /// <seealso cref="Naos.Protocol.Domain.ReturningOperationBase{TReturn}" />
     [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Discover", Justification = "Name/Spelling is correct.")]
     public class DiscoverOp<TObject, TReturn> : ReturningOperationBase<TReturn>
         where TObject : class
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DiscoverOp{TObject, TReturn}"/> class.
+        /// </summary>
+        /// <param name="operationKey">The operation key.</param>
         public DiscoverOp(
             TObject operationKey)
         {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class SeededDetermineLocator<TInput, TLocator> : IReturningProtocol<DetermineLocatorByKeyOp<TInput, TLocator>, TLocator>
-        where TInput : class
-        where TLocator : LocatorBase
-    {
-        public SeededDetermineLocator(
-            IReturningProtocol<GetLatestOp<TLocator>, TLocator> returnProtocol)
-        {
-            this.ReturnProtocol = returnProtocol ?? throw new ArgumentNullException(nameof(returnProtocol));
+            this.OperationKey = operationKey ?? throw new ArgumentNullException(nameof(operationKey));
         }
 
-        public IReturningProtocol<GetLatestOp<TLocator>, TLocator> ReturnProtocol { get; set; }
-
-        /// <inheritdoc />
-        public TLocator Execute(
-            DetermineLocatorByKeyOp<TInput, TLocator> operation)
-        {
-            var actualOperation = new GetLatestOp<TLocator>();
-            var result = this.ReturnProtocol.Execute(actualOperation);
-            return result;
-        }
+        /// <summary>
+        /// Gets or sets the operation key.
+        /// </summary>
+        /// <value>The operation key.</value>
+        public TObject OperationKey { get; set; }
     }
 }

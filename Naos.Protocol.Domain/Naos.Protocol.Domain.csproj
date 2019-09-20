@@ -74,10 +74,7 @@
     <Compile Include=".recipes\OBeautifulCode.Validation\ParameterValidator.cs" />
     <Compile Include=".recipes\OBeautifulCode.Validation\Range.cs" />
     <Compile Include=".recipes\OBeautifulCode.Validation\ValidatedNotNullAttribute.cs" />
-    <Compile Include="IAggregateReadProtocol.cs" />
-    <Compile Include="IRequireProtocol.cs" />
     <Compile Include="IGetProtocol.cs" />
-    <Compile Include="Composer\RegisteredProtocol.cs" />
     <Compile Include="Events\CancelBlock.cs" />
     <Compile Include="Events\Block.cs" />
     <Compile Include="Events\Pruned.cs" />
@@ -85,12 +82,9 @@
     <Compile Include="Events\PruneRequested.cs" />
     <Compile Include="Events\Created.cs" />
     <Compile Include="EventBase.cs" />
-    <Compile Include="LocatorBase.cs" />
-    <Compile Include="ProtocolComposerBase.cs" />
-    <Compile Include="Composer\Registration.cs" />
-    <Compile Include="Events\Handling.cs" />
-    <Compile Include="Events\Handled.cs" />
-    <Compile Include="Events\Happened.cs" />
+    <Compile Include="Location\LocatorBase.cs" />
+    <Compile Include="Events\Executing.cs" />
+    <Compile Include="Events\Executed.cs" />
     <Compile Include="Operations\DiscoverOp.cs" />
     <Compile Include="Operations\DetermineLocatorByKeyOp.cs" />
     <Compile Include="Operations\GetLatestOp.cs" />
@@ -100,6 +94,7 @@
     <Compile Include="Location\StreamLocatorBase.cs" />
     <Compile Include="IProtocol.cs" />
     <Compile Include="IOperation.cs" />
+    <Compile Include="Operations\SeededDetermineLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Gets a protocol.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = "Prefer interface over attribute here.")]
     public interface IGetProtocol
     {
     }
@@ -17,7 +18,7 @@ namespace Naos.Protocol.Domain
     /// Gets a protocol.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
-    public interface IGetProtocol<in TOperation> : IGetProtocol
+    public interface IGetProtocol<TOperation> : IGetProtocol
         where TOperation : IOperation
     {
         /// <summary>
@@ -26,14 +27,15 @@ namespace Naos.Protocol.Domain
         /// <returns>
         /// The protocol.
         /// </returns>
-        IProtocol<TOperation> Get();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Prefer a method here.")]
+        IProtocol<TOperation> GetProtocol();
     }
 
     /// <summary>
     /// Gets a protocol that executes a <see cref="VoidOperationBase"/>.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
-    public interface IGetVoidProtocol<in TOperation> : IGetProtocol
+    public interface IGetVoidProtocol<TOperation> : IGetProtocol
         where TOperation : VoidOperationBase
     {
         /// <summary>
@@ -42,7 +44,17 @@ namespace Naos.Protocol.Domain
         /// <returns>
         /// The protocol.
         /// </returns>
-        IVoidProtocol<TOperation> Get();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Prefer a method here.")]
+        IVoidProtocol<TOperation> GetProtocol();
+
+        /// <summary>
+        /// Gets the async protocol.
+        /// </summary>
+        /// <returns>
+        /// The async protocol.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Prefer a method.")]
+        IAsyncVoidProtocol<TOperation> GetProtocolAsync();
     }
 
     /// <summary>
@@ -50,7 +62,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     /// <typeparam name="TReturn">The type that the operation return.</typeparam>
-    public interface IGetReturningProtocol<in TOperation, out TReturn> : IGetProtocol
+    public interface IGetReturningProtocol<TOperation, TReturn> : IGetProtocol
         where TOperation : ReturningOperationBase<TReturn>
     {
         /// <summary>
@@ -59,6 +71,16 @@ namespace Naos.Protocol.Domain
         /// <returns>
         /// The protocol.
         /// </returns>
-        IReturningProtocol<TOperation, TReturn> Get();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Prefer a method here.")]
+        IReturningProtocol<TOperation, TReturn> GetProtocol();
+
+        /// <summary>
+        /// Gets the async protocol.
+        /// </summary>
+        /// <returns>
+        /// The async protocol.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Prefer a method.")]
+        IAsyncReturningProtocol<TOperation, TReturn> GetAsync();
     }
 }

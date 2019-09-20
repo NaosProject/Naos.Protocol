@@ -27,6 +27,7 @@ namespace Naos.Protocol.Domain
     /// <see cref="IProtocol{TOperation}"/> associated with the operation requires this generic parameter to define
     /// the signature of the method that can execute the operation.
     /// </remarks>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = "Prefer interface over attribute here.")]
     public interface IOperation
     {
     }

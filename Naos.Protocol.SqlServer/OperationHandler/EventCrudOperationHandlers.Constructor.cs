@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CrudOperationHandlers.Get.cs" company="Naos Project">
+// <copyright file="EventCrudOperationHandlers.Constructor.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,7 +15,7 @@ namespace Naos.Protocol.SqlServer
     /// TODO: Starting point for new project.
     /// </summary>
     /// <typeparam name="TObject">The type of payload.</typeparam>
-    public partial class CrudOperationHandlers<TObject>
+    public sealed partial class CrudOperationHandlers<TObject>
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
         where TObject : class
     {
@@ -24,7 +24,6 @@ namespace Naos.Protocol.SqlServer
         /// </summary>
         public CrudOperationHandlers()
         {
-
         }
     }
 }

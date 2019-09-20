@@ -20,8 +20,8 @@ namespace Naos.Protocol.Serialization.Json
         protected override IReadOnlyCollection<Type> TypesToAutoRegisterWithDiscovery =>
             new[]
             {
-                typeof(ProtocolComposerBase),
                 typeof(EventBase),
+                typeof(VoidOperationBase),
                 typeof(ReturningOperationBase<>),
                 typeof(StreamLocatorBase),
             };

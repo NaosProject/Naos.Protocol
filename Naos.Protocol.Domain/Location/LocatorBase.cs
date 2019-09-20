@@ -1,10 +1,15 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="LocatorBase.cs" company="Naos Project">
-//    Copyright (c) Naos Project 2019. All rights reserved.
+//     Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Naos.Protocol.Domain
 {
-    public abstract class LocatorBase {}
+    /// <summary>
+    /// Base class for locators of any type.
+    /// </summary>
+    public abstract class LocatorBase
+    {
+    }
 }
