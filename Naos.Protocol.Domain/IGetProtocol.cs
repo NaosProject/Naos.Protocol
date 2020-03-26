@@ -48,6 +48,16 @@ namespace Naos.Protocol.Domain
         IVoidProtocol<TOperation> GetProtocol();
 
         /// <summary>
+        /// Gets the protocol.
+        /// </summary>
+        /// <param name="operation">The operation needing a protocol.</param>
+        /// <returns>
+        /// The protocol.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Prefer a method here.")]
+        IVoidProtocol<TOperation> GetProtocol(TOperation operation);
+
+        /// <summary>
         /// Gets the async protocol.
         /// </summary>
         /// <returns>
@@ -55,6 +65,16 @@ namespace Naos.Protocol.Domain
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Prefer a method.")]
         IAsyncVoidProtocol<TOperation> GetProtocolAsync();
+
+        /// <summary>
+        /// Gets the async protocol.
+        /// </summary>
+        /// <param name="operation">The operation needing a protocol.</param>
+        /// <returns>
+        /// The async protocol.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Prefer a method.")]
+        IAsyncVoidProtocol<TOperation> GetProtocolAsync(TOperation operation);
     }
 
     /// <summary>
@@ -75,12 +95,32 @@ namespace Naos.Protocol.Domain
         IReturningProtocol<TOperation, TReturn> GetProtocol();
 
         /// <summary>
+        /// Gets the protocol.
+        /// </summary>
+        /// <param name="operation">The operation needing a protocol.</param>
+        /// <returns>
+        /// The protocol.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Prefer a method here.")]
+        IReturningProtocol<TOperation, TReturn> GetProtocol(TOperation operation);
+
+        /// <summary>
         /// Gets the async protocol.
         /// </summary>
         /// <returns>
         /// The async protocol.
         /// </returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Prefer a method.")]
-        IAsyncReturningProtocol<TOperation, TReturn> GetAsync();
+        IAsyncReturningProtocol<TOperation, TReturn> GetProtocolAsync();
+
+        /// <summary>
+        /// Gets the async protocol.
+        /// </summary>
+        /// <param name="operation">The operation needing a protocol.</param>
+        /// <returns>
+        /// The async protocol.
+        /// </returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "Prefer a method.")]
+        IAsyncReturningProtocol<TOperation, TReturn> GetProtocolAsync(TOperation operation);
     }
 }
