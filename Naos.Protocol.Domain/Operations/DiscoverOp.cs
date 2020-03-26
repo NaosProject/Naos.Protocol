@@ -12,7 +12,7 @@ namespace Naos.Protocol.Domain
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
-    using OBeautifulCode.Representation;
+    using OBeautifulCode.Representation.System;
     using OBeautifulCode.Type;
     using static System.FormattableString;
 

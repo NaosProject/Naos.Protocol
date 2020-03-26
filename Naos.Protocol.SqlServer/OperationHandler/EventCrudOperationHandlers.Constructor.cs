@@ -6,24 +6,29 @@
 
 namespace Naos.Protocol.SqlServer
 {
-    using System.Runtime.InteropServices;
-    using System.Threading.Tasks;
+    using System;
     using Naos.Protocol.Domain;
+    using Naos.Protocol.SqlServer.Internal;
 
 #pragma warning disable CS1710 // XML comment has a duplicate typeparam tag
     /// <summary>
     /// TODO: Starting point for new project.
     /// </summary>
+    /// <typeparam name="TKey">The type of key.</typeparam>
     /// <typeparam name="TObject">The type of payload.</typeparam>
-    public sealed partial class CrudOperationHandlers<TObject>
+    public sealed partial class CrudOperationHandlers<TKey, TObject>
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
-        where TObject : class
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "Needed in future.")]
+        private readonly IReturningProtocol<DetermineLocatorByKeyOp<TKey, LocatorBase>, LocatorBase> keyLocatorProtocol;
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="CrudOperationHandlers{TObject}"/> class.
+        /// Initializes a new instance of the <see cref="CrudOperationHandlers{TKey, TObject}"/> class.
         /// </summary>
-        public CrudOperationHandlers()
+        /// <param name="keyLocatorProtocol">Protocol to determine the locator by key (supports sharding).</param>
+        public CrudOperationHandlers(IReturningProtocol<DetermineLocatorByKeyOp<TKey, LocatorBase>, LocatorBase> keyLocatorProtocol)
         {
+            this.keyLocatorProtocol = keyLocatorProtocol ?? throw new ArgumentNullException(nameof(keyLocatorProtocol));
         }
     }
 }
