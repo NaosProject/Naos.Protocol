@@ -1,0 +1,7 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <description>BSON Serialization Configuration for types in Naos.Protocol</description>
+    <tags>bson serialization configuration Protocol</tags>
+  </metadata>
+</package>
