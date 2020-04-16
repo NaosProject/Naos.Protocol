@@ -11,10 +11,10 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Event indicating that an operation is being executed.
     /// </summary>
-    /// <typeparam name="TOperation">The type of the t operation.</typeparam>
+    /// <typeparam name="TOperation">The type of the operation.</typeparam>
     /// <seealso cref="Naos.Protocol.Domain.EventBase" />
     public class Executing<TOperation> : EventBase
-        where TOperation : class
+        where TOperation : class, IOperation
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Executing{TOperation}"/> class.
