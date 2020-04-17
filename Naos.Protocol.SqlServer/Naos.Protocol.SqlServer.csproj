@@ -97,7 +97,11 @@
     <Compile Include="OperationHandler\EventCrudOperationHandlers.CreateStream.cs" />
     <Compile Include="OperationHandler\EventCrudOperationHandlers.Put.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Schema\StreamSchema.cs" />
+    <Compile Include="Schema\StreamSchema.TypeWithoutVersion.cs" />
+    <Compile Include="Schema\StreamSchema.TypeWithVersion.cs" />
+    <Compile Include="Schema\StreamSchema.Tags.cs" />
+    <Compile Include="Schema\StreamSchema.SerializerDescription.cs" />
+    <Compile Include="Schema\StreamSchema.Object.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />
