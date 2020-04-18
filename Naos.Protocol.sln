@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		RepoConfig.state = RepoConfig.state
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naos.Protocol.SqlServer.Test", "Naos.Protocol.SqlServer.Test\Naos.Protocol.SqlServer.Test.csproj", "{B10991B2-4D52-49B4-B1C6-7A05A4849FD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{76FC3458-E2B4-4AF3-A7DD-04D72A625C20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76FC3458-E2B4-4AF3-A7DD-04D72A625C20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76FC3458-E2B4-4AF3-A7DD-04D72A625C20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B10991B2-4D52-49B4-B1C6-7A05A4849FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B10991B2-4D52-49B4-B1C6-7A05A4849FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B10991B2-4D52-49B4-B1C6-7A05A4849FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B10991B2-4D52-49B4-B1C6-7A05A4849FD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
