@@ -228,6 +228,10 @@
       <Project>{CC842AE0-9125-4124-A4B2-3976595B6197}</Project>
       <Name>Naos.Protocol.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Naos.Protocol.Serialization.Bson\Naos.Protocol.Serialization.Bson.csproj">
+      <Project>{86d25aea-adc3-42f9-960a-cab1e50eef5a}</Project>
+      <Name>Naos.Protocol.Serialization.Bson</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Naos.Protocol.SqlServer\Naos.Protocol.SqlServer.csproj">
       <Project>{01807AC1-D1A5-4B32-A729-3F16AD6E4877}</Project>
       <Name>Naos.Protocol.SqlServer</Name>

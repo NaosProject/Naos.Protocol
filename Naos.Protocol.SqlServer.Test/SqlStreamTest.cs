@@ -7,9 +7,13 @@
 namespace Naos.Protocol.SqlServer.Test
 {
     using System;
+    using MongoDB.Bson.Serialization;
     using Naos.Protocol.Domain;
+    using Naos.Protocol.Serialization.Bson;
     using OBeautifulCode.Assertion.Recipes;
-
+    using OBeautifulCode.Representation.System;
+    using OBeautifulCode.Serialization;
+    using OBeautifulCode.Serialization.Bson;
     using Xunit;
 
     /// <summary>
@@ -22,9 +26,26 @@ namespace Naos.Protocol.SqlServer.Test
         {
             var sqlStreamLocator = new SqlStreamLocator("localhost", "Streams", "sa", "J28k#aWOFW#MUdRn", "SQLDEV2017");
             var sqlDriver = new SqlSingleDriver(sqlStreamLocator);
-            var stream = new SqlStream<string>("Second", TimeSpan.FromMinutes(20), sqlDriver, sqlDriver, sqlDriver);
+
+            var configurationTypeRepresentation = typeof(ProtocolBsonSerializationConfiguration).ToRepresentation();
+            SerializationDescription defaultSerializerDescription = new SerializationDescription(
+                SerializationKind.Bson,
+                SerializationFormat.String,
+                configurationTypeRepresentation);
+
+            var stream = new SqlStream<string>(
+                "Second",
+                TimeSpan.FromMinutes(20),
+                defaultSerializerDescription,
+                BsonSerializerFactory.Instance,
+                sqlDriver,
+                sqlDriver,
+                sqlDriver);
 
             stream.Execute(new CreateStreamOp<string>(stream));
+
+            var payload = new Block("Testing.");
+            stream.BuildPutProtocol<Block>().Execute(new PutOp<Block>(payload));
         }
     }
 }

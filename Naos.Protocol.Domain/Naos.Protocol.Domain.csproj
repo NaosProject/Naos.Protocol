@@ -109,6 +109,7 @@
     <Compile Include="Events\Created.cs" />
     <Compile Include="EventBase.cs" />
     <Compile Include="IHaveKeyType.cs" />
+    <Compile Include="IDataOperationsProtocolFactory.cs" />
     <Compile Include="IStream.cs" />
     <Compile Include="Location\LocatorBase.cs" />
     <Compile Include="Events\Executing.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Operations\DiscoverOp.cs" />
     <Compile Include="Operations\DetermineLocatorByKeyOp.cs" />
     <Compile Include="Operations\GetLatestOp.cs" />
+    <Compile Include="Operations\GetKeyFromObjectOp.cs" />
     <Compile Include="Operations\GetStreamLocatorByKeyOp{TKey}.cs" />
     <Compile Include="Operations\GetAllStreamLocatorsOp.cs" />
     <Compile Include="Operations\GetStreamLocatorByTypeOp.cs" />

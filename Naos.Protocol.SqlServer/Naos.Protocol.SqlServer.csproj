@@ -39,8 +39,20 @@
     <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MongoDB.Bson, Version=2.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.4.4\lib\net45\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Compression, Version=1.0.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Compression.1.0.12\lib\net462\OBeautifulCode.Compression.dll</HintPath>
+    </Reference>
     <Reference Include="OBeautifulCode.Representation.System, Version=1.0.37.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.37\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Serialization, Version=1.0.16.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.16\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.16.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.16\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
     </Reference>
     <Reference Include="OBeautifulCode.Type, Version=1.0.45.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Type.1.0.45\lib\net462\OBeautifulCode.Type.dll</HintPath>
@@ -101,14 +113,15 @@
     <Compile Include=".recipes\Spritely.Redo\RetriableFunction.cs" />
     <Compile Include=".recipes\Spritely.Redo\RetriableFunctionAsync.cs" />
     <Compile Include=".recipes\Spritely.Redo\Using.cs" />
+    <Compile Include="Model\SqlStreamDataProtocol.cs" />
     <Compile Include="Model\SqlStreamLocatorExtensions.cs" />
     <Compile Include="Model\SqlStreamLocator.cs" />
     <Compile Include="Model\SqlStream.cs" />
     <Compile Include="OperationHandler\SqlSingleDriver.cs" />
     <Compile Include="OperationHandler\EventCrudOperationHandlers.Constructor.cs" />
     <Compile Include="OperationHandler\EventCrudOperationHandlers.Get.cs" />
-    <Compile Include="OperationHandler\EventCrudOperationHandlers.Put.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schema\StreamSchema.Sprocs.Put.cs" />
     <Compile Include="Schema\StreamSchema.Schema.cs" />
     <Compile Include="Schema\StreamSchema.TypeWithoutVersion.cs" />
     <Compile Include="Schema\StreamSchema.TypeWithVersion.cs" />
@@ -125,6 +138,10 @@
     <ProjectReference Include="..\Naos.Protocol.Domain\Naos.Protocol.Domain.csproj">
       <Project>{CC842AE0-9125-4124-A4B2-3976595B6197}</Project>
       <Name>Naos.Protocol.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Naos.Protocol.Serialization.Bson\Naos.Protocol.Serialization.Bson.csproj">
+      <Project>{86d25aea-adc3-42f9-960a-cab1e50eef5a}</Project>
+      <Name>Naos.Protocol.Serialization.Bson</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -20,7 +20,6 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TObject">Type of data being written.</typeparam>
     public class PutOp<TObject> : VoidOperationBase
-        where TObject : class
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PutOp{TObject}"/> class.
@@ -28,7 +27,7 @@ namespace Naos.Protocol.Domain
         /// <param name="payload">The payload to operate on.</param>
         public PutOp(TObject payload)
         {
-            this.Payload = payload ?? throw new ArgumentNullException(nameof(payload));
+            this.Payload = payload;
         }
 
         /// <summary>

@@ -6,6 +6,7 @@
 
 namespace Naos.Protocol.SqlServer
 {
+    using System;
     using Naos.Protocol.Domain;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
@@ -77,5 +78,19 @@ namespace Naos.Protocol.SqlServer
         /// </summary>
         /// <value>The port.</value>
         public int Port { get; private set; }
+
+        /// <summary>
+        /// Builds the invalid stream locator type exception.
+        /// </summary>
+        /// <param name="typeOfLocator">The type of locator.</param>
+        /// <returns>Correct exception.</returns>
+        public static Exception BuildInvalidStreamLocatorException(
+            Type typeOfLocator)
+        {
+            var message = FormattableString.Invariant($"Only {nameof(SqlStreamLocator)}'s are supported; provided was: {typeOfLocator}");
+            var result = new NotSupportedException(message);
+
+            return result;
+        }
     }
 }

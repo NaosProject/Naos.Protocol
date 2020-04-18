@@ -19,7 +19,8 @@ namespace Naos.Protocol.Domain
         : IReturningProtocol<GetStreamLocatorByKeyOp<TKey>, StreamLocatorBase>,
           IReturningProtocol<GetStreamLocatorByTypeOp, StreamLocatorBase>,
           IReturningProtocol<GetAllStreamLocatorsOp, IReadOnlyCollection<StreamLocatorBase>>,
-          IVoidProtocol<CreateStreamOp<TKey>>
+          IVoidProtocol<CreateStreamOp<TKey>>,
+          IDataOperationsProtocolFactory<TKey>
     {
         /// <summary>
         /// Gets the name of the stream.
