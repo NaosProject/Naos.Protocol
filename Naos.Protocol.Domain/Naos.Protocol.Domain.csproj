@@ -110,6 +110,7 @@
     <Compile Include="EventBase.cs" />
     <Compile Include="IHaveKeyType.cs" />
     <Compile Include="IDataOperationsProtocolFactory.cs" />
+    <Compile Include="IHaveKey.cs" />
     <Compile Include="IStream.cs" />
     <Compile Include="Location\LocatorBase.cs" />
     <Compile Include="Events\Executing.cs" />

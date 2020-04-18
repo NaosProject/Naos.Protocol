@@ -7,13 +7,9 @@
 namespace Naos.Protocol.SqlServer
 {
     using System;
-    using System.Configuration;
-    using System.Data;
     using System.Data.SqlClient;
-    using Dapper;
     using Naos.Protocol.Domain;
     using OBeautifulCode.Assertion.Recipes;
-    using OBeautifulCode.Serialization;
 
     /// <summary>
     /// Class SqlStreamDataProtocol.
@@ -68,7 +64,14 @@ namespace Naos.Protocol.SqlServer
         public TKey Execute(
             GetKeyFromObjectOp<TKey, TObject> operation)
         {
-            throw new NotImplementedException();
+            if (operation.ObjectToDetermineKeyFrom is IHaveKey<TKey> hasKey)
+            {
+                return hasKey.Key;
+            }
+            else
+            {
+                throw new NotImplementedException(FormattableString.Invariant($"Currently do not have an implementation for getting a Key without using the {nameof(IHaveKey<TKey>)} interface."));
+            }
         }
     }
 }
