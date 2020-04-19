@@ -33,7 +33,6 @@ namespace Naos.Protocol.SqlServer
     {
         private readonly IDictionary<SerializationDescription, DescribedSerializer> serializerDescriptionToDescribedSerializerMap = new Dictionary<SerializationDescription, DescribedSerializer>();
 
-        private readonly ISerializerFactory serializerFactory;
         private readonly IReturningProtocol<GetStreamLocatorByTypeOp, StreamLocatorBase> getStreamLocatorByType;
         private readonly IReturningProtocol<GetStreamLocatorByKeyOp<TKey>, StreamLocatorBase> getStreamLocatorByKey;
         private readonly IReturningProtocol<GetAllStreamLocatorsOp, IReadOnlyCollection<StreamLocatorBase>> getAllStreamLocators;
@@ -46,6 +45,7 @@ namespace Naos.Protocol.SqlServer
         /// <param name="defaultTimeout">The default timeout.</param>
         /// <param name="defaultSerializerDescription">Default serializer description to use.</param>
         /// <param name="serializerFactory">The factory to get a serializer to use for objects.</param>
+        /// <param name="compressorFactory">The factory to get a compressor to use for objects.</param>
         /// <param name="getStreamLocatorByType">The executor of <see cref="GetStreamLocatorByTypeOp"/>.</param>
         /// <param name="getStreamLocatorByKey">The executor of <see cref="GetStreamLocatorByKeyOp{TKey}"/>.</param>
         /// <param name="getAllStreamLocators">The executor of <see cref="GetAllStreamLocatorsOp"/>.</param>
@@ -56,6 +56,7 @@ namespace Naos.Protocol.SqlServer
             TimeSpan defaultTimeout,
             SerializationDescription defaultSerializerDescription,
             ISerializerFactory serializerFactory,
+            ICompressorFactory compressorFactory,
             IReturningProtocol<GetStreamLocatorByTypeOp, StreamLocatorBase> getStreamLocatorByType,
             IReturningProtocol<GetStreamLocatorByKeyOp<TKey>, StreamLocatorBase> getStreamLocatorByKey,
             IReturningProtocol<GetAllStreamLocatorsOp, IReadOnlyCollection<StreamLocatorBase>> getAllStreamLocators,
@@ -64,6 +65,7 @@ namespace Naos.Protocol.SqlServer
             name.MustForArg(nameof(name)).NotBeNullNorWhiteSpace();
             defaultSerializerDescription.MustForArg(nameof(defaultSerializerDescription)).NotBeNull();
             serializerFactory.MustForArg(nameof(serializerFactory)).NotBeNull();
+            compressorFactory.MustForArg(nameof(compressorFactory)).NotBeNull();
             getStreamLocatorByType.MustForArg(nameof(getStreamLocatorByType)).NotBeNull();
             getStreamLocatorByKey.MustForArg(nameof(getStreamLocatorByKey)).NotBeNull();
 
@@ -84,7 +86,8 @@ namespace Naos.Protocol.SqlServer
             this.Name = name;
             this.DefaultTimeout = defaultTimeout;
             this.DefaultSerializerDescription = defaultSerializerDescription;
-            this.serializerFactory = serializerFactory;
+            this.SerializerFactory = serializerFactory;
+            this.CompressorFactory = compressorFactory;
             this.getStreamLocatorByType = getStreamLocatorByType;
             this.getStreamLocatorByKey = getStreamLocatorByKey;
             this.getAllStreamLocators = getAllStreamLocators;
@@ -111,6 +114,18 @@ namespace Naos.Protocol.SqlServer
         /// </summary>
         /// <value>The type of the key.</value>
         public Type KeyType => typeof(TKey);
+
+        /// <summary>
+        /// Gets the serializer factory.
+        /// </summary>
+        /// <value>The serializer factory.</value>
+        public ISerializerFactory SerializerFactory { get; private set; }
+
+        /// <summary>
+        /// Gets the compressor factory.
+        /// </summary>
+        /// <value>The compressor factory.</value>
+        public ICompressorFactory CompressorFactory { get; private set; }
 
         /// <inheritdoc />
         public StreamLocatorBase Execute(
@@ -145,38 +160,30 @@ namespace Naos.Protocol.SqlServer
                 {
                     using (var connection = sqlStreamLocator.OpenSqlConnection())
                     {
-                        var creationScripts = new[]
+                        // should use a transation here!!
+                        var streamAlreadyExists = connection.ExecuteScalar<bool>(
+                            FormattableString.Invariant($"IF (EXISTS(select * from sys.schemas where name = '{this.Name}'))BEGIN SELECT 'true' END ELSE BEGIN SELECT 'false' END"));
+                        if (!streamAlreadyExists)
                         {
-                            StreamSchema.BuildCreationScriptForSchema(this.Name),
-                            StreamSchema.BuildCreationScriptForTypeWithVersion(this.Name),
-                            StreamSchema.BuildCreationScriptForTypeWithoutVersion(this.Name),
-                            StreamSchema.BuildCreationScriptForSerializerDescription(this.Name),
-                            StreamSchema.BuildCreationScriptForObject(this.Name),
-                            StreamSchema.BuildCreationScriptForTag(this.Name),
-                            StreamSchema.BuildCreationScriptForTypeWithoutVersionSproc(this.Name),
-                            StreamSchema.BuildCreationScriptForTypeWithVersionSproc(this.Name),
-                            StreamSchema.BuildCreationScriptForSerializerDescriptionSproc(this.Name),
-                            StreamSchema.BuildCreationScriptForPutSproc(this.Name),
-                        };
+                            var creationScripts = new[]
+                                                  {
+                                                      StreamSchema.BuildCreationScriptForSchema(this.Name),
+                                                      StreamSchema.BuildCreationScriptForTypeWithVersion(this.Name),
+                                                      StreamSchema.BuildCreationScriptForTypeWithoutVersion(this.Name),
+                                                      StreamSchema.BuildCreationScriptForSerializerDescription(this.Name),
+                                                      StreamSchema.BuildCreationScriptForObject(this.Name),
+                                                      StreamSchema.BuildCreationScriptForTag(this.Name),
+                                                      StreamSchema.BuildCreationScriptForTypeWithoutVersionSproc(this.Name),
+                                                      StreamSchema.BuildCreationScriptForTypeWithVersionSproc(this.Name),
+                                                      StreamSchema.BuildCreationScriptForSerializerDescriptionSproc(this.Name),
+                                                      StreamSchema.BuildCreationScriptForPutSproc(this.Name),
+                                                      StreamSchema.BuildCreationScriptForGetLatestByKeySproc(this.Name),
+                                                  };
 
-                        /*
-                        Task ExecuteFinalSqlSetupScripts(Server server)
-                        {
                             foreach (var script in creationScripts)
                             {
-                                // because it might contain "GO" statements most likely this needs to be executed via the SMO connection.
-                                server.ConnectionContext.ExecuteNonQuery(script);
+                                connection.Execute(script);
                             }
-
-                            return Task.Run(() => { });
-                        }
-                        Run.TaskUntilCompletion(SqlServerDatabaseManager.RunOperationOnSmoServerAsync(ExecuteFinalSqlSetupScripts, connection));
-                        */
-
-                        foreach (var script in creationScripts)
-                        {
-                            // because it might contain "GO" statements most likely this needs to be executed via the SMO connection.
-                            connection.Execute(script);
                         }
                     }
                 }
@@ -189,6 +196,12 @@ namespace Naos.Protocol.SqlServer
 
         /// <inheritdoc />
         public IVoidProtocol<PutOp<TObject>> BuildPutProtocol<TObject>()
+        {
+            return new SqlStreamDataProtocol<TKey, TObject>(this);
+        }
+
+        /// <inheritdoc />
+        public IReturningProtocol<GetLatestByKeyOp<TKey, TObject>, TObject> BuildGetLatestByKeyProtocol<TObject>()
         {
             return new SqlStreamDataProtocol<TKey, TObject>(this);
         }
@@ -224,7 +237,7 @@ namespace Naos.Protocol.SqlServer
                 return this.serializerDescriptionToDescribedSerializerMap[this.DefaultSerializerDescription];
             }
 
-            var serializer = this.serializerFactory.BuildSerializer(
+            var serializer = this.SerializerFactory.BuildSerializer(
                 this.DefaultSerializerDescription,
                 unregisteredTypeEncounteredStrategy: UnregisteredTypeEncounteredStrategy.Attempt);
 

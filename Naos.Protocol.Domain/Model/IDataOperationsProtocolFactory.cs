@@ -31,10 +31,17 @@ namespace Naos.Protocol.Domain
         IReturningProtocol<GetKeyFromObjectOp<TKey, TObject>, TKey> BuildGetKeyFromObjectProtocol<TObject>();
 
         /// <summary>
-        /// Gets the put protocol.
+        /// Gets the <see cref="PutOp{TObject}"/> protocol.
         /// </summary>
         /// <typeparam name="TObject">The type of the object.</typeparam>
         /// <returns>TProtocol.</returns>
         IVoidProtocol<PutOp<TObject>> BuildPutProtocol<TObject>();
+
+        /// <summary>
+        /// Gets the <see cref="GetLatestByKeyOp{TKey,TObject}"/> protocol.
+        /// </summary>
+        /// <typeparam name="TObject">The type of the object.</typeparam>
+        /// <returns>TProtocol.</returns>
+        IReturningProtocol<GetLatestByKeyOp<TKey, TObject>, TObject> BuildGetLatestByKeyProtocol<TObject>();
     }
 }

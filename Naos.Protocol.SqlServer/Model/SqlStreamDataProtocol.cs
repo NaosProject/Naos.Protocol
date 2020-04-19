@@ -18,9 +18,10 @@ namespace Naos.Protocol.SqlServer
     using Naos.Protocol.SqlServer.Internal;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Compression;
+    using OBeautifulCode.Representation.System;
     using OBeautifulCode.Serialization;
     using OBeautifulCode.Type.Recipes;
-    using SerializationFormat = System.Data.SerializationFormat;
+    using SerializationFormat = OBeautifulCode.Serialization.SerializationFormat;
 
     /// <summary>
     /// Class SqlStreamDataProtocol.
@@ -29,7 +30,8 @@ namespace Naos.Protocol.SqlServer
     /// <typeparam name="TObject">The type of the object.</typeparam>
     public class SqlStreamDataProtocol<TKey, TObject> : IVoidProtocol<PutOp<TObject>>,
                                                         IReturningProtocol<GetKeyFromObjectOp<TKey, TObject>, TKey>,
-                                                        IReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>>
+                                                        IReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>>,
+                                                        IReturningProtocol<GetLatestByKeyOp<TKey, TObject>, TObject>
     {
         private readonly SqlStream<TKey> stream;
 
@@ -64,14 +66,14 @@ namespace Naos.Protocol.SqlServer
                 foreach (var tag in tags ?? new Dictionary<string, string>())
                 {
                     tagsXml.Append("<Tag ");
-                    tagsXml.Append(FormattableString.Invariant($"Name=\"{tag.Key}\""));
-                    tagsXml.Append(FormattableString.Invariant($"Value=\"{tag.Value}\""));
+                    tagsXml.Append(FormattableString.Invariant($"Name=\"{tag.Key}\" Value=\"{tag.Value}\""));
                     tagsXml.Append("/>");
                 }
 
                 tagsXml.Append("</Tags>");
 
                 var serializedPayload = describedSerializer.Serializer.SerializeToString(operation.Payload);
+                var serializedKey = (key is string stringKey) ? stringKey : describedSerializer.Serializer.SerializeToString(key);
                 var storedProcedureName = StreamSchema.BuildPutSprocName(this.stream.Name);
                 using (var connection = sqlStreamLocator.OpenSqlConnection())
                 {
@@ -86,6 +88,7 @@ namespace Naos.Protocol.SqlServer
                             new SqlParameter(
                                 nameof(describedSerializer.SerializerDescriptionId),
                                 describedSerializer.SerializerDescriptionId));
+                        command.Parameters.Add(new SqlParameter("SerializedKey", serializedKey));
                         command.Parameters.Add(new SqlParameter("SerializedPayload", serializedPayload));
                         command.Parameters.Add(new SqlParameter("Tags", tagsXml.ToString()));
 
@@ -134,6 +137,90 @@ namespace Naos.Protocol.SqlServer
             var protocol = this.stream.BuildGetTagsFromObjectProtocol<TObject>();
             var result = protocol.Execute(operation);
             return result;
+        }
+
+        /// <inheritdoc />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Internally generated and should be safe.")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Should be disposing correctly.")]
+        public TObject Execute(
+            GetLatestByKeyOp<TKey, TObject> operation)
+        {
+            var locator = this.stream.Execute(new GetStreamLocatorByKeyOp<TKey>(operation.Key));
+            if (locator is SqlStreamLocator sqlStreamLocator)
+            {
+                var serializedKey = (operation.Key is string stringKey)
+                    ? stringKey
+                    : this.stream.GetDescribedSerializer(sqlStreamLocator).Serializer.SerializeToString(operation.Key);
+
+                var storedProcedureName = StreamSchema.BuildGetLatestByKeySprocName(this.stream.Name);
+
+                SerializationKind serializationKind;
+                SerializationFormat serializationFormat;
+                string serializationConfigAssemblyQualifiedNameWithoutVersion;
+                CompressionKind compressionKind;
+                string serializedPayload;
+
+                using (var connection = sqlStreamLocator.OpenSqlConnection())
+                {
+                    using (var command = new SqlCommand(storedProcedureName, connection)
+                    {
+                        CommandType = CommandType.StoredProcedure,
+                    })
+                    {
+                        command.Parameters.Add(new SqlParameter("SerializedKey", serializedKey));
+                        var serializationConfigAssemblyQualifiedNameWithoutVersionParam = new SqlParameter("SerializationConfigAssemblyQualifiedNameWithoutVersion", SqlDbType.NVarChar, 2000)
+                                                                                          {
+                                                                                              Direction = ParameterDirection.Output,
+                                                                                          };
+                        var serializationKindParam = new SqlParameter(nameof(SerializationKind), SqlDbType.VarChar, 50)
+                                                     {
+                                                         Direction = ParameterDirection.Output,
+                                                     };
+                        var serializationFormatParam = new SqlParameter(nameof(SerializationFormat), SqlDbType.VarChar, 50)
+                                                     {
+                                                         Direction = ParameterDirection.Output,
+                                                     };
+                        var compressionKindParam = new SqlParameter(nameof(CompressionKind), SqlDbType.VarChar, 50)
+                                                   {
+                                                       Direction = ParameterDirection.Output,
+                                                   };
+                        var serializedPayloadParam = new SqlParameter("SerializedPayload", SqlDbType.NVarChar, -1)
+                                                     {
+                                                         Direction = ParameterDirection.Output,
+                                                     };
+                        command.Parameters.Add(serializationConfigAssemblyQualifiedNameWithoutVersionParam);
+                        command.Parameters.Add(serializationKindParam);
+                        command.Parameters.Add(serializationFormatParam);
+                        command.Parameters.Add(compressionKindParam);
+                        command.Parameters.Add(serializedPayloadParam);
+
+                        command.ExecuteNonQuery();
+                        serializationKind = (SerializationKind)Enum.Parse(typeof(SerializationKind), serializationKindParam?.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{nameof(SerializationKind)} from {storedProcedureName} should not be null output for key {operation.Key}.")));
+                        serializationFormat = (SerializationFormat)Enum.Parse(typeof(SerializationFormat), serializationFormatParam?.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{nameof(SerializationFormat)} from {storedProcedureName} should not be null output for key {operation.Key}.")));
+                        serializationConfigAssemblyQualifiedNameWithoutVersion = serializationConfigAssemblyQualifiedNameWithoutVersionParam.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{serializationConfigAssemblyQualifiedNameWithoutVersionParam.ParameterName} from {storedProcedureName} should not be null output for key {operation.Key}."));
+                        compressionKind = (CompressionKind)Enum.Parse(typeof(CompressionKind), compressionKindParam.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{nameof(CompressionKind)} from {storedProcedureName} should not be null output for key {operation.Key}.")));
+                        serializedPayload = serializedPayloadParam.Value?.ToString();
+                    }
+                }
+
+                var describedSerialization = new DescribedSerialization(
+                    typeof(TObject).ToRepresentation(),
+                    serializedPayload,
+                    new SerializationDescription(
+                        serializationKind,
+                        serializationFormat,
+                        Type.GetType(serializationConfigAssemblyQualifiedNameWithoutVersion).ToRepresentation(),
+                        compressionKind));
+                var result = describedSerialization.DeserializePayloadUsingSpecificFactory<TObject>(
+                    this.stream.SerializerFactory,
+                    this.stream.CompressorFactory,
+                    unregisteredTypeEncounteredStrategy: UnregisteredTypeEncounteredStrategy.Attempt);
+                return result;
+            }
+            else
+            {
+                throw SqlStreamLocator.BuildInvalidStreamLocatorException(locator.GetType());
+            }
         }
     }
 }

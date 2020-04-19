@@ -118,8 +118,8 @@
     <Compile Include="Operations\CreateStreamOp{TKey}.cs" />
     <Compile Include="Operations\DiscoverOp.cs" />
     <Compile Include="Operations\DetermineLocatorByKeyOp.cs" />
+    <Compile Include="Operations\GetLatestByKeyOp{TKey,TObject}.cs" />
     <Compile Include="Operations\GetTagsFromObjectOp.cs" />
-    <Compile Include="Operations\GetLatestOp.cs" />
     <Compile Include="Operations\GetKeyFromObjectOp.cs" />
     <Compile Include="Operations\GetStreamLocatorByKeyOp{TKey}.cs" />
     <Compile Include="Operations\GetAllStreamLocatorsOp.cs" />
@@ -130,7 +130,6 @@
     <Compile Include="Location\StreamLocatorBase.cs" />
     <Compile Include="Model\IProtocol.cs" />
     <Compile Include="Model\IOperation.cs" />
-    <Compile Include="Operations\SeededDetermineLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocols\LambdaGetTagsFromObjectProtocol{TObject}.cs" />
   </ItemGroup>

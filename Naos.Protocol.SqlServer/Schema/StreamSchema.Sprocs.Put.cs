@@ -43,6 +43,7 @@ CREATE PROCEDURE [{streamName}].PutObject(
   @AssemblyQualitifiedNameWithoutVersion AS nvarchar(2000)
 , @AssemblyQualitifiedNameWithVersion AS nvarchar(2000)
 , @SerializerDescriptionId AS uniqueidentifier
+, @SerializedKey AS nvarchar(450)
 , @SerializedPayload AS varchar(max)
 , @Tags AS xml
 )
@@ -65,6 +66,7 @@ BEGIN TRANSACTION [PutObject]
 		, [ObjectTypeWithoutVersionId]
 		, [ObjectTypeWithVersionId]
 		, [SerializerDescriptionId]
+		, [SerializedKey]
 		, [SerializedPayload]
 		, [CreateDateTimeUtc]
 		) VALUES (
@@ -72,6 +74,7 @@ BEGIN TRANSACTION [PutObject]
 		, @TypeWithoutVersionId
 		, @TypeWithVersionId
 		, @SerializerDescriptionId
+		, @SerializedKey
 		, @SerializedPayload
 		, @CreateDateTimeUtc
 		)

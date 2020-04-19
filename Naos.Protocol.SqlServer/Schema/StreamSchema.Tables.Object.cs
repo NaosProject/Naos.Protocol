@@ -31,6 +31,7 @@ CREATE TABLE [{streamName}].[Object](
 	[ObjectTypeWithoutVersionId] [int] NOT NULL,
 	[ObjectTypeWithVersionId] [int] NOT NULL,
 	[SerializerDescriptionId] [uniqueidentifier] NOT NULL,
+	[SerializedKey] [nvarchar](450) NOT NULL,
 	[SerializedPayload] [varchar](max) NOT NULL,
 	[CreateDateTimeUtc] [datetime] NOT NULL,
  CONSTRAINT [PK_Object] PRIMARY KEY CLUSTERED 
