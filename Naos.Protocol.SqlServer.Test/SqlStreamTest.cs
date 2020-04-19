@@ -33,19 +33,45 @@ namespace Naos.Protocol.SqlServer.Test
                 SerializationFormat.String,
                 configurationTypeRepresentation);
 
+            var tagExtractor = new LambdaGetTagsFromObjectProtocol<MyObject>(
+                _ => new Dictionary<string, string>
+                     {
+                         { nameof(MyObject.Field), _.Field },
+                     });
+
             var stream = new SqlStream<string>(
-                "Second",
+                "Third",
                 TimeSpan.FromMinutes(20),
                 defaultSerializerDescription,
                 BsonSerializerFactory.Instance,
                 sqlDriver,
                 sqlDriver,
-                sqlDriver);
+                sqlDriver,
+                new Dictionary<Type, IProtocol>
+                {
+                    { typeof(MyObject), tagExtractor },
+                });
 
             stream.Execute(new CreateStreamOp<string>(stream));
 
             var payload = new Block("Testing.");
             stream.BuildPutProtocol<Block>().Execute(new PutOp<Block>(payload));
         }
+    }
+
+    public class MyObject : IHaveKey<string>
+    {
+        public MyObject(
+            string key,
+            string field)
+        {
+            this.Key = key;
+            this.Field = field;
+        }
+
+        /// <inheritdoc />
+        public string Key { get; private set; }
+
+        public string Field { get; private set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StreamSchema.Tags.cs" company="Naos Project">
+// <copyright file="StreamSchema.Tables.Tag.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -22,30 +22,31 @@ namespace Naos.Protocol.SqlServer
             string streamName)
         {
             var result = FormattableString.Invariant($@"
-			SET ANSI_NULLS ON
-			
+SET ANSI_NULLS ON
 
-			SET QUOTED_IDENTIFIER ON
-			
 
-			CREATE TABLE [{streamName}].[Tag](
-				[Id] [uniqueidentifier] NOT NULL,
-				[ObjectId] [uniqueidentifier] NOT NULL,
-				[Name] [nvarchar](1000) NOT NULL,
-				[Value] [nvarchar](4000) NULL,
-				[CreatedDateTimeUtc] [datetime] NOT NULL,
-			 CONSTRAINT [PK_Tag] PRIMARY KEY CLUSTERED 
-			(
-				[Id] ASC
-			)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-			) ON [PRIMARY]
-			
+SET QUOTED_IDENTIFIER ON
 
-			ALTER TABLE [{streamName}].[Tag]  WITH CHECK ADD  CONSTRAINT [FK_Tags_Object] FOREIGN KEY([ObjectId])
-			REFERENCES [{streamName}].[Object] ([Id])
-			
 
-			ALTER TABLE [{streamName}].[Tag] CHECK CONSTRAINT [FK_Tags_Object]
+CREATE TABLE [{streamName}].[Tag](
+	[Id] [uniqueidentifier] NOT NULL,
+	[ObjectId] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](450) NOT NULL,
+	[Value] [nvarchar](4000) NULL,
+	[CreateDateTimeUtc] [datetime] NOT NULL,
+ CONSTRAINT [PK_Tag] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+
+ALTER TABLE [{streamName}].[Tag]  WITH CHECK ADD  CONSTRAINT [FK_Tags_Object] FOREIGN KEY([ObjectId])
+REFERENCES [{streamName}].[Object] ([Id])
+
+
+ALTER TABLE [{streamName}].[Tag] CHECK CONSTRAINT [FK_Tags_Object]
+
 			
 			");
 

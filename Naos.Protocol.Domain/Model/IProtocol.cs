@@ -11,11 +11,19 @@ namespace Naos.Protocol.Domain
     using System.Threading.Tasks;
 
     /// <summary>
+    /// Fully open interface.
+    /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = "Need a top level interface for collections.")]
+    public interface IProtocol
+    {
+    }
+
+    /// <summary>
     /// Executes an operation.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = "Prefer interface over attribute here.")]
-    public interface IProtocol<TOperation>
+    public interface IProtocol<TOperation> : IProtocol
         where TOperation : IOperation
     {
     }

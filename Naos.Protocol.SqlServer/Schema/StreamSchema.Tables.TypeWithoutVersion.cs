@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StreamSchema.TypeWithoutVersion.cs" company="Naos Project">
+// <copyright file="StreamSchema.Tables.TypeWithoutVersion.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -22,22 +22,21 @@ namespace Naos.Protocol.SqlServer
             string streamName)
         {
             var result = FormattableString.Invariant($@"
-            SET ANSI_NULLS ON
-            
+SET ANSI_NULLS ON
 
-            SET QUOTED_IDENTIFIER ON
-            
 
-            CREATE TABLE [{streamName}].[TypeWithoutVersion](
-	            [Id] [int] IDENTITY(1,1) NOT NULL,
-	            [AssemblyQualifiedName] [nvarchar](2000) NOT NULL,
-	            [CreateDateTimeUtc] [datetime] NULL,
-             CONSTRAINT [PK_TypeWithoutVersion] PRIMARY KEY CLUSTERED 
-            (
-	            [Id] ASC
-            )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-            ) ON [PRIMARY]
-            
+SET QUOTED_IDENTIFIER ON
+
+
+CREATE TABLE [{streamName}].[TypeWithoutVersion](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[AssemblyQualifiedName] [nvarchar](2000) NOT NULL,
+	[CreateDateTimeUtc] [datetime] NULL,
+ CONSTRAINT [PK_TypeWithoutVersion] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 			");
 
             return result;

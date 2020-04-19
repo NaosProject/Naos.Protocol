@@ -17,6 +17,13 @@ namespace Naos.Protocol.Domain
     public interface IDataOperationsProtocolFactory<TKey>
     {
         /// <summary>
+        /// Builds the protocol for <see cref="GetTagsFromObjectOp{TObject}"/>.
+        /// </summary>
+        /// <typeparam name="TObject">The type of the t object.</typeparam>
+        /// <returns>Protocol for <see cref="GetTagsFromObjectOp{TObject}"/>.</returns>
+        IReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>> BuildGetTagsFromObjectProtocol<TObject>();
+
+        /// <summary>
         /// Builds the protocol for <see cref="GetKeyFromObjectOp{TKey,TObject}"/>.
         /// </summary>
         /// <typeparam name="TObject">The type of the object.</typeparam>
