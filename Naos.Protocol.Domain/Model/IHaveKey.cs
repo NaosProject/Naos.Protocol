@@ -16,6 +16,6 @@ namespace Naos.Protocol.Domain
         /// Gets the key.
         /// </summary>
         /// <value>The key.</value>
-        TKey Key { get; }
+        TKey Id { get; }
     }
 }

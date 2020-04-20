@@ -27,53 +27,66 @@ namespace Naos.Protocol.SqlServer
     /// <summary>
     /// SQL implementation of an <see cref="IStream{TKey}" />.
     /// </summary>
-    /// <typeparam name="TKey">Type of the key.</typeparam>
+    /// <typeparam name="TId">Type of the key.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Justification = NaosSuppressBecause.CA1711_IdentifiersShouldNotHaveIncorrectSuffix_TypeNameAddedAsSuffixForTestsWhereTypeIsPrimaryConcern)]
-    public partial class SqlStream<TKey> : IHaveKeyType, IStream<TKey>, IModelViaCodeGen, IReturningProtocol<GetIdAddIfNecessarySerializerDescriptionOp, Guid>
+    public partial class SqlStream<TId> : IHaveKeyType, IStream<TId>, IReturningProtocol<GetIdAddIfNecessarySerializerDescriptionOp, int>
     {
         private readonly IDictionary<SerializationDescription, DescribedSerializer> serializerDescriptionToDescribedSerializerMap = new Dictionary<SerializationDescription, DescribedSerializer>();
 
-        private readonly IReturningProtocol<GetStreamLocatorByTypeOp, StreamLocatorBase> getStreamLocatorByType;
-        private readonly IReturningProtocol<GetStreamLocatorByKeyOp<TKey>, StreamLocatorBase> getStreamLocatorByKey;
-        private readonly IReturningProtocol<GetAllStreamLocatorsOp, IReadOnlyCollection<StreamLocatorBase>> getAllStreamLocators;
-        private readonly IReadOnlyDictionary<Type, IProtocol> tagExtractors;
+        private readonly IProtocolStreamLocator<TId> streamLocatorProtocols;
+        private readonly IReadOnlyDictionary<Type, IProtocol> typeToGetIdProtocolMap;
+        private readonly IReadOnlyDictionary<Type, IProtocol> typeToGetTagsProtocolMap;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlStream{TKey}"/> class.
         /// </summary>
         /// <param name="name">The name of the stream.</param>
-        /// <param name="defaultTimeout">The default timeout.</param>
+        /// <param name="defaultConnectionTimeout">The default connection timeout.</param>
+        /// <param name="defaultCommandTimeout">The default command timeout.</param>
         /// <param name="defaultSerializerDescription">Default serializer description to use.</param>
         /// <param name="serializerFactory">The factory to get a serializer to use for objects.</param>
         /// <param name="compressorFactory">The factory to get a compressor to use for objects.</param>
-        /// <param name="getStreamLocatorByType">The executor of <see cref="GetStreamLocatorByTypeOp"/>.</param>
-        /// <param name="getStreamLocatorByKey">The executor of <see cref="GetStreamLocatorByKeyOp{TKey}"/>.</param>
-        /// <param name="getAllStreamLocators">The executor of <see cref="GetAllStreamLocatorsOp"/>.</param>
-        /// <param name="tagExtractors">Tag extractor protocols.</param>
+        /// <param name="streamLocatorProtocols">The executor of <see cref="GetStreamLocatorByIdOp{TKey}"/>.</param>
+        /// <param name="typeToGetIdProtocolMap">Id extractor protocols by type.</param>
+        /// <param name="typeToGetTagsProtocolMap">Tag extractor protocols by type.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "AllStream", Justification = NaosSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWordsInUnitTestMethodName)]
         public SqlStream(
             string name,
-            TimeSpan defaultTimeout,
+            TimeSpan defaultConnectionTimeout,
+            TimeSpan defaultCommandTimeout,
             SerializationDescription defaultSerializerDescription,
             ISerializerFactory serializerFactory,
             ICompressorFactory compressorFactory,
-            IReturningProtocol<GetStreamLocatorByTypeOp, StreamLocatorBase> getStreamLocatorByType,
-            IReturningProtocol<GetStreamLocatorByKeyOp<TKey>, StreamLocatorBase> getStreamLocatorByKey,
-            IReturningProtocol<GetAllStreamLocatorsOp, IReadOnlyCollection<StreamLocatorBase>> getAllStreamLocators,
-            IReadOnlyDictionary<Type, IProtocol> tagExtractors)
+            IProtocolStreamLocator<TId> streamLocatorProtocols,
+            IReadOnlyDictionary<Type, IProtocol> typeToGetIdProtocolMap,
+            IReadOnlyDictionary<Type, IProtocol> typeToGetTagsProtocolMap)
         {
             name.MustForArg(nameof(name)).NotBeNullNorWhiteSpace();
             defaultSerializerDescription.MustForArg(nameof(defaultSerializerDescription)).NotBeNull();
             serializerFactory.MustForArg(nameof(serializerFactory)).NotBeNull();
             compressorFactory.MustForArg(nameof(compressorFactory)).NotBeNull();
-            getStreamLocatorByType.MustForArg(nameof(getStreamLocatorByType)).NotBeNull();
-            getStreamLocatorByKey.MustForArg(nameof(getStreamLocatorByKey)).NotBeNull();
+            streamLocatorProtocols.MustForArg(nameof(streamLocatorProtocols)).NotBeNull();
 
-            var localTagExtractors = tagExtractors ?? new Dictionary<Type, IProtocol>();
-            foreach (var localTagExtractor in localTagExtractors)
+            var localTypeToGetIdProtocolMap = typeToGetIdProtocolMap ?? new Dictionary<Type, IProtocol>();
+            foreach (var localTypeToGetIdProtocol in localTypeToGetIdProtocolMap)
             {
-                var type = localTagExtractor.Key;
-                var protocol = localTagExtractor.Value;
+                var type = localTypeToGetIdProtocol.Key;
+                var protocol = localTypeToGetIdProtocol.Value;
+                var expectedProtocolType = typeof(IReturningProtocol<,>).MakeGenericType(
+                    typeof(GetIdFromObjectOp<,>).MakeGenericType(type),
+                    typeof(TId),
+                    type);
+                if (!protocol.GetType().IsAssignableTo(expectedProtocolType))
+                {
+                    throw new ArgumentException(FormattableString.Invariant($"The type {type.ToStringReadable()} must match the TObject in IReturningProtocol<GetIdFromObjectOp<TObject>, TKey>)"));
+                }
+            }
+
+            var localTypeToGetTagsProtocolMap = typeToGetTagsProtocolMap ?? new Dictionary<Type, IProtocol>();
+            foreach (var localTypeToGetTagsProtocol in localTypeToGetTagsProtocolMap)
+            {
+                var type = localTypeToGetTagsProtocol.Key;
+                var protocol = localTypeToGetTagsProtocol.Value;
                 var expectedProtocolType = typeof(IReturningProtocol<,>).MakeGenericType(
                     typeof(GetTagsFromObjectOp<>).MakeGenericType(type),
                     typeof(IReadOnlyDictionary<string, string>));
@@ -84,14 +97,14 @@ namespace Naos.Protocol.SqlServer
             }
 
             this.Name = name;
-            this.DefaultTimeout = defaultTimeout;
+            this.DefaultConnectionTimeout = defaultConnectionTimeout;
+            this.DefaultCommandTimeout = defaultCommandTimeout;
             this.DefaultSerializerDescription = defaultSerializerDescription;
             this.SerializerFactory = serializerFactory;
             this.CompressorFactory = compressorFactory;
-            this.getStreamLocatorByType = getStreamLocatorByType;
-            this.getStreamLocatorByKey = getStreamLocatorByKey;
-            this.getAllStreamLocators = getAllStreamLocators;
-            this.tagExtractors = localTagExtractors;
+            this.streamLocatorProtocols = streamLocatorProtocols;
+            this.typeToGetIdProtocolMap = localTypeToGetIdProtocolMap;
+            this.typeToGetTagsProtocolMap = localTypeToGetTagsProtocolMap;
         }
 
         /// <inheritdoc />
@@ -104,16 +117,22 @@ namespace Naos.Protocol.SqlServer
         public SerializationDescription DefaultSerializerDescription { get; private set; }
 
         /// <summary>
-        /// Gets the default timeout.
+        /// Gets the default connection timeout.
         /// </summary>
-        /// <value>The default timeout.</value>
-        public TimeSpan DefaultTimeout { get; private set; }
+        /// <value>The default connection timeout.</value>
+        public TimeSpan DefaultConnectionTimeout { get; private set; }
+
+        /// <summary>
+        /// Gets the default command timeout.
+        /// </summary>
+        /// <value>The default command timeout.</value>
+        public TimeSpan DefaultCommandTimeout { get; private set; }
 
         /// <summary>
         /// Gets the type of the key.
         /// </summary>
         /// <value>The type of the key.</value>
-        public Type KeyType => typeof(TKey);
+        public Type IdType => typeof(TId);
 
         /// <summary>
         /// Gets the serializer factory.
@@ -129,28 +148,21 @@ namespace Naos.Protocol.SqlServer
 
         /// <inheritdoc />
         public StreamLocatorBase Execute(
-            GetStreamLocatorByKeyOp<TKey> operation)
+            GetStreamLocatorByIdOp<TId> operation)
         {
-            return this.getStreamLocatorByKey.Execute(operation);
-        }
-
-        /// <inheritdoc />
-        public StreamLocatorBase Execute(
-            GetStreamLocatorByTypeOp operation)
-        {
-            return this.getStreamLocatorByType.Execute(operation);
+            return this.streamLocatorProtocols.Execute(operation);
         }
 
         /// <inheritdoc />
         public IReadOnlyCollection<StreamLocatorBase> Execute(
             GetAllStreamLocatorsOp operation)
         {
-            return this.getAllStreamLocators.Execute(operation);
+            return this.streamLocatorProtocols.Execute(operation);
         }
 
         /// <inheritdoc />
         public void Execute(
-            CreateStreamOp<TKey> operation)
+            CreateStreamOp<TId> operation)
         {
             var stream = operation.Stream;
             var allLocators = stream.Execute(new GetAllStreamLocatorsOp());
@@ -197,31 +209,41 @@ namespace Naos.Protocol.SqlServer
         /// <inheritdoc />
         public IVoidProtocol<PutOp<TObject>> BuildPutProtocol<TObject>()
         {
-            return new SqlStreamDataProtocol<TKey, TObject>(this);
+            return new SqlStreamDataProtocol<TId, TObject>(this);
         }
 
         /// <inheritdoc />
-        public IReturningProtocol<GetLatestByKeyOp<TKey, TObject>, TObject> BuildGetLatestByKeyProtocol<TObject>()
+        public IReturningProtocol<GetLatestByIdOp<TId, TObject>, TObject> BuildGetLatestByKeyProtocol<TObject>()
         {
-            return new SqlStreamDataProtocol<TKey, TObject>(this);
+            return new SqlStreamDataProtocol<TId, TObject>(this);
+        }
+
+        /// <inheritdoc />
+        public IReturningProtocol<GetIdFromObjectOp<TId, TObject>, TId> BuildGetIdFromObjectProtocol<TObject>()
+        {
+            var containsKey = this.typeToGetIdProtocolMap.TryGetValue(typeof(TObject), out IProtocol protocol);
+            if (containsKey)
+            {
+                return (IReturningProtocol<GetIdFromObjectOp<TId, TObject>, TId>)protocol;
+            }
+            else
+            {
+                return new GetIdFromObjectProtocol<TId, TObject>();
+            }
         }
 
         /// <inheritdoc />
         public IReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>> BuildGetTagsFromObjectProtocol<TObject>()
         {
-            var containsKey = this.tagExtractors.TryGetValue(typeof(TObject), out IProtocol protocol);
-            if (!containsKey)
+            var containsKey = this.typeToGetTagsProtocolMap.TryGetValue(typeof(TObject), out IProtocol protocol);
+            if (containsKey)
             {
-                return new LambdaGetTagsFromObjectProtocol<TObject>(_ => new Dictionary<string, string>());
+                return (IReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>>)protocol;
             }
-
-            return (IReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>>)protocol;
-        }
-
-        /// <inheritdoc />
-        public IReturningProtocol<GetKeyFromObjectOp<TKey, TObject>, TKey> BuildGetKeyFromObjectProtocol<TObject>()
-        {
-            return new SqlStreamDataProtocol<TKey, TObject>(this);
+            else
+            {
+                return new GetTagsFromObjectProtocol<TObject>();
+            }
         }
 
         /// <summary>
@@ -249,7 +271,7 @@ namespace Naos.Protocol.SqlServer
         /// <inheritdoc />
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Should dispose correctly.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Built internally and should be safe from injection.")]
-        public Guid Execute(
+        public int Execute(
             GetIdAddIfNecessarySerializerDescriptionOp operation)
         {
             var serializationConfigurationTypeWithoutVersion = operation.SerializationDescription.ConfigurationTypeRepresentation.AssemblyQualifiedName;
@@ -270,7 +292,7 @@ namespace Naos.Protocol.SqlServer
                     command.Parameters.Add(new SqlParameter(nameof(CompressionKind), operation.SerializationDescription.CompressionKind));
                     command.Parameters.Add(
                         new SqlParameter(nameof(UnregisteredTypeEncounteredStrategy), UnregisteredTypeEncounteredStrategy.Attempt));
-                    var resultParameter = new SqlParameter("Result", SqlDbType.UniqueIdentifier)
+                    var resultParameter = new SqlParameter("Result", SqlDbType.Int)
                                           {
                                               Direction = ParameterDirection.Output,
                                           };
@@ -279,9 +301,9 @@ namespace Naos.Protocol.SqlServer
                     command.ExecuteNonQuery();
 
                     var result = resultParameter.Value;
-                    if (result is Guid guidResult)
+                    if (result is int intResult)
                     {
-                        return guidResult;
+                        return intResult;
                     }
                     else
                     {

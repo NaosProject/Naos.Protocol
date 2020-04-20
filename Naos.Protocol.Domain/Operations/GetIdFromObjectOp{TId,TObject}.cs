@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GetKeyFromObjectOp.cs" company="Naos Project">
+// <copyright file="GetIdFromObjectOp{TId,TObject}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,27 +11,27 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Abstract base of an operation.
     /// </summary>
-    /// <typeparam name="TKey">Type of key being used.</typeparam>
+    /// <typeparam name="TId">Type of ID being used.</typeparam>
     /// <typeparam name="TObject">Type of object.</typeparam>
-    public class GetKeyFromObjectOp<TKey, TObject> : ReturningOperationBase<TKey>, IHaveKeyType
+    public class GetIdFromObjectOp<TId, TObject> : ReturningOperationBase<TId>, IHaveKeyType
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetKeyFromObjectOp{TKey, TObject}"/> class.
+        /// Initializes a new instance of the <see cref="GetIdFromObjectOp{TKey,TObject}"/> class.
         /// </summary>
-        /// <param name="objectToDetermineKeyFrom">The object to determine key from.</param>
-        public GetKeyFromObjectOp(
-            TObject objectToDetermineKeyFrom)
+        /// <param name="objectToDetermineIdFrom">The object to determine key from.</param>
+        public GetIdFromObjectOp(
+            TObject objectToDetermineIdFrom)
         {
-            this.ObjectToDetermineKeyFrom = objectToDetermineKeyFrom;
+            this.ObjectToDetermineIdFrom = objectToDetermineIdFrom;
         }
 
         /// <summary>
         /// Gets the object to determine key from.
         /// </summary>
         /// <value>The object to determine key from.</value>
-        public TObject ObjectToDetermineKeyFrom { get; private set; }
+        public TObject ObjectToDetermineIdFrom { get; private set; }
 
         /// <inheritdoc />
-        public Type KeyType => typeof(TKey);
+        public Type IdType => typeof(TId);
     }
 }

@@ -32,7 +32,7 @@ namespace Naos.Protocol.SqlServer
         /// <param name="serializerDescription">The serializer description.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="serializerDescriptionId">The serializer description identifier.</param>
-        public DescribedSerializer(SerializationDescription serializerDescription, ISerializeAndDeserialize serializer, Guid serializerDescriptionId)
+        public DescribedSerializer(SerializationDescription serializerDescription, ISerializeAndDeserialize serializer, int serializerDescriptionId)
         {
             serializerDescription.MustForArg(nameof(serializerDescription)).NotBeNull();
             serializer.MustForArg(nameof(serializer)).NotBeNull();
@@ -57,6 +57,6 @@ namespace Naos.Protocol.SqlServer
         /// Gets the serializer description identifier.
         /// </summary>
         /// <value>The serializer description identifier.</value>
-        public Guid SerializerDescriptionId { get; private set; }
+        public int SerializerDescriptionId { get; private set; }
     }
 }

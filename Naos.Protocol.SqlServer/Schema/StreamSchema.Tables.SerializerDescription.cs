@@ -29,14 +29,14 @@ SET QUOTED_IDENTIFIER ON
 
 
 CREATE TABLE [{streamName}].[SerializerDescription](
-	[Id] [uniqueidentifier] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[SerializationKind] [varchar](50) NOT NULL,
 	[SerializationFormat] [varchar](50) NOT NULL,
 	[SerializationConfigurationTypeWithoutVersionId] [int] NOT NULL,
 	[SerializationConfigurationTypeWithVersionId] [int] NOT NULL,
 	[CompressionKind] [varchar](50) NOT NULL,
 	[UnregisteredTypeEncounteredStrategy] [nvarchar](50) NULL,
-	[CreateDateTimeUtc] [datetime] NOT NULL,
+	[RecordCreatedUtc] [datetime2] NOT NULL,
  CONSTRAINT [PK_SerializerDescription] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

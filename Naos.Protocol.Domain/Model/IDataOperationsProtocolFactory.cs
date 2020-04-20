@@ -24,11 +24,11 @@ namespace Naos.Protocol.Domain
         IReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>> BuildGetTagsFromObjectProtocol<TObject>();
 
         /// <summary>
-        /// Builds the protocol for <see cref="GetKeyFromObjectOp{TKey,TObject}"/>.
+        /// Builds the protocol for <see cref="GetIdFromObjectOp{TKey,TObject}"/>.
         /// </summary>
         /// <typeparam name="TObject">The type of the object.</typeparam>
-        /// <returns>Protocol for <see cref="GetKeyFromObjectOp{TKey,TObject}"/>.</returns>
-        IReturningProtocol<GetKeyFromObjectOp<TKey, TObject>, TKey> BuildGetKeyFromObjectProtocol<TObject>();
+        /// <returns>Protocol for <see cref="GetIdFromObjectOp{TKey,TObject}"/>.</returns>
+        IReturningProtocol<GetIdFromObjectOp<TKey, TObject>, TKey> BuildGetIdFromObjectProtocol<TObject>();
 
         /// <summary>
         /// Gets the <see cref="PutOp{TObject}"/> protocol.
@@ -38,10 +38,10 @@ namespace Naos.Protocol.Domain
         IVoidProtocol<PutOp<TObject>> BuildPutProtocol<TObject>();
 
         /// <summary>
-        /// Gets the <see cref="GetLatestByKeyOp{TKey,TObject}"/> protocol.
+        /// Gets the <see cref="GetLatestByIdOp{TKey,TObject}"/> protocol.
         /// </summary>
         /// <typeparam name="TObject">The type of the object.</typeparam>
         /// <returns>TProtocol.</returns>
-        IReturningProtocol<GetLatestByKeyOp<TKey, TObject>, TObject> BuildGetLatestByKeyProtocol<TObject>();
+        IReturningProtocol<GetLatestByIdOp<TKey, TObject>, TObject> BuildGetLatestByKeyProtocol<TObject>();
     }
 }

@@ -31,7 +31,7 @@ SET QUOTED_IDENTIFIER ON
 CREATE TABLE [{streamName}].[TypeWithoutVersion](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[AssemblyQualifiedName] [nvarchar](2000) NOT NULL,
-	[CreateDateTimeUtc] [datetime] NULL,
+	[RecordCreatedUtc] [datetime2] NULL,
  CONSTRAINT [PK_TypeWithoutVersion] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

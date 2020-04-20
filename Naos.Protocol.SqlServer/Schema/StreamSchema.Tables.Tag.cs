@@ -29,14 +29,14 @@ SET QUOTED_IDENTIFIER ON
 
 
 CREATE TABLE [{streamName}].[Tag](
-	[Id] [uniqueidentifier] NOT NULL,
-	[ObjectId] [uniqueidentifier] NOT NULL,
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ObjectId] [int] NOT NULL,
 	[Name] [nvarchar](450) NOT NULL,
 	[Value] [nvarchar](4000) NULL,
-	[CreateDateTimeUtc] [datetime] NOT NULL,
+	[RecordCreatedUtc] [datetime2] NOT NULL,
  CONSTRAINT [PK_Tag] PRIMARY KEY CLUSTERED 
 (
-	[Id] ASC
+	[Id] DESC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 

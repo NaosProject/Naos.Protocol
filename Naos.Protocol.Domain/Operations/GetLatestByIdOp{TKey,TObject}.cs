@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GetLatestByKeyOp{TKey,TObject}.cs" company="Naos Project">
+// <copyright file="GetLatestByIdOp{TKey,TObject}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -14,22 +14,22 @@ namespace Naos.Protocol.Domain
     /// <typeparam name="TKey">The type of the key of the object.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
     /// <seealso cref="Naos.Protocol.Domain.ReturningOperationBase{TObject}" />
-    public class GetLatestByKeyOp<TKey, TObject> : ReturningOperationBase<TObject>, IHaveKey<TKey>, IHaveKeyType
+    public class GetLatestByIdOp<TKey, TObject> : ReturningOperationBase<TObject>, IHaveKey<TKey>, IHaveKeyType
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetLatestByKeyOp{TKey, TObject}"/> class.
+        /// Initializes a new instance of the <see cref="GetLatestByIdOp{TKey,TObject}"/> class.
         /// </summary>
         /// <param name="key">The key.</param>
-        public GetLatestByKeyOp(
+        public GetLatestByIdOp(
             TKey key)
         {
-            this.Key = key;
+            this.Id = key;
         }
 
         /// <inheritdoc />
-        public TKey Key { get; private set; }
+        public TKey Id { get; private set; }
 
         /// <inheritdoc />
-        public Type KeyType => typeof(TKey);
+        public Type IdType => typeof(TKey);
     }
 }

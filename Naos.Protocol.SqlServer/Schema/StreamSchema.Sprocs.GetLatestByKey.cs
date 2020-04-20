@@ -41,23 +41,23 @@ namespace Naos.Protocol.SqlServer
         {
             var result = FormattableString.Invariant($@"
 CREATE PROCEDURE [{streamName}].GetLatestByKey(
-  @SerializedKey AS nvarchar(450)
+  @SerializedObjectId AS nvarchar(450)
 , @SerializationConfigAssemblyQualifiedNameWithoutVersion AS nvarchar(2000) OUTPUT
 , @SerializationKind AS varchar(50) OUTPUT
 , @SerializationFormat AS varchar(50) OUTPUT
 , @CompressionKind AS varchar(50) OUTPUT
-, @SerializedPayload AS nvarchar(MAX) OUTPUT
+, @SerializedObject AS nvarchar(MAX) OUTPUT
 )
 AS
 BEGIN
 
-    DECLARE @SerializerDescriptionId uniqueidentifier   
+    DECLARE @SerializerDescriptionId int   
     SELECT TOP 1
 	   @SerializerDescriptionId = [SerializerDescriptionId]
-	 , @SerializedPayload = [SerializedPayload]
+	 , @SerializedObject = [SerializedObject]
 	FROM [{streamName}].[Object]
-	WHERE [SerializedKey] = @SerializedKey
-	ORDER BY [CreateDateTimeUtc] DESC
+	WHERE [SerializedObjectId] = @SerializedObjectId
+	ORDER BY [RecordCreatedUtc] DESC
 
 	DECLARE @TypeWithoutVersionId int
 	SELECT 

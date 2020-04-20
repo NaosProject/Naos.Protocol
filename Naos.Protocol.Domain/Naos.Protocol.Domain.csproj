@@ -111,6 +111,7 @@
     <Compile Include="Model\IHaveKeyType.cs" />
     <Compile Include="Model\IDataOperationsProtocolFactory.cs" />
     <Compile Include="Model\IHaveKey.cs" />
+    <Compile Include="Model\IProtocolStreamLocator.cs" />
     <Compile Include="Model\IStream.cs" />
     <Compile Include="Location\LocatorBase.cs" />
     <Compile Include="Events\Executing.cs" />
@@ -118,12 +119,13 @@
     <Compile Include="Operations\CreateStreamOp{TKey}.cs" />
     <Compile Include="Operations\DiscoverOp.cs" />
     <Compile Include="Operations\DetermineLocatorByKeyOp.cs" />
-    <Compile Include="Operations\GetLatestByKeyOp{TKey,TObject}.cs" />
+    <Compile Include="Operations\GetIdFromObjectOp{TId,TObject}.cs" />
+    <Compile Include="Operations\GetLatestByIdOp{TKey,TObject}.cs" />
+    <Compile Include="Operations\GetReturningProtocolOp{TOperation,TReturn}.cs" />
+    <Compile Include="Operations\GetStreamLocatorByIdOp{TId}.cs" />
     <Compile Include="Operations\GetTagsFromObjectOp.cs" />
-    <Compile Include="Operations\GetKeyFromObjectOp.cs" />
-    <Compile Include="Operations\GetStreamLocatorByKeyOp{TKey}.cs" />
     <Compile Include="Operations\GetAllStreamLocatorsOp.cs" />
-    <Compile Include="Operations\GetStreamLocatorByTypeOp.cs" />
+    <Compile Include="Operations\GetVoidProtocolOp{TOperation}.cs" />
     <Compile Include="Operations\HandleEventOp.cs" />
     <Compile Include="Operations\GetByKeyOp.cs" />
     <Compile Include="Operations\PutOp.cs" />
@@ -131,7 +133,11 @@
     <Compile Include="Model\IProtocol.cs" />
     <Compile Include="Model\IOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Protocols\LambdaGetTagsFromObjectProtocol{TObject}.cs" />
+    <Compile Include="Protocols\GetIdFromObjectProtocol{TId,TObject}.cs" />
+    <Compile Include="Protocols\GetTagsFromObjectProtocol{TObject}.cs" />
+    <Compile Include="Protocols\LambdaReturningProtocol{TOperation,TReturn}.cs" />
+    <Compile Include="Protocols\LambdaVoidProtocol{TOperation}.cs" />
+    <Compile Include="Protocols\SingleStreamLocatorProtocol{TId}.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />

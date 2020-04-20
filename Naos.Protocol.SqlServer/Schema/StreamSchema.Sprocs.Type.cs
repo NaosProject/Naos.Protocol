@@ -51,7 +51,7 @@ BEGIN TRANSACTION [GetIdAddTypeWithoutVersion]
 	  IF (@Result IS NULL)
 	  BEGIN
 	      
-	      INSERT INTO [{streamName}].[TypeWithoutVersion] ([AssemblyQualifiedName], [CreateDateTimeUtc]) VALUES (@AssemblyQualitifiedNameWithoutVersion, GETUTCDATE())
+	      INSERT INTO [{streamName}].[TypeWithoutVersion] ([AssemblyQualifiedName], [RecordCreatedUtc]) VALUES (@AssemblyQualitifiedNameWithoutVersion, GETUTCDATE())
 		  SET @Result = SCOPE_IDENTITY()
 	  END
 
@@ -105,7 +105,7 @@ BEGIN TRANSACTION [GetIdAddTypeWithVersion]
 	  IF (@Result IS NULL)
 	  BEGIN
 	      
-	      INSERT INTO [{streamName}].[TypeWithVersion] ([AssemblyQualifiedName], [CreateDateTimeUtc]) VALUES (@AssemblyQualitifiedNameWithVersion, GETUTCDATE())
+	      INSERT INTO [{streamName}].[TypeWithVersion] ([AssemblyQualifiedName], [RecordCreatedUtc]) VALUES (@AssemblyQualitifiedNameWithVersion, GETUTCDATE())
 		  SET @Result = SCOPE_IDENTITY()
 	  END
 

@@ -1,23 +1,17 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IHaveKeyType.cs" company="Naos Project">
+// <copyright file="GetVoidProtocolOp{TOperation}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Naos.Protocol.Domain
 {
-    using System;
-    using Naos.Protocol.Domain.Internal;
-
     /// <summary>
-    /// Interface that exposes the <see cref="Type"/> of the key.
+    /// Operation to get a void protocol by type of operation.
     /// </summary>
-    public interface IHaveKeyType
+    /// <typeparam name="TOperation">The type of the operation.</typeparam>
+    public class GetVoidProtocolOp<TOperation> : ReturningOperationBase<IVoidProtocol<TOperation>>
+        where TOperation : VoidOperationBase
     {
-        /// <summary>
-        /// Gets the type of the key.
-        /// </summary>
-        /// <value>The type of the key.</value>
-        Type IdType { get; }
     }
 }

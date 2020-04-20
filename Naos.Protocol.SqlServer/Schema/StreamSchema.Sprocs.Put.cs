@@ -42,9 +42,9 @@ namespace Naos.Protocol.SqlServer
 CREATE PROCEDURE [{streamName}].PutObject(
   @AssemblyQualitifiedNameWithoutVersion AS nvarchar(2000)
 , @AssemblyQualitifiedNameWithVersion AS nvarchar(2000)
-, @SerializerDescriptionId AS uniqueidentifier
-, @SerializedKey AS nvarchar(450)
-, @SerializedPayload AS varchar(max)
+, @SerializerDescriptionId AS int
+, @SerializedObjectId AS nvarchar(450)
+, @SerializedObject AS varchar(max)
 , @Tags AS xml
 )
 AS
@@ -57,37 +57,35 @@ BEGIN TRANSACTION [PutObject]
       DECLARE @TypeWithVersionId int
       EXEC [{streamName}].[GetIdAddIfNecessaryTypeWithVersion] @AssemblyQualitifiedNameWithVersion, @TypeWithVersionId OUTPUT
       
-	  DECLARE @Id uniqueidentifier
-	  SET @Id = NEWID()
-	  DECLARE @CreateDateTimeUtc datetime
-	  SET @CreateDateTimeUtc = GETUTCDATE()
+	  DECLARE @Id int
+
+	  DECLARE @RecordCreatedUtc datetime
+	  SET @RecordCreatedUtc = GETUTCDATE()
 	  INSERT INTO [{streamName}].[Object] (
-          [Id]
-		, [ObjectTypeWithoutVersionId]
+		  [ObjectTypeWithoutVersionId]
 		, [ObjectTypeWithVersionId]
 		, [SerializerDescriptionId]
-		, [SerializedKey]
-		, [SerializedPayload]
-		, [CreateDateTimeUtc]
+		, [SerializedObjectId]
+		, [SerializedObject]
+		, [RecordCreatedUtc]
 		) VALUES (
-		  @Id
-		, @TypeWithoutVersionId
+		  @TypeWithoutVersionId
 		, @TypeWithVersionId
 		, @SerializerDescriptionId
-		, @SerializedKey
-		, @SerializedPayload
-		, @CreateDateTimeUtc
+		, @SerializedObjectId
+		, @SerializedObject
+		, @RecordCreatedUtc
 		)
+      SET @Id = SCOPE_IDENTITY()
 	  
 	  IF (@Tags IS NOT NULL)
 	  BEGIN
 	      INSERT INTO [{streamName}].Tag
 		  SELECT
-			NEWID()
-  		  , @Id
+  		    @Id
 		  , C.value('(Tag/@Name)[1]', 'nvarchar(450)') as [Name]
 		  , C.value('(Tag/@Value)[1]', 'nvarchar(4000)') as [Value]
-		  , @CreateDateTimeUtc as CreateDateTimeUtc
+		  , @RecordCreatedUtc as RecordCreatedUtc
 		  FROM
 			@Tags.nodes('/Tags') AS T(C)
 	  END

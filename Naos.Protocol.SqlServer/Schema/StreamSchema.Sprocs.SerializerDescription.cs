@@ -43,7 +43,7 @@ CREATE PROCEDURE [{streamName}].GetIdAddIfNecessarySerializerDescription(
 , @SerializationFormat AS varchar(50)
 , @CompressionKind AS varchar(50)
 , @UnregisteredTypeEncounteredStrategy AS varchar(50)
-, @Result uniqueidentifier OUTPUT
+, @Result int OUTPUT
 )
 AS
 BEGIN
@@ -65,19 +65,16 @@ BEGIN TRANSACTION [GetIdAddSerializerDescription]
 
 	  IF (@Result IS NULL)
 	  BEGIN
-	      SET @Result = NEWID()
 	      INSERT INTO [{streamName}].[SerializerDescription] (
-		    [Id]
-		  , [SerializationKind]
+		    [SerializationKind]
 		  , [SerializationFormat]
 		  , [SerializationConfigurationTypeWithoutVersionId]
 		  , [SerializationConfigurationTypeWithVersionId]
 		  , [CompressionKind]
 		  , [UnregisteredTypeEncounteredStrategy]
-		  , [CreateDateTimeUtc]
+		  , [RecordCreatedUtc]
 		  ) VALUES (
-		    @Result
-	      , @SerializationKind
+	        @SerializationKind
 		  , @SerializationFormat
 		  , @TypeWithoutVersionId
 		  , @TypeWithVersionId
@@ -85,6 +82,8 @@ BEGIN TRANSACTION [GetIdAddSerializerDescription]
 		  , @UnregisteredTypeEncounteredStrategy
 		  , GETUTCDATE()
 		  )
+
+	      SET @Result = SCOPE_IDENTITY()
 	  END
 
       COMMIT TRANSACTION [GetIdAddSerializerDescription]

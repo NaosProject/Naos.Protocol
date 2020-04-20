@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Find the identity of a <see cref="SerializationDescription"/>.
     /// </summary>
-    public class GetIdAddIfNecessarySerializerDescriptionOp : ReturningOperationBase<Guid>
+    public class GetIdAddIfNecessarySerializerDescriptionOp : ReturningOperationBase<int>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetIdAddIfNecessarySerializerDescriptionOp"/> class.
