@@ -89,6 +89,38 @@ namespace Naos.Protocol.SqlServer.Test
             }
         }
 
+        [Verb(Aliases = "Get", IsDefault = false, Description = "Gets a dummy from the stream")]
+        public static void GetDummy(
+            [Aliases("name")] string streamName,
+            [Aliases("kind")] SerializationKind serializationKind,
+            [Aliases("format")] SerializationFormat serializationFormat,
+            [Aliases("server")] string serverName,
+            [Aliases("db")] string databaseName,
+            [Aliases("instance")] string instanceName,
+            [Aliases("user")] string userName,
+            [Aliases("pass")] string password,
+            [Aliases("")] string id,
+            [Aliases("")] [DefaultValue(false)] bool debug)
+        {
+            CommonSetup(debug, logWritingSettings: new LogWritingSettings());
+
+            var stream = GetSqlStream(streamName, serializationKind, serializationFormat, serverName, databaseName, instanceName, userName, password);
+
+            for (var idx = 0;
+                idx < 5;
+                idx++)
+            {
+                var stopwatch = new Stopwatch();
+                stopwatch.Reset();
+                stopwatch.Start();
+                var result = stream.BuildGetLatestByIdProtocol<TestObject>().Execute(new GetLatestByIdOp<string, TestObject>(id));
+                stopwatch.Stop();
+                Console.WriteLine(
+                    FormattableString.Invariant(
+                        $"Get - {id} took {stopwatch.Elapsed.TotalMilliseconds}ms - size field: {result.Field.Length}, size filler: {result.Filler.Length}."));
+            }
+        }
+
         private static string BuildGarbageStringOfLength(
             int length)
         {
