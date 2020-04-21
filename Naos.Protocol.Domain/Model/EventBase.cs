@@ -6,8 +6,6 @@
 
 namespace Naos.Protocol.Domain
 {
-    using OBeautifulCode.Type;
-
     /// <summary>
     /// Event container.
     /// </summary>

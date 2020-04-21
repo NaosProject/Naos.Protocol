@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include=".analyzers\SuppressBecause.cs" />
+    <Compile Include=".recipes\Naos.RunWithRetry\Run.cs" />
     <Compile Include=".recipes\OBeautifulCode.Assertion\Actions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Assertion\ApplyBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Assertion\AssertionKind.cs" />
@@ -98,6 +99,12 @@
     <Compile Include=".recipes\OBeautifulCode.Type\SuppressBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include=".recipes\Spritely.Redo\BackOffStrategy.cs" />
+    <Compile Include=".recipes\Spritely.Redo\RetriableAction.cs" />
+    <Compile Include=".recipes\Spritely.Redo\RetriableActionAsync.cs" />
+    <Compile Include=".recipes\Spritely.Redo\RetriableFunction.cs" />
+    <Compile Include=".recipes\Spritely.Redo\RetriableFunctionAsync.cs" />
+    <Compile Include=".recipes\Spritely.Redo\Using.cs" />
     <Compile Include="Events\Handled.cs" />
     <Compile Include="Events\Handling.cs" />
     <Compile Include="Model\IGetProtocol.cs" />
@@ -108,26 +115,23 @@
     <Compile Include="Events\PruneRequested.cs" />
     <Compile Include="Events\Created.cs" />
     <Compile Include="Model\EventBase.cs" />
-    <Compile Include="Model\IHaveKeyType.cs" />
-    <Compile Include="Model\IDataOperationsProtocolFactory.cs" />
-    <Compile Include="Model\IHaveKey.cs" />
+    <Compile Include="Model\IHaveId{TId}.cs" />
+    <Compile Include="Model\IProtocolFactoryStreamObjectOperations{TId}.cs" />
     <Compile Include="Model\IProtocolStreamLocator.cs" />
     <Compile Include="Model\IStream.cs" />
     <Compile Include="Location\LocatorBase.cs" />
     <Compile Include="Events\Executing.cs" />
     <Compile Include="Events\Executed.cs" />
-    <Compile Include="Operations\CreateStreamOp{TKey}.cs" />
+    <Compile Include="Operations\CreateStreamOp{TId}.cs" />
     <Compile Include="Operations\DiscoverOp.cs" />
-    <Compile Include="Operations\DetermineLocatorByKeyOp.cs" />
     <Compile Include="Operations\GetIdFromObjectOp{TId,TObject}.cs" />
-    <Compile Include="Operations\GetLatestByIdOp{TKey,TObject}.cs" />
+    <Compile Include="Operations\GetLatestByIdOp{TId,TObject}.cs" />
     <Compile Include="Operations\GetReturningProtocolOp{TOperation,TReturn}.cs" />
     <Compile Include="Operations\GetStreamLocatorByIdOp{TId}.cs" />
     <Compile Include="Operations\GetTagsFromObjectOp.cs" />
     <Compile Include="Operations\GetAllStreamLocatorsOp.cs" />
     <Compile Include="Operations\GetVoidProtocolOp{TOperation}.cs" />
     <Compile Include="Operations\HandleEventOp.cs" />
-    <Compile Include="Operations\GetByKeyOp.cs" />
     <Compile Include="Operations\PutOp.cs" />
     <Compile Include="Location\StreamLocatorBase.cs" />
     <Compile Include="Model\IProtocol.cs" />

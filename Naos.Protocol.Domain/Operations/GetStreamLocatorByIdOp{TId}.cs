@@ -7,15 +7,15 @@
 namespace Naos.Protocol.Domain
 {
     /// <summary>
-    /// Abstract base of an operation.
+    /// Get the <see cref="StreamLocatorBase"/> by the ID, this support ID based sharding.
     /// </summary>
     /// <typeparam name="TId">Type of ID being used.</typeparam>
     public class GetStreamLocatorByIdOp<TId> : ReturningOperationBase<StreamLocatorBase>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetStreamLocatorByIdOp{TKey}"/> class.
+        /// Initializes a new instance of the <see cref="GetStreamLocatorByIdOp{TId}"/> class.
         /// </summary>
-        /// <param name="id">The key.</param>
+        /// <param name="id">The ID.</param>
         public GetStreamLocatorByIdOp(
             TId id)
         {
@@ -23,9 +23,9 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Gets the key.
+        /// Gets the ID.
         /// </summary>
-        /// <value>The key.</value>
+        /// <value>The ID.</value>
         public TId Id { get; private set; }
     }
 }

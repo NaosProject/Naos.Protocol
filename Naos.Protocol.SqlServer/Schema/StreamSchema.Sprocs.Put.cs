@@ -83,8 +83,8 @@ BEGIN TRANSACTION [PutObject]
 	      INSERT INTO [{streamName}].Tag
 		  SELECT
   		    @Id
-		  , C.value('(Tag/@Name)[1]', 'nvarchar(450)') as [Name]
-		  , C.value('(Tag/@Value)[1]', 'nvarchar(4000)') as [Value]
+		  , C.value('(Tag/@Key)[1]', 'nvarchar(450)') as [TagKey]
+		  , C.value('(Tag/@Value)[1]', 'nvarchar(4000)') as [TagValue]
 		  , @RecordCreatedUtc as RecordCreatedUtc
 		  FROM
 			@Tags.nodes('/Tags') AS T(C)

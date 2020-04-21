@@ -1,35 +1,30 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GetLatestByIdOp{TKey,TObject}.cs" company="Naos Project">
+// <copyright file="GetLatestByIdOp{TId,TObject}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Naos.Protocol.Domain
 {
-    using System;
-
     /// <summary>
-    /// Operation to get the most recent object of a certain key.
+    /// Operation to get the most recent object of a certain ID.
     /// </summary>
-    /// <typeparam name="TKey">The type of the key of the object.</typeparam>
+    /// <typeparam name="TId">The type of the ID of the object.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
     /// <seealso cref="Naos.Protocol.Domain.ReturningOperationBase{TObject}" />
-    public class GetLatestByIdOp<TKey, TObject> : ReturningOperationBase<TObject>, IHaveKey<TKey>, IHaveKeyType
+    public class GetLatestByIdOp<TId, TObject> : ReturningOperationBase<TObject>, IHaveId<TId>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetLatestByIdOp{TKey,TObject}"/> class.
         /// </summary>
-        /// <param name="key">The key.</param>
+        /// <param name="id">The ID.</param>
         public GetLatestByIdOp(
-            TKey key)
+            TId id)
         {
-            this.Id = key;
+            this.Id = id;
         }
 
         /// <inheritdoc />
-        public TKey Id { get; private set; }
-
-        /// <inheritdoc />
-        public Type IdType => typeof(TKey);
+        public TId Id { get; private set; }
     }
 }

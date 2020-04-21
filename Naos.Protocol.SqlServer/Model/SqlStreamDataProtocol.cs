@@ -14,6 +14,8 @@ namespace Naos.Protocol.SqlServer
     using System.Linq;
     using System.Reflection;
     using System.Text;
+    using System.Threading.Tasks;
+    using System.Xml.Linq;
     using Naos.Protocol.Domain;
     using Naos.Protocol.SqlServer.Internal;
     using OBeautifulCode.Assertion.Recipes;
@@ -28,7 +30,7 @@ namespace Naos.Protocol.SqlServer
     /// </summary>
     /// <typeparam name="TId">The type of the key.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
-    public class SqlStreamDataProtocol<TId, TObject> : IVoidProtocol<PutOp<TObject>>, IReturningProtocol<GetLatestByIdOp<TId, TObject>, TObject>
+    public class SqlStreamDataProtocol<TId, TObject> : ISyncAndAsyncVoidProtocol<PutOp<TObject>>, ISyncAndAsyncReturningProtocol<GetLatestByIdOp<TId, TObject>, TObject>
     {
         private readonly SqlStream<TId> stream;
         private readonly IReturningProtocol<GetIdFromObjectOp<TId, TObject>, TId> getIdFromObjectProtocol;
@@ -53,28 +55,18 @@ namespace Naos.Protocol.SqlServer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Name is built internally.")]
         public void Execute(PutOp<TObject> operation)
         {
-            var key = this.getIdFromObjectProtocol.Execute(new GetIdFromObjectOp<TId, TObject>(operation.Payload));
-            var locator = this.stream.Execute(new GetStreamLocatorByIdOp<TId>(key));
+            var id = this.getIdFromObjectProtocol.Execute(new GetIdFromObjectOp<TId, TObject>(operation.ObjectToPut));
+            var locator = this.stream.StreamLocatorProtocol.Execute(new GetStreamLocatorByIdOp<TId>(id));
             if (locator is SqlStreamLocator sqlStreamLocator)
             {
-                var objectType = operation.Payload?.GetType() ?? typeof(TObject);
+                var objectType = operation.ObjectToPut?.GetType() ?? typeof(TObject);
                 var objectTypeWithoutVersion = objectType.AssemblyQualifiedName;
                 var objectTypeWithVersion = objectType.AssemblyQualifiedName;
                 var describedSerializer = this.stream.GetDescribedSerializer(sqlStreamLocator);
-                var tags = this.getTagsFromObjectProtocol.Execute(new GetTagsFromObjectOp<TObject>(operation.Payload));
-                var tagsXml = new StringBuilder();
-                tagsXml.Append("<Tags>");
-                foreach (var tag in tags ?? new Dictionary<string, string>())
-                {
-                    tagsXml.Append("<Tag ");
-                    tagsXml.Append(FormattableString.Invariant($"Name=\"{tag.Key}\" Value=\"{tag.Value}\""));
-                    tagsXml.Append("/>");
-                }
+                var tagsXml = this.GetTagsXmlString(operation);
 
-                tagsXml.Append("</Tags>");
-
-                var serializedObject = describedSerializer.Serializer.SerializeToString(operation.Payload);
-                var serializedObjectId = (key is string stringKey) ? stringKey : describedSerializer.Serializer.SerializeToString(key);
+                var serializedObject = describedSerializer.Serializer.SerializeToString(operation.ObjectToPut);
+                var serializedObjectId = (id is string stringKey) ? stringKey : describedSerializer.Serializer.SerializeToString(id);
                 var storedProcedureName = StreamSchema.BuildPutSprocName(this.stream.Name);
                 using (var connection = sqlStreamLocator.OpenSqlConnection())
                 {
@@ -91,7 +83,7 @@ namespace Naos.Protocol.SqlServer
                                 describedSerializer.SerializerDescriptionId));
                         command.Parameters.Add(new SqlParameter("SerializedObjectId", serializedObjectId));
                         command.Parameters.Add(new SqlParameter("SerializedObject", serializedObject));
-                        command.Parameters.Add(new SqlParameter("Tags", tagsXml.ToString()));
+                        command.Parameters.Add(new SqlParameter("Tags", tagsXml));
 
                         command.ExecuteNonQuery();
                     }
@@ -103,13 +95,48 @@ namespace Naos.Protocol.SqlServer
             }
         }
 
+        private string GetTagsXmlString(
+            PutOp<TObject> operation)
+        {
+            var tags = this.getTagsFromObjectProtocol.Execute(new GetTagsFromObjectOp<TObject>(operation.ObjectToPut));
+            var tagsXmlBuilder = new StringBuilder();
+            tagsXmlBuilder.Append("<Tags>");
+            foreach (var tag in tags ?? new Dictionary<string, string>())
+            {
+                var escapedKey = new XElement("ForEscapingOnly", tag.Key).LastNode.ToString();
+                var escapedValue = tag.Value == null ? null : new XElement("ForEscapingOnly", tag.Value).LastNode.ToString();
+                tagsXmlBuilder.Append("<Tag ");
+                if (escapedValue == null)
+                {
+                    tagsXmlBuilder.Append(FormattableString.Invariant($"Key=\"{escapedKey}\" Value=null"));
+                }
+                else
+                {
+                    tagsXmlBuilder.Append(FormattableString.Invariant($"Key=\"{escapedKey}\" Value=\"{escapedValue}\""));
+                }
+
+                tagsXmlBuilder.Append("/>");
+            }
+
+            tagsXmlBuilder.Append("</Tags>");
+            var result = tagsXmlBuilder.ToString();
+            return result;
+        }
+
+        /// <inheritdoc />
+        public Task ExecuteAsync(
+            PutOp<TObject> operation)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <inheritdoc />
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Internally generated and should be safe.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Should be disposing correctly.")]
         public TObject Execute(
             GetLatestByIdOp<TId, TObject> operation)
         {
-            var locator = this.stream.Execute(new GetStreamLocatorByIdOp<TId>(operation.Id));
+            var locator = this.stream.StreamLocatorProtocol.Execute(new GetStreamLocatorByIdOp<TId>(operation.Id));
             if (locator is SqlStreamLocator sqlStreamLocator)
             {
                 var serializedObjectId = (operation.Id is string stringKey)
@@ -186,6 +213,13 @@ namespace Naos.Protocol.SqlServer
             {
                 throw SqlStreamLocator.BuildInvalidStreamLocatorException(locator.GetType());
             }
+        }
+
+        /// <inheritdoc />
+        public Task<TObject> ExecuteAsync(
+            GetLatestByIdOp<TId, TObject> operation)
+        {
+            throw new NotImplementedException();
         }
     }
 }

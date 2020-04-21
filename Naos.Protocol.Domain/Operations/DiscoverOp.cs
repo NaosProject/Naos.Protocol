@@ -20,7 +20,7 @@ namespace Naos.Protocol.Domain
     /// Implements the <see cref="Naos.Protocol.Domain.ReturningOperationBase{TReturn}" /> to discover something using some input.
     /// </summary>
     /// <typeparam name="TObject">Type of data being written.</typeparam>
-    /// <typeparam name="TReturn">The type of the t return.</typeparam>
+    /// <typeparam name="TReturn">The type of the return.</typeparam>
     /// <seealso cref="Naos.Protocol.Domain.ReturningOperationBase{TReturn}" />
     [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Discover", Justification = "Name/Spelling is correct.")]
     public class DiscoverOp<TObject, TReturn> : ReturningOperationBase<TReturn>
@@ -29,17 +29,17 @@ namespace Naos.Protocol.Domain
         /// <summary>
         /// Initializes a new instance of the <see cref="DiscoverOp{TObject, TReturn}"/> class.
         /// </summary>
-        /// <param name="operationKey">The operation key.</param>
+        /// <param name="operationId">The operation ID.</param>
         public DiscoverOp(
-            TObject operationKey)
+            TObject operationId)
         {
-            this.OperationKey = operationKey ?? throw new ArgumentNullException(nameof(operationKey));
+            this.OperationId = operationId ?? throw new ArgumentNullException(nameof(operationId));
         }
 
         /// <summary>
-        /// Gets or sets the operation key.
+        /// Gets or sets the operation ID.
         /// </summary>
-        /// <value>The operation key.</value>
-        public TObject OperationKey { get; set; }
+        /// <value>The operation ID.</value>
+        public TObject OperationId { get; set; }
     }
 }

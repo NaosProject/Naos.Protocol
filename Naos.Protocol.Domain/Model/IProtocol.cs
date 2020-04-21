@@ -6,8 +6,6 @@
 
 namespace Naos.Protocol.Domain
 {
-    using System;
-    using System.Runtime.Serialization;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -29,7 +27,7 @@ namespace Naos.Protocol.Domain
     }
 
     /// <summary>
-    /// Executes a <see cref="VoidOperationBase"/>.
+    /// Executes a <see cref="VoidOperationBase"/> synchronously.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     public interface IVoidProtocol<TOperation> : IProtocol<TOperation>
@@ -43,7 +41,7 @@ namespace Naos.Protocol.Domain
     }
 
     /// <summary>
-    /// Executes a <see cref="VoidOperationBase"/>.
+    /// Executes a <see cref="VoidOperationBase"/> asynchronously.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     public interface IAsyncVoidProtocol<TOperation> : IProtocol<TOperation>
@@ -58,10 +56,19 @@ namespace Naos.Protocol.Domain
     }
 
     /// <summary>
-    /// Executes a <see cref="ReturningOperationBase{TReturn}"/>.
+    /// Executes a <see cref="VoidOperationBase"/> both synchronously and asynchronously.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
-    /// <typeparam name="TReturn">The type that the operation return.</typeparam>
+    public interface ISyncAndAsyncVoidProtocol<TOperation> : IVoidProtocol<TOperation>, IAsyncVoidProtocol<TOperation>
+        where TOperation : VoidOperationBase
+    {
+    }
+
+    /// <summary>
+    /// Executes a <see cref="ReturningOperationBase{TReturn}"/> synchronously.
+    /// </summary>
+    /// <typeparam name="TOperation">The type of the operation.</typeparam>
+    /// <typeparam name="TReturn">The type that the operation returns.</typeparam>
     public interface IReturningProtocol<TOperation, TReturn> : IProtocol<TOperation>
         where TOperation : ReturningOperationBase<TReturn>
     {
@@ -74,10 +81,10 @@ namespace Naos.Protocol.Domain
     }
 
     /// <summary>
-    /// Executes a <see cref="ReturningOperationBase{TReturn}"/>.
+    /// Executes a <see cref="ReturningOperationBase{TReturn}"/> asynchronously.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
-    /// <typeparam name="TReturn">The type that the operation return.</typeparam>
+    /// <typeparam name="TReturn">The type that the operation returns.</typeparam>
     public interface IAsyncReturningProtocol<TOperation, TReturn> : IProtocol<TOperation>
         where TOperation : ReturningOperationBase<TReturn>
     {
@@ -87,5 +94,15 @@ namespace Naos.Protocol.Domain
         /// <param name="operation">The operation.</param>
         /// <returns>The result of the operation.</returns>
         Task<TReturn> ExecuteAsync(TOperation operation);
+    }
+
+    /// <summary>
+    /// Executes a <see cref="ReturningOperationBase{TReturn}"/> both synchronously and asynchronously.
+    /// </summary>
+    /// <typeparam name="TOperation">The type of the operation.</typeparam>
+    /// <typeparam name="TReturn">The type that the operation returns.</typeparam>
+    public interface ISyncAndAsyncReturningProtocol<TOperation, TReturn> : IReturningProtocol<TOperation, TReturn>, IAsyncReturningProtocol<TOperation, TReturn>
+        where TOperation : ReturningOperationBase<TReturn>
+    {
     }
 }

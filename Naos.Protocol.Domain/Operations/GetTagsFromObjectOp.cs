@@ -17,17 +17,17 @@ namespace Naos.Protocol.Domain
         /// <summary>
         /// Initializes a new instance of the <see cref="GetTagsFromObjectOp{TObject}"/> class.
         /// </summary>
-        /// <param name="objectToDetermineKeyFrom">The object to determine tags from.</param>
+        /// <param name="objectToDetermineTagsFrom">The object to determine tags from.</param>
         public GetTagsFromObjectOp(
-            TObject objectToDetermineKeyFrom)
+            TObject objectToDetermineTagsFrom)
         {
-            this.ObjectToDetermineKeyFrom = objectToDetermineKeyFrom;
+            this.ObjectToDetermineTagsFrom = objectToDetermineTagsFrom;
         }
 
         /// <summary>
-        /// Gets the object to determine key from.
+        /// Gets the object to determine tags from.
         /// </summary>
-        /// <value>The object to determine key from.</value>
-        public TObject ObjectToDetermineKeyFrom { get; private set; }
+        /// <value>The object to determine tags from.</value>
+        public TObject ObjectToDetermineTagsFrom { get; private set; }
     }
 }

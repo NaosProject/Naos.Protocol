@@ -6,13 +6,6 @@
 
 namespace Naos.Protocol.Domain
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using System.Reflection;
-    using OBeautifulCode.Representation.System;
-    using OBeautifulCode.Type;
     using static System.FormattableString;
 
     /// <summary>
@@ -24,16 +17,16 @@ namespace Naos.Protocol.Domain
         /// <summary>
         /// Initializes a new instance of the <see cref="PutOp{TObject}"/> class.
         /// </summary>
-        /// <param name="payload">The payload to operate on.</param>
-        public PutOp(TObject payload)
+        /// <param name="objectToPut">The object to put into a stream.</param>
+        public PutOp(TObject objectToPut)
         {
-            this.Payload = payload;
+            this.ObjectToPut = objectToPut;
         }
 
         /// <summary>
-        /// Gets the payload.
+        /// Gets the object.
         /// </summary>
-        /// <value>The payload.</value>
-        public TObject Payload { get; private set; }
+        /// <value>The object.</value>
+        public TObject ObjectToPut { get; private set; }
     }
 }

@@ -1,23 +1,21 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IHaveKeyType.cs" company="Naos Project">
+// <copyright file="IHaveId{TId}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Naos.Protocol.Domain
 {
-    using System;
-    using Naos.Protocol.Domain.Internal;
-
     /// <summary>
-    /// Interface that exposes the <see cref="Type"/> of the key.
+    /// Model interface for objects that have a ID.
     /// </summary>
-    public interface IHaveKeyType
+    /// <typeparam name="TId">The type of ID of the object.</typeparam>
+    public interface IHaveId<TId>
     {
         /// <summary>
-        /// Gets the type of the key.
+        /// Gets the ID.
         /// </summary>
-        /// <value>The type of the key.</value>
-        Type IdType { get; }
+        /// <value>The ID.</value>
+        TId Id { get; }
     }
 }

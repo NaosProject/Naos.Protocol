@@ -22,7 +22,7 @@ namespace Naos.Protocol.SqlServer
     using OBeautifulCode.Type.Recipes;
 
     /// <summary>
-    /// SQL implementation of an <see cref="IStream{TKey}" />.
+    /// Existing serializer with database ID.
     /// </summary>
     public partial class DescribedSerializer
     {

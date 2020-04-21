@@ -7,6 +7,7 @@
 namespace Naos.Protocol.Domain
 {
     using System;
+    using System.Threading.Tasks;
     using OBeautifulCode.Type.Recipes;
 
     /// <summary>
@@ -14,18 +15,25 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TId">The type of the ID.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
-    public class GetIdFromObjectProtocol<TId, TObject> : IReturningProtocol<GetIdFromObjectOp<TId, TObject>, TId>
+    public class GetIdFromObjectProtocol<TId, TObject> : ISyncAndAsyncReturningProtocol<GetIdFromObjectOp<TId, TObject>, TId>
     {
         /// <inheritdoc />
         public TId Execute(
             GetIdFromObjectOp<TId, TObject> operation)
         {
-            if (operation.ObjectToDetermineIdFrom is IHaveKey<TId> haveKeyObject)
+            if (operation.ObjectToDetermineIdFrom is IHaveId<TId> identifiableObject)
             {
-                return haveKeyObject.Id;
+                return identifiableObject.Id;
             }
 
             throw new ArgumentException(FormattableString.Invariant($"Cannot extract an Id from type {typeof(TObject).ToStringReadable()}"));
+        }
+
+        /// <inheritdoc />
+        public async Task<TId> ExecuteAsync(
+            GetIdFromObjectOp<TId, TObject> operation)
+        {
+            return await Task.FromResult(this.Execute(operation));
         }
     }
 }

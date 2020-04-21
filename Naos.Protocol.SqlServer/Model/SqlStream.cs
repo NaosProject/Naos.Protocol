@@ -25,20 +25,19 @@ namespace Naos.Protocol.SqlServer
     using SerializationFormat = OBeautifulCode.Serialization.SerializationFormat;
 
     /// <summary>
-    /// SQL implementation of an <see cref="IStream{TKey}" />.
+    /// SQL implementation of an <see cref="IStream{TId}" />.
     /// </summary>
     /// <typeparam name="TId">Type of the key.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Justification = NaosSuppressBecause.CA1711_IdentifiersShouldNotHaveIncorrectSuffix_TypeNameAddedAsSuffixForTestsWhereTypeIsPrimaryConcern)]
-    public partial class SqlStream<TId> : IHaveKeyType, IStream<TId>, IReturningProtocol<GetIdAddIfNecessarySerializerDescriptionOp, int>
+    public partial class SqlStream<TId> : IStream<TId>, ISyncAndAsyncReturningProtocol<GetIdAddIfNecessarySerializerDescriptionOp, int>
     {
         private readonly IDictionary<SerializationDescription, DescribedSerializer> serializerDescriptionToDescribedSerializerMap = new Dictionary<SerializationDescription, DescribedSerializer>();
 
-        private readonly IProtocolStreamLocator<TId> streamLocatorProtocols;
         private readonly IReadOnlyDictionary<Type, IProtocol> typeToGetIdProtocolMap;
         private readonly IReadOnlyDictionary<Type, IProtocol> typeToGetTagsProtocolMap;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SqlStream{TKey}"/> class.
+        /// Initializes a new instance of the <see cref="SqlStream{TId}"/> class.
         /// </summary>
         /// <param name="name">The name of the stream.</param>
         /// <param name="defaultConnectionTimeout">The default connection timeout.</param>
@@ -46,7 +45,7 @@ namespace Naos.Protocol.SqlServer
         /// <param name="defaultSerializerDescription">Default serializer description to use.</param>
         /// <param name="serializerFactory">The factory to get a serializer to use for objects.</param>
         /// <param name="compressorFactory">The factory to get a compressor to use for objects.</param>
-        /// <param name="streamLocatorProtocols">The executor of <see cref="GetStreamLocatorByIdOp{TKey}"/>.</param>
+        /// <param name="streamLocatorProtocol">The protocols for getting locators.</param>
         /// <param name="typeToGetIdProtocolMap">Id extractor protocols by type.</param>
         /// <param name="typeToGetTagsProtocolMap">Tag extractor protocols by type.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "AllStream", Justification = NaosSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWordsInUnitTestMethodName)]
@@ -57,7 +56,7 @@ namespace Naos.Protocol.SqlServer
             SerializationDescription defaultSerializerDescription,
             ISerializerFactory serializerFactory,
             ICompressorFactory compressorFactory,
-            IProtocolStreamLocator<TId> streamLocatorProtocols,
+            IProtocolStreamLocator<TId> streamLocatorProtocol,
             IReadOnlyDictionary<Type, IProtocol> typeToGetIdProtocolMap,
             IReadOnlyDictionary<Type, IProtocol> typeToGetTagsProtocolMap)
         {
@@ -65,20 +64,20 @@ namespace Naos.Protocol.SqlServer
             defaultSerializerDescription.MustForArg(nameof(defaultSerializerDescription)).NotBeNull();
             serializerFactory.MustForArg(nameof(serializerFactory)).NotBeNull();
             compressorFactory.MustForArg(nameof(compressorFactory)).NotBeNull();
-            streamLocatorProtocols.MustForArg(nameof(streamLocatorProtocols)).NotBeNull();
+            streamLocatorProtocol.MustForArg(nameof(streamLocatorProtocol)).NotBeNull();
 
             var localTypeToGetIdProtocolMap = typeToGetIdProtocolMap ?? new Dictionary<Type, IProtocol>();
             foreach (var localTypeToGetIdProtocol in localTypeToGetIdProtocolMap)
             {
                 var type = localTypeToGetIdProtocol.Key;
                 var protocol = localTypeToGetIdProtocol.Value;
-                var expectedProtocolType = typeof(IReturningProtocol<,>).MakeGenericType(
+                var expectedProtocolType = typeof(ISyncAndAsyncReturningProtocol<,>).MakeGenericType(
                     typeof(GetIdFromObjectOp<,>).MakeGenericType(type),
                     typeof(TId),
                     type);
                 if (!protocol.GetType().IsAssignableTo(expectedProtocolType))
                 {
-                    throw new ArgumentException(FormattableString.Invariant($"The type {type.ToStringReadable()} must match the TObject in IReturningProtocol<GetIdFromObjectOp<TObject>, TKey>)"));
+                    throw new ArgumentException(FormattableString.Invariant($"The type {type.ToStringReadable()} must match the TObject in IReturningProtocol<GetIdFromObjectOp<TObject>, TId>)"));
                 }
             }
 
@@ -87,7 +86,7 @@ namespace Naos.Protocol.SqlServer
             {
                 var type = localTypeToGetTagsProtocol.Key;
                 var protocol = localTypeToGetTagsProtocol.Value;
-                var expectedProtocolType = typeof(IReturningProtocol<,>).MakeGenericType(
+                var expectedProtocolType = typeof(ISyncAndAsyncReturningProtocol<,>).MakeGenericType(
                     typeof(GetTagsFromObjectOp<>).MakeGenericType(type),
                     typeof(IReadOnlyDictionary<string, string>));
                 if (!protocol.GetType().IsAssignableTo(expectedProtocolType))
@@ -102,13 +101,16 @@ namespace Naos.Protocol.SqlServer
             this.DefaultSerializerDescription = defaultSerializerDescription;
             this.SerializerFactory = serializerFactory;
             this.CompressorFactory = compressorFactory;
-            this.streamLocatorProtocols = streamLocatorProtocols;
+            this.StreamLocatorProtocol = streamLocatorProtocol;
             this.typeToGetIdProtocolMap = localTypeToGetIdProtocolMap;
             this.typeToGetTagsProtocolMap = localTypeToGetTagsProtocolMap;
         }
 
         /// <inheritdoc />
         public string Name { get; private set; }
+
+        /// <inheritdoc />
+        public IProtocolStreamLocator<TId> StreamLocatorProtocol { get; private set; }
 
         /// <summary>
         /// Gets the default serializer description.
@@ -147,32 +149,18 @@ namespace Naos.Protocol.SqlServer
         public ICompressorFactory CompressorFactory { get; private set; }
 
         /// <inheritdoc />
-        public StreamLocatorBase Execute(
-            GetStreamLocatorByIdOp<TId> operation)
-        {
-            return this.streamLocatorProtocols.Execute(operation);
-        }
-
-        /// <inheritdoc />
-        public IReadOnlyCollection<StreamLocatorBase> Execute(
-            GetAllStreamLocatorsOp operation)
-        {
-            return this.streamLocatorProtocols.Execute(operation);
-        }
-
-        /// <inheritdoc />
         public void Execute(
             CreateStreamOp<TId> operation)
         {
             var stream = operation.Stream;
-            var allLocators = stream.Execute(new GetAllStreamLocatorsOp());
+            var allLocators = stream.StreamLocatorProtocol.Execute(new GetAllStreamLocatorsOp());
             foreach (var locator in allLocators)
             {
                 if (locator is SqlStreamLocator sqlStreamLocator)
                 {
                     using (var connection = sqlStreamLocator.OpenSqlConnection())
                     {
-                        // should use a transation here!!
+                        // should use a transaction here!!
                         var streamAlreadyExists = connection.ExecuteScalar<bool>(
                             FormattableString.Invariant($"IF (EXISTS(select * from sys.schemas where name = '{this.Name}'))BEGIN SELECT 'true' END ELSE BEGIN SELECT 'false' END"));
                         if (!streamAlreadyExists)
@@ -207,24 +195,31 @@ namespace Naos.Protocol.SqlServer
         }
 
         /// <inheritdoc />
-        public IVoidProtocol<PutOp<TObject>> BuildPutProtocol<TObject>()
+        public async Task ExecuteAsync(
+            CreateStreamOp<TId> operation)
+        {
+            await Task.Run(() => this.Execute(operation));
+        }
+
+        /// <inheritdoc />
+        public ISyncAndAsyncVoidProtocol<PutOp<TObject>> BuildPutProtocol<TObject>()
         {
             return new SqlStreamDataProtocol<TId, TObject>(this);
         }
 
         /// <inheritdoc />
-        public IReturningProtocol<GetLatestByIdOp<TId, TObject>, TObject> BuildGetLatestByKeyProtocol<TObject>()
+        public ISyncAndAsyncReturningProtocol<GetLatestByIdOp<TId, TObject>, TObject> BuildGetLatestByIdProtocol<TObject>()
         {
             return new SqlStreamDataProtocol<TId, TObject>(this);
         }
 
         /// <inheritdoc />
-        public IReturningProtocol<GetIdFromObjectOp<TId, TObject>, TId> BuildGetIdFromObjectProtocol<TObject>()
+        public ISyncAndAsyncReturningProtocol<GetIdFromObjectOp<TId, TObject>, TId> BuildGetIdFromObjectProtocol<TObject>()
         {
             var containsKey = this.typeToGetIdProtocolMap.TryGetValue(typeof(TObject), out IProtocol protocol);
             if (containsKey)
             {
-                return (IReturningProtocol<GetIdFromObjectOp<TId, TObject>, TId>)protocol;
+                return (ISyncAndAsyncReturningProtocol<GetIdFromObjectOp<TId, TObject>, TId>)protocol;
             }
             else
             {
@@ -233,12 +228,12 @@ namespace Naos.Protocol.SqlServer
         }
 
         /// <inheritdoc />
-        public IReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>> BuildGetTagsFromObjectProtocol<TObject>()
+        public ISyncAndAsyncReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>> BuildGetTagsFromObjectProtocol<TObject>()
         {
             var containsKey = this.typeToGetTagsProtocolMap.TryGetValue(typeof(TObject), out IProtocol protocol);
             if (containsKey)
             {
-                return (IReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>>)protocol;
+                return (ISyncAndAsyncReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>>)protocol;
             }
             else
             {
@@ -313,6 +308,13 @@ namespace Naos.Protocol.SqlServer
                     }
                 }
             }
+        }
+
+        /// <inheritdoc />
+        public async Task<int> ExecuteAsync(
+            GetIdAddIfNecessarySerializerDescriptionOp operation)
+        {
+            return await Task.FromResult(this.Execute(operation));
         }
     }
 }

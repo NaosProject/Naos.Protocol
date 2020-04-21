@@ -50,11 +50,11 @@ namespace Naos.Protocol.SqlServer.Test
             var tagExtractor = new LambdaReturningProtocol<GetTagsFromObjectOp<MyObject>, IReadOnlyDictionary<string, string>>(
                 _ => new Dictionary<string, string>
                      {
-                         { nameof(MyObject.Field), _.ObjectToDetermineKeyFrom.Field },
+                         { nameof(MyObject.Field), _.ObjectToDetermineTagsFrom.Field },
                      });
 
             var stream = new SqlStream<string>(
-                "HMyStream",
+                "IMyStream",
                 TimeSpan.FromMinutes(20),
                 TimeSpan.FromMinutes(20),
                 defaultSerializerDescription,
@@ -79,7 +79,7 @@ namespace Naos.Protocol.SqlServer.Test
             this.testOutputHelper.WriteLine(FormattableString.Invariant($"Put: {stopwatch.Elapsed.TotalMilliseconds} ms"));
             stopwatch.Reset();
             stopwatch.Start();
-            var my = stream.BuildGetLatestByKeyProtocol<MyObject>().Execute(new GetLatestByIdOp<string, MyObject>(key));
+            var my = stream.BuildGetLatestByIdProtocol<MyObject>().Execute(new GetLatestByIdOp<string, MyObject>(key));
             this.testOutputHelper.WriteLine(FormattableString.Invariant($"Get: {stopwatch.Elapsed.TotalMilliseconds} ms"));
            // this.testOutputHelper.WriteLine(FormattableString.Invariant($"Get: {SqlStream<string>.Stopwatch.Elapsed.TotalMilliseconds} ms"));
             this.testOutputHelper.WriteLine(FormattableString.Invariant($"Key={my.Id}, Field={my.Field}"));
@@ -87,7 +87,7 @@ namespace Naos.Protocol.SqlServer.Test
         }
     }
 
-    public class MyObject : IHaveKey<string>
+    public class MyObject : IHaveId<string>
     {
         public MyObject(
             string key,

@@ -6,19 +6,17 @@
 
 namespace Naos.Protocol.Domain
 {
-    using System;
-
     /// <summary>
-    /// Abstract base of an operation.
+    /// Get the ID for a stream from the provided object.
     /// </summary>
     /// <typeparam name="TId">Type of ID being used.</typeparam>
     /// <typeparam name="TObject">Type of object.</typeparam>
-    public class GetIdFromObjectOp<TId, TObject> : ReturningOperationBase<TId>, IHaveKeyType
+    public class GetIdFromObjectOp<TId, TObject> : ReturningOperationBase<TId>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetIdFromObjectOp{TKey,TObject}"/> class.
+        /// Initializes a new instance of the <see cref="GetIdFromObjectOp{TId,TObject}"/> class.
         /// </summary>
-        /// <param name="objectToDetermineIdFrom">The object to determine key from.</param>
+        /// <param name="objectToDetermineIdFrom">The object to determine ID from.</param>
         public GetIdFromObjectOp(
             TObject objectToDetermineIdFrom)
         {
@@ -26,12 +24,9 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Gets the object to determine key from.
+        /// Gets the object to determine ID from.
         /// </summary>
-        /// <value>The object to determine key from.</value>
+        /// <value>The object to determine ID from.</value>
         public TObject ObjectToDetermineIdFrom { get; private set; }
-
-        /// <inheritdoc />
-        public Type IdType => typeof(TId);
     }
 }

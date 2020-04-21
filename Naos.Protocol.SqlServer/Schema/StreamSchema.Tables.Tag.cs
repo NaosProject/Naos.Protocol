@@ -31,8 +31,8 @@ SET QUOTED_IDENTIFIER ON
 CREATE TABLE [{streamName}].[Tag](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[ObjectId] [int] NOT NULL,
-	[Name] [nvarchar](450) NOT NULL,
-	[Value] [nvarchar](4000) NULL,
+	[TagKey] [nvarchar](450) NOT NULL,
+	[TagValue] [nvarchar](4000) NULL,
 	[RecordCreatedUtc] [datetime2] NOT NULL,
  CONSTRAINT [PK_Tag] PRIMARY KEY CLUSTERED 
 (

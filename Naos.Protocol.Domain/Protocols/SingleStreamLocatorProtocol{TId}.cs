@@ -8,15 +8,16 @@ namespace Naos.Protocol.Domain
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     /// <summary>
-    /// TODO: Starting point for new project.
+    /// Implements <see cref="IProtocolStreamLocator{TId}"/> using a single provided <see cref="StreamLocatorBase"/>.
     /// </summary>
-    /// <typeparam name="TId">Type of key.</typeparam>
+    /// <typeparam name="TId">Type of ID.</typeparam>
     public sealed partial class SingleStreamLocatorProtocol<TId>
         : IProtocolStreamLocator<TId>
     {
-        private readonly StreamLocatorBase sqlStreamLocator;
+        private readonly StreamLocatorBase streamLocator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SingleStreamLocatorProtocol{TId}"/> class.
@@ -24,14 +25,21 @@ namespace Naos.Protocol.Domain
         /// <param name="streamLocator">The SQL stream locator.</param>
         public SingleStreamLocatorProtocol(StreamLocatorBase streamLocator)
         {
-            this.sqlStreamLocator = streamLocator ?? throw new ArgumentNullException(nameof(streamLocator));
+            this.streamLocator = streamLocator ?? throw new ArgumentNullException(nameof(streamLocator));
         }
 
         /// <inheritdoc />
         public StreamLocatorBase Execute(
             GetStreamLocatorByIdOp<TId> operation)
         {
-            return this.sqlStreamLocator;
+            return this.streamLocator;
+        }
+
+        /// <inheritdoc />
+        public async Task<StreamLocatorBase> ExecuteAsync(
+            GetStreamLocatorByIdOp<TId> operation)
+        {
+            return await Task.FromResult(this.Execute(operation));
         }
 
         /// <inheritdoc />
@@ -40,8 +48,15 @@ namespace Naos.Protocol.Domain
         {
             return new[]
                    {
-                       this.sqlStreamLocator,
+                       this.streamLocator,
                    };
+        }
+
+        /// <inheritdoc />
+        public async Task<IReadOnlyCollection<StreamLocatorBase>> ExecuteAsync(
+            GetAllStreamLocatorsOp operation)
+        {
+            return await Task.FromResult(this.Execute(operation));
         }
     }
 }
