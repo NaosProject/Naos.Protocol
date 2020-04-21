@@ -31,6 +31,7 @@ SET QUOTED_IDENTIFIER ON
 CREATE TABLE [{streamName}].[Tag](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[ObjectId] [int] NOT NULL,
+	[ObjectTypeWithoutVersionId] [int] NOT NULL,
 	[TagKey] [nvarchar](450) NOT NULL,
 	[TagValue] [nvarchar](4000) NULL,
 	[RecordCreatedUtc] [datetime2] NOT NULL,
