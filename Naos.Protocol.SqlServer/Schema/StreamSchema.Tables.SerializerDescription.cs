@@ -56,7 +56,46 @@ REFERENCES [{streamName}].[TypeWithVersion] ([Id])
 
 
 ALTER TABLE [{streamName}].[SerializerDescription] CHECK CONSTRAINT [FK_SerializerDescription_TypeWithVersion]
-			");
+
+ALTER TABLE [{streamName}].[SerializerDescription] ADD CONSTRAINT [UQ_SerializerDescription_All] UNIQUE([SerializationKind], [SerializationFormat], [SerializationConfigurationTypeWithoutVersionId], [SerializationConfigurationTypeWithVersionId], [CompressionKind], [UnregisteredTypeEncounteredStrategy]);
+
+SET ANSI_PADDING ON
+
+CREATE NONCLUSTERED INDEX [IX_SerializerDescription_Id_Asc] ON [{streamName}].[SerializerDescription]
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+CREATE NONCLUSTERED INDEX [IX_SerializerDescription__SerializationKind_Asc] ON [{streamName}].[SerializerDescription]
+(
+	[SerializationKind] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+CREATE NONCLUSTERED INDEX [IX_SerializerDescription_SerializationFormat_Asc] ON [{streamName}].[SerializerDescription]
+(
+	[SerializationFormat] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+CREATE NONCLUSTERED INDEX [IX_SerializerDescription_SerializationConfigurationTypeWithoutVersionId_Asc] ON [{streamName}].[SerializerDescription]
+(
+	[SerializationConfigurationTypeWithoutVersionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+CREATE NONCLUSTERED INDEX [IX_SerializerDescription_SerializationConfigurationTypeWithVersionId_Asc] ON [{streamName}].[SerializerDescription]
+(
+	[SerializationConfigurationTypeWithVersionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+CREATE NONCLUSTERED INDEX [IX_SerializerDescription_CompressionKind_Asc] ON [{streamName}].[SerializerDescription]
+(
+	[CompressionKind] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+CREATE NONCLUSTERED INDEX [IX_SerializerDescription_UnregisteredTypeEncounteredStrategy_Asc] ON [{streamName}].[SerializerDescription]
+(
+	[UnregisteredTypeEncounteredStrategy] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+");
 
             return result;
         }

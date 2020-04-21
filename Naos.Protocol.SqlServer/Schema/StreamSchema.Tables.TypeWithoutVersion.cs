@@ -30,13 +30,20 @@ SET QUOTED_IDENTIFIER ON
 
 CREATE TABLE [{streamName}].[TypeWithoutVersion](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[AssemblyQualifiedName] [nvarchar](2000) NOT NULL,
+	[AssemblyQualifiedName] [nvarchar](2000) UNIQUE NOT NULL,
 	[RecordCreatedUtc] [datetime2] NULL,
  CONSTRAINT [PK_TypeWithoutVersion] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
+SET ANSI_PADDING ON
+
+CREATE NONCLUSTERED INDEX [IX_TypeWithoutVersion_Id_Asc] ON [{streamName}].[TypeWithoutVersion]
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 			");
 
             return result;
