@@ -44,7 +44,8 @@ CREATE PROCEDURE [{streamName}].PutObject(
 , @AssemblyQualitifiedNameWithVersion AS nvarchar(2000)
 , @SerializerDescriptionId AS int
 , @SerializedObjectId AS nvarchar(450)
-, @SerializedObject AS varchar(max)
+, @SerializedObjectString AS nvarchar(max)
+, @SerializedObjectBinary AS varbinary(max)
 , @Tags AS xml
 )
 AS
@@ -66,14 +67,16 @@ BEGIN TRANSACTION [PutObject]
 		, [ObjectTypeWithVersionId]
 		, [SerializerDescriptionId]
 		, [SerializedObjectId]
-		, [SerializedObject]
+		, [SerializedObjectString]
+		, [SerializedObjectBinary]
 		, [RecordCreatedUtc]
 		) VALUES (
 		  @TypeWithoutVersionId
 		, @TypeWithVersionId
 		, @SerializerDescriptionId
 		, @SerializedObjectId
-		, @SerializedObject
+		, @SerializedObjectString
+		, @SerializedObjectBinary
 		, @RecordCreatedUtc
 		)
       SET @Id = SCOPE_IDENTITY()

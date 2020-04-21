@@ -217,6 +217,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\SuppressBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
+    <Compile Include="ConsoleAbstraction.Custom.cs" />
     <Compile Include="ConsoleAbstraction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -231,6 +232,10 @@
     <ProjectReference Include="..\Naos.Protocol.Serialization.Bson\Naos.Protocol.Serialization.Bson.csproj">
       <Project>{86d25aea-adc3-42f9-960a-cab1e50eef5a}</Project>
       <Name>Naos.Protocol.Serialization.Bson</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Naos.Protocol.Serialization.Json\Naos.Protocol.Serialization.Json.csproj">
+      <Project>{30972E2B-A854-4E7C-A76A-F208AB9C7470}</Project>
+      <Name>Naos.Protocol.Serialization.Json</Name>
     </ProjectReference>
     <ProjectReference Include="..\Naos.Protocol.SqlServer\Naos.Protocol.SqlServer.csproj">
       <Project>{01807AC1-D1A5-4B32-A729-3F16AD6E4877}</Project>

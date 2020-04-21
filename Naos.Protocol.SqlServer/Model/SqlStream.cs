@@ -163,7 +163,21 @@ namespace Naos.Protocol.SqlServer
                         // should use a transaction here!!
                         var streamAlreadyExists = connection.ExecuteScalar<bool>(
                             FormattableString.Invariant($"IF (EXISTS(select * from sys.schemas where name = '{this.Name}'))BEGIN SELECT 'true' END ELSE BEGIN SELECT 'false' END"));
-                        if (!streamAlreadyExists)
+
+                        if (streamAlreadyExists)
+                        {
+                            switch (operation.ExistingStreamEncounteredStrategy)
+                            {
+                                case ExistingStreamEncounteredStrategy.Overwrite:
+                                    throw new NotSupportedException(FormattableString.Invariant(
+                                        $"Overwriting streams is not currently supported; stream '{this.Name}' already exists, {nameof(operation)}.{nameof(operation.ExistingStreamEncounteredStrategy)} was set to {ExistingStreamEncounteredStrategy.Overwrite}."));
+                                case ExistingStreamEncounteredStrategy.Throw:
+                                    throw new InvalidDataException(FormattableString.Invariant($"Stream '{this.Name}' already exists, {nameof(operation)}.{nameof(operation.ExistingStreamEncounteredStrategy)} was set to {ExistingStreamEncounteredStrategy.Throw}."));
+                                case ExistingStreamEncounteredStrategy.Skip:
+                                    break;
+                            }
+                        }
+                        else
                         {
                             var creationScripts = new[]
                                                   {

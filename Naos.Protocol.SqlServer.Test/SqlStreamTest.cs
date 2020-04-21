@@ -12,11 +12,13 @@ namespace Naos.Protocol.SqlServer.Test
     using MongoDB.Bson.Serialization;
     using Naos.Protocol.Domain;
     using Naos.Protocol.Serialization.Bson;
+    using Naos.Protocol.Serialization.Json;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Compression.Recipes;
     using OBeautifulCode.Representation.System;
     using OBeautifulCode.Serialization;
     using OBeautifulCode.Serialization.Bson;
+    using OBeautifulCode.Serialization.Json;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -54,7 +56,7 @@ namespace Naos.Protocol.SqlServer.Test
                      });
 
             var stream = new SqlStream<string>(
-                "IMyStream",
+                streamName,
                 TimeSpan.FromMinutes(20),
                 TimeSpan.FromMinutes(20),
                 defaultSerializerDescription,
@@ -67,7 +69,7 @@ namespace Naos.Protocol.SqlServer.Test
                     { typeof(MyObject), tagExtractor },
                 });
 
-            stream.Execute(new CreateStreamOp<string>(stream));
+            stream.Execute(new CreateStreamOp<string>(stream, ExistingStreamEncounteredStrategy.Skip));
             var key = stream.Name;
             var firstValue = "Testing again.";
             var secondValue = "Testing again latest.";
@@ -90,10 +92,10 @@ namespace Naos.Protocol.SqlServer.Test
     public class MyObject : IHaveId<string>
     {
         public MyObject(
-            string key,
+            string id,
             string field)
         {
-            this.Id = key;
+            this.Id = id;
             this.Field = field;
         }
 

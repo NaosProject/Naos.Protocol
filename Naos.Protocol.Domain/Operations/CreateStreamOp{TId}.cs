@@ -18,10 +18,14 @@ namespace Naos.Protocol.Domain
         /// Initializes a new instance of the <see cref="CreateStreamOp{TId}"/> class.
         /// </summary>
         /// <param name="stream">The stream.</param>
+        /// <param name="existingStreamEncounteredStrategy">Existing stream encountered strategy.</param>
         /// <exception cref="ArgumentNullException">stream.</exception>
-        public CreateStreamOp(IStream<TId> stream)
+        public CreateStreamOp(
+            IStream<TId> stream,
+            ExistingStreamEncounteredStrategy existingStreamEncounteredStrategy)
         {
             this.Stream = stream ?? throw new ArgumentNullException(nameof(stream));
+            this.ExistingStreamEncounteredStrategy = existingStreamEncounteredStrategy;
         }
 
         /// <summary>
@@ -29,5 +33,11 @@ namespace Naos.Protocol.Domain
         /// </summary>
         /// <value>The stream.</value>
         public IStream<TId> Stream { get; private set; }
+
+        /// <summary>
+        /// Gets the existing stream encountered strategy.
+        /// </summary>
+        /// <value>The existing stream encountered strategy.</value>
+        public ExistingStreamEncounteredStrategy ExistingStreamEncounteredStrategy { get; private set; }
     }
 }

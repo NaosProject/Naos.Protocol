@@ -30,7 +30,7 @@ namespace Naos.Protocol.SqlServer
     /// </summary>
     /// <typeparam name="TId">The type of the key.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
-    public class SqlStreamDataProtocol<TId, TObject> : ISyncAndAsyncVoidProtocol<PutOp<TObject>>, ISyncAndAsyncReturningProtocol<GetLatestByIdOp<TId, TObject>, TObject>
+    public class SqlStreamDataProtocol<TId, TObject> : IProtocolStreamObjectOperations<TId, TObject>
     {
         private readonly SqlStream<TId> stream;
         private readonly IReturningProtocol<GetIdFromObjectOp<TId, TObject>, TId> getIdFromObjectProtocol;
@@ -65,7 +65,13 @@ namespace Naos.Protocol.SqlServer
                 var describedSerializer = this.stream.GetDescribedSerializer(sqlStreamLocator);
                 var tagsXml = this.GetTagsXmlString(operation);
 
-                var serializedObject = describedSerializer.Serializer.SerializeToString(operation.ObjectToPut);
+                var serializedObjectString = describedSerializer.SerializerDescription.SerializationFormat != SerializationFormat.String
+                    ? null
+                    : describedSerializer.Serializer.SerializeToString(operation.ObjectToPut);
+                var serializedObjectBinary = describedSerializer.SerializerDescription.SerializationFormat != SerializationFormat.Binary
+                    ? null
+                    : describedSerializer.Serializer.SerializeToBytes(operation.ObjectToPut);
+
                 var serializedObjectId = (id is string stringKey) ? stringKey : describedSerializer.Serializer.SerializeToString(id);
                 var storedProcedureName = StreamSchema.BuildPutSprocName(this.stream.Name);
                 using (var connection = sqlStreamLocator.OpenSqlConnection())
@@ -82,8 +88,19 @@ namespace Naos.Protocol.SqlServer
                                 nameof(describedSerializer.SerializerDescriptionId),
                                 describedSerializer.SerializerDescriptionId));
                         command.Parameters.Add(new SqlParameter("SerializedObjectId", serializedObjectId));
-                        command.Parameters.Add(new SqlParameter("SerializedObject", serializedObject));
-                        command.Parameters.Add(new SqlParameter("Tags", tagsXml));
+                        command.Parameters.Add(
+                            new SqlParameter("SerializedObjectString", SqlDbType.NVarChar, -1)
+                            {
+                                IsNullable = true,
+                                Value = serializedObjectString ?? string.Empty, // the parameter won't accept null here for some reason...
+                            });
+                        command.Parameters.Add(
+                            new SqlParameter("SerializedObjectBinary", SqlDbType.VarBinary, -1)
+                            {
+                                IsNullable = true,
+                                Value = serializedObjectBinary ?? new byte[0], // the parameter won't accept null here for some reason...
+                            });
+                        command.Parameters.Add(new SqlParameter("Tags", tagsXml ?? string.Empty));
 
                         command.ExecuteNonQuery();
                     }
@@ -99,6 +116,11 @@ namespace Naos.Protocol.SqlServer
             PutOp<TObject> operation)
         {
             var tags = this.getTagsFromObjectProtocol.Execute(new GetTagsFromObjectOp<TObject>(operation.ObjectToPut));
+            if (!tags.Any())
+            {
+                return null;
+            }
+
             var tagsXmlBuilder = new StringBuilder();
             tagsXmlBuilder.Append("<Tags>");
             foreach (var tag in tags ?? new Dictionary<string, string>())
@@ -149,7 +171,8 @@ namespace Naos.Protocol.SqlServer
                 SerializationFormat serializationFormat;
                 string serializationConfigAssemblyQualifiedNameWithoutVersion;
                 CompressionKind compressionKind;
-                string serializedObject;
+                string serializedObjectString;
+                byte[] serializedObjectBytes;
 
                 using (var connection = sqlStreamLocator.OpenSqlConnection())
                 {
@@ -175,7 +198,11 @@ namespace Naos.Protocol.SqlServer
                                                    {
                                                        Direction = ParameterDirection.Output,
                                                    };
-                        var serializedObjectParam = new SqlParameter("SerializedObject", SqlDbType.NVarChar, -1)
+                        var serializedObjectStringParam = new SqlParameter("SerializedObjectString", SqlDbType.NVarChar, -1)
+                                                     {
+                                                         Direction = ParameterDirection.Output,
+                                                     };
+                        var serializedObjectBytesParam = new SqlParameter("SerializedObjectBinary", SqlDbType.VarBinary, -1)
                                                      {
                                                          Direction = ParameterDirection.Output,
                                                      };
@@ -183,30 +210,39 @@ namespace Naos.Protocol.SqlServer
                         command.Parameters.Add(serializationKindParam);
                         command.Parameters.Add(serializationFormatParam);
                         command.Parameters.Add(compressionKindParam);
-                        command.Parameters.Add(serializedObjectParam);
+                        command.Parameters.Add(serializedObjectStringParam);
+                        command.Parameters.Add(serializedObjectBytesParam);
 
                         command.ExecuteNonQuery();
                         serializationKind = (SerializationKind)Enum.Parse(typeof(SerializationKind), serializationKindParam?.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{nameof(SerializationKind)} from {storedProcedureName} should not be null output for key {operation.Id}.")));
                         serializationFormat = (SerializationFormat)Enum.Parse(typeof(SerializationFormat), serializationFormatParam?.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{nameof(SerializationFormat)} from {storedProcedureName} should not be null output for key {operation.Id}.")));
                         serializationConfigAssemblyQualifiedNameWithoutVersion = serializationConfigAssemblyQualifiedNameWithoutVersionParam.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{serializationConfigAssemblyQualifiedNameWithoutVersionParam.ParameterName} from {storedProcedureName} should not be null output for key {operation.Id}."));
                         compressionKind = (CompressionKind)Enum.Parse(typeof(CompressionKind), compressionKindParam.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{nameof(CompressionKind)} from {storedProcedureName} should not be null output for key {operation.Id}.")));
-                        serializedObject = serializedObjectParam.Value?.ToString();
+                        serializedObjectString = serializedObjectStringParam.Value?.ToString();
+                        serializedObjectBytes = (byte[])serializedObjectBytesParam.Value;
                     }
                 }
 
-                var describedSerialization = new DescribedSerialization(
-                    typeof(TObject).ToRepresentation(),
-                    serializedObject,
-                    new SerializationDescription(
-                        serializationKind,
-                        serializationFormat,
-                        Type.GetType(serializationConfigAssemblyQualifiedNameWithoutVersion).ToRepresentation(),
-                        compressionKind));
+                var serializerDescription = new SerializationDescription(
+                    serializationKind,
+                    serializationFormat,
+                    Type.GetType(serializationConfigAssemblyQualifiedNameWithoutVersion).ToRepresentation(),
+                    compressionKind);
 
-                var result = describedSerialization.DeserializePayloadUsingSpecificFactory<TObject>(
-                    this.stream.SerializerFactory,
-                    this.stream.CompressorFactory,
+                var serializer = this.stream.SerializerFactory.BuildSerializer(
+                    serializerDescription,
                     unregisteredTypeEncounteredStrategy: UnregisteredTypeEncounteredStrategy.Attempt);
+
+                TObject result = default(TObject);
+                if (serializationFormat == SerializationFormat.String)
+                {
+                    result = serializer.Deserialize<TObject>(serializedObjectString);
+                }
+                else if (serializationFormat == SerializationFormat.Binary)
+                {
+                    result = serializer.Deserialize<TObject>(serializedObjectBytes);
+                }
+
                 return result;
             }
             else

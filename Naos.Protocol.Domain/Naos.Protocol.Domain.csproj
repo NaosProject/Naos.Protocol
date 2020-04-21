@@ -118,6 +118,8 @@
     <Compile Include="Model\IHaveId{TId}.cs" />
     <Compile Include="Model\IProtocolFactoryStreamObjectOperations{TId}.cs" />
     <Compile Include="Model\IProtocolStreamLocator.cs" />
+    <Compile Include="Model\ExistingStreamEncounteredStrategy.cs" />
+    <Compile Include="Model\IProtocolStreamObjectOperations{TId,TObject}.cs" />
     <Compile Include="Model\IStream.cs" />
     <Compile Include="Location\LocatorBase.cs" />
     <Compile Include="Events\Executing.cs" />

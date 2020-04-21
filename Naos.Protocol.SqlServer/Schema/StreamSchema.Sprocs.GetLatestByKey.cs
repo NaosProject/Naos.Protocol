@@ -46,7 +46,8 @@ CREATE PROCEDURE [{streamName}].GetLatestByKey(
 , @SerializationKind AS varchar(50) OUTPUT
 , @SerializationFormat AS varchar(50) OUTPUT
 , @CompressionKind AS varchar(50) OUTPUT
-, @SerializedObject AS nvarchar(MAX) OUTPUT
+, @SerializedObjectString AS nvarchar(MAX) OUTPUT
+, @SerializedObjectBinary AS varbinary(MAX) OUTPUT
 )
 AS
 BEGIN
@@ -54,7 +55,8 @@ BEGIN
     DECLARE @SerializerDescriptionId int   
     SELECT TOP 1
 	   @SerializerDescriptionId = [SerializerDescriptionId]
-	 , @SerializedObject = [SerializedObject]
+	 , @SerializedObjectString = [SerializedObjectString]
+	 , @SerializedObjectBinary = [SerializedObjectBinary]
 	FROM [{streamName}].[Object]
 	WHERE [SerializedObjectId] = @SerializedObjectId
 	ORDER BY [RecordCreatedUtc] DESC
