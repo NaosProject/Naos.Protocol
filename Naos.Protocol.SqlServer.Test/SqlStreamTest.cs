@@ -38,6 +38,8 @@ namespace Naos.Protocol.SqlServer.Test
         [Fact(Skip = "Testing only.")]
         public void Method___Should_do_something___When_called()
         {
+            var streamName = "StreamName11";
+
             var sqlStreamLocator = new SqlStreamLocator("localhost", "Streams", "sa", "password", "SQLDEV2017");
             var streamLocatorProtocol = new SingleStreamLocatorProtocol<string>(sqlStreamLocator);
 

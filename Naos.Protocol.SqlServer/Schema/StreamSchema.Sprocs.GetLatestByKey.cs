@@ -46,6 +46,8 @@ CREATE PROCEDURE [{streamName}].GetLatestByKey(
 , @SerializationKind AS varchar(50) OUTPUT
 , @SerializationFormat AS varchar(50) OUTPUT
 , @CompressionKind AS varchar(50) OUTPUT
+, @ObjectAssemblyQualifiedNameWithoutVersion AS nvarchar(2000) OUTPUT
+, @ObjectAssemblyQualifiedNameWithVersion AS nvarchar(2000) OUTPUT
 , @SerializedObjectString AS nvarchar(MAX) OUTPUT
 , @SerializedObjectBinary AS varbinary(MAX) OUTPUT
 )
@@ -53,22 +55,29 @@ AS
 BEGIN
 
     DECLARE @SerializerDescriptionId int   
+	DECLARE @ObjectTypeWithoutVersionId int
+	DECLARE @ObjectTypeWithVersionId int
     SELECT TOP 1
 	   @SerializerDescriptionId = [SerializerDescriptionId]
+	 , @ObjectTypeWithoutVersionId = [ObjectTypeWithoutVersionId]
+	 , @ObjectTypeWithVersionId = [ObjectTypeWithVersionId]
 	 , @SerializedObjectString = [SerializedObjectString]
 	 , @SerializedObjectBinary = [SerializedObjectBinary]
 	FROM [{streamName}].[Object]
 	WHERE [SerializedObjectId] = @SerializedObjectId
-	ORDER BY [RecordCreatedUtc] DESC
+	ORDER BY [Id] DESC
 
-	DECLARE @TypeWithoutVersionId int
+	DECLARE @SerializationConfigTypeWithoutVersionId int
 	SELECT 
-		@TypeWithoutVersionId = [SerializationConfigurationTypeWithoutVersionId] 
+		@SerializationConfigTypeWithoutVersionId = [SerializationConfigurationTypeWithoutVersionId] 
   	  , @SerializationKind = [SerializationKind]
 	  , @SerializationFormat = [SerializationFormat]
 	  , @CompressionKind = [CompressionKind]
 	FROM [{streamName}].[SerializerDescription] WHERE [Id] = @SerializerDescriptionId
-	SELECT @SerializationConfigAssemblyQualifiedNameWithoutVersion = [AssemblyQualifiedName] FROM [{streamName}].[TypeWithoutVersion] WHERE [Id] = @TypeWithoutVersionId
+
+	SELECT @SerializationConfigAssemblyQualifiedNameWithoutVersion = [AssemblyQualifiedName] FROM [{streamName}].[TypeWithoutVersion] WHERE [Id] = @SerializationConfigTypeWithoutVersionId
+	SELECT @ObjectAssemblyQualifiedNameWithoutVersion = [AssemblyQualifiedName] FROM [{streamName}].[TypeWithoutVersion] WHERE [Id] = @ObjectTypeWithoutVersionId
+	SELECT @ObjectAssemblyQualifiedNameWithVersion = [AssemblyQualifiedName] FROM [{streamName}].[TypeWithVersion] WHERE [Id] = @ObjectTypeWithVersionId
 END
 
 			");

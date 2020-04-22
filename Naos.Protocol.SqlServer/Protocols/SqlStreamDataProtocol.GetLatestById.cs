@@ -12,6 +12,7 @@ namespace Naos.Protocol.SqlServer
     using System.IO;
     using System.Threading.Tasks;
     using Naos.Protocol.Domain;
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Compression;
     using OBeautifulCode.Representation.System;
     using OBeautifulCode.Serialization;
@@ -48,6 +49,8 @@ namespace Naos.Protocol.SqlServer
                 SerializationFormat serializationFormat;
                 string serializationConfigAssemblyQualifiedNameWithoutVersion;
                 CompressionKind compressionKind;
+                string objectAssemblyQualifiedNameWithoutVersion;
+                string objectAssemblyQualifiedNameWithVersion;
                 string serializedObjectString;
                 byte[] serializedObjectBytes;
 
@@ -75,6 +78,14 @@ namespace Naos.Protocol.SqlServer
                                                    {
                                                        Direction = ParameterDirection.Output,
                                                    };
+                        var objectAssemblyQualifiedNameWithoutVersionParam = new SqlParameter("ObjectAssemblyQualifiedNameWithoutVersion", SqlDbType.NVarChar, 2000)
+                                                                                     {
+                                                                                         Direction = ParameterDirection.Output,
+                                                                                     };
+                        var objectAssemblyQualifiedNameWithVersionParam = new SqlParameter("ObjectAssemblyQualifiedNameWithVersion", SqlDbType.NVarChar, 2000)
+                                                                                     {
+                                                                                         Direction = ParameterDirection.Output,
+                                                                                     };
                         var serializedObjectStringParam = new SqlParameter("SerializedObjectString", SqlDbType.NVarChar, -1)
                                                      {
                                                          Direction = ParameterDirection.Output,
@@ -87,6 +98,8 @@ namespace Naos.Protocol.SqlServer
                         command.Parameters.Add(serializationKindParam);
                         command.Parameters.Add(serializationFormatParam);
                         command.Parameters.Add(compressionKindParam);
+                        command.Parameters.Add(objectAssemblyQualifiedNameWithoutVersionParam);
+                        command.Parameters.Add(objectAssemblyQualifiedNameWithVersionParam);
                         command.Parameters.Add(serializedObjectStringParam);
                         command.Parameters.Add(serializedObjectBytesParam);
 
@@ -95,10 +108,18 @@ namespace Naos.Protocol.SqlServer
                         serializationFormat = (SerializationFormat)Enum.Parse(typeof(SerializationFormat), serializationFormatParam?.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{nameof(SerializationFormat)} from {storedProcedureName} should not be null output for key {operation.Id}.")));
                         serializationConfigAssemblyQualifiedNameWithoutVersion = serializationConfigAssemblyQualifiedNameWithoutVersionParam.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{serializationConfigAssemblyQualifiedNameWithoutVersionParam.ParameterName} from {storedProcedureName} should not be null output for key {operation.Id}."));
                         compressionKind = (CompressionKind)Enum.Parse(typeof(CompressionKind), compressionKindParam.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{nameof(CompressionKind)} from {storedProcedureName} should not be null output for key {operation.Id}.")));
+                        objectAssemblyQualifiedNameWithoutVersion = objectAssemblyQualifiedNameWithoutVersionParam.Value?.ToString();
+                        objectAssemblyQualifiedNameWithVersion = objectAssemblyQualifiedNameWithVersionParam.Value?.ToString();
                         serializedObjectString = serializedObjectStringParam.Value?.ToString();
                         serializedObjectBytes = (byte[])serializedObjectBytesParam.Value;
                     }
                 }
+
+                // TODO: check objectAssemblyQualifiedNameWithoutVersion against the versionless one built by typeof(TObject)...
+                objectAssemblyQualifiedNameWithoutVersion.MustForArg().NotBeNullNorWhiteSpace();
+
+                // TODO: add strategy to the operation to force exact version match?
+                objectAssemblyQualifiedNameWithVersion.MustForArg().NotBeNullNorWhiteSpace();
 
                 var serializerDescription = new SerializationDescription(
                     serializationKind,
