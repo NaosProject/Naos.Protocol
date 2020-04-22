@@ -58,13 +58,20 @@ BEGIN TRANSACTION [GetIdAddTypeWithoutVersion]
       COMMIT TRANSACTION [GetIdAddTypeWithoutVersion]
 
   END TRY
-
   BEGIN CATCH
-
       SET @Result = NULL
-      ROLLBACK TRANSACTION [GetIdAddTypeWithoutVersion]
+      DECLARE @ErrorMessage nvarchar(max), 
+              @ErrorSeverity int, 
+              @ErrorState int
 
-  END CATCH  
+      SELECT @ErrorMessage = ERROR_MESSAGE() + ' Line ' + cast(ERROR_LINE() as nvarchar(5)), @ErrorSeverity = ERROR_SEVERITY(), @ErrorState = ERROR_STATE()
+
+      IF (@@trancount > 0)
+      BEGIN
+         ROLLBACK TRANSACTION [GetIdAddTypeWithoutVersion]
+      END
+    RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState)
+  END CATCH
 END");
         }
 
@@ -112,13 +119,20 @@ BEGIN TRANSACTION [GetIdAddTypeWithVersion]
       COMMIT TRANSACTION [GetIdAddTypeWithVersion]
 
   END TRY
-
   BEGIN CATCH
-
       SET @Result = NULL
-      ROLLBACK TRANSACTION [GetIdAddTypeWithVersion]
+      DECLARE @ErrorMessage nvarchar(max), 
+              @ErrorSeverity int, 
+              @ErrorState int
 
-  END CATCH  
+      SELECT @ErrorMessage = ERROR_MESSAGE() + ' Line ' + cast(ERROR_LINE() as nvarchar(5)), @ErrorSeverity = ERROR_SEVERITY(), @ErrorState = ERROR_STATE()
+
+      IF (@@trancount > 0)
+      BEGIN
+         ROLLBACK TRANSACTION [GetIdAddTypeWithVersion]
+      END
+    RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState)
+  END CATCH 
 END");
         }
     }

@@ -97,11 +97,19 @@ BEGIN TRANSACTION [PutObject]
       COMMIT TRANSACTION [PutObject]
 
   END TRY
-
   BEGIN CATCH
-      ROLLBACK TRANSACTION [PutObject]
+      DECLARE @ErrorMessage nvarchar(max), 
+              @ErrorSeverity int, 
+              @ErrorState int
 
-  END CATCH  
+      SELECT @ErrorMessage = ERROR_MESSAGE() + ' Line ' + cast(ERROR_LINE() as nvarchar(5)), @ErrorSeverity = ERROR_SEVERITY(), @ErrorState = ERROR_STATE()
+
+      IF (@@trancount > 0)
+      BEGIN
+         ROLLBACK TRANSACTION [PutObject]
+      END
+    RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState)
+  END CATCH
 END
 			");
 
