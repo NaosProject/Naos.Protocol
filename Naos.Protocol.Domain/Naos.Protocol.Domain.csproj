@@ -107,6 +107,7 @@
     <Compile Include=".recipes\Spritely.Redo\Using.cs" />
     <Compile Include="Events\Handled.cs" />
     <Compile Include="Events\Handling.cs" />
+    <Compile Include="Model\TypeVersionMatchStrategy.cs" />
     <Compile Include="Model\IGetProtocol.cs" />
     <Compile Include="Events\CancelBlock.cs" />
     <Compile Include="Events\Block.cs" />
@@ -127,7 +128,7 @@
     <Compile Include="Operations\CreateStreamOp{TId}.cs" />
     <Compile Include="Operations\DiscoverOp.cs" />
     <Compile Include="Operations\GetIdFromObjectOp{TId,TObject}.cs" />
-    <Compile Include="Operations\GetLatestByIdOp{TId,TObject}.cs" />
+    <Compile Include="Operations\GetLatestByIdAndTypeOp{TId,TObject}.cs" />
     <Compile Include="Operations\GetReturningProtocolOp{TOperation,TReturn}.cs" />
     <Compile Include="Operations\GetStreamLocatorByIdOp{TId}.cs" />
     <Compile Include="Operations\GetTagsFromObjectOp.cs" />

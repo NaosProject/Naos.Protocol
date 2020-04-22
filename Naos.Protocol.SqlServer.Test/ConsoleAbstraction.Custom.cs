@@ -113,7 +113,7 @@ namespace Naos.Protocol.SqlServer.Test
                 var stopwatch = new Stopwatch();
                 stopwatch.Reset();
                 stopwatch.Start();
-                var result = stream.BuildGetLatestByIdProtocol<TestObject>().Execute(new GetLatestByIdOp<string, TestObject>(id));
+                var result = stream.BuildGetLatestByIdAndTypeProtocol<TestObject>().Execute(new GetLatestByIdAndTypeOp<string, TestObject>(id));
                 stopwatch.Stop();
                 Console.WriteLine(
                     FormattableString.Invariant(

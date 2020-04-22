@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain
     /// <typeparam name="TObject">Type of object used.</typeparam>
     public interface IProtocolStreamObjectOperations<TId, TObject> :
         ISyncAndAsyncVoidProtocol<PutOp<TObject>>,
-        ISyncAndAsyncReturningProtocol<GetLatestByIdOp<TId, TObject>, TObject>
+        ISyncAndAsyncReturningProtocol<GetLatestByIdAndTypeOp<TId, TObject>, TObject>
     {
     }
 }

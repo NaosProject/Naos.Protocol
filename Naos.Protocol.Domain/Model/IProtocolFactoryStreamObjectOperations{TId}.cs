@@ -36,10 +36,10 @@ namespace Naos.Protocol.Domain
         ISyncAndAsyncVoidProtocol<PutOp<TObject>> BuildPutProtocol<TObject>();
 
         /// <summary>
-        /// Gets the <see cref="GetLatestByIdOp{TKey,TObject}"/> protocol.
+        /// Gets the <see cref="GetLatestByIdAndTypeOp{TId,TObject}"/> protocol.
         /// </summary>
         /// <typeparam name="TObject">The type of the object.</typeparam>
         /// <returns>TProtocol.</returns>
-        ISyncAndAsyncReturningProtocol<GetLatestByIdOp<TId, TObject>, TObject> BuildGetLatestByIdProtocol<TObject>();
+        ISyncAndAsyncReturningProtocol<GetLatestByIdAndTypeOp<TId, TObject>, TObject> BuildGetLatestByIdAndTypeProtocol<TObject>();
     }
 }

@@ -222,7 +222,7 @@ namespace Naos.Protocol.SqlServer
         }
 
         /// <inheritdoc />
-        public ISyncAndAsyncReturningProtocol<GetLatestByIdOp<TId, TObject>, TObject> BuildGetLatestByIdProtocol<TObject>()
+        public ISyncAndAsyncReturningProtocol<GetLatestByIdAndTypeOp<TId, TObject>, TObject> BuildGetLatestByIdAndTypeProtocol<TObject>()
         {
             return new SqlStreamObjectOperationsProtocol<TId, TObject>(this);
         }

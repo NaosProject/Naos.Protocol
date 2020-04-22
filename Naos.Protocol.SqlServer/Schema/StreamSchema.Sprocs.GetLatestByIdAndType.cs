@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StreamSchema.Sprocs.GetLatestById.cs" company="Naos Project">
+// <copyright file="StreamSchema.Sprocs.GetLatestByIdAndType.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -42,12 +42,13 @@ namespace Naos.Protocol.SqlServer
             var result = FormattableString.Invariant($@"
 CREATE PROCEDURE [{streamName}].GetLatestById(
   @SerializedObjectId AS nvarchar(450)
+, @ObjectAssemblyQualifiedNameWithoutVersion AS nvarchar(2000)
+, @ObjectAssemblyQualifiedNameWithVersion AS nvarchar(2000)
+, @TypeVersionMatchStrategy AS varchar(10)
 , @SerializationConfigAssemblyQualifiedNameWithoutVersion AS nvarchar(2000) OUTPUT
 , @SerializationKind AS varchar(50) OUTPUT
 , @SerializationFormat AS varchar(50) OUTPUT
 , @CompressionKind AS varchar(50) OUTPUT
-, @ObjectAssemblyQualifiedNameWithoutVersion AS nvarchar(2000) OUTPUT
-, @ObjectAssemblyQualifiedNameWithVersion AS nvarchar(2000) OUTPUT
 , @SerializedObjectString AS nvarchar(MAX) OUTPUT
 , @SerializedObjectBinary AS varbinary(MAX) OUTPUT
 )
