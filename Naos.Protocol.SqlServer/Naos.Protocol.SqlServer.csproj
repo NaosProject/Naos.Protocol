@@ -116,7 +116,9 @@
     <Compile Include=".recipes\Spritely.Redo\RetriableFunctionAsync.cs" />
     <Compile Include=".recipes\Spritely.Redo\Using.cs" />
     <Compile Include="Model\DescribedSerializer.cs" />
-    <Compile Include="Model\SqlStreamDataProtocol.cs" />
+    <Compile Include="Protocols\SqlStreamDataProtocol.cs" />
+    <Compile Include="Protocols\SqlStreamDataProtocol.Put.cs" />
+    <Compile Include="Protocols\SqlStreamDataProtocol.GetLatestById.cs" />
     <Compile Include="Model\SqlStreamLocatorExtensions.cs" />
     <Compile Include="Model\SqlStreamLocator.cs" />
     <Compile Include="Model\SqlStream.cs" />
@@ -155,9 +157,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="OperationHandler\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Naos.Build.Analyzers.1.55.30\build\Naos.Build.Analyzers.targets" Condition="Exists('..\packages\Naos.Build.Analyzers.1.55.30\build\Naos.Build.Analyzers.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
