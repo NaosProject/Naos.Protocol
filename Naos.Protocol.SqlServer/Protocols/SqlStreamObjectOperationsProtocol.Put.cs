@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SqlStreamDataProtocol.Put.cs" company="Naos Project">
+// <copyright file="SqlStreamObjectOperationsProtocol.Put.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ namespace Naos.Protocol.SqlServer
     /// </summary>
     /// <typeparam name="TId">The type of the key.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
-    public partial class SqlStreamDataProtocol<TId, TObject>
+    public partial class SqlStreamObjectOperationsProtocol<TId, TObject>
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
     {

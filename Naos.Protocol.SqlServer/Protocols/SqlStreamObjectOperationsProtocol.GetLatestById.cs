@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SqlStreamDataProtocol.GetLatestById.cs" company="Naos Project">
+// <copyright file="SqlStreamObjectOperationsProtocol.GetLatestById.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ namespace Naos.Protocol.SqlServer
     /// </summary>
     /// <typeparam name="TId">The type of the key.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
-    public partial class SqlStreamDataProtocol<TId, TObject>
+    public partial class SqlStreamObjectOperationsProtocol<TId, TObject>
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
     {
@@ -43,7 +43,7 @@ namespace Naos.Protocol.SqlServer
                     ? stringKey
                     : this.stream.GetDescribedSerializer(sqlStreamLocator).Serializer.SerializeToString(operation.Id);
 
-                var storedProcedureName = StreamSchema.BuildGetLatestByKeySprocName(this.stream.Name);
+                var storedProcedureName = StreamSchema.BuildGetLatestByIdSprocName(this.stream.Name);
 
                 SerializationKind serializationKind;
                 SerializationFormat serializationFormat;

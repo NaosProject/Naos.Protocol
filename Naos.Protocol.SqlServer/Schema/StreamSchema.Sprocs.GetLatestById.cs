@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="StreamSchema.Sprocs.GetLatestByKey.cs" company="Naos Project">
+// <copyright file="StreamSchema.Sprocs.GetLatestById.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -23,10 +23,10 @@ namespace Naos.Protocol.SqlServer
         /// <param name="streamName">Name of the stream.</param>
         /// <returns>Name of the put stored procedure.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sproc", Justification = NaosSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
-        public static string BuildGetLatestByKeySprocName(
+        public static string BuildGetLatestByIdSprocName(
             string streamName)
         {
-            return FormattableString.Invariant($"[{streamName}].GetLatestByKey");
+            return FormattableString.Invariant($"[{streamName}].GetLatestById");
         }
 
         /// <summary>
@@ -36,11 +36,11 @@ namespace Naos.Protocol.SqlServer
         /// <returns>System.String.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "ForGet", Justification = NaosSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sproc", Justification = NaosSuppressBecause.CA1704_IdentifiersShouldBeSpelledCorrectly_SpellingIsCorrectInContextOfTheDomain)]
-        public static string BuildCreationScriptForGetLatestByKeySproc(
+        public static string BuildCreationScriptForGetLatestByIdSproc(
             string streamName)
         {
             var result = FormattableString.Invariant($@"
-CREATE PROCEDURE [{streamName}].GetLatestByKey(
+CREATE PROCEDURE [{streamName}].GetLatestById(
   @SerializedObjectId AS nvarchar(450)
 , @SerializationConfigAssemblyQualifiedNameWithoutVersion AS nvarchar(2000) OUTPUT
 , @SerializationKind AS varchar(50) OUTPUT

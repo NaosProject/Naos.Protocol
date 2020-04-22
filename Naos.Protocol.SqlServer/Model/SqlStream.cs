@@ -191,7 +191,7 @@ namespace Naos.Protocol.SqlServer
                                                       StreamSchema.BuildCreationScriptForTypeWithVersionSproc(this.Name),
                                                       StreamSchema.BuildCreationScriptForSerializerDescriptionSproc(this.Name),
                                                       StreamSchema.BuildCreationScriptForPutSproc(this.Name),
-                                                      StreamSchema.BuildCreationScriptForGetLatestByKeySproc(this.Name),
+                                                      StreamSchema.BuildCreationScriptForGetLatestByIdSproc(this.Name),
                                                   };
 
                             foreach (var script in creationScripts)
@@ -218,13 +218,13 @@ namespace Naos.Protocol.SqlServer
         /// <inheritdoc />
         public ISyncAndAsyncVoidProtocol<PutOp<TObject>> BuildPutProtocol<TObject>()
         {
-            return new SqlStreamDataProtocol<TId, TObject>(this);
+            return new SqlStreamObjectOperationsProtocol<TId, TObject>(this);
         }
 
         /// <inheritdoc />
         public ISyncAndAsyncReturningProtocol<GetLatestByIdOp<TId, TObject>, TObject> BuildGetLatestByIdProtocol<TObject>()
         {
-            return new SqlStreamDataProtocol<TId, TObject>(this);
+            return new SqlStreamObjectOperationsProtocol<TId, TObject>(this);
         }
 
         /// <inheritdoc />

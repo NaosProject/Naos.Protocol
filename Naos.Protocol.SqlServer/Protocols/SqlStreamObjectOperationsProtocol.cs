@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SqlStreamDataProtocol.cs" company="Naos Project">
+// <copyright file="SqlStreamObjectOperationsProtocol.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ namespace Naos.Protocol.SqlServer
     /// </summary>
     /// <typeparam name="TId">The type of the key.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
-    public partial class SqlStreamDataProtocol<TId, TObject> : IProtocolStreamObjectOperations<TId, TObject>
+    public partial class SqlStreamObjectOperationsProtocol<TId, TObject> : IProtocolStreamObjectOperations<TId, TObject>
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
     {
@@ -26,10 +26,10 @@ namespace Naos.Protocol.SqlServer
         private readonly IReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>> getTagsFromObjectProtocol;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SqlStreamDataProtocol{TKey, TObject}"/> class.
+        /// Initializes a new instance of the <see cref="SqlStreamObjectOperationsProtocol{TId,TObject}"/> class.
         /// </summary>
         /// <param name="stream">The stream to operation against.</param>
-        public SqlStreamDataProtocol(
+        public SqlStreamObjectOperationsProtocol(
             SqlStream<TId> stream)
         {
             stream.MustForArg(nameof(stream)).NotBeNull();
