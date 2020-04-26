@@ -9,6 +9,7 @@ namespace Naos.Protocol.SqlServer
     using System;
     using System.Globalization;
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Type.Recipes;
 
     /// <summary>
     /// Top level .
@@ -56,7 +57,10 @@ namespace Naos.Protocol.SqlServer
         public override void ValidateObjectTypeIsCompatible(
             Type objectType)
         {
-            objectType.MustForArg(nameof(objectType)).NotBeNull().And().BeEqualTo(typeof(string));
+            if (objectType != typeof(string) && !objectType.IsEnum)
+            {
+                throw new NotSupportedException(FormattableString.Invariant($"String data can only be used for strings and enums, objectType {objectType.ToStringReadable()} is not supported."));
+            }
         }
     }
 }

@@ -11,6 +11,8 @@ namespace Naos.Protocol.SqlServer
     using System.Linq;
     using Naos.Protocol.Domain;
     using Naos.Protocol.SqlServer.Internal;
+    using OBeautifulCode.Compression;
+    using OBeautifulCode.Serialization;
 
     /// <summary>
     /// Stream schema.
@@ -79,6 +81,11 @@ namespace Naos.Protocol.SqlServer
                     CompressionKind,
 
                     /// <summary>
+                    /// The unregistered type encountered strategy.
+                    /// </summary>
+                    UnregisteredTypeEncounteredStrategy,
+
+                    /// <summary>
                     /// The serialized object string
                     /// </summary>
                     SerializedObjectString,
@@ -114,9 +121,10 @@ namespace Naos.Protocol.SqlServer
                                          new SqlInputParameterRepresentation<string>(nameof(InputParamNames.ObjectAssemblyQualifiedNameWithVersion), Tables.TypeWithVersion.AssemblyQualifiedName.DataType, objectAssemblyQualifiedNameWithVersion),
                                          new SqlInputParameterRepresentation<string>(nameof(InputParamNames.TypeVersionMatchStrategy), new StringSqlDataTypeRepresentation(false, 50), typeVersionMatchStrategy.ToString()),
                                          new SqlOutputParameterRepresentation<string>(nameof(OutputParamNames.SerializationConfigAssemblyQualifiedNameWithoutVersion), Tables.TypeWithoutVersion.AssemblyQualifiedName.DataType),
-                                         new SqlOutputParameterRepresentation<string>(nameof(OutputParamNames.SerializationKind), Tables.SerializerDescription.SerializationKind.DataType),
-                                         new SqlOutputParameterRepresentation<string>(nameof(OutputParamNames.SerializationFormat), Tables.SerializerDescription.SerializationFormat.DataType),
-                                         new SqlOutputParameterRepresentation<string>(nameof(OutputParamNames.CompressionKind), Tables.SerializerDescription.CompressionKind.DataType),
+                                         new SqlOutputParameterRepresentation<SerializationKind>(nameof(OutputParamNames.SerializationKind), Tables.SerializerDescription.SerializationKind.DataType),
+                                         new SqlOutputParameterRepresentation<SerializationFormat>(nameof(OutputParamNames.SerializationFormat), Tables.SerializerDescription.SerializationFormat.DataType),
+                                         new SqlOutputParameterRepresentation<CompressionKind>(nameof(OutputParamNames.CompressionKind), Tables.SerializerDescription.CompressionKind.DataType),
+                                         new SqlOutputParameterRepresentation<UnregisteredTypeEncounteredStrategy>(nameof(OutputParamNames.UnregisteredTypeEncounteredStrategy), Tables.SerializerDescription.UnregisteredTypeEncounteredStrategy.DataType),
                                          new SqlOutputParameterRepresentation<string>(nameof(OutputParamNames.SerializedObjectString), Tables.Object.SerializedObjectString.DataType),
                                          new SqlOutputParameterRepresentation<byte[]>(nameof(OutputParamNames.SerializedObjectBinary), Tables.Object.SerializedObjectBinary.DataType),
                                      };
@@ -157,6 +165,7 @@ CREATE PROCEDURE [{streamName}].GetLatestByIdAndType(
 , @{nameof(OutputParamNames.SerializationKind)} AS varchar(50) OUTPUT
 , @{nameof(OutputParamNames.SerializationFormat)} AS varchar(50) OUTPUT
 , @{nameof(OutputParamNames.CompressionKind)} AS varchar(50) OUTPUT
+, @{nameof(OutputParamNames.UnregisteredTypeEncounteredStrategy)} AS varchar(50) OUTPUT
 , @{nameof(OutputParamNames.SerializedObjectString)} AS nvarchar(MAX) OUTPUT
 , @{nameof(OutputParamNames.SerializedObjectBinary)} AS varbinary(MAX) OUTPUT
 )
@@ -170,21 +179,22 @@ BEGIN
 	   @SerializerDescriptionId = [SerializerDescriptionId]
 	 , @ObjectTypeWithoutVersionId = [ObjectTypeWithoutVersionId]
 	 , @ObjectTypeWithVersionId = [ObjectTypeWithVersionId]
-	 , @SerializedObjectString = [SerializedObjectString]
-	 , @SerializedObjectBinary = [SerializedObjectBinary]
+	 , @{nameof(OutputParamNames.SerializedObjectString)} = [SerializedObjectString]
+	 , @{nameof(OutputParamNames.SerializedObjectBinary)} = [SerializedObjectBinary]
 	FROM [{streamName}].[Object]
 	WHERE [SerializedObjectId] = @SerializedObjectId
 	ORDER BY [Id] DESC
 --check for record count and update contract to have an understanding of nothing found
 	DECLARE @SerializationConfigTypeWithoutVersionId int
 	SELECT 
-		@SerializationConfigTypeWithoutVersionId = [SerializationConfigurationTypeWithoutVersionId] 
-  	  , @SerializationKind = [SerializationKind]
-	  , @SerializationFormat = [SerializationFormat]
-	  , @CompressionKind = [CompressionKind]
+		@SerializationConfigTypeWithoutVersionId = [{nameof(Tables.SerializerDescription.SerializationConfigurationTypeWithoutVersionId)}] 
+	  , @{nameof(OutputParamNames.SerializationKind)} = [{nameof(Tables.SerializerDescription.SerializationKind)}]
+	  , @{nameof(OutputParamNames.SerializationFormat)} = [{nameof(Tables.SerializerDescription.SerializationFormat)}]
+	  , @{nameof(OutputParamNames.CompressionKind)} = [{nameof(Tables.SerializerDescription.CompressionKind)}]
+	  , @{nameof(OutputParamNames.UnregisteredTypeEncounteredStrategy)} = [{nameof(Tables.SerializerDescription.UnregisteredTypeEncounteredStrategy)}]
 	FROM [{streamName}].[SerializerDescription] WHERE [Id] = @SerializerDescriptionId
 
-	SELECT @SerializationConfigAssemblyQualifiedNameWithoutVersion = [AssemblyQualifiedName] FROM [{streamName}].[TypeWithoutVersion] WHERE [Id] = @SerializationConfigTypeWithoutVersionId
+	SELECT @{nameof(OutputParamNames.SerializationConfigAssemblyQualifiedNameWithoutVersion)} = [AssemblyQualifiedName] FROM [{streamName}].[TypeWithoutVersion] WHERE [Id] = @SerializationConfigTypeWithoutVersionId
 	SELECT @ObjectAssemblyQualifiedNameWithoutVersion = [AssemblyQualifiedName] FROM [{streamName}].[TypeWithoutVersion] WHERE [Id] = @ObjectTypeWithoutVersionId
 	SELECT @ObjectAssemblyQualifiedNameWithVersion = [AssemblyQualifiedName] FROM [{streamName}].[TypeWithVersion] WHERE [Id] = @ObjectTypeWithVersionId
 END

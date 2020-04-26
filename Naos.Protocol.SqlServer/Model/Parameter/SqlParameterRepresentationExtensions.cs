@@ -10,8 +10,10 @@ namespace Naos.Protocol.SqlServer
     using System.Data;
     using System.Data.SqlClient;
     using System.Globalization;
+    using System.Linq;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Database.Recipes;
+    using OBeautifulCode.Reflection.Recipes;
     using OBeautifulCode.Type.Recipes;
 
     /// <summary>
@@ -68,6 +70,27 @@ namespace Naos.Protocol.SqlServer
             else if (parameterRepresentation is SqlOutputParameterRepresentation<DateTime> dateTimeRepresentationOutput)
             {
                 return dateTimeRepresentationOutput.ToSqlParameter();
+            }
+            else if (parameterRepresentation.GetType().GetGenericArguments().SingleOrDefault()?.IsEnum ?? false)
+            {
+                var genericDefinition = parameterRepresentation.GetType().GetGenericTypeDefinition();
+                if (genericDefinition == typeof(SqlInputParameterRepresentation<>))
+                {
+                    var enumValue = parameterRepresentation.GetType()
+                                                           .GetProperty(nameof(SqlInputParameterRepresentation<string>.Value))
+                                                          ?.GetValue(parameterRepresentation);
+                    var stringParameter = new SqlInputParameterRepresentation<string>(parameterRepresentation.Name, parameterRepresentation.DataType, enumValue?.ToString());
+                    return stringParameter.ToSqlParameter();
+                }
+                else if (genericDefinition == typeof(SqlOutputParameterRepresentation<>))
+                {
+                    var stringParameter = new SqlOutputParameterRepresentation<string>(parameterRepresentation.Name, parameterRepresentation.DataType);
+                    return stringParameter.ToSqlParameter();
+                }
+                else
+                {
+                    throw new NotSupportedException(FormattableString.Invariant($"Param type {parameterRepresentation.GetType().ToStringReadable()} is not supported."));
+                }
             }
             else
             {
@@ -271,6 +294,20 @@ namespace Naos.Protocol.SqlServer
                 rawValue.MustForArg(nameof(rawValue)).NotBeNull();
                 var dateTimeValue = (DateTime)rawValue;
                 result = new SqlOutputParameterRepresentationWithResult<DateTime>(outputParameterRepresentation.Name, outputParameterRepresentation.DataType, dateTimeValue);
+            }
+            else if (outputParameterRepresentation.GetType().GetGenericArguments().SingleOrDefault()?.IsEnum ?? false)
+            {
+                rawValue.MustForArg(nameof(rawValue)).NotBeNull();
+
+                var genericDefinition = outputParameterRepresentation.GetType().GetGenericTypeDefinition();
+                genericDefinition.MustForArg(nameof(genericDefinition)).BeEqualTo(typeof(SqlOutputParameterRepresentation<>));
+
+                var genericArguments = outputParameterRepresentation.GetType().GetGenericArguments().ToList();
+                var enumType = genericArguments.Single();
+                var enumValue = Enum.Parse(enumType, rawValue.ToString());
+                var resultType = typeof(SqlOutputParameterRepresentationWithResult<>).MakeGenericType(enumType);
+                var rawResult = resultType.Construct(outputParameterRepresentation.Name, outputParameterRepresentation.DataType, enumValue);
+                result = (ISqlOutputParameterRepresentationWithResult)rawResult;
             }
             else
             {

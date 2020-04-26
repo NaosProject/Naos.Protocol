@@ -59,8 +59,8 @@ namespace Naos.Protocol.SqlServer.Test
 
             var stream = new SqlStream<string>(
                 streamName,
-                TimeSpan.FromMinutes(20),
-                TimeSpan.FromMinutes(20),
+                TimeSpan.FromMinutes(1),
+                TimeSpan.FromMinutes(3),
                 defaultSerializerDescription,
                 BsonSerializerFactory.Instance,
                 CompressorFactory.Instance,
