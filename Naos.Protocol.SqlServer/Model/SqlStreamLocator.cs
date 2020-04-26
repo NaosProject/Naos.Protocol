@@ -14,7 +14,7 @@ namespace Naos.Protocol.SqlServer
     /// <summary>
     /// SQL implementation of an <see cref="StreamLocatorBase" />.
     /// </summary>
-    public partial class SqlStreamLocator : StreamLocatorBase, IModelViaCodeGen
+    public partial class SqlStreamLocator : StreamLocatorBase, ISqlLocator, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlStreamLocator"/> class.

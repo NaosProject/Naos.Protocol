@@ -28,6 +28,7 @@ namespace Naos.Protocol.SqlServer
     /// SQL implementation of an <see cref="IStream{TId}" />.
     /// </summary>
     /// <typeparam name="TId">Type of the key.</typeparam>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Acceptable given it creates the stream.")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Justification = NaosSuppressBecause.CA1711_IdentifiersShouldNotHaveIncorrectSuffix_TypeNameAddedAsSuffixForTestsWhereTypeIsPrimaryConcern)]
     public partial class SqlStream<TId> : IStream<TId>, ISyncAndAsyncReturningProtocol<GetIdAddIfNecessarySerializerDescriptionOp, int>
     {
@@ -149,6 +150,7 @@ namespace Naos.Protocol.SqlServer
         public ICompressorFactory CompressorFactory { get; private set; }
 
         /// <inheritdoc />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Acceptable given it creates the streams.")]
         public void Execute(
             CreateStreamOp<TId> operation)
         {
@@ -158,7 +160,7 @@ namespace Naos.Protocol.SqlServer
             {
                 if (locator is SqlStreamLocator sqlStreamLocator)
                 {
-                    using (var connection = sqlStreamLocator.OpenSqlConnection())
+                    using (var connection = sqlStreamLocator.OpenSqlConnection(this.DefaultConnectionTimeout))
                     {
                         // should use a transaction here!!
                         var streamAlreadyExists = connection.ExecuteScalar<bool>(
@@ -182,16 +184,16 @@ namespace Naos.Protocol.SqlServer
                             var creationScripts = new[]
                                                   {
                                                       StreamSchema.BuildCreationScriptForSchema(this.Name),
-                                                      StreamSchema.BuildCreationScriptForTypeWithVersion(this.Name),
-                                                      StreamSchema.BuildCreationScriptForTypeWithoutVersion(this.Name),
-                                                      StreamSchema.BuildCreationScriptForSerializerDescription(this.Name),
-                                                      StreamSchema.BuildCreationScriptForObject(this.Name),
-                                                      StreamSchema.BuildCreationScriptForTag(this.Name),
-                                                      StreamSchema.BuildCreationScriptForTypeWithoutVersionSproc(this.Name),
-                                                      StreamSchema.BuildCreationScriptForTypeWithVersionSproc(this.Name),
-                                                      StreamSchema.BuildCreationScriptForSerializerDescriptionSproc(this.Name),
-                                                      StreamSchema.BuildCreationScriptForPutSproc(this.Name),
-                                                      StreamSchema.BuildCreationScriptForGetLatestByIdSproc(this.Name),
+                                                      StreamSchema.Tables.TypeWithoutVersion.BuildCreationScript(this.Name),
+                                                      StreamSchema.Tables.TypeWithVersion.BuildCreationScript(this.Name),
+                                                      StreamSchema.Tables.SerializerDescription.BuildCreationScript(this.Name),
+                                                      StreamSchema.Tables.Object.BuildCreationScript(this.Name),
+                                                      StreamSchema.Tables.Tag.BuildCreationScript(this.Name),
+                                                      StreamSchema.Sprocs.GetIdAddIfNecessaryTypeWithoutVersion.BuildCreationScript(this.Name),
+                                                      StreamSchema.Sprocs.GetIdAddIfNecessaryTypeWithVersion.BuildCreationScript(this.Name),
+                                                      StreamSchema.Sprocs.GetIdAddIfNecessarySerializerDescription.BuildCreationScript(this.Name),
+                                                      StreamSchema.Sprocs.PutObject.BuildCreationScript(this.Name),
+                                                      StreamSchema.Sprocs.GetLatestByIdAndType.BuildCreationScript(this.Name),
                                                   };
 
                             foreach (var script in creationScripts)
@@ -286,42 +288,26 @@ namespace Naos.Protocol.SqlServer
             var serializationConfigurationTypeWithoutVersion = operation.SerializationDescription.ConfigurationTypeRepresentation.AssemblyQualifiedName;
             var serializationConfigurationTypeWithVersion = operation.SerializationDescription.ConfigurationTypeRepresentation.AssemblyQualifiedName;
 
-            var storedProcedureName = StreamSchema.BuildSerializerDescriptionSprocName(this.Name);
-            using (var connection = operation.StreamLocator.OpenSqlConnection())
+            var storedProcOp = StreamSchema.Sprocs.GetIdAddIfNecessarySerializerDescription.BuildExecuteStoredProcedureOp(
+                this.Name,
+                serializationConfigurationTypeWithoutVersion,
+                serializationConfigurationTypeWithVersion,
+                operation.SerializationDescription.SerializationKind,
+                operation.SerializationDescription.SerializationFormat,
+                operation.SerializationDescription.CompressionKind,
+                UnregisteredTypeEncounteredStrategy.Attempt);
+
+            var locator = operation.StreamLocator;
+            if (!(locator is ISqlLocator sqlLocator))
             {
-                using (var command = new SqlCommand(storedProcedureName, connection)
-                                     {
-                                         CommandType = CommandType.StoredProcedure,
-                                     })
-                {
-                    command.Parameters.Add(new SqlParameter("AssemblyQualitifiedNameWithoutVersion", serializationConfigurationTypeWithoutVersion));
-                    command.Parameters.Add(new SqlParameter("AssemblyQualitifiedNameWithVersion", serializationConfigurationTypeWithVersion));
-                    command.Parameters.Add(new SqlParameter(nameof(SerializationKind), operation.SerializationDescription.SerializationKind));
-                    command.Parameters.Add(new SqlParameter(nameof(SerializationFormat), operation.SerializationDescription.SerializationFormat));
-                    command.Parameters.Add(new SqlParameter(nameof(CompressionKind), operation.SerializationDescription.CompressionKind));
-                    command.Parameters.Add(
-                        new SqlParameter(nameof(UnregisteredTypeEncounteredStrategy), UnregisteredTypeEncounteredStrategy.Attempt));
-                    var resultParameter = new SqlParameter("Result", SqlDbType.Int)
-                                          {
-                                              Direction = ParameterDirection.Output,
-                                          };
-                    command.Parameters.Add(resultParameter);
-
-                    command.ExecuteNonQuery();
-
-                    var result = resultParameter.Value;
-                    if (result is int intResult)
-                    {
-                        return intResult;
-                    }
-                    else
-                    {
-                        throw new InvalidDataException(
-                            FormattableString.Invariant(
-                                $"Result from [{this.Name}].[{storedProcedureName}] was expected to be of type int but was {result?.GetType().ToStringReadable()} ({result})."));
-                    }
-                }
+                throw new NotSupportedException(FormattableString.Invariant($"Cannot support locator of type: {locator.GetType().ToStringReadable()}"));
             }
+
+            var sqlProtocol = this.BuildSqlOperationsProtocol(sqlLocator);
+            var sprocResult = sqlProtocol.Execute(storedProcOp);
+            var result = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetIdAddIfNecessarySerializerDescription.OutputParamNames.Id)]
+                                    .GetValue<int>();
+            return result;
         }
 
         /// <inheritdoc />
@@ -329,6 +315,18 @@ namespace Naos.Protocol.SqlServer
             GetIdAddIfNecessarySerializerDescriptionOp operation)
         {
             return await Task.FromResult(this.Execute(operation));
+        }
+
+        /// <summary>
+        /// Builds the SQL operations protocol.
+        /// </summary>
+        /// <param name="sqlLocator">The SQL locator.</param>
+        /// <returns>IProtocolSqlOperations.</returns>
+        public IProtocolSqlOperations BuildSqlOperationsProtocol(
+            ISqlLocator sqlLocator)
+        {
+            var result = new SqlOperationsProtocol(sqlLocator, this.DefaultConnectionTimeout, this.DefaultCommandTimeout);
+            return result;
         }
     }
 }

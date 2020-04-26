@@ -8,8 +8,6 @@ namespace Naos.Protocol.SqlServer
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
-    using System.Data.SqlClient;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -29,6 +27,7 @@ namespace Naos.Protocol.SqlServer
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
     {
         /// <inheritdoc />
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "sprocResult", Justification = "Contains the ID but this is a void operation.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Should dispose correctly.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Name is built internally.")]
         public void Execute(PutOp<TObject> operation)
@@ -38,8 +37,8 @@ namespace Naos.Protocol.SqlServer
             if (locator is SqlStreamLocator sqlStreamLocator)
             {
                 var objectType = operation.ObjectToPut?.GetType() ?? typeof(TObject);
-                var objectTypeWithoutVersion = objectType.AssemblyQualifiedName;
-                var objectTypeWithVersion = objectType.AssemblyQualifiedName;
+                var objectAssemblyQualifiedNameWithoutVersion = objectType.AssemblyQualifiedName;
+                var objectAssemblyQualifiedNameWithVersion = objectType.AssemblyQualifiedName;
                 var describedSerializer = this.stream.GetDescribedSerializer(sqlStreamLocator);
                 var tagsXml = this.GetTagsXmlString(operation);
 
@@ -51,38 +50,19 @@ namespace Naos.Protocol.SqlServer
                     : describedSerializer.Serializer.SerializeToBytes(operation.ObjectToPut);
 
                 var serializedObjectId = (id is string stringKey) ? stringKey : describedSerializer.Serializer.SerializeToString(id);
-                var storedProcedureName = StreamSchema.BuildPutSprocName(this.stream.Name);
-                using (var connection = sqlStreamLocator.OpenSqlConnection())
-                {
-                    using (var command = new SqlCommand(storedProcedureName, connection)
-                                         {
-                                             CommandType = CommandType.StoredProcedure,
-                                         })
-                    {
-                        command.Parameters.Add(new SqlParameter("AssemblyQualitifiedNameWithoutVersion", objectTypeWithoutVersion));
-                        command.Parameters.Add(new SqlParameter("AssemblyQualitifiedNameWithVersion", objectTypeWithVersion));
-                        command.Parameters.Add(
-                            new SqlParameter(
-                                nameof(describedSerializer.SerializerDescriptionId),
-                                describedSerializer.SerializerDescriptionId));
-                        command.Parameters.Add(new SqlParameter("SerializedObjectId", serializedObjectId));
-                        command.Parameters.Add(
-                            new SqlParameter("SerializedObjectString", SqlDbType.NVarChar, -1)
-                            {
-                                IsNullable = true,
-                                Value = serializedObjectString ?? string.Empty, // the parameter won't accept null here for some reason...
-                            });
-                        command.Parameters.Add(
-                            new SqlParameter("SerializedObjectBinary", SqlDbType.VarBinary, -1)
-                            {
-                                IsNullable = true,
-                                Value = serializedObjectBinary ?? new byte[0], // the parameter won't accept null here for some reason...
-                            });
-                        command.Parameters.Add(new SqlParameter("Tags", tagsXml ?? string.Empty));
 
-                        command.ExecuteNonQuery();
-                    }
-                }
+                var storedProcOp = StreamSchema.Sprocs.PutObject.BuildExecuteStoredProcedureOp(
+                    this.stream.Name,
+                    objectAssemblyQualifiedNameWithoutVersion,
+                    objectAssemblyQualifiedNameWithVersion,
+                    describedSerializer.SerializerDescriptionId,
+                    serializedObjectId,
+                    serializedObjectString,
+                    serializedObjectBinary,
+                    tagsXml);
+
+                var sqlProtocol = this.stream.BuildSqlOperationsProtocol(sqlStreamLocator);
+                var sprocResult = sqlProtocol.Execute(storedProcOp);
             }
             else
             {

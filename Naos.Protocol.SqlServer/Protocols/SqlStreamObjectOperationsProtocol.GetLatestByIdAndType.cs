@@ -10,6 +10,7 @@ namespace Naos.Protocol.SqlServer
     using System.Data;
     using System.Data.SqlClient;
     using System.IO;
+    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
     using Naos.Protocol.Domain;
     using OBeautifulCode.Assertion.Recipes;
@@ -43,66 +44,25 @@ namespace Naos.Protocol.SqlServer
                     ? stringKey
                     : this.stream.GetDescribedSerializer(sqlStreamLocator).Serializer.SerializeToString(operation.Id);
 
-                var storedProcedureName = StreamSchema.BuildGetLatestByIdSprocName(this.stream.Name);
+                var assemblyQualifiedNameWithoutVersion = typeof(TObject).AssemblyQualifiedName;
+                var assemblyQualifiedNameWithVersion = typeof(TObject).AssemblyQualifiedName;
 
-                SerializationKind serializationKind;
-                SerializationFormat serializationFormat;
-                string serializationConfigAssemblyQualifiedNameWithoutVersion;
-                CompressionKind compressionKind;
-                string serializedObjectString;
-                byte[] serializedObjectBytes;
+                var storedProcOp = StreamSchema.Sprocs.GetLatestByIdAndType.BuildExecuteStoredProcedureOp(
+                    this.stream.Name,
+                    serializedObjectId,
+                    assemblyQualifiedNameWithoutVersion,
+                    assemblyQualifiedNameWithVersion,
+                    TypeVersionMatchStrategy.Any);
 
-                using (var connection = sqlStreamLocator.OpenSqlConnection())
-                {
-                    using (var command = new SqlCommand(storedProcedureName, connection)
-                    {
-                        CommandType = CommandType.StoredProcedure,
-                    })
-                    {
-                        command.Parameters.Add(new SqlParameter("SerializedObjectId", serializedObjectId));
-                        command.Parameters.Add(new SqlParameter("ObjectAssemblyQualifiedNameWithoutVersion", typeof(TObject).AssemblyQualifiedName));
-                        command.Parameters.Add(new SqlParameter("ObjectAssemblyQualifiedNameWithVersion", typeof(TObject).AssemblyQualifiedName));
-                        command.Parameters.Add(new SqlParameter("TypeVersionMatchStrategy", operation.TypeVersionMatchStrategy.ToString()));
-                        var serializationConfigAssemblyQualifiedNameWithoutVersionParam = new SqlParameter("SerializationConfigAssemblyQualifiedNameWithoutVersion", SqlDbType.NVarChar, 2000)
-                                                                                          {
-                                                                                              Direction = ParameterDirection.Output,
-                                                                                          };
-                        var serializationKindParam = new SqlParameter(nameof(SerializationKind), SqlDbType.VarChar, 50)
-                                                     {
-                                                         Direction = ParameterDirection.Output,
-                                                     };
-                        var serializationFormatParam = new SqlParameter(nameof(SerializationFormat), SqlDbType.VarChar, 50)
-                                                     {
-                                                         Direction = ParameterDirection.Output,
-                                                     };
-                        var compressionKindParam = new SqlParameter(nameof(CompressionKind), SqlDbType.VarChar, 50)
-                                                   {
-                                                       Direction = ParameterDirection.Output,
-                                                   };
-                        var serializedObjectStringParam = new SqlParameter("SerializedObjectString", SqlDbType.NVarChar, -1)
-                                                          {
-                                                              Direction = ParameterDirection.Output,
-                                                          };
-                        var serializedObjectBytesParam = new SqlParameter("SerializedObjectBinary", SqlDbType.VarBinary, -1)
-                                                     {
-                                                         Direction = ParameterDirection.Output,
-                                                     };
-                        command.Parameters.Add(serializationConfigAssemblyQualifiedNameWithoutVersionParam);
-                        command.Parameters.Add(serializationKindParam);
-                        command.Parameters.Add(serializationFormatParam);
-                        command.Parameters.Add(compressionKindParam);
-                        command.Parameters.Add(serializedObjectStringParam);
-                        command.Parameters.Add(serializedObjectBytesParam);
+                var sqlProtocol = this.stream.BuildSqlOperationsProtocol(sqlStreamLocator);
+                var sprocResult = sqlProtocol.Execute(storedProcOp);
 
-                        command.ExecuteNonQuery();
-                        serializationKind = (SerializationKind)Enum.Parse(typeof(SerializationKind), serializationKindParam?.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{nameof(SerializationKind)} from {storedProcedureName} should not be null output for key {operation.Id}.")));
-                        serializationFormat = (SerializationFormat)Enum.Parse(typeof(SerializationFormat), serializationFormatParam?.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{nameof(SerializationFormat)} from {storedProcedureName} should not be null output for key {operation.Id}.")));
-                        serializationConfigAssemblyQualifiedNameWithoutVersion = serializationConfigAssemblyQualifiedNameWithoutVersionParam.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{serializationConfigAssemblyQualifiedNameWithoutVersionParam.ParameterName} from {storedProcedureName} should not be null output for key {operation.Id}."));
-                        compressionKind = (CompressionKind)Enum.Parse(typeof(CompressionKind), compressionKindParam.Value?.ToString() ?? throw new InvalidDataException(FormattableString.Invariant($"{nameof(CompressionKind)} from {storedProcedureName} should not be null output for key {operation.Id}.")));
-                        serializedObjectString = serializedObjectStringParam.Value?.ToString();
-                        serializedObjectBytes = (byte[])serializedObjectBytesParam.Value;
-                    }
-                }
+                SerializationKind serializationKind = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetLatestByIdAndType.OutputParamNames.SerializationKind)].GetValue<SerializationKind>();
+                SerializationFormat serializationFormat = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetLatestByIdAndType.OutputParamNames.SerializationFormat)].GetValue<SerializationFormat>();
+                string serializationConfigAssemblyQualifiedNameWithoutVersion = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetLatestByIdAndType.OutputParamNames.SerializationConfigAssemblyQualifiedNameWithoutVersion)].GetValue<string>();
+                CompressionKind compressionKind = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetLatestByIdAndType.OutputParamNames.CompressionKind)].GetValue<CompressionKind>();
+                string serializedObjectString = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetLatestByIdAndType.OutputParamNames.SerializedObjectString)].GetValue<string>();
+                byte[] serializedObjectBytes = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetLatestByIdAndType.OutputParamNames.SerializedObjectBinary)].GetValue<byte[]>();
 
                 var serializerDescription = new SerializationDescription(
                     serializationKind,
