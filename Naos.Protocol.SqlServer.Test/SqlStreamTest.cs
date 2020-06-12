@@ -44,12 +44,13 @@ namespace Naos.Protocol.SqlServer.Test
             var streamLocatorProtocol = new SingleStreamLocatorProtocol<string>(sqlStreamLocator);
 
             var configurationTypeRepresentation = typeof(ProtocolBsonSerializationConfiguration)
-                // typeof(GenericDependencyConfiguration<GenericDiscoveryBsonConfiguration<MyObject>, ProtocolBsonSerializationConfiguration>)
+                // typeof(GenericDependencyConfiguration<GenericDiscoveryBsonSerializationConfiguration<MyObject>, ProtocolBsonSerializationConfiguration>)
                    .ToRepresentation();
-            SerializationDescription defaultSerializerDescription = new SerializationDescription(
+            SerializerRepresentation defaultSerializerRepresentation = new SerializerRepresentation(
                 SerializationKind.Bson,
-                SerializationFormat.String,
                 configurationTypeRepresentation);
+
+            var defaultSerializationFormat = SerializationFormat.String;
 
             var tagExtractor = new LambdaReturningProtocol<GetTagsFromObjectOp<MyObject>, IReadOnlyDictionary<string, string>>(
                 _ => new Dictionary<string, string>
@@ -61,9 +62,9 @@ namespace Naos.Protocol.SqlServer.Test
                 streamName,
                 TimeSpan.FromMinutes(1),
                 TimeSpan.FromMinutes(3),
-                defaultSerializerDescription,
-                BsonSerializerFactory.Instance,
-                CompressorFactory.Instance,
+                defaultSerializerRepresentation,
+                defaultSerializationFormat,
+                new BsonSerializerFactory(),
                 streamLocatorProtocol,
                 new Dictionary<Type, IProtocol>(), 
                 new Dictionary<Type, IProtocol>
