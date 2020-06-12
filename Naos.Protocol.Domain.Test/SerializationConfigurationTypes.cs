@@ -20,8 +20,8 @@ namespace Naos.Protocol.Domain.Test
     [GeneratedCode("Naos.Build.Conventions.VisualStudioProjectTemplates.Domain.Test", "1.55.27")]
     public static class SerializationConfigurationTypes
     {
-        public static Type BsonConfigurationType => typeof(ProtocolBsonSerializationConfiguration);
+        public static Type BsonSerializationConfigurationType => typeof(ProtocolBsonSerializationConfiguration);
 
-        public static Type JsonConfigurationType => typeof(ProtocolJsonSerializationConfiguration);
+        public static Type JsonSerializationConfigurationType => typeof(ProtocolJsonSerializationConfiguration);
     }
 }

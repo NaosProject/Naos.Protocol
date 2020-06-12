@@ -12,15 +12,15 @@ namespace Naos.Protocol.Serialization.Json
     using OBeautifulCode.Serialization.Json;
 
     /// <inheritdoc />
-    public class ProtocolJsonSerializationConfiguration : JsonConfigurationBase
+    public class ProtocolJsonSerializationConfiguration : JsonSerializationConfigurationBase
     {
         /// <inheritdoc />
-        protected override IReadOnlyCollection<Type> TypesToAutoRegister => new Type[]
-        {
-            typeof(EventBase),
-            typeof(VoidOperationBase),
-            typeof(ReturningOperationBase<>),
-            typeof(StreamLocatorBase),
-        };
+        protected override IReadOnlyCollection<TypeToRegisterForJson> TypesToRegisterForJson => new[]
+                                                                                                {
+                                                                                                    typeof(EventBase).ToTypeToRegisterForJson(),
+                                                                                                    typeof(VoidOperationBase).ToTypeToRegisterForJson(),
+                                                                                                    typeof(ReturningOperationBase<>).ToTypeToRegisterForJson(),
+                                                                                                    typeof(StreamLocatorBase).ToTypeToRegisterForJson(),
+                                                                                                };
     }
 }

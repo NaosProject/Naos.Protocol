@@ -10,8 +10,10 @@
 namespace OBeautifulCode.Serialization.Recipes
 {
     using System;
+    using System.Collections.Concurrent;
 
     using OBeautifulCode.Assertion.Recipes;
+    using OBeautifulCode.Compression;
     using OBeautifulCode.Representation.System;
     using OBeautifulCode.Serialization.Bson;
     using OBeautifulCode.Serialization.Json;
@@ -29,15 +31,21 @@ namespace OBeautifulCode.Serialization.Recipes
 #else
     public
 #endif
-    sealed class SerializerFactory : ISerializerFactory
+    sealed class SerializerFactory : SerializerFactoryBase
     {
         private static readonly SerializerFactory InternalInstance = new SerializerFactory();
 
-        private readonly object sync = new object();
+        private static readonly ConcurrentDictionary<SerializerRepresentation, ConcurrentDictionary<AssemblyMatchStrategy, ISerializer>>
+            SerializerCache = new ConcurrentDictionary<SerializerRepresentation, ConcurrentDictionary<AssemblyMatchStrategy, ISerializer>>();
 
-        private SerializerFactory()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PropertyBagSerializerFactory"/> class.
+        /// </summary>
+        /// <param name="compressorFactory">Optional compressor factory to use.  DEFAULT is to use OBeautifulCode.Compression.Recipes.CompressorFactory.Instance.</param>
+        public SerializerFactory(
+            ICompressorFactory compressorFactory = null)
+            : base(compressorFactory)
         {
-            /* no-op to make sure this can only be accessed via instance property */
         }
 
         /// <summary>
@@ -46,22 +54,49 @@ namespace OBeautifulCode.Serialization.Recipes
         public static ISerializerFactory Instance => InternalInstance;
 
         /// <inheritdoc />
-        public ISerializeAndDeserialize BuildSerializer(SerializationDescription serializationDescription, TypeMatchStrategy typeMatchStrategy = TypeMatchStrategy.NamespaceAndName, MultipleMatchStrategy multipleMatchStrategy = MultipleMatchStrategy.ThrowOnMultiple, UnregisteredTypeEncounteredStrategy unregisteredTypeEncounteredStrategy = UnregisteredTypeEncounteredStrategy.Default)
+        public override ISerializer BuildSerializer(
+            SerializerRepresentation serializerRepresentation,
+            AssemblyMatchStrategy assemblyMatchStrategy = AssemblyMatchStrategy.AnySingleVersion)
         {
-            new { serializationDescription }.AsArg().Must().NotBeNull();
+            new { serializerRepresentation }.AsArg().Must().NotBeNull();
 
-            lock (this.sync)
+            ISerializer result;
+
+            if (SerializerCache.TryGetValue(serializerRepresentation, out ConcurrentDictionary<AssemblyMatchStrategy, ISerializer> assemblyMatchStrategyToSerializerMap))
             {
-                var configurationType = serializationDescription.ConfigurationTypeRepresentation?.ResolveFromLoadedTypes(typeMatchStrategy, multipleMatchStrategy);
-
-                switch (serializationDescription.SerializationKind)
+                if (assemblyMatchStrategyToSerializerMap.TryGetValue(assemblyMatchStrategy, out result))
                 {
-                    case SerializationKind.Bson: return new ObcBsonSerializer(configurationType, unregisteredTypeEncounteredStrategy);
-                    case SerializationKind.Json: return new ObcJsonSerializer(configurationType, unregisteredTypeEncounteredStrategy);
-                    case SerializationKind.PropertyBag: return new ObcPropertyBagSerializer(configurationType, unregisteredTypeEncounteredStrategy);
-                    default: throw new NotSupportedException(Invariant($"{nameof(serializationDescription)} from enumeration {nameof(SerializationKind)} of {serializationDescription.SerializationKind} is not supported."));
+                    return result;
                 }
             }
+
+            // ReSharper disable once RedundantArgumentDefaultValue
+            var configurationType = serializerRepresentation.SerializationConfigType?.ResolveFromLoadedTypes(assemblyMatchStrategy, throwIfCannotResolve: true);
+
+            ISerializer serializer;
+
+            switch (serializerRepresentation.SerializationKind)
+            {
+                case SerializationKind.Bson:
+                    serializer = new ObcBsonSerializer(configurationType?.ToBsonSerializationConfigurationType());
+                    break;
+                case SerializationKind.Json:
+                    serializer = new ObcJsonSerializer(configurationType?.ToJsonSerializationConfigurationType());
+                    break;
+                case SerializationKind.PropertyBag:
+                    serializer = new ObcPropertyBagSerializer(configurationType?.ToPropertyBagSerializationConfigurationType());
+                    break;
+                default:
+                    throw new NotSupportedException(Invariant($"{nameof(serializerRepresentation)} from enumeration {nameof(SerializationKind)} of {serializerRepresentation.SerializationKind} is not supported."));
+            }
+
+            result = this.WrapInCompressingSerializerIfAppropriate(serializer, serializerRepresentation.CompressionKind);
+
+            SerializerCache.TryAdd(serializerRepresentation, new ConcurrentDictionary<AssemblyMatchStrategy, ISerializer>());
+
+            SerializerCache[serializerRepresentation].TryAdd(assemblyMatchStrategy, result);
+
+            return result;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Naos.Protocol.SqlServer
     using OBeautifulCode.Serialization.Bson;
     using OBeautifulCode.Type;
     using OBeautifulCode.Type.Recipes;
+    using SerializationFormat = OBeautifulCode.Serialization.SerializationFormat;
 
     /// <summary>
     /// Existing serializer with database ID.
@@ -30,22 +31,30 @@ namespace Naos.Protocol.SqlServer
         /// Initializes a new instance of the <see cref="DescribedSerializer"/> class.
         /// </summary>
         /// <param name="serializerDescription">The serializer description.</param>
+        /// <param name="serializationFormat">The serialization format.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="serializerDescriptionId">The serializer description identifier.</param>
-        public DescribedSerializer(SerializationDescription serializerDescription, ISerializeAndDeserialize serializer, int serializerDescriptionId)
+        public DescribedSerializer(SerializerRepresentation serializerDescription, SerializationFormat serializationFormat, ISerializeAndDeserialize serializer, int serializerDescriptionId)
         {
             serializerDescription.MustForArg(nameof(serializerDescription)).NotBeNull();
             serializer.MustForArg(nameof(serializer)).NotBeNull();
-            this.SerializerDescription = serializerDescription;
+            this.SerializerRepresentation = serializerDescription;
+            this.SerializationFormat = serializationFormat;
             this.Serializer = serializer;
-            this.SerializerDescriptionId = serializerDescriptionId;
+            this.SerializerRepresentationId = serializerDescriptionId;
         }
 
         /// <summary>
         /// Gets the serializer description.
         /// </summary>
         /// <value>The serializer description.</value>
-        public SerializationDescription SerializerDescription { get; private set; }
+        public SerializerRepresentation SerializerRepresentation { get; private set; }
+
+        /// <summary>
+        /// Gets the serialization format.
+        /// </summary>
+        /// <value>The serialization format.</value>
+        public SerializationFormat SerializationFormat { get; private set; }
 
         /// <summary>
         /// Gets the serializer.
@@ -57,6 +66,6 @@ namespace Naos.Protocol.SqlServer
         /// Gets the serializer description identifier.
         /// </summary>
         /// <value>The serializer description identifier.</value>
-        public int SerializerDescriptionId { get; private set; }
+        public int SerializerRepresentationId { get; private set; }
     }
 }

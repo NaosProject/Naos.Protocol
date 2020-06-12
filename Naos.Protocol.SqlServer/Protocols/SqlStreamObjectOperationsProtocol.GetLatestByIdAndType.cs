@@ -40,8 +40,8 @@ namespace Naos.Protocol.SqlServer
             var locator = this.stream.StreamLocatorProtocol.Execute(new GetStreamLocatorByIdOp<TId>(operation.Id));
             if (locator is SqlStreamLocator sqlStreamLocator)
             {
-                var serializedObjectId = (operation.Id is string stringKey)
-                    ? stringKey
+                var serializedObjectId = (operation.Id is string stringId)
+                    ? stringId
                     : this.stream.GetDescribedSerializer(sqlStreamLocator).Serializer.SerializeToString(operation.Id);
 
                 var assemblyQualifiedNameWithoutVersion = typeof(TObject).AssemblyQualifiedName;
@@ -64,15 +64,13 @@ namespace Naos.Protocol.SqlServer
                 string serializedObjectString = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetLatestByIdAndType.OutputParamNames.SerializedObjectString)].GetValue<string>();
                 byte[] serializedObjectBytes = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetLatestByIdAndType.OutputParamNames.SerializedObjectBinary)].GetValue<byte[]>();
 
-                var serializerDescription = new SerializationDescription(
+                var serializerDescription = new SerializerRepresentation(
                     serializationKind,
-                    serializationFormat,
                     Type.GetType(serializationConfigAssemblyQualifiedNameWithoutVersion).ToRepresentation(),
                     compressionKind);
 
                 var serializer = this.stream.SerializerFactory.BuildSerializer(
-                    serializerDescription,
-                    unregisteredTypeEncounteredStrategy: UnregisteredTypeEncounteredStrategy.Attempt);
+                    serializerDescription);
 
                 TObject result = default(TObject);
                 if (serializationFormat == SerializationFormat.String)

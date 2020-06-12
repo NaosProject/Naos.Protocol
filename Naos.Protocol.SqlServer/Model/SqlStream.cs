@@ -18,6 +18,7 @@ namespace Naos.Protocol.SqlServer
     using Naos.Recipes.RunWithRetry;
     using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Compression;
+    using OBeautifulCode.Representation.System;
     using OBeautifulCode.Serialization;
     using OBeautifulCode.Serialization.Bson;
     using OBeautifulCode.Type;
@@ -30,9 +31,9 @@ namespace Naos.Protocol.SqlServer
     /// <typeparam name="TId">Type of the key.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Acceptable given it creates the stream.")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Justification = NaosSuppressBecause.CA1711_IdentifiersShouldNotHaveIncorrectSuffix_TypeNameAddedAsSuffixForTestsWhereTypeIsPrimaryConcern)]
-    public partial class SqlStream<TId> : IStream<TId>, ISyncAndAsyncReturningProtocol<GetIdAddIfNecessarySerializerDescriptionOp, int>
+    public partial class SqlStream<TId> : IStream<TId>, ISyncAndAsyncReturningProtocol<GetIdAddIfNecessarySerializerRepresentationOp, int>
     {
-        private readonly IDictionary<SerializationDescription, DescribedSerializer> serializerDescriptionToDescribedSerializerMap = new Dictionary<SerializationDescription, DescribedSerializer>();
+        private readonly IDictionary<SerializerRepresentation, DescribedSerializer> serializerDescriptionToDescribedSerializerMap = new Dictionary<SerializerRepresentation, DescribedSerializer>();
 
         private readonly IReadOnlyDictionary<Type, IProtocol> typeToGetIdProtocolMap;
         private readonly IReadOnlyDictionary<Type, IProtocol> typeToGetTagsProtocolMap;
@@ -43,9 +44,9 @@ namespace Naos.Protocol.SqlServer
         /// <param name="name">The name of the stream.</param>
         /// <param name="defaultConnectionTimeout">The default connection timeout.</param>
         /// <param name="defaultCommandTimeout">The default command timeout.</param>
-        /// <param name="defaultSerializerDescription">Default serializer description to use.</param>
+        /// <param name="defaultSerializerRepresentation">Default serializer description to use.</param>
+        /// <param name="defaultSerializationFormat">Default serializer format.</param>
         /// <param name="serializerFactory">The factory to get a serializer to use for objects.</param>
-        /// <param name="compressorFactory">The factory to get a compressor to use for objects.</param>
         /// <param name="streamLocatorProtocol">The protocols for getting locators.</param>
         /// <param name="typeToGetIdProtocolMap">Id extractor protocols by type.</param>
         /// <param name="typeToGetTagsProtocolMap">Tag extractor protocols by type.</param>
@@ -54,17 +55,16 @@ namespace Naos.Protocol.SqlServer
             string name,
             TimeSpan defaultConnectionTimeout,
             TimeSpan defaultCommandTimeout,
-            SerializationDescription defaultSerializerDescription,
+            SerializerRepresentation defaultSerializerRepresentation,
+            SerializationFormat defaultSerializationFormat,
             ISerializerFactory serializerFactory,
-            ICompressorFactory compressorFactory,
             IProtocolStreamLocator<TId> streamLocatorProtocol,
             IReadOnlyDictionary<Type, IProtocol> typeToGetIdProtocolMap,
             IReadOnlyDictionary<Type, IProtocol> typeToGetTagsProtocolMap)
         {
             name.MustForArg(nameof(name)).NotBeNullNorWhiteSpace();
-            defaultSerializerDescription.MustForArg(nameof(defaultSerializerDescription)).NotBeNull();
+            defaultSerializerRepresentation.MustForArg(nameof(defaultSerializerRepresentation)).NotBeNull();
             serializerFactory.MustForArg(nameof(serializerFactory)).NotBeNull();
-            compressorFactory.MustForArg(nameof(compressorFactory)).NotBeNull();
             streamLocatorProtocol.MustForArg(nameof(streamLocatorProtocol)).NotBeNull();
 
             var localTypeToGetIdProtocolMap = typeToGetIdProtocolMap ?? new Dictionary<Type, IProtocol>();
@@ -99,10 +99,10 @@ namespace Naos.Protocol.SqlServer
             this.Name = name;
             this.DefaultConnectionTimeout = defaultConnectionTimeout;
             this.DefaultCommandTimeout = defaultCommandTimeout;
-            this.DefaultSerializerDescription = defaultSerializerDescription;
+            this.DefaultSerializerRepresentation = defaultSerializerRepresentation;
             this.SerializerFactory = serializerFactory;
-            this.CompressorFactory = compressorFactory;
             this.StreamLocatorProtocol = streamLocatorProtocol;
+            this.DefaultSerializationFormat = defaultSerializationFormat;
             this.typeToGetIdProtocolMap = localTypeToGetIdProtocolMap;
             this.typeToGetTagsProtocolMap = localTypeToGetTagsProtocolMap;
         }
@@ -117,7 +117,13 @@ namespace Naos.Protocol.SqlServer
         /// Gets the default serializer description.
         /// </summary>
         /// <value>The default serializer description.</value>
-        public SerializationDescription DefaultSerializerDescription { get; private set; }
+        public SerializerRepresentation DefaultSerializerRepresentation { get; private set; }
+
+        /// <summary>
+        /// Gets the default serialization format.
+        /// </summary>
+        /// <value>The default serialization format.</value>
+        public SerializationFormat DefaultSerializationFormat { get; private set; }
 
         /// <summary>
         /// Gets the default connection timeout.
@@ -142,12 +148,6 @@ namespace Naos.Protocol.SqlServer
         /// </summary>
         /// <value>The serializer factory.</value>
         public ISerializerFactory SerializerFactory { get; private set; }
-
-        /// <summary>
-        /// Gets the compressor factory.
-        /// </summary>
-        /// <value>The compressor factory.</value>
-        public ICompressorFactory CompressorFactory { get; private set; }
 
         /// <inheritdoc />
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling", Justification = "Acceptable given it creates the streams.")]
@@ -186,12 +186,12 @@ namespace Naos.Protocol.SqlServer
                                                       StreamSchema.BuildCreationScriptForSchema(this.Name),
                                                       StreamSchema.Tables.TypeWithoutVersion.BuildCreationScript(this.Name),
                                                       StreamSchema.Tables.TypeWithVersion.BuildCreationScript(this.Name),
-                                                      StreamSchema.Tables.SerializerDescription.BuildCreationScript(this.Name),
+                                                      StreamSchema.Tables.SerializerRepresentation.BuildCreationScript(this.Name),
                                                       StreamSchema.Tables.Object.BuildCreationScript(this.Name),
                                                       StreamSchema.Tables.Tag.BuildCreationScript(this.Name),
                                                       StreamSchema.Sprocs.GetIdAddIfNecessaryTypeWithoutVersion.BuildCreationScript(this.Name),
                                                       StreamSchema.Sprocs.GetIdAddIfNecessaryTypeWithVersion.BuildCreationScript(this.Name),
-                                                      StreamSchema.Sprocs.GetIdAddIfNecessarySerializerDescription.BuildCreationScript(this.Name),
+                                                      StreamSchema.Sprocs.GetIdAddIfNecessarySerializerRepresentation.BuildCreationScript(this.Name),
                                                       StreamSchema.Sprocs.PutObject.BuildCreationScript(this.Name),
                                                       StreamSchema.Sprocs.GetLatestByIdAndType.BuildCreationScript(this.Name),
                                                   };
@@ -265,17 +265,17 @@ namespace Naos.Protocol.SqlServer
         public DescribedSerializer GetDescribedSerializer(
             SqlStreamLocator streamLocator)
         {
-            if (this.serializerDescriptionToDescribedSerializerMap.ContainsKey(this.DefaultSerializerDescription))
+            if (this.serializerDescriptionToDescribedSerializerMap.ContainsKey(this.DefaultSerializerRepresentation))
             {
-                return this.serializerDescriptionToDescribedSerializerMap[this.DefaultSerializerDescription];
+                return this.serializerDescriptionToDescribedSerializerMap[this.DefaultSerializerRepresentation];
             }
 
             var serializer = this.SerializerFactory.BuildSerializer(
-                this.DefaultSerializerDescription,
-                unregisteredTypeEncounteredStrategy: UnregisteredTypeEncounteredStrategy.Attempt);
+                this.DefaultSerializerRepresentation);
 
-            var serializerDescriptionId = this.Execute(new GetIdAddIfNecessarySerializerDescriptionOp(streamLocator, this.DefaultSerializerDescription));
-            var result = new DescribedSerializer(this.DefaultSerializerDescription, serializer, serializerDescriptionId);
+            var serializerDescriptionId = this.Execute(new GetIdAddIfNecessarySerializerRepresentationOp(streamLocator, this.DefaultSerializerRepresentation));
+            var result = new DescribedSerializer(this.DefaultSerializerRepresentation, this.DefaultSerializationFormat, serializer, serializerDescriptionId);
+            this.serializerDescriptionToDescribedSerializerMap.Add(this.DefaultSerializerRepresentation, result);
             return result;
         }
 
@@ -283,18 +283,18 @@ namespace Naos.Protocol.SqlServer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Should dispose correctly.")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Built internally and should be safe from injection.")]
         public int Execute(
-            GetIdAddIfNecessarySerializerDescriptionOp operation)
+            GetIdAddIfNecessarySerializerRepresentationOp operation)
         {
-            var serializationConfigurationTypeWithoutVersion = operation.SerializationDescription.ConfigurationTypeRepresentation.AssemblyQualifiedName;
-            var serializationConfigurationTypeWithVersion = operation.SerializationDescription.ConfigurationTypeRepresentation.AssemblyQualifiedName;
+            var serializationConfigurationTypeWithoutVersion = operation.SerializerRepresentation.SerializationConfigType.RemoveAssemblyVersions().BuildAssemblyQualifiedName();
+            var serializationConfigurationTypeWithVersion = operation.SerializerRepresentation.SerializationConfigType.BuildAssemblyQualifiedName();
 
-            var storedProcOp = StreamSchema.Sprocs.GetIdAddIfNecessarySerializerDescription.BuildExecuteStoredProcedureOp(
+            var storedProcOp = StreamSchema.Sprocs.GetIdAddIfNecessarySerializerRepresentation.BuildExecuteStoredProcedureOp(
                 this.Name,
                 serializationConfigurationTypeWithoutVersion,
                 serializationConfigurationTypeWithVersion,
-                operation.SerializationDescription.SerializationKind,
-                operation.SerializationDescription.SerializationFormat,
-                operation.SerializationDescription.CompressionKind,
+                operation.SerializerRepresentation.SerializationKind,
+                operation.SerializationFormat,
+                operation.SerializerRepresentation.CompressionKind,
                 UnregisteredTypeEncounteredStrategy.Attempt);
 
             var locator = operation.StreamLocator;
@@ -305,14 +305,14 @@ namespace Naos.Protocol.SqlServer
 
             var sqlProtocol = this.BuildSqlOperationsProtocol(sqlLocator);
             var sprocResult = sqlProtocol.Execute(storedProcOp);
-            var result = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetIdAddIfNecessarySerializerDescription.OutputParamNames.Id)]
+            var result = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetIdAddIfNecessarySerializerRepresentation.OutputParamNames.Id)]
                                     .GetValue<int>();
             return result;
         }
 
         /// <inheritdoc />
         public async Task<int> ExecuteAsync(
-            GetIdAddIfNecessarySerializerDescriptionOp operation)
+            GetIdAddIfNecessarySerializerRepresentationOp operation)
         {
             return await Task.FromResult(this.Execute(operation));
         }

@@ -46,7 +46,7 @@ namespace Naos.Protocol.SqlServer
                     /// <summary>
                     /// The serializer description identifier.
                     /// </summary>
-                    SerializerDescriptionId,
+                    SerializerRepresentationId,
 
                     /// <summary>
                     /// The serialized object identifier.
@@ -108,7 +108,7 @@ namespace Naos.Protocol.SqlServer
                                      {
                                          new SqlInputParameterRepresentation<string>(nameof(InputParamNames.ObjectAssemblyQualifiedNameWithoutVersion), Tables.TypeWithoutVersion.AssemblyQualifiedName.DataType, objectAssemblyQualifiedNameWithoutVersion),
                                          new SqlInputParameterRepresentation<string>(nameof(InputParamNames.ObjectAssemblyQualifiedNameWithVersion), Tables.TypeWithVersion.AssemblyQualifiedName.DataType, objectAssemblyQualifiedNameWithVersion),
-                                         new SqlInputParameterRepresentation<int>(nameof(InputParamNames.SerializerDescriptionId), Tables.SerializerDescription.Id.DataType, serializerDescriptionId),
+                                         new SqlInputParameterRepresentation<int>(nameof(InputParamNames.SerializerRepresentationId), Tables.SerializerRepresentation.Id.DataType, serializerDescriptionId),
                                          new SqlInputParameterRepresentation<string>(nameof(InputParamNames.SerializedObjectId), Tables.Object.SerializedObjectId.DataType, serializedObjectId),
                                          new SqlInputParameterRepresentation<string>(nameof(InputParamNames.SerializedObjectString), Tables.Object.SerializedObjectString.DataType, serializedObjectString),
                                          new SqlInputParameterRepresentation<byte[]>(nameof(InputParamNames.SerializedObjectBinary), Tables.Object.SerializedObjectBinary.DataType, serializedObjectBinary),
@@ -135,7 +135,7 @@ namespace Naos.Protocol.SqlServer
 CREATE PROCEDURE [{streamName}].PutObject(
   @{nameof(InputParamNames.ObjectAssemblyQualifiedNameWithoutVersion)} AS {Tables.TypeWithoutVersion.AssemblyQualifiedName.DataType.DeclarationInSqlSyntax}
 , @{nameof(InputParamNames.ObjectAssemblyQualifiedNameWithVersion)} AS {Tables.TypeWithVersion.AssemblyQualifiedName.DataType.DeclarationInSqlSyntax}
-, @{nameof(InputParamNames.SerializerDescriptionId)} AS {Tables.Object.SerializerDescriptionId.DataType.DeclarationInSqlSyntax}
+, @{nameof(InputParamNames.SerializerRepresentationId)} AS {Tables.Object.SerializerRepresentationId.DataType.DeclarationInSqlSyntax}
 , @{nameof(InputParamNames.SerializedObjectId)} AS {Tables.Object.SerializedObjectId.DataType.DeclarationInSqlSyntax}
 , @{nameof(InputParamNames.SerializedObjectString)} AS {Tables.Object.SerializedObjectString.DataType.DeclarationInSqlSyntax}
 , @{nameof(InputParamNames.SerializedObjectBinary)} AS {Tables.Object.SerializedObjectBinary.DataType.DeclarationInSqlSyntax}
@@ -157,7 +157,7 @@ BEGIN TRANSACTION [PutObject]
 	  INSERT INTO [{streamName}].[Object] (
 		  [{nameof(Tables.Object.ObjectTypeWithoutVersionId)}]
 		, [{nameof(Tables.Object.ObjectTypeWithVersionId)}]
-		, [{nameof(Tables.Object.SerializerDescriptionId)}]
+		, [{nameof(Tables.Object.SerializerRepresentationId)}]
 		, [{nameof(Tables.Object.SerializedObjectId)}]
 		, [{nameof(Tables.Object.SerializedObjectString)}]
 		, [{nameof(Tables.Object.SerializedObjectBinary)}]
@@ -165,7 +165,7 @@ BEGIN TRANSACTION [PutObject]
 		) VALUES (
 		  @TypeWithoutVersionId
 		, @TypeWithVersionId
-		, @{nameof(InputParamNames.SerializerDescriptionId)}
+		, @{nameof(InputParamNames.SerializerRepresentationId)}
 		, @{nameof(InputParamNames.SerializedObjectId)}
 		, @{nameof(InputParamNames.SerializedObjectString)}
 		, @{nameof(InputParamNames.SerializedObjectBinary)}

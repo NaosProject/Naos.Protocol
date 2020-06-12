@@ -12,15 +12,15 @@ namespace Naos.Protocol.Serialization.Bson
     using OBeautifulCode.Serialization.Bson;
 
     /// <inheritdoc />
-    public class ProtocolBsonSerializationConfiguration : BsonConfigurationBase
+    public class ProtocolBsonSerializationConfiguration : BsonSerializationConfigurationBase
     {
         /// <inheritdoc />
-        protected override IReadOnlyCollection<Type> TypesToAutoRegister => new Type[]
-        {
-            typeof(EventBase),
-            typeof(VoidOperationBase),
-            typeof(ReturningOperationBase<>),
-            typeof(StreamLocatorBase),
-        };
+        protected override IReadOnlyCollection<TypeToRegisterForBson> TypesToRegisterForBson => new[]
+                                                                                                {
+                                                                                                    typeof(EventBase).ToTypeToRegisterForBson(),
+                                                                                                    typeof(VoidOperationBase).ToTypeToRegisterForBson(),
+                                                                                                    typeof(ReturningOperationBase<>).ToTypeToRegisterForBson(),
+                                                                                                    typeof(StreamLocatorBase).ToTypeToRegisterForBson(),
+                                                                                                };
     }
 }

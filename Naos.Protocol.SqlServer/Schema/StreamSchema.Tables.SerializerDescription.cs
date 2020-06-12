@@ -10,7 +10,7 @@ namespace Naos.Protocol.SqlServer
     using System.Linq;
 
     /// <summary>
-    /// SerializerDescription table schema.
+    /// SerializerRepresentation table schema.
     /// </summary>
     public static partial class StreamSchema
     {
@@ -20,9 +20,9 @@ namespace Naos.Protocol.SqlServer
         public static partial class Tables
         {
             /// <summary>
-            /// SerializerDescription table.
+            /// SerializerRepresentation table.
             /// </summary>
-            public static class SerializerDescription
+            public static class SerializerRepresentation
             {
                 /// <summary>
                 /// Gets the identifier.
@@ -88,7 +88,7 @@ namespace Naos.Protocol.SqlServer
                 /// </summary>
                 /// <value>The table.</value>
                 public static TableRepresentation Table => new TableRepresentation(
-                    nameof(SerializerDescription),
+                    nameof(SerializerRepresentation),
                     new[]
                     {
                         Id,
@@ -102,10 +102,10 @@ namespace Naos.Protocol.SqlServer
                     }.ToDictionary(k => k.Name, v => v));
 
                 /// <summary>
-                /// Builds the creation script for SerializerDescription table.
+                /// Builds the creation script for SerializerRepresentation table.
                 /// </summary>
                 /// <param name="streamName">Name of the stream.</param>
-                /// <returns>Creation script for SerializerDescription table.</returns>
+                /// <returns>Creation script for SerializerRepresentation table.</returns>
                 public static string BuildCreationScript(
                     string streamName)
                 {
@@ -117,7 +117,7 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 
 
-CREATE TABLE [{streamName}].[{nameof(SerializerDescription)}](
+CREATE TABLE [{streamName}].[{nameof(SerializerRepresentation)}](
 	[{nameof(Id)}] {Id.DataType.DeclarationInSqlSyntax} IDENTITY(1,1) NOT NULL,
 	[{nameof(SerializationKind)}] {SerializationKind.DataType.DeclarationInSqlSyntax} NOT NULL,
 	[{nameof(SerializationFormat)}] {SerializationFormat.DataType.DeclarationInSqlSyntax} NOT NULL,
@@ -126,61 +126,61 @@ CREATE TABLE [{streamName}].[{nameof(SerializerDescription)}](
 	[{nameof(CompressionKind)}] {CompressionKind.DataType.DeclarationInSqlSyntax} NOT NULL,
 	[{nameof(UnregisteredTypeEncounteredStrategy)}] {UnregisteredTypeEncounteredStrategy.DataType.DeclarationInSqlSyntax} NULL,
 	[{nameof(RecordCreatedUtc)}] {RecordCreatedUtc.DataType.DeclarationInSqlSyntax} NOT NULL,
- CONSTRAINT [PK_{nameof(SerializerDescription)}] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [PK_{nameof(SerializerRepresentation)}] PRIMARY KEY CLUSTERED 
 (
 	[{nameof(Id)}] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 
-ALTER TABLE [{streamName}].[{nameof(SerializerDescription)}]  WITH CHECK ADD  CONSTRAINT [FK_{nameof(SerializerDescription)}_TypeWithoutVersion] FOREIGN KEY([{nameof(SerializationConfigurationTypeWithoutVersionId)}])
+ALTER TABLE [{streamName}].[{nameof(SerializerRepresentation)}]  WITH CHECK ADD  CONSTRAINT [FK_{nameof(SerializerRepresentation)}_TypeWithoutVersion] FOREIGN KEY([{nameof(SerializationConfigurationTypeWithoutVersionId)}])
 REFERENCES [{streamName}].[TypeWithoutVersion] ([Id])
 
 
-ALTER TABLE [{streamName}].[{nameof(SerializerDescription)}] CHECK CONSTRAINT [FK_{nameof(SerializerDescription)}_TypeWithoutVersion]
+ALTER TABLE [{streamName}].[{nameof(SerializerRepresentation)}] CHECK CONSTRAINT [FK_{nameof(SerializerRepresentation)}_TypeWithoutVersion]
 
 
-ALTER TABLE [{streamName}].[{nameof(SerializerDescription)}]  WITH CHECK ADD  CONSTRAINT [FK_{nameof(SerializerDescription)}_TypeWithVersion] FOREIGN KEY([{nameof(SerializationConfigurationTypeWithVersionId)}])
+ALTER TABLE [{streamName}].[{nameof(SerializerRepresentation)}]  WITH CHECK ADD  CONSTRAINT [FK_{nameof(SerializerRepresentation)}_TypeWithVersion] FOREIGN KEY([{nameof(SerializationConfigurationTypeWithVersionId)}])
 REFERENCES [{streamName}].[TypeWithVersion] ([Id])
 
 
-ALTER TABLE [{streamName}].[{nameof(SerializerDescription)}] CHECK CONSTRAINT [FK_{nameof(SerializerDescription)}_TypeWithVersion]
+ALTER TABLE [{streamName}].[{nameof(SerializerRepresentation)}] CHECK CONSTRAINT [FK_{nameof(SerializerRepresentation)}_TypeWithVersion]
 
-ALTER TABLE [{streamName}].[{nameof(SerializerDescription)}] ADD CONSTRAINT [UQ_{nameof(SerializerDescription)}_All] UNIQUE([{nameof(SerializationKind)}], [{nameof(SerializationFormat)}], [{nameof(SerializationConfigurationTypeWithoutVersionId)}], [{nameof(SerializationConfigurationTypeWithVersionId)}], [{nameof(CompressionKind)}], [{nameof(UnregisteredTypeEncounteredStrategy)}]);
+ALTER TABLE [{streamName}].[{nameof(SerializerRepresentation)}] ADD CONSTRAINT [UQ_{nameof(SerializerRepresentation)}_All] UNIQUE([{nameof(SerializationKind)}], [{nameof(SerializationFormat)}], [{nameof(SerializationConfigurationTypeWithoutVersionId)}], [{nameof(SerializationConfigurationTypeWithVersionId)}], [{nameof(CompressionKind)}], [{nameof(UnregisteredTypeEncounteredStrategy)}]);
 
 SET ANSI_PADDING ON
 
-CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerDescription)}_Id_Asc] ON [{streamName}].[{nameof(SerializerDescription)}]
+CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerRepresentation)}_Id_Asc] ON [{streamName}].[{nameof(SerializerRepresentation)}]
 (
 	[{nameof(Id)}] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 
-CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerDescription)}__{nameof(SerializationKind)}_Asc] ON [{streamName}].[{nameof(SerializerDescription)}]
+CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerRepresentation)}__{nameof(SerializationKind)}_Asc] ON [{streamName}].[{nameof(SerializerRepresentation)}]
 (
 	[{nameof(SerializationKind)}] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 
-CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerDescription)}_{nameof(SerializationFormat)}_Asc] ON [{streamName}].[{nameof(SerializerDescription)}]
+CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerRepresentation)}_{nameof(SerializationFormat)}_Asc] ON [{streamName}].[{nameof(SerializerRepresentation)}]
 (
 	[{nameof(SerializationFormat)}] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 
-CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerDescription)}_{nameof(SerializationConfigurationTypeWithoutVersionId)}_Asc] ON [{streamName}].[{nameof(SerializerDescription)}]
+CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerRepresentation)}_{nameof(SerializationConfigurationTypeWithoutVersionId)}_Asc] ON [{streamName}].[{nameof(SerializerRepresentation)}]
 (
 	[{nameof(SerializationConfigurationTypeWithoutVersionId)}] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 
-CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerDescription)}_{nameof(SerializationConfigurationTypeWithVersionId)}_Asc] ON [{streamName}].[{nameof(SerializerDescription)}]
+CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerRepresentation)}_{nameof(SerializationConfigurationTypeWithVersionId)}_Asc] ON [{streamName}].[{nameof(SerializerRepresentation)}]
 (
 	[{nameof(SerializationConfigurationTypeWithVersionId)}] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 
-CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerDescription)}_{nameof(CompressionKind)}_Asc] ON [{streamName}].[{nameof(SerializerDescription)}]
+CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerRepresentation)}_{nameof(CompressionKind)}_Asc] ON [{streamName}].[{nameof(SerializerRepresentation)}]
 (
 	[{nameof(CompressionKind)}] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 
-CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerDescription)}_{nameof(UnregisteredTypeEncounteredStrategy)}_Asc] ON [{streamName}].[{nameof(SerializerDescription)}]
+CREATE NONCLUSTERED INDEX [IX_{nameof(SerializerRepresentation)}_{nameof(UnregisteredTypeEncounteredStrategy)}_Asc] ON [{streamName}].[{nameof(SerializerRepresentation)}]
 (
 	[{nameof(UnregisteredTypeEncounteredStrategy)}] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]

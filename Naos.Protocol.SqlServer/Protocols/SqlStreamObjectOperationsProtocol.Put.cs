@@ -42,10 +42,10 @@ namespace Naos.Protocol.SqlServer
                 var describedSerializer = this.stream.GetDescribedSerializer(sqlStreamLocator);
                 var tagsXml = this.GetTagsXmlString(operation);
 
-                var serializedObjectString = describedSerializer.SerializerDescription.SerializationFormat != SerializationFormat.String
+                var serializedObjectString = describedSerializer.SerializationFormat != SerializationFormat.String
                     ? null
                     : describedSerializer.Serializer.SerializeToString(operation.ObjectToPut);
-                var serializedObjectBinary = describedSerializer.SerializerDescription.SerializationFormat != SerializationFormat.Binary
+                var serializedObjectBinary = describedSerializer.SerializationFormat != SerializationFormat.Binary
                     ? null
                     : describedSerializer.Serializer.SerializeToBytes(operation.ObjectToPut);
 
@@ -55,7 +55,7 @@ namespace Naos.Protocol.SqlServer
                     this.stream.Name,
                     objectAssemblyQualifiedNameWithoutVersion,
                     objectAssemblyQualifiedNameWithVersion,
-                    describedSerializer.SerializerDescriptionId,
+                    describedSerializer.SerializerRepresentationId,
                     serializedObjectId,
                     serializedObjectString,
                     serializedObjectBinary,

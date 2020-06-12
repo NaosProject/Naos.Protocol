@@ -46,7 +46,7 @@ namespace Naos.Protocol.SqlServer
                 /// Gets the serializer description identifier.
                 /// </summary>
                 /// <value>The serializer description identifier.</value>
-                public static ColumnRepresentation SerializerDescriptionId => new ColumnRepresentation(nameof(SerializerDescriptionId), new IntSqlDataTypeRepresentation());
+                public static ColumnRepresentation SerializerRepresentationId => new ColumnRepresentation(nameof(SerializerRepresentationId), new IntSqlDataTypeRepresentation());
 
                 /// <summary>
                 /// Gets the serialized object identifier.
@@ -83,7 +83,7 @@ namespace Naos.Protocol.SqlServer
                         Id,
                         ObjectTypeWithoutVersionId,
                         ObjectTypeWithVersionId,
-                        SerializerDescriptionId,
+                        SerializerRepresentationId,
                         SerializedObjectId,
                         SerializedObjectString,
                         SerializedObjectBinary,
@@ -108,7 +108,7 @@ CREATE TABLE [{streamName}].[{nameof(Object)}](
 	[{nameof(Id)}] {Id.DataType.DeclarationInSqlSyntax} IDENTITY(1,1) NOT NULL,
 	[{nameof(ObjectTypeWithoutVersionId)}] {ObjectTypeWithoutVersionId.DataType.DeclarationInSqlSyntax} NOT NULL,
 	[{nameof(ObjectTypeWithVersionId)}] {ObjectTypeWithVersionId.DataType.DeclarationInSqlSyntax} NOT NULL,
-	[{nameof(SerializerDescriptionId)}] {SerializerDescriptionId.DataType.DeclarationInSqlSyntax} NOT NULL,
+	[{nameof(SerializerRepresentationId)}] {SerializerRepresentationId.DataType.DeclarationInSqlSyntax} NOT NULL,
 	[{nameof(SerializedObjectId)}] {SerializedObjectId.DataType.DeclarationInSqlSyntax} NOT NULL,
 	[{nameof(SerializedObjectString)}] {SerializedObjectString.DataType.DeclarationInSqlSyntax} NULL,
 	[{nameof(SerializedObjectBinary)}] {SerializedObjectBinary.DataType.DeclarationInSqlSyntax} NULL,

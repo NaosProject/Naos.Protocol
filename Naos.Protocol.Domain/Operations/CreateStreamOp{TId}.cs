@@ -7,6 +7,7 @@
 namespace Naos.Protocol.Domain
 {
     using System;
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// Create a stream's persistence.

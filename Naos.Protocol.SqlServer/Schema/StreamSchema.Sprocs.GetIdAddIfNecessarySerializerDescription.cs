@@ -26,9 +26,9 @@ namespace Naos.Protocol.SqlServer
         public static partial class Sprocs
         {
             /// <summary>
-            /// Stored procedure: GetIdAddIfNecessarySerializerDescription.
+            /// Stored procedure: GetIdAddIfNecessarySerializerRepresentation.
             /// </summary>
-            public static class GetIdAddIfNecessarySerializerDescription
+            public static class GetIdAddIfNecessarySerializerRepresentation
             {
                 /// <summary>
                 /// Input parameter names.
@@ -97,17 +97,17 @@ namespace Naos.Protocol.SqlServer
                     CompressionKind compressionKind,
                     UnregisteredTypeEncounteredStrategy unregisteredTypeEncounteredStrategy)
                 {
-                    var sprocName = FormattableString.Invariant($"[{streamName}].{nameof(GetIdAddIfNecessarySerializerDescription)}");
+                    var sprocName = FormattableString.Invariant($"[{streamName}].{nameof(GetIdAddIfNecessarySerializerRepresentation)}");
 
                     var parameters = new List<SqlParameterRepresentationBase>()
                                      {
                                          new SqlInputParameterRepresentation<string>(nameof(InputParamNames.ConfigAssemblyQualifiedNameWithoutVersion), Tables.TypeWithoutVersion.AssemblyQualifiedName.DataType, configAssemblyQualifiedNameWithoutVersion),
                                          new SqlInputParameterRepresentation<string>(nameof(InputParamNames.ConfigAssemblyQualifiedNameWithVersion), Tables.TypeWithVersion.AssemblyQualifiedName.DataType, configAssemblyQualifiedNameWithVersion),
-                                         new SqlInputParameterRepresentation<string>(nameof(InputParamNames.SerializationKind), Tables.SerializerDescription.SerializationKind.DataType, serializationKind.ToString()),
-                                         new SqlInputParameterRepresentation<string>(nameof(InputParamNames.SerializationFormat), Tables.SerializerDescription.SerializationFormat.DataType, serializationFormat.ToString()),
-                                         new SqlInputParameterRepresentation<string>(nameof(InputParamNames.CompressionKind), Tables.SerializerDescription.CompressionKind.DataType, compressionKind.ToString()),
-                                         new SqlInputParameterRepresentation<string>(nameof(InputParamNames.UnregisteredTypeEncounteredStrategy), Tables.SerializerDescription.SerializationKind.DataType, unregisteredTypeEncounteredStrategy.ToString()),
-                                         new SqlOutputParameterRepresentation<int>(nameof(OutputParamNames.Id), Tables.SerializerDescription.Id.DataType),
+                                         new SqlInputParameterRepresentation<string>(nameof(InputParamNames.SerializationKind), Tables.SerializerRepresentation.SerializationKind.DataType, serializationKind.ToString()),
+                                         new SqlInputParameterRepresentation<string>(nameof(InputParamNames.SerializationFormat), Tables.SerializerRepresentation.SerializationFormat.DataType, serializationFormat.ToString()),
+                                         new SqlInputParameterRepresentation<string>(nameof(InputParamNames.CompressionKind), Tables.SerializerRepresentation.CompressionKind.DataType, compressionKind.ToString()),
+                                         new SqlInputParameterRepresentation<string>(nameof(InputParamNames.UnregisteredTypeEncounteredStrategy), Tables.SerializerRepresentation.SerializationKind.DataType, unregisteredTypeEncounteredStrategy.ToString()),
+                                         new SqlOutputParameterRepresentation<int>(nameof(OutputParamNames.Id), Tables.SerializerRepresentation.Id.DataType),
                                      };
 
                     var parameterNameToRepresentationMap = parameters.ToDictionary(k => k.Name, v => v);
@@ -132,43 +132,43 @@ namespace Naos.Protocol.SqlServer
                 {
                     return FormattableString.Invariant(
                         $@"
-CREATE PROCEDURE [{streamName}].GetIdAddIfNecessarySerializerDescription(
+CREATE PROCEDURE [{streamName}].GetIdAddIfNecessarySerializerRepresentation(
   @{InputParamNames.ConfigAssemblyQualifiedNameWithoutVersion} AS {Tables.TypeWithoutVersion.AssemblyQualifiedName.DataType.DeclarationInSqlSyntax}
 , @{InputParamNames.ConfigAssemblyQualifiedNameWithVersion} AS {Tables.TypeWithVersion.AssemblyQualifiedName.DataType.DeclarationInSqlSyntax}
-, @{InputParamNames.SerializationKind} {Tables.SerializerDescription.SerializationKind.DataType.DeclarationInSqlSyntax}
-, @{InputParamNames.SerializationFormat} AS {Tables.SerializerDescription.SerializationFormat.DataType.DeclarationInSqlSyntax}
-, @{InputParamNames.CompressionKind} AS {Tables.SerializerDescription.CompressionKind.DataType.DeclarationInSqlSyntax}
-, @{InputParamNames.UnregisteredTypeEncounteredStrategy} AS {Tables.SerializerDescription.UnregisteredTypeEncounteredStrategy.DataType.DeclarationInSqlSyntax}
-, @{OutputParamNames.Id} {Tables.SerializerDescription.Id.DataType.DeclarationInSqlSyntax} OUTPUT
+, @{InputParamNames.SerializationKind} {Tables.SerializerRepresentation.SerializationKind.DataType.DeclarationInSqlSyntax}
+, @{InputParamNames.SerializationFormat} AS {Tables.SerializerRepresentation.SerializationFormat.DataType.DeclarationInSqlSyntax}
+, @{InputParamNames.CompressionKind} AS {Tables.SerializerRepresentation.CompressionKind.DataType.DeclarationInSqlSyntax}
+, @{InputParamNames.UnregisteredTypeEncounteredStrategy} AS {Tables.SerializerRepresentation.UnregisteredTypeEncounteredStrategy.DataType.DeclarationInSqlSyntax}
+, @{OutputParamNames.Id} {Tables.SerializerRepresentation.Id.DataType.DeclarationInSqlSyntax} OUTPUT
 )
 AS
 BEGIN
 
-BEGIN TRANSACTION [GetIdAddSerializerDescription]
+BEGIN TRANSACTION [GetIdAddSerializerRepresentation]
   BEGIN TRY
       DECLARE @TypeWithoutVersionId {Tables.TypeWithoutVersion.Id.DataType.DeclarationInSqlSyntax}
       EXEC [{streamName}].[GetIdAddIfNecessaryTypeWithoutVersion] @{InputParamNames.ConfigAssemblyQualifiedNameWithoutVersion}, @TypeWithoutVersionId OUTPUT
       DECLARE @TypeWithVersionId {Tables.TypeWithVersion.Id.DataType.DeclarationInSqlSyntax}
       EXEC [{streamName}].[GetIdAddIfNecessaryTypeWithVersion] @{InputParamNames.ConfigAssemblyQualifiedNameWithVersion}, @TypeWithVersionId OUTPUT
       
-      SELECT @{nameof(OutputParamNames.Id)} = [{nameof(Tables.SerializerDescription.Id)}] FROM [{streamName}].[{nameof(Tables.SerializerDescription)}]
-        WHERE [{nameof(Tables.SerializerDescription.SerializationConfigurationTypeWithVersionId)}] = @TypeWithVersionId
-        AND [{nameof(Tables.SerializerDescription.SerializationConfigurationTypeWithoutVersionId)}] = @TypeWithoutVersionId
-        AND [{nameof(Tables.SerializerDescription.SerializationKind)}] = @{InputParamNames.SerializationKind}
-        AND [{nameof(Tables.SerializerDescription.SerializationFormat)}] = @{InputParamNames.SerializationFormat}
-        AND [{nameof(Tables.SerializerDescription.CompressionKind)}] = @{InputParamNames.CompressionKind}
-        AND [{nameof(Tables.SerializerDescription.UnregisteredTypeEncounteredStrategy)}] = @{InputParamNames.UnregisteredTypeEncounteredStrategy}
+      SELECT @{nameof(OutputParamNames.Id)} = [{nameof(Tables.SerializerRepresentation.Id)}] FROM [{streamName}].[{nameof(Tables.SerializerRepresentation)}]
+        WHERE [{nameof(Tables.SerializerRepresentation.SerializationConfigurationTypeWithVersionId)}] = @TypeWithVersionId
+        AND [{nameof(Tables.SerializerRepresentation.SerializationConfigurationTypeWithoutVersionId)}] = @TypeWithoutVersionId
+        AND [{nameof(Tables.SerializerRepresentation.SerializationKind)}] = @{InputParamNames.SerializationKind}
+        AND [{nameof(Tables.SerializerRepresentation.SerializationFormat)}] = @{InputParamNames.SerializationFormat}
+        AND [{nameof(Tables.SerializerRepresentation.CompressionKind)}] = @{InputParamNames.CompressionKind}
+        AND [{nameof(Tables.SerializerRepresentation.UnregisteredTypeEncounteredStrategy)}] = @{InputParamNames.UnregisteredTypeEncounteredStrategy}
 
 	  IF (@{nameof(OutputParamNames.Id)} IS NULL)
 	  BEGIN
-	      INSERT INTO [{streamName}].[{nameof(Tables.SerializerDescription)}] (
-		    [{nameof(Tables.SerializerDescription.SerializationKind)}]
-		  , [{nameof(Tables.SerializerDescription.SerializationFormat)}]
-		  , [{nameof(Tables.SerializerDescription.SerializationConfigurationTypeWithoutVersionId)}]
-		  , [{nameof(Tables.SerializerDescription.SerializationConfigurationTypeWithVersionId)}]
-		  , [{nameof(Tables.SerializerDescription.CompressionKind)}]
-		  , [{nameof(Tables.SerializerDescription.UnregisteredTypeEncounteredStrategy)}]
-		  , [{nameof(Tables.SerializerDescription.RecordCreatedUtc)}]
+	      INSERT INTO [{streamName}].[{nameof(Tables.SerializerRepresentation)}] (
+		    [{nameof(Tables.SerializerRepresentation.SerializationKind)}]
+		  , [{nameof(Tables.SerializerRepresentation.SerializationFormat)}]
+		  , [{nameof(Tables.SerializerRepresentation.SerializationConfigurationTypeWithoutVersionId)}]
+		  , [{nameof(Tables.SerializerRepresentation.SerializationConfigurationTypeWithVersionId)}]
+		  , [{nameof(Tables.SerializerRepresentation.CompressionKind)}]
+		  , [{nameof(Tables.SerializerRepresentation.UnregisteredTypeEncounteredStrategy)}]
+		  , [{nameof(Tables.SerializerRepresentation.RecordCreatedUtc)}]
 		  ) VALUES (
 	        @{InputParamNames.SerializationKind}
 		  , @{InputParamNames.SerializationFormat}
@@ -182,7 +182,7 @@ BEGIN TRANSACTION [GetIdAddSerializerDescription]
 	      SET @{nameof(OutputParamNames.Id)} = SCOPE_IDENTITY()
 	  END
 
-      COMMIT TRANSACTION [GetIdAddSerializerDescription]
+      COMMIT TRANSACTION [GetIdAddSerializerRepresentation]
 
   END TRY
 
@@ -196,7 +196,7 @@ BEGIN TRANSACTION [GetIdAddSerializerDescription]
 
       IF (@@trancount > 0)
       BEGIN
-         ROLLBACK TRANSACTION [GetIdAddSerializerDescription]
+         ROLLBACK TRANSACTION [GetIdAddSerializerRepresentation]
       END
     RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState)
   END CATCH

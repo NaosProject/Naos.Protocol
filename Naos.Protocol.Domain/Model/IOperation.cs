@@ -6,6 +6,8 @@
 
 namespace Naos.Protocol.Domain
 {
+    using OBeautifulCode.Type;
+
     /// <summary>
     /// An operation is, conceptually, a method on an interface.
     /// </summary>
