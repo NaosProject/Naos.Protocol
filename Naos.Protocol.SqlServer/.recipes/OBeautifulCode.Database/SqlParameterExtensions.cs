@@ -13,8 +13,8 @@ namespace OBeautifulCode.Database.Recipes
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
 
-    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.String.Recipes;
 
     using static System.FormattableString;
@@ -1332,7 +1332,15 @@ namespace OBeautifulCode.Database.Recipes
         private static void ValidateForSqlParameterName(
             this string name)
         {
-            new { name }.AsArg().Must().NotBeNullNorWhiteSpace();
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(name)}' is white space"));
+            }
 
             var nameWithoutAtSymbol = name.StartsWith("@", StringComparison.OrdinalIgnoreCase) ? name.Substring(1) : name;
 
@@ -1346,7 +1354,10 @@ namespace OBeautifulCode.Database.Recipes
             this SqlDbType sqlDbType,
             IReadOnlyCollection<SqlDbType> validSqlDbTypes)
         {
-            new { validSqlDbTypes }.AsArg().Must().ContainElement(sqlDbType);
+            if (!validSqlDbTypes.Contains(sqlDbType))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(validSqlDbTypes)}' does not contain '{sqlDbType}'"));
+            }
         }
     }
 }

@@ -19,7 +19,6 @@ namespace OBeautifulCode.Database.Recipes
     using System.Linq;
     using System.Threading.Tasks;
 
-    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Collection.Recipes;
     using OBeautifulCode.Database.Recipes.Internal;
     using OBeautifulCode.String.Recipes;
@@ -49,7 +48,15 @@ namespace OBeautifulCode.Database.Recipes
         public static SqlConnection OpenSqlConnection(
             this string connectionString)
         {
-            new { connectionString }.AsArg().Must().NotBeNullNorWhiteSpace();
+            if (connectionString == null)
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(connectionString)}' is white space"));
+            }
 
             SqlConnection result = null;
 
@@ -83,7 +90,15 @@ namespace OBeautifulCode.Database.Recipes
         public static async Task<SqlConnection> OpenSqlConnectionAsync(
             this string connectionString)
         {
-            new { connectionString }.AsArg().Must().NotBeNullNorWhiteSpace();
+            if (connectionString == null)
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(connectionString)}' is white space"));
+            }
 
             SqlConnection result = null;
 
@@ -131,12 +146,37 @@ namespace OBeautifulCode.Database.Recipes
             bool prepareCommand = false)
         {
             // check arguments
-            new { connection }.AsArg().Must().NotBeNull();
-            new { connection.State }.AsArg().Must().BeEqualTo(ConnectionState.Open, "connection is in an invalid state: " + connection.State + ".  Must be Open.");
-            new { commandText }.AsArg().Must().NotBeNullNorWhiteSpace();
-            new { commandTimeoutInSeconds }.AsArg().Must().BeGreaterThanOrEqualTo(0);
+            if (connection == null)
+            {
+                throw new ArgumentNullException(nameof(connection));
+            }
+
+            if (connection.State != ConnectionState.Open)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"connection is in an invalid state: '{connection.State}'.  Must be Open."), (Exception)null);
+            }
+
+            if (commandText == null)
+            {
+                throw new ArgumentNullException(nameof(commandText));
+            }
+
+            if (string.IsNullOrWhiteSpace(commandText))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(commandText)}' is white space"));
+            }
+
+            if (commandTimeoutInSeconds < 0)
+            {
+                throw new ArgumentOutOfRangeException(Invariant($"'{nameof(commandTimeoutInSeconds)}' < '{0}'"), (Exception)null);
+            }
+
             commandParameters = commandParameters ?? new SqlParameter[0];
-            new { commandParameters }.AsArg().Must().NotContainAnyNullElements();
+
+            if (commandParameters.Any(_ => _ == null))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(commandParameters)}' contains an element that is null"));
+            }
 
             // validate transaction
             if (transaction != null)
@@ -477,7 +517,15 @@ namespace OBeautifulCode.Database.Recipes
             string batchCommandText,
             int commandTimeoutInSeconds = 30)
         {
-            new { batchCommandText }.AsArg().Must().NotBeNullNorWhiteSpace();
+            if (batchCommandText == null)
+            {
+                throw new ArgumentNullException(nameof(batchCommandText));
+            }
+
+            if (string.IsNullOrWhiteSpace(batchCommandText))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(batchCommandText)}' is white space"));
+            }
 
             var statements = SqlBatchStatementSplitter.SplitSqlAndRemoveEmptyStatements(batchCommandText);
 
@@ -516,7 +564,15 @@ namespace OBeautifulCode.Database.Recipes
             int commandTimeoutInSeconds = 30,
             SqlTransaction transaction = null)
         {
-            new { batchCommandText }.AsArg().Must().NotBeNullNorWhiteSpace();
+            if (batchCommandText == null)
+            {
+                throw new ArgumentNullException(nameof(batchCommandText));
+            }
+
+            if (string.IsNullOrWhiteSpace(batchCommandText))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(batchCommandText)}' is white space"));
+            }
 
             var statements = SqlBatchStatementSplitter.SplitSqlAndRemoveEmptyStatements(batchCommandText);
 
@@ -585,7 +641,15 @@ namespace OBeautifulCode.Database.Recipes
             int commandTimeoutInSeconds = 30,
             SqlTransaction transaction = null)
         {
-            new { batchCommandText }.AsArg().Must().NotBeNullNorWhiteSpace();
+            if (batchCommandText == null)
+            {
+                throw new ArgumentNullException(nameof(batchCommandText));
+            }
+
+            if (string.IsNullOrWhiteSpace(batchCommandText))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(batchCommandText)}' is white space"));
+            }
 
             var statements = SqlBatchStatementSplitter.SplitSqlAndRemoveEmptyStatements(batchCommandText);
 
@@ -1182,7 +1246,15 @@ namespace OBeautifulCode.Database.Recipes
             CommandBehavior commandBehavior = CommandBehavior.CloseConnection,
             bool prepareCommand = false)
         {
-            new { outputFilePath }.AsArg().Must().NotBeNullNorWhiteSpace();
+            if (outputFilePath == null)
+            {
+                throw new ArgumentNullException(nameof(outputFilePath));
+            }
+
+            if (string.IsNullOrWhiteSpace(outputFilePath))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(outputFilePath)}' is white space"));
+            }
 
             using (var writer = new StreamWriter(outputFilePath))
             {
@@ -1222,7 +1294,15 @@ namespace OBeautifulCode.Database.Recipes
             CommandBehavior commandBehavior = CommandBehavior.CloseConnection,
             bool prepareCommand = false)
         {
-            new { outputFilePath }.AsArg().Must().NotBeNullNorWhiteSpace();
+            if (outputFilePath == null)
+            {
+                throw new ArgumentNullException(nameof(outputFilePath));
+            }
+
+            if (string.IsNullOrWhiteSpace(outputFilePath))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(outputFilePath)}' is white space"));
+            }
 
             using (var writer = new StreamWriter(outputFilePath))
             {
@@ -1258,7 +1338,15 @@ namespace OBeautifulCode.Database.Recipes
             CommandBehavior commandBehavior = CommandBehavior.Default,
             bool prepareCommand = false)
         {
-            new { outputFilePath }.AsArg().Must().NotBeNullNorWhiteSpace();
+            if (outputFilePath == null)
+            {
+                throw new ArgumentNullException(nameof(outputFilePath));
+            }
+
+            if (string.IsNullOrWhiteSpace(outputFilePath))
+            {
+                throw new ArgumentException(Invariant($"'{nameof(outputFilePath)}' is white space"));
+            }
 
             using (var writer = new StreamWriter(outputFilePath))
             {
@@ -1276,7 +1364,10 @@ namespace OBeautifulCode.Database.Recipes
         public static void RollbackTransaction(
             this SqlTransaction transaction)
         {
-            new { transaction }.AsArg().Must().NotBeNull();
+            if (transaction == null)
+            {
+                throw new ArgumentNullException(nameof(transaction));
+            }
 
             if (transaction.Connection == null)
             {
