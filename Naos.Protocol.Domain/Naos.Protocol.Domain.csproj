@@ -105,6 +105,9 @@
     <Compile Include=".recipes\Spritely.Redo\Using.cs" />
     <Compile Include="Events\Handled.cs" />
     <Compile Include="Events\Handling.cs" />
+    <Compile Include="Model\IProtocolFactoryStreamObjectWriteOperations{TId}.cs" />
+    <Compile Include="Model\IProtocolStreamObjectReadOperations{TId,TObject}.cs" />
+    <Compile Include="Model\IReadOnlyStream{TId}.cs" />
     <Compile Include="Model\TypeVersionMatchStrategy.cs" />
     <Compile Include="Model\IGetProtocol.cs" />
     <Compile Include="Events\CancelBlock.cs" />
@@ -115,11 +118,11 @@
     <Compile Include="Events\Created.cs" />
     <Compile Include="Model\EventBase.cs" />
     <Compile Include="Model\IHaveId{TId}.cs" />
-    <Compile Include="Model\IProtocolFactoryStreamObjectOperations{TId}.cs" />
+    <Compile Include="Model\IProtocolFactoryStreamObjectReadOperations{TId}.cs" />
     <Compile Include="Model\IProtocolStreamLocator.cs" />
     <Compile Include="Model\ExistingStreamEncounteredStrategy.cs" />
-    <Compile Include="Model\IProtocolStreamObjectOperations{TId,TObject}.cs" />
-    <Compile Include="Model\IStream.cs" />
+    <Compile Include="Model\IProtocolStreamObjectWriteOperations{TId,TObject}.cs" />
+    <Compile Include="Model\IStream{TId}.cs" />
     <Compile Include="Location\LocatorBase.cs" />
     <Compile Include="Events\Executing.cs" />
     <Compile Include="Events\Executed.cs" />

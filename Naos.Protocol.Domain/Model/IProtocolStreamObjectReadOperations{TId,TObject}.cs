@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IProtocolStreamObjectOperations{TId,TObject}.cs" company="Naos Project">
+// <copyright file="IProtocolStreamObjectReadOperations{TId,TObject}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,8 +11,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TId">Type of ID used.</typeparam>
     /// <typeparam name="TObject">Type of object used.</typeparam>
-    public interface IProtocolStreamObjectOperations<TId, TObject> :
-        ISyncAndAsyncVoidProtocol<PutOp<TObject>>,
+    public interface IProtocolStreamObjectReadOperations<TId, TObject> :
         ISyncAndAsyncReturningProtocol<GetLatestByIdAndTypeOp<TId, TObject>, TObject>
     {
     }

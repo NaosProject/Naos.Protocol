@@ -13,11 +13,11 @@ namespace Naos.Protocol.SqlServer
 #pragma warning disable CS1710 // XML comment has a duplicate typeparam tag
 #pragma warning disable CS1710 // XML comment has a duplicate typeparam tag
     /// <summary>
-    /// SQL Server implementation of <see cref="IProtocolFactoryStreamObjectOperations{TId}" />.
+    /// SQL Server implementation of <see cref="IProtocolFactoryStreamObjectReadOperations{TId}" /> and <see cref="IProtocolFactoryStreamObjectWriteOperations{TId}" />.
     /// </summary>
     /// <typeparam name="TId">The type of the key.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
-    public partial class SqlStreamObjectOperationsProtocol<TId, TObject> : IProtocolStreamObjectOperations<TId, TObject>
+    public partial class SqlStreamObjectOperationsProtocol<TId, TObject> : IProtocolStreamObjectReadOperations<TId, TObject>, IProtocolStreamObjectWriteOperations<TId, TObject>
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
 #pragma warning restore CS1710 // XML comment has a duplicate typeparam tag
     {

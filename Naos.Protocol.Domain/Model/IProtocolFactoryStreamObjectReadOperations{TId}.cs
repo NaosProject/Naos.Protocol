@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IProtocolFactoryStreamObjectOperations{TId}.cs" company="Naos Project">
+// <copyright file="IProtocolFactoryStreamObjectReadOperations{TId}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,10 +9,10 @@ namespace Naos.Protocol.Domain
     using System.Collections.Generic;
 
     /// <summary>
-    /// Interface to get the protocols for the basic stream data operations.
+    /// Interface to get the protocols for the basic stream read operations.
     /// </summary>
     /// <typeparam name="TId">Type of ID used.</typeparam>
-    public interface IProtocolFactoryStreamObjectOperations<TId>
+    public interface IProtocolFactoryStreamObjectReadOperations<TId>
     {
         /// <summary>
         /// Builds the protocol for <see cref="GetTagsFromObjectOp{TObject}"/>.
@@ -27,13 +27,6 @@ namespace Naos.Protocol.Domain
         /// <typeparam name="TObject">The type of the object.</typeparam>
         /// <returns>Protocol for <see cref="GetIdFromObjectOp{TId,TObject}"/>.</returns>
         ISyncAndAsyncReturningProtocol<GetIdFromObjectOp<TId, TObject>, TId> BuildGetIdFromObjectProtocol<TObject>();
-
-        /// <summary>
-        /// Gets the <see cref="PutOp{TObject}"/> protocol.
-        /// </summary>
-        /// <typeparam name="TObject">The type of the object.</typeparam>
-        /// <returns>TProtocol.</returns>
-        ISyncAndAsyncVoidProtocol<PutOp<TObject>> BuildPutProtocol<TObject>();
 
         /// <summary>
         /// Gets the <see cref="GetLatestByIdAndTypeOp{TId,TObject}"/> protocol.
