@@ -282,7 +282,7 @@ namespace Naos.Protocol.SqlServer
             var serializer = this.SerializerFactory.BuildSerializer(
                 this.DefaultSerializerRepresentation);
 
-            var serializerDescriptionId = this.Execute(new GetIdAddIfNecessarySerializerRepresentationOp(streamLocator, this.DefaultSerializerRepresentation));
+            var serializerDescriptionId = this.Execute(new GetIdAddIfNecessarySerializerRepresentationOp(streamLocator, this.DefaultSerializerRepresentation, this.DefaultSerializationFormat));
             var result = new DescribedSerializer(this.DefaultSerializerRepresentation, this.DefaultSerializationFormat, serializer, serializerDescriptionId);
             this.serializerDescriptionToDescribedSerializerMap.Add(this.DefaultSerializerRepresentation, result);
             return result;

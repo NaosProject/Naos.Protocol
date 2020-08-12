@@ -62,7 +62,7 @@ namespace Naos.Protocol.SqlServer
                     tagsXml);
 
                 var sqlProtocol = this.stream.BuildSqlOperationsProtocol(sqlStreamLocator);
-                var sprocResult = sqlProtocol.Execute(storedProcOp);
+                var sprocResult = sqlProtocol.Execute(storedProcOp); // should this be returning with the ID??? Dangerous b/c it blurs the contract, opens avenues for coupling and misuse...
             }
             else
             {

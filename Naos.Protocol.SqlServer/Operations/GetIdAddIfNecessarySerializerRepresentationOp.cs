@@ -20,26 +20,35 @@ namespace Naos.Protocol.Domain
         /// </summary>
         /// <param name="streamLocator">Stream locator to inspect.</param>
         /// <param name="serializerRepresentation">The serialization description.</param>
+        /// <param name="serializationFormat">The serialization format.</param>
         /// <exception cref="System.ArgumentNullException">serializerRepresentation.</exception>
         public GetIdAddIfNecessarySerializerRepresentationOp(
             SqlStreamLocator streamLocator,
-            SerializerRepresentation serializerRepresentation)
+            SerializerRepresentation serializerRepresentation,
+            SerializationFormat serializationFormat)
         {
-            this.StreamLocator = streamLocator;
+            this.StreamLocator = streamLocator ?? throw new ArgumentNullException(nameof(streamLocator));
             this.SerializerRepresentation = serializerRepresentation ?? throw new ArgumentNullException(nameof(serializerRepresentation));
+
+            if (serializationFormat == SerializationFormat.Invalid)
+            {
+                throw new ArgumentException("Format cannot be 'Invalid'.", nameof(serializationFormat));
+            }
+
+            this.SerializationFormat = serializationFormat;
         }
 
         /// <summary>
-        /// Gets or sets the serialization description.
+        /// Gets the serialization description.
         /// </summary>
         /// <value>The serialization description.</value>
-        public SerializerRepresentation SerializerRepresentation { get; set; }
+        public SerializerRepresentation SerializerRepresentation { get; private set; }
 
         /// <summary>
-        /// Gets or sets the serialization format.
+        /// Gets the serialization format.
         /// </summary>
         /// <value>The serialization format.</value>
-        public SerializationFormat SerializationFormat { get; set; }
+        public SerializationFormat SerializationFormat { get; private set; }
 
         /// <summary>
         /// Gets the stream locator.
