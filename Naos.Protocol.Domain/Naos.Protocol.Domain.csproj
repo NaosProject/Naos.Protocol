@@ -108,6 +108,8 @@
     <Compile Include="Model\IProtocolFactoryStreamObjectWriteOperations{TId}.cs" />
     <Compile Include="Model\IProtocolStreamObjectReadOperations{TId,TObject}.cs" />
     <Compile Include="Model\IReadOnlyStream{TId}.cs" />
+    <Compile Include="Model\StreamFactory{TId}.cs" />
+    <Compile Include="Model\StreamRepresentation{TId}.cs" />
     <Compile Include="Model\TypeVersionMatchStrategy.cs" />
     <Compile Include="Model\IGetProtocol.cs" />
     <Compile Include="Events\CancelBlock.cs" />
@@ -131,6 +133,7 @@
     <Compile Include="Operations\GetIdFromObjectOp{TId,TObject}.cs" />
     <Compile Include="Operations\GetLatestByIdAndTypeOp{TId,TObject}.cs" />
     <Compile Include="Operations\GetReturningProtocolOp{TOperation,TReturn}.cs" />
+    <Compile Include="Operations\GetStreamFromRepresentationOp{TId}.cs" />
     <Compile Include="Operations\GetStreamLocatorByIdOp{TId}.cs" />
     <Compile Include="Operations\GetTagsFromObjectOp.cs" />
     <Compile Include="Operations\GetAllStreamLocatorsOp.cs" />

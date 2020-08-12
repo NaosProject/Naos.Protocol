@@ -7,7 +7,6 @@
 namespace Naos.Protocol.Domain
 {
     using System;
-    using OBeautifulCode.Type;
 
     /// <summary>
     /// Create a stream's persistence.
@@ -18,14 +17,14 @@ namespace Naos.Protocol.Domain
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateStreamOp{TId}"/> class.
         /// </summary>
-        /// <param name="stream">The stream.</param>
+        /// <param name="streamRepresentation">The stream.</param>
         /// <param name="existingStreamEncounteredStrategy">Existing stream encountered strategy.</param>
         /// <exception cref="ArgumentNullException">stream.</exception>
         public CreateStreamOp(
-            IStream<TId> stream,
+            StreamRepresentation<TId> streamRepresentation,
             ExistingStreamEncounteredStrategy existingStreamEncounteredStrategy)
         {
-            this.Stream = stream ?? throw new ArgumentNullException(nameof(stream));
+            this.StreamRepresentation = streamRepresentation ?? throw new ArgumentNullException(nameof(streamRepresentation));
             this.ExistingStreamEncounteredStrategy = existingStreamEncounteredStrategy;
         }
 
@@ -33,7 +32,7 @@ namespace Naos.Protocol.Domain
         /// Gets the stream.
         /// </summary>
         /// <value>The stream.</value>
-        public IStream<TId> Stream { get; private set; }
+        public StreamRepresentation<TId> StreamRepresentation { get; private set; }
 
         /// <summary>
         /// Gets the existing stream encountered strategy.

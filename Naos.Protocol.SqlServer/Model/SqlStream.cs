@@ -97,6 +97,7 @@ namespace Naos.Protocol.SqlServer
             }
 
             this.Name = name;
+            this.StreamRepresentation = new StreamRepresentation<TId>(this.Name);
             this.DefaultConnectionTimeout = defaultConnectionTimeout;
             this.DefaultCommandTimeout = defaultCommandTimeout;
             this.DefaultSerializerRepresentation = defaultSerializerRepresentation;
@@ -112,6 +113,9 @@ namespace Naos.Protocol.SqlServer
 
         /// <inheritdoc />
         public IProtocolStreamLocator<TId> StreamLocatorProtocol { get; private set; }
+
+        /// <inheritdoc />
+        public StreamRepresentation<TId> StreamRepresentation { get; private set; }
 
         /// <summary>
         /// Gets the default serializer description.
@@ -154,8 +158,13 @@ namespace Naos.Protocol.SqlServer
         public void Execute(
             CreateStreamOp<TId> operation)
         {
-            var stream = operation.Stream;
-            var allLocators = stream.StreamLocatorProtocol.Execute(new GetAllStreamLocatorsOp());
+            var streamRepresentation = operation.StreamRepresentation;
+            if (streamRepresentation.Name != this.Name)
+            {
+                throw new ArgumentException(FormattableString.Invariant($"Cannot create a stream using a stream with mismatching name, confirm this is the stream you're intending to create; this.Name '{this.Name}' op.StreamRepresentation.Name '{streamRepresentation.Name}'."));
+            }
+
+            var allLocators = this.StreamLocatorProtocol.Execute(new GetAllStreamLocatorsOp());
             foreach (var locator in allLocators)
             {
                 if (locator is SqlStreamLocator sqlStreamLocator)

@@ -46,7 +46,7 @@ namespace Naos.Protocol.SqlServer.Test
             var stopwatch = new Stopwatch();
             stopwatch.Reset();
             stopwatch.Start();
-            stream.Execute(new CreateStreamOp<string>(stream, ExistingStreamEncounteredStrategy.Skip));
+            stream.Execute(new CreateStreamOp<string>(stream.StreamRepresentation, ExistingStreamEncounteredStrategy.Skip));
             stopwatch.Stop();
             Console.WriteLine(FormattableString.Invariant($"Create - {streamName} took {stopwatch.Elapsed.TotalMilliseconds}ms."));
         }
