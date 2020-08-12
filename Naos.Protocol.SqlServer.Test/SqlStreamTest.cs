@@ -72,7 +72,7 @@ namespace Naos.Protocol.SqlServer.Test
                     { typeof(MyObject), tagExtractor },
                 });
 
-            stream.Execute(new CreateStreamOp<string>(stream, ExistingStreamEncounteredStrategy.Skip));
+            stream.Execute(new CreateStreamOp<string>(stream.StreamRepresentation, ExistingStreamEncounteredStrategy.Skip));
             var key = stream.Name;
             var firstValue = "Testing again.";
             var secondValue = "Testing again latest.";
