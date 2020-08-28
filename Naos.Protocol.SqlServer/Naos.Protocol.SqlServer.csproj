@@ -48,14 +48,14 @@
     <Reference Include="OBeautifulCode.Representation.System, Version=1.0.52.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.52\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization, Version=1.0.66.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.66\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization, Version=1.0.67.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.67\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.66.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.66\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.67.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.67\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.51.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.51\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.52.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.52\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -121,6 +121,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ArrayKind.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\SuppressBecause.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include=".recipes\Spritely.Redo\BackOffStrategy.cs" />
     <Compile Include=".recipes\Spritely.Redo\RetriableAction.cs" />
@@ -136,14 +137,15 @@
     <Compile Include="Model\DataTypes\IntSqlDataTypeRepresentation.cs" />
     <Compile Include="Model\DescribedSerializer.cs" />
     <Compile Include="Model\DataTypes\SqlDataTypeRepresentationBase.cs" />
+    <Compile Include="Model\ISqlServerLocator.cs" />
     <Compile Include="Model\Parameter\SqlInputParameterRepresentation{TValue}.cs" />
     <Compile Include="Model\Parameter\ISqlOutputParameterRepresentationWithResult.cs" />
     <Compile Include="Model\Parameter\SqlOutputParameterRepresentationWithResult{TValue}.cs" />
     <Compile Include="Model\Parameter\SqlOutputParameterRepresentation{TValue}.cs" />
     <Compile Include="Model\Parameter\SqlOutputParameterRepresentationBase.cs" />
     <Compile Include="Model\Parameter\SqlParameterRepresentationBase.cs" />
-    <Compile Include="Model\ISqlLocator.cs" />
     <Compile Include="Model\Parameter\SqlParameterRepresentationExtensions.cs" />
+    <Compile Include="Model\SqlServerLocator.cs" />
     <Compile Include="Model\StoredProcedureExecutionResult.cs" />
     <Compile Include="Model\Table\ColumnRepresentation.cs" />
     <Compile Include="Model\Table\TableRepresentation.cs" />
@@ -155,9 +157,8 @@
     <Compile Include="Protocols\SqlStreamObjectOperationsProtocol.cs" />
     <Compile Include="Protocols\SqlStreamObjectOperationsProtocol.Put.cs" />
     <Compile Include="Protocols\SqlStreamObjectOperationsProtocol.GetLatestByIdAndType.cs" />
-    <Compile Include="Model\SqlLocatorExtensions.cs" />
-    <Compile Include="Model\SqlStreamLocator.cs" />
-    <Compile Include="Model\SqlStream.cs" />
+    <Compile Include="Model\SqlServerLocatorExtensions.cs" />
+    <Compile Include="Model\SqlStream{TId}.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Schema\StreamSchema.Sprocs.GetLatestByIdAndType.cs" />
     <Compile Include="Schema\StreamSchema.Sprocs.GetIdAddIfNecessarySerializerDescription.cs" />

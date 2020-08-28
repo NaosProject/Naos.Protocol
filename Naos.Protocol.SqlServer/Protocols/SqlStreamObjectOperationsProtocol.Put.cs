@@ -33,13 +33,13 @@ namespace Naos.Protocol.SqlServer
         public void Execute(PutOp<TObject> operation)
         {
             var id = this.getIdFromObjectProtocol.Execute(new GetIdFromObjectOp<TId, TObject>(operation.ObjectToPut));
-            var locator = this.stream.StreamLocatorProtocol.Execute(new GetStreamLocatorByIdOp<TId>(id));
-            if (locator is SqlStreamLocator sqlStreamLocator)
+            var resourceLocator = this.stream.ResourceLocatorProtocol.Execute(new GetResourceLocatorByIdOp<TId>(id));
+            if (resourceLocator is SqlServerLocator sqlServerLocator)
             {
                 var objectType = operation.ObjectToPut?.GetType() ?? typeof(TObject);
                 var objectAssemblyQualifiedNameWithoutVersion = objectType.AssemblyQualifiedName;
                 var objectAssemblyQualifiedNameWithVersion = objectType.AssemblyQualifiedName;
-                var describedSerializer = this.stream.GetDescribedSerializer(sqlStreamLocator);
+                var describedSerializer = this.stream.GetDescribedSerializer(sqlServerLocator);
                 var tagsXml = this.GetTagsXmlString(operation);
 
                 var serializedObjectString = describedSerializer.SerializationFormat != SerializationFormat.String
@@ -61,12 +61,12 @@ namespace Naos.Protocol.SqlServer
                     serializedObjectBinary,
                     tagsXml);
 
-                var sqlProtocol = this.stream.BuildSqlOperationsProtocol(sqlStreamLocator);
+                var sqlProtocol = this.stream.BuildSqlOperationsProtocol(sqlServerLocator);
                 var sprocResult = sqlProtocol.Execute(storedProcOp); // should this be returning with the ID??? Dangerous b/c it blurs the contract, opens avenues for coupling and misuse...
             }
             else
             {
-                throw SqlStreamLocator.BuildInvalidStreamLocatorException(locator.GetType());
+                throw SqlServerLocator.BuildInvalidLocatorException(resourceLocator.GetType());
             }
         }
 

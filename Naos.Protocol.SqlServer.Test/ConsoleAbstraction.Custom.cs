@@ -22,6 +22,7 @@ namespace Naos.Protocol.SqlServer.Test
     using OBeautifulCode.Serialization;
     using OBeautifulCode.Serialization.Bson;
     using OBeautifulCode.Serialization.Recipes;
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// Default implementation of the ConsoleAbstraction layer.
@@ -151,8 +152,8 @@ namespace Naos.Protocol.SqlServer.Test
             string userName,
             string password)
         {
-            var sqlStreamLocator = new SqlStreamLocator(serverName, databaseName, userName, password, instanceName);
-            var streamLocatorProtocol = new SingleStreamLocatorProtocol<string>(sqlStreamLocator);
+            var sqlLocator = new SqlServerLocator(serverName, databaseName, userName, password, instanceName);
+            var resourceLocatorProtocol = new SingleResourceLocatorProtocol<string>(sqlLocator);
 
             var configurationTypeRepresentation = typeof(ProtocolBsonSerializationConfiguration)
                 // typeof(GenericDependencyConfiguration<GenericDiscoveryBsonSerializationConfiguration<MyObject>, ProtocolBsonSerializationConfiguration>)
@@ -174,19 +175,20 @@ namespace Naos.Protocol.SqlServer.Test
                 defaultSerializerRepresentation,
                 serializationFormat,
                 SerializerFactory.Instance,
-                streamLocatorProtocol,
-                new Dictionary<Type, IProtocol>(),
-                new Dictionary<Type, IProtocol>
-                {
-                    { typeof(TestObject), tagExtractor },
-                });
+                resourceLocatorProtocol,
+                new ProtocolFactory(new Dictionary<Type, Func<IProtocol>>()),
+                new ProtocolFactory(
+                    new Dictionary<Type, Func<IProtocol>>
+                    {
+                        { typeof(TestObject), () => tagExtractor },
+                    }));
             return stream;
         }
     }
 
-    public class TestObject : IHaveId<string>
+    public class TestObject : IIdentifiableBy<string>
     {
-        public string Id { get; private set; }
+        public string Id { get; set; } // TODO: change this back to private when IIdentifiableBy is fixed...
 
         public string Field { get; private set; }
 

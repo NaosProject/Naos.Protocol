@@ -20,7 +20,7 @@ namespace Naos.Protocol.Serialization.Json
                                                                                                     typeof(EventBase).ToTypeToRegisterForJson(),
                                                                                                     typeof(VoidOperationBase).ToTypeToRegisterForJson(),
                                                                                                     typeof(ReturningOperationBase<>).ToTypeToRegisterForJson(),
-                                                                                                    typeof(StreamLocatorBase).ToTypeToRegisterForJson(),
+                                                                                                    typeof(ResourceLocatorBase).ToTypeToRegisterForJson(),
                                                                                                 };
     }
 }

@@ -18,16 +18,16 @@ namespace Naos.Protocol.Domain
         /// <summary>
         /// Initializes a new instance of the <see cref="GetIdAddIfNecessarySerializerRepresentationOp"/> class.
         /// </summary>
-        /// <param name="streamLocator">Stream locator to inspect.</param>
+        /// <param name="resourceLocator">Stream locator to inspect.</param>
         /// <param name="serializerRepresentation">The serialization description.</param>
         /// <param name="serializationFormat">The serialization format.</param>
         /// <exception cref="System.ArgumentNullException">serializerRepresentation.</exception>
         public GetIdAddIfNecessarySerializerRepresentationOp(
-            SqlStreamLocator streamLocator,
+            SqlServerLocator resourceLocator,
             SerializerRepresentation serializerRepresentation,
             SerializationFormat serializationFormat)
         {
-            this.StreamLocator = streamLocator ?? throw new ArgumentNullException(nameof(streamLocator));
+            this.ResourceLocator = resourceLocator ?? throw new ArgumentNullException(nameof(resourceLocator));
             this.SerializerRepresentation = serializerRepresentation ?? throw new ArgumentNullException(nameof(serializerRepresentation));
 
             if (serializationFormat == SerializationFormat.Invalid)
@@ -54,6 +54,6 @@ namespace Naos.Protocol.Domain
         /// Gets the stream locator.
         /// </summary>
         /// <value>The stream locator.</value>
-        public SqlStreamLocator StreamLocator { get; private set; }
+        public SqlServerLocator ResourceLocator { get; private set; }
     }
 }

@@ -26,7 +26,7 @@ namespace Naos.Protocol.SqlServer
             ExecuteStoredProcedureOp operation)
         {
             var outputParametersWithExecutionResult = new Dictionary<string, ISqlOutputParameterRepresentationWithResult>();
-            using (var sqlConnection = this.sqlLocator.OpenSqlConnection(this.defaultConnectionTimeout))
+            using (var sqlConnection = this.sqlServerLocator.OpenSqlConnection(this.defaultConnectionTimeout))
             {
                 using (var command = sqlConnection.BuildSqlCommand(operation.Name, (int)this.defaultCommandTimeout.TotalSeconds))
                 {

@@ -1073,6 +1073,102 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
+        /// Gets an XML-doc compatible string representation of the specified type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="throwIfNoCompatibleStringExists">Optional value indicating whether to throw a <see cref="NotSupportedException"/> if there's no compatible string representation of the specified type.</param>
+        /// <param name="options">The options to use when generating the string representation.</param>
+        /// <returns>
+        /// A XML-doc compatible string representation of the specified type.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static string ToStringXmlDoc(
+            this Type type,
+            bool throwIfNoCompatibleStringExists = false,
+            ToStringXmlDocOptions options = ToStringXmlDocOptions.None)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            string result;
+
+            if (type.IsAnonymousType())
+            {
+                if (throwIfNoCompatibleStringExists)
+                {
+                    throw new NotSupportedException("Anonymous types are not supported.");
+                }
+                else
+                {
+                    result = null;
+                }
+            }
+            else if (type.IsGenericParameter)
+            {
+                if (throwIfNoCompatibleStringExists)
+                {
+                    // note that IsGenericParameter and ContainsGenericParameters will return true for generic parameters,
+                    // hence we order the IsGenericParameter check first.
+                    throw new NotSupportedException("Generic parameters not supported.");
+                }
+                else
+                {
+                    result = null;
+                }
+            }
+            else if (type.IsArray)
+            {
+                result = options.HasFlag(ToStringXmlDocOptions.IncludeNamespace) ? typeof(Array).FullName : nameof(Array);
+            }
+            else if (ValueTypeToAliasMap.ContainsKey(type))
+            {
+                result = ValueTypeToAliasMap[type];
+            }
+            else
+            {
+                result = CodeDomProvider.GetTypeOutput(new CodeTypeReference(type.FullName?.Replace(type.Namespace + ".", string.Empty) ?? type.Name));
+
+                var includeNamespace = options.HasFlag(ToStringXmlDocOptions.IncludeNamespace);
+
+                if (includeNamespace && (type.Namespace != null))
+                {
+                    result = type.Namespace + "." + result;
+                }
+
+                // as far as we can tell, you can't namespace qualify generic arguments
+                // also multiple-levels of generics are not allow (e.g. List<List<string>> is represented as List{List})
+                if (type.IsGenericType)
+                {
+                    var genericArgumentStrings = new List<string>();
+
+                    foreach (var genericArgument in type.GetGenericArguments())
+                    {
+                        string genericArgumentString;
+
+                        if (genericArgument.IsArray)
+                        {
+                            genericArgumentString = nameof(Array);
+                        }
+                        else
+                        {
+                            var genericTickIndex = genericArgument.Name.IndexOf('`');
+
+                            genericArgumentString = genericTickIndex == -1 ? genericArgument.Name : genericArgument.Name.Substring(0, genericTickIndex);
+                        }
+
+                        genericArgumentStrings.Add(genericArgumentString);
+                    }
+
+                    result = GenericBracketsRegex.Replace(result, "{" + string.Join(", ", genericArgumentStrings) + "}");
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets a string representation of the specified type without the generic component.
         /// For example, Dictionary&lt;string, string&gt; would be represented as 'Dictionary'.
         /// </summary>

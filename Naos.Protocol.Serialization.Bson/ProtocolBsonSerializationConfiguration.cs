@@ -20,7 +20,7 @@ namespace Naos.Protocol.Serialization.Bson
                                                                                                     typeof(EventBase).ToTypeToRegisterForBson(),
                                                                                                     typeof(VoidOperationBase).ToTypeToRegisterForBson(),
                                                                                                     typeof(ReturningOperationBase<>).ToTypeToRegisterForBson(),
-                                                                                                    typeof(StreamLocatorBase).ToTypeToRegisterForBson(),
+                                                                                                    typeof(ResourceLocatorBase).ToTypeToRegisterForBson(),
                                                                                                 };
     }
 }

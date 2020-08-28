@@ -37,12 +37,12 @@ namespace Naos.Protocol.SqlServer
         public TObject Execute(
             GetLatestByIdAndTypeOp<TId, TObject> operation)
         {
-            var locator = this.stream.StreamLocatorProtocol.Execute(new GetStreamLocatorByIdOp<TId>(operation.Id));
-            if (locator is SqlStreamLocator sqlStreamLocator)
+            var resourceLocator = this.stream.ResourceLocatorProtocol.Execute(new GetResourceLocatorByIdOp<TId>(operation.Id));
+            if (resourceLocator is SqlServerLocator sqlServerLocator)
             {
                 var serializedObjectId = (operation.Id is string stringId)
                     ? stringId
-                    : this.stream.GetDescribedSerializer(sqlStreamLocator).Serializer.SerializeToString(operation.Id);
+                    : this.stream.GetDescribedSerializer(sqlServerLocator).Serializer.SerializeToString(operation.Id);
 
                 var assemblyQualifiedNameWithoutVersion = typeof(TObject).AssemblyQualifiedName;
                 var assemblyQualifiedNameWithVersion = typeof(TObject).AssemblyQualifiedName;
@@ -54,7 +54,7 @@ namespace Naos.Protocol.SqlServer
                     assemblyQualifiedNameWithVersion,
                     TypeVersionMatchStrategy.Any);
 
-                var sqlProtocol = this.stream.BuildSqlOperationsProtocol(sqlStreamLocator);
+                var sqlProtocol = this.stream.BuildSqlOperationsProtocol(sqlServerLocator);
                 var sprocResult = sqlProtocol.Execute(storedProcOp);
 
                 SerializationKind serializationKind = sprocResult.OutputParameters[nameof(StreamSchema.Sprocs.GetLatestByIdAndType.OutputParamNames.SerializationKind)].GetValue<SerializationKind>();
@@ -86,7 +86,7 @@ namespace Naos.Protocol.SqlServer
             }
             else
             {
-                throw SqlStreamLocator.BuildInvalidStreamLocatorException(locator.GetType());
+                throw SqlServerLocator.BuildInvalidLocatorException(resourceLocator.GetType());
             }
         }
 

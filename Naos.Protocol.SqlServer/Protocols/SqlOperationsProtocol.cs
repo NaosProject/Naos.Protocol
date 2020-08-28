@@ -14,24 +14,24 @@ namespace Naos.Protocol.SqlServer
     /// </summary>
     public partial class SqlOperationsProtocol : IProtocolSqlOperations
     {
-        private readonly ISqlLocator sqlLocator;
+        private readonly ISqlServerLocator sqlServerLocator;
         private readonly TimeSpan defaultConnectionTimeout;
         private readonly TimeSpan defaultCommandTimeout;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlOperationsProtocol"/> class.
         /// </summary>
-        /// <param name="sqlLocator">The SQL locator.</param>
+        /// <param name="sqlServerLocator">The SQL locator.</param>
         /// <param name="defaultConnectionTimeout">The default connection timeout.</param>
         /// <param name="defaultCommandTimeout">The default command timeout.</param>
         public SqlOperationsProtocol(
-            ISqlLocator sqlLocator,
+            ISqlServerLocator sqlServerLocator,
             TimeSpan defaultConnectionTimeout,
             TimeSpan defaultCommandTimeout)
         {
-            sqlLocator.MustForArg(nameof(sqlLocator)).NotBeNull();
+            sqlServerLocator.MustForArg(nameof(sqlServerLocator)).NotBeNull();
 
-            this.sqlLocator = sqlLocator;
+            this.sqlServerLocator = sqlServerLocator;
 
             this.defaultConnectionTimeout = defaultConnectionTimeout;
             this.defaultCommandTimeout = defaultCommandTimeout;

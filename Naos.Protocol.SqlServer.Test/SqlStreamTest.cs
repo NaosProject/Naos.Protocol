@@ -19,6 +19,7 @@ namespace Naos.Protocol.SqlServer.Test
     using OBeautifulCode.Serialization;
     using OBeautifulCode.Serialization.Bson;
     using OBeautifulCode.Serialization.Json;
+    using OBeautifulCode.Type;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -35,17 +36,19 @@ namespace Naos.Protocol.SqlServer.Test
             this.testOutputHelper = testOutputHelper;
         }
 
-        [Fact(Skip = "Testing only.")]
+        [Fact(Skip = "For local testing.")]
         public void Method___Should_do_something___When_called()
         {
-            var streamName = "StreamName11";
+            var streamName = "StreamName31";
 
-            var sqlStreamLocator = new SqlStreamLocator("localhost", "Streams", "sa", "password", "SQLDEV2017");
-            var streamLocatorProtocol = new SingleStreamLocatorProtocol<string>(sqlStreamLocator);
+            var sqlServerLocator = new SqlServerLocator("localhost", "Streams", "sa", "password", "SQLDEV2017");
+            var resourceLocatorProtocol = new SingleResourceLocatorProtocol<string>(sqlServerLocator);
 
-            var configurationTypeRepresentation = typeof(ProtocolBsonSerializationConfiguration)
-                // typeof(GenericDependencyConfiguration<GenericDiscoveryBsonSerializationConfiguration<MyObject>, ProtocolBsonSerializationConfiguration>)
-                   .ToRepresentation();
+            var configurationTypeRepresentation =
+                typeof(DependencyOnlyBsonSerializationConfiguration<
+                    TypesToRegisterBsonSerializationConfiguration<MyObject>,
+                    ProtocolBsonSerializationConfiguration>).ToRepresentation();
+
             SerializerRepresentation defaultSerializerRepresentation = new SerializerRepresentation(
                 SerializationKind.Bson,
                 configurationTypeRepresentation);
@@ -65,12 +68,13 @@ namespace Naos.Protocol.SqlServer.Test
                 defaultSerializerRepresentation,
                 defaultSerializationFormat,
                 new BsonSerializerFactory(),
-                streamLocatorProtocol,
-                new Dictionary<Type, IProtocol>(), 
-                new Dictionary<Type, IProtocol>
-                {
-                    { typeof(MyObject), tagExtractor },
-                });
+                resourceLocatorProtocol,
+                new ProtocolFactory(new Dictionary<Type, Func<IProtocol>>()),
+                new ProtocolFactory(
+                    new Dictionary<Type, Func<IProtocol>>
+                    {
+                        { typeof(ISyncAndAsyncReturningProtocol<GetTagsFromObjectOp<MyObject>, IReadOnlyDictionary<string, string>>), () => tagExtractor },
+                    }));
 
             stream.Execute(new CreateStreamOp<string>(stream.StreamRepresentation, ExistingStreamEncounteredStrategy.Skip));
             var key = stream.Name;
@@ -90,9 +94,66 @@ namespace Naos.Protocol.SqlServer.Test
             this.testOutputHelper.WriteLine(FormattableString.Invariant($"Key={my.Id}, Field={my.Field}"));
             my.Id.MustForTest().BeEqualTo(key);
         }
+
+        [Fact]
+        public void Method___Should_do_something___When_called_on_memory_stream()
+        {
+            var streamName = "MemoryStreamName";
+
+            var configurationTypeRepresentation =
+                typeof(DependencyOnlyBsonSerializationConfiguration<
+                    TypesToRegisterBsonSerializationConfiguration<MyObject>,
+                    ProtocolBsonSerializationConfiguration>).ToRepresentation();
+
+            SerializerRepresentation defaultSerializerRepresentation = new SerializerRepresentation(
+                SerializationKind.Bson,
+                configurationTypeRepresentation);
+
+            var defaultSerializationFormat = SerializationFormat.String;
+
+            var tagExtractor = new LambdaReturningProtocol<GetTagsFromObjectOp<MyObject>, IReadOnlyDictionary<string, string>>(
+                _ => new Dictionary<string, string>
+                     {
+                         { nameof(MyObject.Field), _.ObjectToDetermineTagsFrom.Field },
+                     });
+
+            var stream = new MemoryStream<string>(
+                streamName,
+                defaultSerializerRepresentation,
+                defaultSerializationFormat,
+                new BsonSerializerFactory(),
+                new ProtocolFactory(
+                    new Dictionary<Type, Func<IProtocol>>
+                    {
+                        { typeof(ISyncAndAsyncReturningProtocol<GetTagsFromObjectOp<MyObject>, IReadOnlyDictionary<string, string>>), () => tagExtractor },
+                    }));
+
+            stream.Execute(new CreateStreamOp<string>(stream.StreamRepresentation, ExistingStreamEncounteredStrategy.Skip));
+            var key = stream.Name;
+            var firstValue = "Testing again.";
+            var secondValue = "Testing again latest.";
+
+            for (int idx = 0;
+                idx < 10;
+                idx++)
+            {
+                stream.BuildPutProtocol<MyObject>().Execute(new PutOp<MyObject>(new MyObject(key, firstValue)));
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+                stream.BuildPutProtocol<MyObject>().Execute(new PutOp<MyObject>(new MyObject(key, secondValue)));
+                stopwatch.Stop();
+                this.testOutputHelper.WriteLine(FormattableString.Invariant($"Put: {stopwatch.Elapsed.TotalMilliseconds} ms"));
+                stopwatch.Reset();
+                stopwatch.Start();
+                var my = stream.BuildGetLatestByIdAndTypeProtocol<MyObject>().Execute(new GetLatestByIdAndTypeOp<string, MyObject>(key));
+                this.testOutputHelper.WriteLine(FormattableString.Invariant($"Get: {stopwatch.Elapsed.TotalMilliseconds} ms"));
+                this.testOutputHelper.WriteLine(FormattableString.Invariant($"Key={my.Id}, Field={my.Field}"));
+                my.Id.MustForTest().BeEqualTo(key);
+            }
+        }
     }
 
-    public class MyObject : IHaveId<string>
+    public class MyObject : IIdentifiableBy<string>
     {
         public MyObject(
             string id,
@@ -102,7 +163,7 @@ namespace Naos.Protocol.SqlServer.Test
             this.Field = field;
         }
 
-        public string Id { get; private set; }
+        public string Id { get; set; } // TODO: change this back to private when IIdentifiableBy is fixed...
 
         public string Field { get; private set; }
     }
