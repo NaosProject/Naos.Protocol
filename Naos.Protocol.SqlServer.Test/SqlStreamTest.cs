@@ -163,7 +163,7 @@ namespace Naos.Protocol.SqlServer.Test
             this.Field = field;
         }
 
-        public string Id { get; set; } // TODO: change this back to private when IIdentifiableBy is fixed...
+        public string Id { get; private set; }
 
         public string Field { get; private set; }
     }

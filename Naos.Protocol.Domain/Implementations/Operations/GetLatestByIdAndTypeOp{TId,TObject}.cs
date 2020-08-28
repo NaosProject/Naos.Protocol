@@ -30,7 +30,7 @@ namespace Naos.Protocol.Domain
         }
 
         /// <inheritdoc />
-        public TId Id { get; set; } // TODO: change this back to private when IIdentifiableBy is fixed...
+        public TId Id { get; private set; }
 
         /// <summary>
         /// Gets the type version match strategy.
