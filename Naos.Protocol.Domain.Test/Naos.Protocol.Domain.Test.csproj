@@ -223,6 +223,7 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
     <Compile Include="ConsoleAbstraction.cs" />
+    <Compile Include="Model\SpecificProtocolBaseTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Class1Test.cs" />
@@ -260,6 +261,7 @@
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
