@@ -13,7 +13,7 @@ namespace Naos.Protocol.SqlServer
     /// <summary>
     /// Stored procedure to execute.
     /// </summary>
-    public class ExecuteStoredProcedureOp : ReturningOperationBase<StoredProcedureExecutionResult>
+    public partial class ExecuteStoredProcedureOp : ReturningOperationBase<StoredProcedureExecutionResult>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExecuteStoredProcedureOp"/> class.

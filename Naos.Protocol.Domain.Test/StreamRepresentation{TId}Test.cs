@@ -1,17 +1,20 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="EventBase.cs" company="Naos Project">
+// <copyright file="StreamRepresentation{TId}Test.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Naos.Protocol.Domain
+namespace Naos.Protocol.Domain.Test
 {
-    using OBeautifulCode.Type;
+    using System;
 
-    /// <summary>
-    /// Event container.
-    /// </summary>
-    public abstract partial class EventBase : IModelViaCodeGen
+    using FakeItEasy;
+
+    using OBeautifulCode.AutoFakeItEasy;
+
+    using Xunit;
+
+    public static partial class StreamRepresentationTest
     {
     }
 }

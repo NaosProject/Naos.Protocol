@@ -14,7 +14,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TId">The type of ID of the stream.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "AllStream", Justification = NaosSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWordsInUnitTestMethodName)]
-    public class GetStreamFromRepresentationOp<TId> : ReturningOperationBase<IStream<TId>>
+    public partial class GetStreamFromRepresentationOp<TId> : ReturningOperationBase<IStream<TId>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetStreamFromRepresentationOp{TId}"/> class.

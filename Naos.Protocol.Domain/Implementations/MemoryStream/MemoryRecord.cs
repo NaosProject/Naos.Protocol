@@ -8,12 +8,13 @@ namespace Naos.Protocol.Domain
 {
     using System;
     using OBeautifulCode.Serialization;
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// Record in the <see cref="MemoryStream{TId}"/>.
     /// </summary>
     /// <typeparam name="TId">The type of the identifier.</typeparam>
-    public class MemoryRecord<TId>
+    public partial class MemoryRecord<TId> : IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryRecord{TId}"/> class.

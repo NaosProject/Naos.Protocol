@@ -18,7 +18,7 @@ namespace Naos.Protocol.Domain
     /// <typeparam name="TReturn">The type of the return.</typeparam>
     /// <seealso cref="Naos.Protocol.Domain.ReturningOperationBase{TReturn}" />
     [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "Discover", Justification = "Name/Spelling is correct.")]
-    public class DiscoverOp<TObject, TReturn> : ReturningOperationBase<TReturn>
+    public partial class DiscoverOp<TObject, TReturn> : ReturningOperationBase<TReturn>
         where TObject : class
     {
         /// <summary>

@@ -9,7 +9,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Null object implementation of <see cref="ResourceLocatorBase"/>.
     /// </summary>
-    public class NullResourceLocator : ResourceLocatorBase
+    public partial class NullResourceLocator : ResourceLocatorBase
     {
     }
 }

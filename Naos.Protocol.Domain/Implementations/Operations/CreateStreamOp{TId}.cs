@@ -7,12 +7,13 @@
 namespace Naos.Protocol.Domain
 {
     using System;
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// Create a stream's persistence.
     /// </summary>
     /// <typeparam name="TId">Type of ID being used.</typeparam>
-    public class CreateStreamOp<TId> : VoidOperationBase
+    public partial class CreateStreamOp<TId> : VoidOperationBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateStreamOp{TId}"/> class.

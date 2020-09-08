@@ -10,7 +10,7 @@ namespace Naos.Protocol.Domain
     /// Operation to get a void protocol by type of operation.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
-    public class GetVoidProtocolOp<TOperation> : ReturningOperationBase<IVoidProtocol<TOperation>>
+    public partial class GetVoidProtocolOp<TOperation> : ReturningOperationBase<IVoidProtocol<TOperation>>
         where TOperation : VoidOperationBase
     {
     }

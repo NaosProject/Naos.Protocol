@@ -6,10 +6,12 @@
 
 namespace Naos.Protocol.Domain
 {
+    using OBeautifulCode.Type;
+
     /// <summary>
     /// Represents an operation that does not return (void) any object.
     /// </summary>
-    public abstract class VoidOperationBase : IOperation
+    public abstract partial class VoidOperationBase : IOperation, IModelViaCodeGen
     {
     }
 }

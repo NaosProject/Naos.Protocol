@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SqlStreamTest.cs" company="Naos Project">
+// <copyright file="SqlStream{TKey}Test.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -36,10 +36,10 @@ namespace Naos.Protocol.SqlServer.Test
             this.testOutputHelper = testOutputHelper;
         }
 
-        [Fact(Skip = "For local testing.")]
+        [Fact(Skip = "Local testing only.")]
         public void Method___Should_do_something___When_called()
         {
-            var streamName = "StreamName31";
+            var streamName = "StreamName32";
 
             var sqlServerLocator = new SqlServerLocator("localhost", "Streams", "sa", "password", "SQLDEV2017");
             var resourceLocatorProtocol = new SingleResourceLocatorProtocol<string>(sqlServerLocator);

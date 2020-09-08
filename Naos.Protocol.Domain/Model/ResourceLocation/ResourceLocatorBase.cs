@@ -6,10 +6,12 @@
 
 namespace Naos.Protocol.Domain
 {
+    using OBeautifulCode.Type;
+
     /// <summary>
     /// Base class for locators of any type.
     /// </summary>
-    public abstract class ResourceLocatorBase
+    public abstract partial class ResourceLocatorBase : IModelViaCodeGen
     {
     }
 }

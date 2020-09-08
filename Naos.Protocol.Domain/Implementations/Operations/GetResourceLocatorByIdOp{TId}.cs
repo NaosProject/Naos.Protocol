@@ -10,7 +10,7 @@ namespace Naos.Protocol.Domain
     /// Get the <see cref="ResourceLocatorBase"/> by the ID, this support ID based sharding.
     /// </summary>
     /// <typeparam name="TId">Type of ID being used.</typeparam>
-    public class GetResourceLocatorByIdOp<TId> : ReturningOperationBase<ResourceLocatorBase>
+    public partial class GetResourceLocatorByIdOp<TId> : ReturningOperationBase<ResourceLocatorBase>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetResourceLocatorByIdOp{TId}"/> class.

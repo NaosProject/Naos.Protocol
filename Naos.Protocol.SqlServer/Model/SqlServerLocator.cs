@@ -14,7 +14,7 @@ namespace Naos.Protocol.SqlServer
     /// <summary>
     /// SQL implementation of an <see cref="ResourceLocatorBase" />.
     /// </summary>
-    public class SqlServerLocator : ResourceLocatorBase, ISqlServerLocator, IModelViaCodeGen
+    public partial class SqlServerLocator : ResourceLocatorBase, ISqlServerLocator, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlServerLocator"/> class.

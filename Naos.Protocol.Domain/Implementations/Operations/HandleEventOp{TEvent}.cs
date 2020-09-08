@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HandleEventOp.cs" company="Naos Project">
+// <copyright file="HandleEventOp{TEvent}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,7 +15,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TEvent">Type of data being written.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "ExecuteScalar", Justification = "Name/Spelling is correct.")]
-    public class HandleEventOp<TEvent> : VoidOperationBase
+    public partial class HandleEventOp<TEvent> : VoidOperationBase
         where TEvent : EventBase
     {
         /// <summary>

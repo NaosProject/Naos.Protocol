@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Get a protocol by the specified type.
     /// </summary>
-    public class GetProtocolByTypeOp : ReturningOperationBase<IProtocol>
+    public partial class GetProtocolByTypeOp : ReturningOperationBase<IProtocol>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetProtocolByTypeOp"/> class.

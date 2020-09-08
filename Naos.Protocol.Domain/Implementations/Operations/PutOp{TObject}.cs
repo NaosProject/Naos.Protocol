@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PutOp.cs" company="Naos Project">
+// <copyright file="PutOp{TObject}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -12,7 +12,7 @@ namespace Naos.Protocol.Domain
     /// Abstract base of an operation.
     /// </summary>
     /// <typeparam name="TObject">Type of data being written.</typeparam>
-    public class PutOp<TObject> : VoidOperationBase
+    public partial class PutOp<TObject> : VoidOperationBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PutOp{TObject}"/> class.

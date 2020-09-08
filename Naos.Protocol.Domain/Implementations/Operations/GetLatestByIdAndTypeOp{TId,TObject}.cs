@@ -14,7 +14,7 @@ namespace Naos.Protocol.Domain
     /// <typeparam name="TId">The type of the ID of the object.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
     /// <seealso cref="Naos.Protocol.Domain.ReturningOperationBase{TObject}" />
-    public class GetLatestByIdAndTypeOp<TId, TObject> : ReturningOperationBase<TObject>, IIdentifiableBy<TId>
+    public partial class GetLatestByIdAndTypeOp<TId, TObject> : ReturningOperationBase<TObject>, IIdentifiableBy<TId>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetLatestByIdAndTypeOp{TId,TObject}"/> class.

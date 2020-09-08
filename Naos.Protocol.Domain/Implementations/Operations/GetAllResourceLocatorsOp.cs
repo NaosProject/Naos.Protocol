@@ -14,7 +14,7 @@ namespace Naos.Protocol.Domain
     /// Operation to a <see cref="ResourceLocatorBase"/> by a <see cref="Type"/>.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "AllStream", Justification = NaosSuppressBecause.CA1702_CompoundWordsShouldBeCasedCorrectly_AnalyzerIsIncorrectlyDetectingCompoundWordsInUnitTestMethodName)]
-    public class GetAllResourceLocatorsOp : ReturningOperationBase<IReadOnlyCollection<ResourceLocatorBase>>
+    public partial class GetAllResourceLocatorsOp : ReturningOperationBase<IReadOnlyCollection<ResourceLocatorBase>>
     {
     }
 }

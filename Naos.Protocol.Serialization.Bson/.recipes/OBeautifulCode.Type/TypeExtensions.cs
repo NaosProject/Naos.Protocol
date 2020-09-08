@@ -385,8 +385,6 @@ namespace OBeautifulCode.Type.Recipes
                 return false;
             }
 
-            new DateTime();
-
             var defaultConstructor = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance).SingleOrDefault(_ => _.GetParameters().Length == 0);
 
             var result = defaultConstructor != null;
@@ -585,22 +583,17 @@ namespace OBeautifulCode.Type.Recipes
         }
 
         /// <summary>
-        /// Determines if the specified type is assignable to null.
+        /// Determines if the specified type is closed and assignable to null.
         /// </summary>
         /// <remarks>
         /// Adapted from: <a href="https://stackoverflow.com/a/1770232/356790" />.
-        /// We are specifically throwing <see cref="NotSupportedException"/> for open types here
-        /// instead of returning false unlike some of the other IsClosed... methods because
-        /// likely if you are passing-in an open type, you are doing something wrong, similar
-        /// to the GetClosed... methods.
         /// </remarks>
         /// <param name="type">The type.</param>
         /// <returns>
-        /// true if the specified type is assignable to null, otherwise false.
+        /// true if the specified type is closed and assignable to null, otherwise false.
         /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
-        /// <exception cref="NotSupportedException"><paramref name="type"/> is an open type.</exception>
-        public static bool IsAssignableToNull(
+        public static bool IsClosedTypeAssignableToNull(
             this Type type)
         {
             if (type == null)
@@ -610,7 +603,7 @@ namespace OBeautifulCode.Type.Recipes
 
             if (type.ContainsGenericParameters)
             {
-                throw new NotSupportedException(Invariant($"Parameter '{nameof(type)}' is an open type; open types are not supported for that parameter."));
+                return false;
             }
 
             var result = (!type.IsValueType) || type.IsClosedNullableType();
@@ -708,8 +701,8 @@ namespace OBeautifulCode.Type.Recipes
 
             var result =
                 type.IsClass
-                && (!type.IsClosedAnonymousType())
-                && (!type.ContainsGenericParameters);
+                && (!type.ContainsGenericParameters)
+                && (!type.IsAnonymousType());
 
             return result;
         }
@@ -1070,6 +1063,30 @@ namespace OBeautifulCode.Type.Recipes
             var genericTypeDefinition = type.GetGenericTypeDefinition();
 
             var result = SystemUnorderedCollectionGenericTypeDefinitions.Contains(genericTypeDefinition);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Determines if the specified type is assignable to null.
+        /// </summary>
+        /// <remarks>
+        /// Adapted from: <a href="https://stackoverflow.com/a/1770232/356790" />.
+        /// </remarks>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        /// true if the specified type is assignable to null, otherwise false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="type"/> is null.</exception>
+        public static bool IsTypeAssignableToNull(
+            this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            var result = (!type.IsValueType) || type.IsNullableType();
 
             return result;
         }

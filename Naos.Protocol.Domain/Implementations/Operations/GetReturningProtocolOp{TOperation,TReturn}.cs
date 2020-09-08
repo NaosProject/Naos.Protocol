@@ -11,7 +11,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TOperation">Type of operation.</typeparam>
     /// <typeparam name="TReturn">The type of the return.</typeparam>
-    public class GetReturningProtocolOp<TOperation, TReturn> : ReturningOperationBase<IReturningProtocol<TOperation, TReturn>>
+    public partial class GetReturningProtocolOp<TOperation, TReturn> : ReturningOperationBase<IReturningProtocol<TOperation, TReturn>>
         where TOperation : ReturningOperationBase<TReturn>
     {
     }
