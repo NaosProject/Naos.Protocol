@@ -22,15 +22,15 @@ namespace Naos.Protocol.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class StreamRepresentation<TId> : IModel<StreamRepresentation<TId>>
+    public partial class Created<TObject> : IModel<Created<TObject>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="StreamRepresentation{TId}"/> are equal.
+        /// Determines whether two objects of type <see cref="Created{TObject}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(StreamRepresentation<TId> left, StreamRepresentation<TId> right)
+        public static bool operator ==(Created<TObject> left, Created<TObject> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="StreamRepresentation{TId}"/> are not equal.
+        /// Determines whether two objects of type <see cref="Created{TObject}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(StreamRepresentation<TId> left, StreamRepresentation<TId> right) => !(left == right);
+        public static bool operator !=(Created<TObject> left, Created<TObject> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(StreamRepresentation<TId> other)
+        public bool Equals(Created<TObject> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -68,36 +68,27 @@ namespace Naos.Protocol.Domain
                 return false;
             }
 
-            var result = this.Name.IsEqualTo(other.Name, StringComparer.Ordinal);
+            var result = this.CreatedObject.IsEqualTo(other.CreatedObject);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as StreamRepresentation<TId>);
+        public override bool Equals(object obj) => this == (obj as Created<TObject>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Name)
+            .Hash(this.CreatedObject)
             .Value;
 
         /// <inheritdoc />
-        public object Clone() => this.DeepClone();
-
-        /// <inheritdoc />
-        public StreamRepresentation<TId> DeepClone()
-        {
-            var result = new StreamRepresentation<TId>(
-                                 this.Name?.Clone().ToString());
-
-            return result;
-        }
+        public new Created<TObject> DeepClone() => (Created<TObject>)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Name" />.
+        /// Deep clones this object with a new <see cref="CreatedObject" />.
         /// </summary>
-        /// <param name="name">The new <see cref="Name" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="StreamRepresentation{TId}" /> using the specified <paramref name="name" /> for <see cref="Name" /> and a deep clone of every other property.</returns>
+        /// <param name="createdObject">The new <see cref="CreatedObject" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="Created{TObject}" /> using the specified <paramref name="createdObject" /> for <see cref="CreatedObject" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
@@ -113,19 +104,28 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public StreamRepresentation<TId> DeepCloneWithName(string name)
+        public Created<TObject> DeepCloneWithCreatedObject(TObject createdObject)
         {
-            var result = new StreamRepresentation<TId>(
-                                 name);
+            var result = new Created<TObject>(
+                                 createdObject);
 
             return result;
         }
 
-        private TId DeepCloneGeneric(TId value)
+        /// <inheritdoc />
+        protected override EventBase DeepCloneInternal()
         {
-            TId result;
+            var result = new Created<TObject>(
+                                 DeepCloneGeneric(this.CreatedObject));
 
-            var type = typeof(TId);
+            return result;
+        }
+
+        private TObject DeepCloneGeneric(TObject value)
+        {
+            TObject result;
+
+            var type = typeof(TObject);
 
             if (type.IsValueType)
             {
@@ -137,17 +137,17 @@ namespace Naos.Protocol.Domain
                 {
                     result = default;
                 }
-                else if (value is IDeepCloneable<TId> deepCloneableValue)
+                else if (value is IDeepCloneable<TObject> deepCloneableValue)
                 {
                     result = deepCloneableValue.DeepClone();
                 }
                 else if (value is string valueAsString)
                 {
-                    result = (TId)(object)valueAsString.Clone().ToString();
+                    result = (TObject)(object)valueAsString.Clone().ToString();
                 }
                 else if (value is System.Version valueAsVersion)
                 {
-                    result = (TId)valueAsVersion.Clone();
+                    result = (TObject)valueAsVersion.Clone();
                 }
                 else
                 {
@@ -162,7 +162,7 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: Name = {this.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: CreatedObject = {this.CreatedObject?.ToString() ?? "<null>"}.");
 
             return result;
         }

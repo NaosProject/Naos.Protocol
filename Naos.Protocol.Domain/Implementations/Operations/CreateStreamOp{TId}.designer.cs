@@ -22,15 +22,15 @@ namespace Naos.Protocol.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class StreamRepresentation<TId> : IModel<StreamRepresentation<TId>>
+    public partial class CreateStreamOp<TId> : IModel<CreateStreamOp<TId>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="StreamRepresentation{TId}"/> are equal.
+        /// Determines whether two objects of type <see cref="CreateStreamOp{TId}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(StreamRepresentation<TId> left, StreamRepresentation<TId> right)
+        public static bool operator ==(CreateStreamOp<TId> left, CreateStreamOp<TId> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="StreamRepresentation{TId}"/> are not equal.
+        /// Determines whether two objects of type <see cref="CreateStreamOp{TId}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(StreamRepresentation<TId> left, StreamRepresentation<TId> right) => !(left == right);
+        public static bool operator !=(CreateStreamOp<TId> left, CreateStreamOp<TId> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(StreamRepresentation<TId> other)
+        public bool Equals(CreateStreamOp<TId> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -68,36 +68,29 @@ namespace Naos.Protocol.Domain
                 return false;
             }
 
-            var result = this.Name.IsEqualTo(other.Name, StringComparer.Ordinal);
+            var result = this.StreamRepresentation.IsEqualTo(other.StreamRepresentation)
+                      && this.ExistingStreamEncounteredStrategy.IsEqualTo(other.ExistingStreamEncounteredStrategy);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as StreamRepresentation<TId>);
+        public override bool Equals(object obj) => this == (obj as CreateStreamOp<TId>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Name)
+            .Hash(this.StreamRepresentation)
+            .Hash(this.ExistingStreamEncounteredStrategy)
             .Value;
 
         /// <inheritdoc />
-        public object Clone() => this.DeepClone();
-
-        /// <inheritdoc />
-        public StreamRepresentation<TId> DeepClone()
-        {
-            var result = new StreamRepresentation<TId>(
-                                 this.Name?.Clone().ToString());
-
-            return result;
-        }
+        public new CreateStreamOp<TId> DeepClone() => (CreateStreamOp<TId>)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Name" />.
+        /// Deep clones this object with a new <see cref="StreamRepresentation" />.
         /// </summary>
-        /// <param name="name">The new <see cref="Name" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="StreamRepresentation{TId}" /> using the specified <paramref name="name" /> for <see cref="Name" /> and a deep clone of every other property.</returns>
+        /// <param name="streamRepresentation">The new <see cref="StreamRepresentation" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="CreateStreamOp{TId}" /> using the specified <paramref name="streamRepresentation" /> for <see cref="StreamRepresentation" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
@@ -113,10 +106,50 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public StreamRepresentation<TId> DeepCloneWithName(string name)
+        public CreateStreamOp<TId> DeepCloneWithStreamRepresentation(StreamRepresentation<TId> streamRepresentation)
         {
-            var result = new StreamRepresentation<TId>(
-                                 name);
+            var result = new CreateStreamOp<TId>(
+                                 streamRepresentation,
+                                 this.ExistingStreamEncounteredStrategy);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deep clones this object with a new <see cref="ExistingStreamEncounteredStrategy" />.
+        /// </summary>
+        /// <param name="existingStreamEncounteredStrategy">The new <see cref="ExistingStreamEncounteredStrategy" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="CreateStreamOp{TId}" /> using the specified <paramref name="existingStreamEncounteredStrategy" /> for <see cref="ExistingStreamEncounteredStrategy" /> and a deep clone of every other property.</returns>
+        [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
+        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
+        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
+        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
+        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
+        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
+        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
+        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
+        public CreateStreamOp<TId> DeepCloneWithExistingStreamEncounteredStrategy(ExistingStreamEncounteredStrategy existingStreamEncounteredStrategy)
+        {
+            var result = new CreateStreamOp<TId>(
+                                 this.StreamRepresentation?.DeepClone(),
+                                 existingStreamEncounteredStrategy);
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        protected override VoidOperationBase DeepCloneInternal()
+        {
+            var result = new CreateStreamOp<TId>(
+                                 this.StreamRepresentation?.DeepClone(),
+                                 this.ExistingStreamEncounteredStrategy);
 
             return result;
         }
@@ -162,7 +195,7 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: Name = {this.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: StreamRepresentation = {this.StreamRepresentation?.ToString() ?? "<null>"}, ExistingStreamEncounteredStrategy = {this.ExistingStreamEncounteredStrategy.ToString() ?? "<null>"}.");
 
             return result;
         }

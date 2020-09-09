@@ -32,9 +32,9 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Gets or sets the operation ID.
+        /// Gets the operation ID.
         /// </summary>
         /// <value>The operation ID.</value>
-        public TObject OperationId { get; set; }
+        public TObject OperationId { get; private set; }
     }
 }

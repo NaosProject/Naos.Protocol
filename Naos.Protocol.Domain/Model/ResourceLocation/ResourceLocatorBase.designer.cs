@@ -22,15 +22,15 @@ namespace Naos.Protocol.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class VoidOperationBase : IModel<VoidOperationBase>
+    public partial class ResourceLocatorBase : IModel<ResourceLocatorBase>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="VoidOperationBase"/> are equal.
+        /// Determines whether two objects of type <see cref="ResourceLocatorBase"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(VoidOperationBase left, VoidOperationBase right)
+        public static bool operator ==(ResourceLocatorBase left, ResourceLocatorBase right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="VoidOperationBase"/> are not equal.
+        /// Determines whether two objects of type <see cref="ResourceLocatorBase"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(VoidOperationBase left, VoidOperationBase right) => !(left == right);
+        public static bool operator !=(ResourceLocatorBase left, ResourceLocatorBase right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(VoidOperationBase other) => this == other;
+        public bool Equals(ResourceLocatorBase other) => this == other;
 
         /// <inheritdoc />
         public abstract override bool Equals(object obj);
@@ -68,7 +68,7 @@ namespace Naos.Protocol.Domain
         public object Clone() => this.DeepClone();
 
         /// <inheritdoc />
-        public VoidOperationBase DeepClone() => this.DeepCloneInternal();
+        public ResourceLocatorBase DeepClone() => this.DeepCloneInternal();
 
         /// <summary>
         /// Creates a new object that is a deep clone of this instance.
@@ -76,7 +76,7 @@ namespace Naos.Protocol.Domain
         /// <returns>
         /// A new object that is a deep clone of this instance.
         /// </returns>
-        protected abstract VoidOperationBase DeepCloneInternal();
+        protected abstract ResourceLocatorBase DeepCloneInternal();
 
         /// <inheritdoc />
         public abstract override string ToString();

@@ -113,6 +113,7 @@
     <Compile Include=".recipes\Spritely.Redo\RetriableFunction.cs" />
     <Compile Include=".recipes\Spritely.Redo\RetriableFunctionAsync.cs" />
     <Compile Include=".recipes\Spritely.Redo\Using.cs" />
+    <Compile Include="Implementations\Operations\ThrowIfResourceUnavailableOp.cs" />
     <Compile Include="Implementations\Operations\GetOp{TObject}.cs" />
     <Compile Include="Model\Protocol\AsyncSpecificReturningProtocolBase{TOperation,TReturn}.cs" />
     <Compile Include="Model\Protocol\AsyncSpecificVoidProtocolBase{TOperation}.cs" />
@@ -131,7 +132,7 @@
     <Compile Include="Model\Protocol\SyncSpecificVoidProtocolBase{TOperation}.cs" />
     <Compile Include="Model\ResourceLocation\IProtocolResourceLocator{TId}.cs" />
     <Compile Include="Model\ResourceLocation\NullResourceLocator.cs" />
-    <Compile Include="Implementations\MemoryStream\MemoryRecord.cs" />
+    <Compile Include="Implementations\MemoryStream\MemoryRecord{TId}.cs" />
     <Compile Include="Model\Protocol\IReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Model\Protocol\ISyncAndAsyncReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Model\Protocol\ISyncAndAsyncVoidProtocol{TOperation}.cs" />

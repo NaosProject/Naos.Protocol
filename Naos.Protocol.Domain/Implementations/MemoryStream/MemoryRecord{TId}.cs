@@ -42,7 +42,7 @@ namespace Naos.Protocol.Domain
         /// Gets the described serialization.
         /// </summary>
         /// <value>The described serialization.</value>
-        public DescribedSerialization DescribedSerialization { get; }
+        public DescribedSerialization DescribedSerialization { get; private set; }
 
         /// <summary>
         /// Gets the timestamp in UTC.

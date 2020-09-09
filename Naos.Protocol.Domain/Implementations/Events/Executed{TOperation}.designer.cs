@@ -22,15 +22,15 @@ namespace Naos.Protocol.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class StreamRepresentation<TId> : IModel<StreamRepresentation<TId>>
+    public partial class Executed<TOperation> : IModel<Executed<TOperation>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="StreamRepresentation{TId}"/> are equal.
+        /// Determines whether two objects of type <see cref="Executed{TOperation}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(StreamRepresentation<TId> left, StreamRepresentation<TId> right)
+        public static bool operator ==(Executed<TOperation> left, Executed<TOperation> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="StreamRepresentation{TId}"/> are not equal.
+        /// Determines whether two objects of type <see cref="Executed{TOperation}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(StreamRepresentation<TId> left, StreamRepresentation<TId> right) => !(left == right);
+        public static bool operator !=(Executed<TOperation> left, Executed<TOperation> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(StreamRepresentation<TId> other)
+        public bool Equals(Executed<TOperation> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -68,36 +68,27 @@ namespace Naos.Protocol.Domain
                 return false;
             }
 
-            var result = this.Name.IsEqualTo(other.Name, StringComparer.Ordinal);
+            var result = this.ExecutedOperation.IsEqualTo(other.ExecutedOperation);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as StreamRepresentation<TId>);
+        public override bool Equals(object obj) => this == (obj as Executed<TOperation>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Name)
+            .Hash(this.ExecutedOperation)
             .Value;
 
         /// <inheritdoc />
-        public object Clone() => this.DeepClone();
-
-        /// <inheritdoc />
-        public StreamRepresentation<TId> DeepClone()
-        {
-            var result = new StreamRepresentation<TId>(
-                                 this.Name?.Clone().ToString());
-
-            return result;
-        }
+        public new Executed<TOperation> DeepClone() => (Executed<TOperation>)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Name" />.
+        /// Deep clones this object with a new <see cref="ExecutedOperation" />.
         /// </summary>
-        /// <param name="name">The new <see cref="Name" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="StreamRepresentation{TId}" /> using the specified <paramref name="name" /> for <see cref="Name" /> and a deep clone of every other property.</returns>
+        /// <param name="executedOperation">The new <see cref="ExecutedOperation" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="Executed{TOperation}" /> using the specified <paramref name="executedOperation" /> for <see cref="ExecutedOperation" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
@@ -113,19 +104,28 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public StreamRepresentation<TId> DeepCloneWithName(string name)
+        public Executed<TOperation> DeepCloneWithExecutedOperation(TOperation executedOperation)
         {
-            var result = new StreamRepresentation<TId>(
-                                 name);
+            var result = new Executed<TOperation>(
+                                 executedOperation);
 
             return result;
         }
 
-        private TId DeepCloneGeneric(TId value)
+        /// <inheritdoc />
+        protected override EventBase DeepCloneInternal()
         {
-            TId result;
+            var result = new Executed<TOperation>(
+                                 DeepCloneGeneric(this.ExecutedOperation));
 
-            var type = typeof(TId);
+            return result;
+        }
+
+        private TOperation DeepCloneGeneric(TOperation value)
+        {
+            TOperation result;
+
+            var type = typeof(TOperation);
 
             if (type.IsValueType)
             {
@@ -137,17 +137,17 @@ namespace Naos.Protocol.Domain
                 {
                     result = default;
                 }
-                else if (value is IDeepCloneable<TId> deepCloneableValue)
+                else if (value is IDeepCloneable<TOperation> deepCloneableValue)
                 {
                     result = deepCloneableValue.DeepClone();
                 }
                 else if (value is string valueAsString)
                 {
-                    result = (TId)(object)valueAsString.Clone().ToString();
+                    result = (TOperation)(object)valueAsString.Clone().ToString();
                 }
                 else if (value is System.Version valueAsVersion)
                 {
-                    result = (TId)valueAsVersion.Clone();
+                    result = (TOperation)valueAsVersion.Clone();
                 }
                 else
                 {
@@ -162,7 +162,7 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: Name = {this.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
+            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: ExecutedOperation = {this.ExecutedOperation?.ToString() ?? "<null>"}.");
 
             return result;
         }

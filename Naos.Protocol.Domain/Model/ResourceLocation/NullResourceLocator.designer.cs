@@ -22,15 +22,15 @@ namespace Naos.Protocol.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class GetOp<TObject> : IModel<GetOp<TObject>>
+    public partial class NullResourceLocator : IModel<NullResourceLocator>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="GetOp{TObject}"/> are equal.
+        /// Determines whether two objects of type <see cref="NullResourceLocator"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(GetOp<TObject> left, GetOp<TObject> right)
+        public static bool operator ==(NullResourceLocator left, NullResourceLocator right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="GetOp{TObject}"/> are not equal.
+        /// Determines whether two objects of type <see cref="NullResourceLocator"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(GetOp<TObject> left, GetOp<TObject> right) => !(left == right);
+        public static bool operator !=(NullResourceLocator left, NullResourceLocator right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(GetOp<TObject> other)
+        public bool Equals(NullResourceLocator other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -74,56 +74,19 @@ namespace Naos.Protocol.Domain
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as GetOp<TObject>);
+        public override bool Equals(object obj) => this == (obj as NullResourceLocator);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Value;
 
         /// <inheritdoc />
-        public new GetOp<TObject> DeepClone() => (GetOp<TObject>)this.DeepCloneInternal();
+        public new NullResourceLocator DeepClone() => (NullResourceLocator)this.DeepCloneInternal();
 
         /// <inheritdoc />
-        protected override ReturningOperationBase<TObject> DeepCloneInternal()
+        protected override ResourceLocatorBase DeepCloneInternal()
         {
-            var result = new GetOp<TObject>();
-
-            return result;
-        }
-
-        private TObject DeepCloneGeneric(TObject value)
-        {
-            TObject result;
-
-            var type = typeof(TObject);
-
-            if (type.IsValueType)
-            {
-                result = value;
-            }
-            else
-            {
-                if (ReferenceEquals(value, null))
-                {
-                    result = default;
-                }
-                else if (value is IDeepCloneable<TObject> deepCloneableValue)
-                {
-                    result = deepCloneableValue.DeepClone();
-                }
-                else if (value is string valueAsString)
-                {
-                    result = (TObject)(object)valueAsString.Clone().ToString();
-                }
-                else if (value is System.Version valueAsVersion)
-                {
-                    result = (TObject)valueAsVersion.Clone();
-                }
-                else
-                {
-                    throw new NotSupportedException(Invariant($"I do not know how to deep clone an object of type '{type.ToStringReadable()}'"));
-                }
-            }
+            var result = new NullResourceLocator();
 
             return result;
         }
@@ -132,7 +95,7 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: <no properties>.");
+            var result = Invariant($"Naos.Protocol.Domain.NullResourceLocator: <no properties>.");
 
             return result;
         }
