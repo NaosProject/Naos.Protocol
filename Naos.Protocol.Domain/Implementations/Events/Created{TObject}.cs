@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Created.cs" company="Naos Project">
-//     Copyright (c) Naos Project 2019. All rights reserved.
+// <copyright file="Created{TObject}.cs" company="Naos Project">
+//    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 

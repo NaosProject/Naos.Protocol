@@ -113,6 +113,7 @@
     <Compile Include=".recipes\Spritely.Redo\RetriableFunction.cs" />
     <Compile Include=".recipes\Spritely.Redo\RetriableFunctionAsync.cs" />
     <Compile Include=".recipes\Spritely.Redo\Using.cs" />
+    <Compile Include="Implementations\Operations\GetOp{TObject}.cs" />
     <Compile Include="Model\Protocol\AsyncSpecificReturningProtocolBase{TOperation,TReturn}.cs" />
     <Compile Include="Model\Protocol\AsyncSpecificVoidProtocolBase{TOperation}.cs" />
     <Compile Include="Model\Operation\ReturningOperationBase{TReturn}.cs" />
@@ -122,8 +123,8 @@
     <Compile Include="Model\Protocol\IGetProtocol{TOperation}.cs" />
     <Compile Include="Model\Protocol\IGetReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Model\Protocol\IGetVoidProtocol{TOperation}.cs" />
-    <Compile Include="Implementations\Events\Handled.cs" />
-    <Compile Include="Implementations\Events\Handling.cs" />
+    <Compile Include="Implementations\Events\Handled{TEvent}.cs" />
+    <Compile Include="Implementations\Events\Handling{TEvent}.cs" />
     <Compile Include="Model\Protocol\IProtocol{TOperation}.cs" />
     <Compile Include="Model\Protocol\IProtocolFactory.cs" />
     <Compile Include="Model\Protocol\SyncSpecificReturningProtocolBase{TOperation,TReturn}.cs" />
@@ -149,15 +150,15 @@
     <Compile Include="Implementations\Events\Pruned.cs" />
     <Compile Include="Implementations\Events\Pruning.cs" />
     <Compile Include="Implementations\Events\PruneRequested.cs" />
-    <Compile Include="Implementations\Events\Created.cs" />
+    <Compile Include="Implementations\Events\Created{TObject}.cs" />
     <Compile Include="Model\Event\EventBase.cs" />
     <Compile Include="Model\Stream\IProtocolFactoryStreamObjectReadOperations{TId}.cs" />
     <Compile Include="Model\Stream\ExistingStreamEncounteredStrategy.cs" />
     <Compile Include="Model\Stream\IProtocolStreamObjectWriteOperations{TId,TObject}.cs" />
     <Compile Include="Model\Stream\IStream{TId}.cs" />
     <Compile Include="Model\ResourceLocation\ResourceLocatorBase.cs" />
-    <Compile Include="Implementations\Events\Executing.cs" />
-    <Compile Include="Implementations\Events\Executed.cs" />
+    <Compile Include="Implementations\Events\Executing{TOperation}.cs" />
+    <Compile Include="Implementations\Events\Executed{TOperation}.cs" />
     <Compile Include="Implementations\Operations\CreateStreamOp{TId}.cs" />
     <Compile Include="Implementations\Operations\DiscoverOp{TObject,TReturn}.cs" />
     <Compile Include="Implementations\Operations\GetIdFromObjectOp{TId,TObject}.cs" />

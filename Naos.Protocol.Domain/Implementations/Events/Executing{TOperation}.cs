@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Executed.cs" company="Naos Project">
+// <copyright file="Executing{TOperation}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,19 +9,19 @@ namespace Naos.Protocol.Domain
     using System;
 
     /// <summary>
-    /// Event indicating that an operation was executed.
+    /// Event indicating that an operation is being executed.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     /// <seealso cref="Naos.Protocol.Domain.EventBase" />
-    public class Executed<TOperation> : EventBase
+    public class Executing<TOperation> : EventBase
         where TOperation : class, IOperation
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Executed{TOperation}"/> class.
+        /// Initializes a new instance of the <see cref="Executing{TOperation}"/> class.
         /// </summary>
         /// <param name="executedOperation">The executed operation.</param>
         /// <exception cref="System.ArgumentNullException">executedOperation.</exception>
-        public Executed(
+        public Executing(
             TOperation executedOperation)
         {
             this.ExecutedOperation = executedOperation ?? throw new ArgumentNullException(nameof(executedOperation));

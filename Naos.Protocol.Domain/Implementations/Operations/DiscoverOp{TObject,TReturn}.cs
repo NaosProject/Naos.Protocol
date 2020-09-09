@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DiscoverOp.cs" company="Naos Project">
-//     Copyright (c) Naos Project 2019. All rights reserved.
+// <copyright file="DiscoverOp{TObject,TReturn}.cs" company="Naos Project">
+//    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
