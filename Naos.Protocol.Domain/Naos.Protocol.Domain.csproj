@@ -159,7 +159,7 @@
     <Compile Include="Implementations\Events\Executing.cs" />
     <Compile Include="Implementations\Events\Executed.cs" />
     <Compile Include="Implementations\Operations\CreateStreamOp{TId}.cs" />
-    <Compile Include="Implementations\Operations\DiscoverOp.cs" />
+    <Compile Include="Implementations\Operations\DiscoverOp{TObject,TReturn}.cs" />
     <Compile Include="Implementations\Operations\GetIdFromObjectOp{TId,TObject}.cs" />
     <Compile Include="Implementations\Operations\GetLatestByIdAndTypeOp{TId,TObject}.cs" />
     <Compile Include="Implementations\Operations\GetProtocolByTypeOp.cs" />
