@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain
     /// Implements the <see cref="Naos.Protocol.Domain.EventBase" />.
     /// </summary>
     /// <seealso cref="Naos.Protocol.Domain.EventBase" />
-    public class Pruned : EventBase
+    public partial class Pruned : EventBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Pruned"/> class.

@@ -12,7 +12,7 @@ namespace Naos.Protocol.Domain
     /// Event to indicate a <see cref="Block" /> was cancelled (i.e. ignore a previous <see cref="Block" />).
     /// </summary>
     /// <seealso cref="Naos.Protocol.Domain.EventBase" />
-    public class CancelBlock : EventBase
+    public partial class CancelBlock : EventBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CancelBlock"/> class.

@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TEvent">The type of the t operation.</typeparam>
     /// <seealso cref="Naos.Protocol.Domain.EventBase" />
-    public class Handled<TEvent> : EventBase
+    public partial class Handled<TEvent> : EventBase
         where TEvent : EventBase
     {
         /// <summary>

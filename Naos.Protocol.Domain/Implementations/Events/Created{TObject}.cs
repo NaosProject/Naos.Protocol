@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TObject">The type of the t object.</typeparam>
     /// <seealso cref="Naos.Protocol.Domain.EventBase" />
-    public class Created<TObject> : EventBase
+    public partial class Created<TObject> : EventBase
         where TObject : class
     {
         /// <summary>

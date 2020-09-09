@@ -12,7 +12,7 @@ namespace Naos.Protocol.Domain
     /// Event indicating a prune should be done on the stream (standard reads will not go prior to the requested checkpoint).
     /// </summary>
     /// <seealso cref="Naos.Protocol.Domain.EventBase" />
-    public class PruneRequested : EventBase
+    public partial class PruneRequested : EventBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PruneRequested"/> class.

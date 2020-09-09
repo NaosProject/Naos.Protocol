@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain
     /// Implements the <see cref="Naos.Protocol.Domain.EventBase" />.
     /// </summary>
     /// <seealso cref="Naos.Protocol.Domain.EventBase" />
-    public class Block : EventBase
+    public partial class Block : EventBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Block"/> class.

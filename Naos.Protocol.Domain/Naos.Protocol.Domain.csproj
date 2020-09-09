@@ -168,7 +168,7 @@
     <Compile Include="Implementations\Operations\GetReturningProtocolOp{TOperation,TReturn}.cs" />
     <Compile Include="Implementations\Operations\GetStreamFromRepresentationOp{TId}.cs" />
     <Compile Include="Implementations\Operations\GetResourceLocatorByIdOp{TId}.cs" />
-    <Compile Include="Implementations\Operations\GetTagsFromObjectOp.cs" />
+    <Compile Include="Implementations\Operations\GetTagsFromObjectOp{TObject}.cs" />
     <Compile Include="Implementations\Operations\GetAllResourceLocatorsOp.cs" />
     <Compile Include="Implementations\Operations\GetVoidProtocolOp{TOperation}.cs" />
     <Compile Include="Implementations\Operations\HandleEventOp{TEvent}.cs" />
