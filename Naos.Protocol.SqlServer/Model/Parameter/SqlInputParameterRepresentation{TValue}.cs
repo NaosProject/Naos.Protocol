@@ -14,24 +14,24 @@ namespace Naos.Protocol.SqlServer
     /// Top level .
     /// </summary>
     /// <typeparam name="TValue">Type of the input value.</typeparam>
-    public class SqlInputParameterRepresentation<TValue> : SqlParameterRepresentationBase
+    public partial class SqlInputParameterRepresentation<TValue> : SqlParameterRepresentationBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlInputParameterRepresentation{TValue}"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
-        /// <param name="type">The type.</param>
+        /// <param name="dataType">The type.</param>
         /// <param name="value">The value.</param>
         public SqlInputParameterRepresentation(
             string name,
-            SqlDataTypeRepresentationBase type,
+            SqlDataTypeRepresentationBase dataType,
             TValue value)
-            : base(name, type)
+            : base(name, dataType)
         {
-            type.MustForTest(nameof(type)).NotBeNull();
+            dataType.MustForTest(nameof(dataType)).NotBeNull();
 
             var valueType = typeof(TValue);
-            type.ValidateObjectTypeIsCompatible(valueType);
+            dataType.ValidateObjectTypeIsCompatible(valueType);
 
             this.Value = value;
         }

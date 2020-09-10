@@ -14,7 +14,7 @@ namespace Naos.Protocol.SqlServer
     /// <summary>
     /// Top level .
     /// </summary>
-    public class StringSqlDataTypeRepresentation : SqlDataTypeRepresentationBase
+    public partial class StringSqlDataTypeRepresentation : SqlDataTypeRepresentationBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StringSqlDataTypeRepresentation"/> class.

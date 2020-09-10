@@ -9,7 +9,7 @@ namespace Naos.Protocol.SqlServer
     /// <summary>
     /// Top level base of a SQL Parameter.
     /// </summary>
-    public abstract class SqlOutputParameterRepresentationBase : SqlParameterRepresentationBase
+    public abstract partial class SqlOutputParameterRepresentationBase : SqlParameterRepresentationBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlOutputParameterRepresentationBase"/> class.

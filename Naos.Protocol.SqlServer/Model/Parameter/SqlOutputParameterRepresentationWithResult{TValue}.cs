@@ -13,7 +13,7 @@ namespace Naos.Protocol.SqlServer
     /// Top level .
     /// </summary>
     /// <typeparam name="TValue">Type of the Output value.</typeparam>
-    public class SqlOutputParameterRepresentationWithResult<TValue> : SqlOutputParameterRepresentation<TValue>, ISqlOutputParameterRepresentationWithResult
+    public partial class SqlOutputParameterRepresentationWithResult<TValue> : SqlOutputParameterRepresentationBase, ISqlOutputParameterRepresentationWithResult
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SqlOutputParameterRepresentationWithResult{TValue}"/> class.

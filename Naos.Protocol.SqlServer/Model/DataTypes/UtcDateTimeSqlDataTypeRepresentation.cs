@@ -12,7 +12,7 @@ namespace Naos.Protocol.SqlServer
     /// <summary>
     /// Top level .
     /// </summary>
-    public class UtcDateTimeSqlDataTypeRepresentation : SqlDataTypeRepresentationBase
+    public partial class UtcDateTimeSqlDataTypeRepresentation : SqlDataTypeRepresentationBase
     {
         /// <inheritdoc />
         public override string DeclarationInSqlSyntax => "[DATETIME2]";

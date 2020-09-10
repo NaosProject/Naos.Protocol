@@ -13,7 +13,7 @@ namespace Naos.Protocol.SqlServer
     /// <summary>
     /// Top level .
     /// </summary>
-    public class BinarySqlDataTypeRepresentation : SqlDataTypeRepresentationBase
+    public partial class BinarySqlDataTypeRepresentation : SqlDataTypeRepresentationBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BinarySqlDataTypeRepresentation"/> class.

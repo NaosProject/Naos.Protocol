@@ -131,26 +131,68 @@
     <Compile Include=".recipes\Spritely.Redo\Using.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Model\DataTypes\BinarySqlDataTypeRepresentation.cs" />
+    <Compile Include="Model\DataTypes\BinarySqlDataTypeRepresentation.designer.cs">
+      <DependentUpon>BinarySqlDataTypeRepresentation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DataTypes\DecimalSqlDataTypeRepresentation.designer.cs">
+      <DependentUpon>DecimalSqlDataTypeRepresentation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DataTypes\IntSqlDataTypeRepresentation.designer.cs">
+      <DependentUpon>IntSqlDataTypeRepresentation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DataTypes\SqlDataTypeRepresentationBase.designer.cs">
+      <DependentUpon>SqlDataTypeRepresentationBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DataTypes\StringSqlDataTypeRepresentation.designer.cs">
+      <DependentUpon>StringSqlDataTypeRepresentation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\DataTypes\UtcDateTimeSqlDataTypeRepresentation.cs" />
     <Compile Include="Model\DataTypes\DecimalSqlDataTypeRepresentation.cs" />
     <Compile Include="Model\DataTypes\StringSqlDataTypeRepresentation.cs" />
     <Compile Include="Model\DataTypes\IntSqlDataTypeRepresentation.cs" />
+    <Compile Include="Model\DataTypes\UtcDateTimeSqlDataTypeRepresentation.designer.cs">
+      <DependentUpon>UtcDateTimeSqlDataTypeRepresentation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\DescribedSerializer.cs" />
     <Compile Include="Model\DataTypes\SqlDataTypeRepresentationBase.cs" />
     <Compile Include="Model\ISqlServerLocator.cs" />
     <Compile Include="Model\Parameter\SqlInputParameterRepresentation{TValue}.cs" />
     <Compile Include="Model\Parameter\ISqlOutputParameterRepresentationWithResult.cs" />
+    <Compile Include="Model\Parameter\SqlInputParameterRepresentation{TValue}.designer.cs">
+      <DependentUpon>SqlInputParameterRepresentation{TValue}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Parameter\SqlOutputParameterRepresentationBase.designer.cs">
+      <DependentUpon>SqlOutputParameterRepresentationBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Parameter\SqlOutputParameterRepresentationWithResult{TValue}.cs" />
+    <Compile Include="Model\Parameter\SqlOutputParameterRepresentationWithResult{TValue}.designer.cs">
+      <DependentUpon>SqlOutputParameterRepresentationWithResult{TValue}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Parameter\SqlOutputParameterRepresentation{TValue}.cs" />
     <Compile Include="Model\Parameter\SqlOutputParameterRepresentationBase.cs" />
+    <Compile Include="Model\Parameter\SqlOutputParameterRepresentation{TValue}.designer.cs">
+      <DependentUpon>SqlOutputParameterRepresentation{TValue}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Parameter\SqlParameterRepresentationBase.cs" />
+    <Compile Include="Model\Parameter\SqlParameterRepresentationBase.designer.cs">
+      <DependentUpon>SqlParameterRepresentationBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Parameter\SqlParameterRepresentationExtensions.cs" />
     <Compile Include="Model\SqlServerLocator.cs" />
+    <Compile Include="Model\SqlServerLocator.designer.cs">
+      <DependentUpon>SqlServerLocator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\StoredProcedureExecutionResult.cs" />
     <Compile Include="Model\Table\ColumnRepresentation.cs" />
     <Compile Include="Model\Table\TableRepresentation.cs" />
     <Compile Include="Operations\ExecuteStoredProcedureOp.cs" />
+    <Compile Include="Operations\ExecuteStoredProcedureOp.designer.cs">
+      <DependentUpon>ExecuteStoredProcedureOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operations\GetIdAddIfNecessarySerializerRepresentationOp.cs" />
+    <Compile Include="Operations\GetIdAddIfNecessarySerializerRepresentationOp.designer.cs">
+      <DependentUpon>GetIdAddIfNecessarySerializerRepresentationOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Protocols\IProtocolSqlOperations.cs" />
     <Compile Include="Protocols\SqlOperationsProtocol.ExecuteSproc.cs" />
     <Compile Include="Protocols\SqlOperationsProtocol.cs" />

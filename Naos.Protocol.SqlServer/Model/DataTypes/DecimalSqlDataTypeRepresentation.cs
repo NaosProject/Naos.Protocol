@@ -12,7 +12,7 @@ namespace Naos.Protocol.SqlServer
     /// <summary>
     /// Top level .
     /// </summary>
-    public class DecimalSqlDataTypeRepresentation : SqlDataTypeRepresentationBase
+    public partial class DecimalSqlDataTypeRepresentation : SqlDataTypeRepresentationBase
     {
         /// <summary>
         /// The default numeric precision to hold dot net decimal.
@@ -30,11 +30,11 @@ namespace Naos.Protocol.SqlServer
         /// <param name="precision">The precision.</param>
         /// <param name="scale">The scale.</param>
         public DecimalSqlDataTypeRepresentation(
-            byte? precision = null,
-            byte? scale = null)
+            byte precision = DefaultNumericPrecisionToHoldDotNetDecimal,
+            byte scale = DefaultNumericScaleToHoldDotNetDecimal)
         {
-            this.Precision = precision ?? DefaultNumericPrecisionToHoldDotNetDecimal;
-            this.Scale = scale ?? DefaultNumericScaleToHoldDotNetDecimal;
+            this.Precision = precision;
+            this.Scale = scale;
         }
 
         /// <summary>

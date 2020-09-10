@@ -10,7 +10,8 @@
 namespace Naos.Protocol.Domain.Test
 {
     using System;
-
+    using System.CodeDom.Compiler;
+    using System.Diagnostics.CodeAnalysis;
     using FakeItEasy;
 
     using OBeautifulCode.AutoFakeItEasy;
@@ -18,11 +19,14 @@ namespace Naos.Protocol.Domain.Test
     /// <summary>
     /// A Dummy Factory for types in <see cref="Naos.Protocol.Domain"/>.
     /// </summary>
-#if !NaosProtocolRecipesProject
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-    [System.CodeDom.Compiler.GeneratedCode("Naos.Protocol.Domain.Test", "See package version number")]
-#endif
-    public class ProtocolDummyFactory : DefaultProtocolDummyFactory
+#if !NaosProtocolSolution
+    [ExcludeFromCodeCoverage]
+    [GeneratedCode("Naos.Protocol.Domain.Test", "See package version number")]
+    internal
+#else
+    public
+#endif 
+        class ProtocolDummyFactory : DefaultProtocolDummyFactory
     {
         public ProtocolDummyFactory()
         {

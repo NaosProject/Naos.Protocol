@@ -12,7 +12,7 @@ namespace Naos.Protocol.SqlServer
     /// <summary>
     /// Top level .
     /// </summary>
-    public class IntSqlDataTypeRepresentation : SqlDataTypeRepresentationBase
+    public partial class IntSqlDataTypeRepresentation : SqlDataTypeRepresentationBase
     {
         /// <inheritdoc />
         public override string DeclarationInSqlSyntax => "[INT]";

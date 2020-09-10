@@ -15,13 +15,15 @@ namespace Naos.Protocol.Domain.Test
 
     using Naos.Protocol.Serialization.Bson;
     using Naos.Protocol.Serialization.Json;
+    using OBeautifulCode.Serialization.Bson;
+    using OBeautifulCode.Serialization.Json;
 
     [ExcludeFromCodeCoverage]
     [GeneratedCode("Naos.Build.Conventions.VisualStudioProjectTemplates.Domain.Test", "1.55.27")]
     public static class SerializationConfigurationTypes
     {
-        public static Type BsonSerializationConfigurationType => typeof(ProtocolBsonSerializationConfiguration);
+        public static BsonSerializationConfigurationType BsonSerializationConfigurationType => typeof(ProtocolBsonSerializationConfiguration).ToBsonSerializationConfigurationType();
 
-        public static Type JsonSerializationConfigurationType => typeof(ProtocolJsonSerializationConfiguration);
+        public static JsonSerializationConfigurationType JsonSerializationConfigurationType => typeof(ProtocolJsonSerializationConfiguration).ToJsonSerializationConfigurationType();
     }
 }

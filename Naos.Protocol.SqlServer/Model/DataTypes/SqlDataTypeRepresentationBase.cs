@@ -7,11 +7,12 @@
 namespace Naos.Protocol.SqlServer
 {
     using System;
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// Top level .
     /// </summary>
-    public abstract class SqlDataTypeRepresentationBase
+    public abstract partial class SqlDataTypeRepresentationBase : IModelViaCodeGen
     {
         /// <summary>
         /// Gets the declaration in SQL syntax.
