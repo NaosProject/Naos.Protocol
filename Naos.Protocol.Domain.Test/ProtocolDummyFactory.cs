@@ -37,5 +37,23 @@ namespace Naos.Protocol.Domain.Test
     /// <summary>
     /// Delete this class after code gen.
     /// </summary>
-    public class DefaultProtocolDummyFactory {}
+    public class DefaultProtocolDummyFactory : IDummyFactory
+    {
+        /// <inheritdoc />
+        public bool CanCreate(
+            Type type)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public object Create(
+            Type type)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public Priority Priority => throw new NotImplementedException();
+    }
 }
