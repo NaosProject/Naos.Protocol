@@ -223,6 +223,9 @@
     <Compile Include="Model\SpecificProtocolBaseTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtocolDummyFactory.designer.cs">
+      <DependentUpon>ProtocolDummyFactory.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProtocolDummyFactoryTest.designer.cs">
       <DependentUpon>ProtocolDummyFactoryTest.cs</DependentUpon>
     </Compile>

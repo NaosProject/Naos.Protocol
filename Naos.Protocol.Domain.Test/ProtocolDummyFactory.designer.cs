@@ -17,20 +17,26 @@ namespace Naos.Protocol.Domain.Test
     using OBeautifulCode.AutoFakeItEasy;
 
     /// <summary>
-    /// A Dummy Factory for types in <see cref="Naos.Protocol.Domain"/>.
+    /// Delete this class after code gen.
     /// </summary>
-#if !NaosProtocolSolution
-    [ExcludeFromCodeCoverage]
-    [GeneratedCode("Naos.Protocol.Domain.Test", "See package version number")]
-    internal
-#else
-    public
-#endif 
-        class ProtocolDummyFactory : DefaultProtocolDummyFactory
+    public class DefaultProtocolDummyFactory : IDummyFactory
     {
-        public ProtocolDummyFactory()
+        /// <inheritdoc />
+        public bool CanCreate(
+            Type type)
         {
-            /* Add any overriding or custom registrations here. */
+            throw new NotImplementedException();
         }
+
+        /// <inheritdoc />
+        public object Create(
+            Type type)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = "This is a stub to be removed when code gen fix finished.")]
+        public Priority Priority => throw new NotImplementedException();
     }
 }
