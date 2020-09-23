@@ -7,7 +7,7 @@
 namespace Naos.Protocol.Domain
 {
     /// <summary>
-    /// Gets a protocol that executes a <see cref="VoidOperationBase"/>.
+    /// Gets a protocol that executes a <see cref="IVoidOperation"/>.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     public interface IGetVoidProtocol<TOperation> : IGetProtocol

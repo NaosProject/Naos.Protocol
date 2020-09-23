@@ -7,7 +7,7 @@
 namespace Naos.Protocol.Domain
 {
     /// <summary>
-    /// Gets a protocol that executes a <see cref="ReturningOperationBase{TReturn}"/>.
+    /// Gets a protocol that executes a <see cref="IReturningOperation{TReturn}"/>.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     /// <typeparam name="TReturn">The type that the operation return.</typeparam>

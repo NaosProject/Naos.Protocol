@@ -7,7 +7,7 @@
 namespace Naos.Protocol.Domain
 {
     /// <summary>
-    /// Executes a <see cref="ReturningOperationBase{TReturn}"/> both synchronously and asynchronously.
+    /// Executes a <see cref="IReturningOperation{TReturn}"/> both synchronously and asynchronously.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     /// <typeparam name="TReturn">The type that the operation returns.</typeparam>

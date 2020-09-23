@@ -9,7 +9,7 @@ namespace Naos.Protocol.Domain
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Executes a <see cref="ReturningOperationBase{TReturn}"/> asynchronously.
+    /// Executes a <see cref="IReturningOperation{TReturn}"/> asynchronously.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     /// <typeparam name="TReturn">The type that the operation returns.</typeparam>

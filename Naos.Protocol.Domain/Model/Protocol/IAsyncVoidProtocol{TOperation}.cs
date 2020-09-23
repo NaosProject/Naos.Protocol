@@ -9,7 +9,7 @@ namespace Naos.Protocol.Domain
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Executes a <see cref="VoidOperationBase"/> asynchronously.
+    /// Executes a <see cref="IVoidOperation"/> asynchronously.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     public interface IAsyncVoidProtocol<TOperation> : IProtocol<TOperation>

@@ -7,7 +7,7 @@
 namespace Naos.Protocol.Domain
 {
     /// <summary>
-    /// Executes a <see cref="VoidOperationBase"/> synchronously.
+    /// Executes a <see cref="IVoidOperation"/> synchronously.
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     public interface IVoidProtocol<TOperation> : IProtocol<TOperation>
