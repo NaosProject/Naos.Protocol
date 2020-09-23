@@ -14,7 +14,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TOperation">Type of operation.</typeparam>
     public abstract class AsyncSpecificVoidProtocolBase<TOperation> : ISyncAndAsyncVoidProtocol<TOperation>
-        where TOperation : VoidOperationBase
+        where TOperation : IVoidOperation
     {
         /// <inheritdoc />
         public void Execute(

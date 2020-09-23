@@ -11,7 +11,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Represents an operation that does not return (void) any object.
     /// </summary>
-    public abstract partial class VoidOperationBase : IOperation, IModelViaCodeGen
+    public abstract partial class VoidOperationBase : IVoidOperation, IModelViaCodeGen
     {
     }
 }

@@ -33,4 +33,9 @@ namespace Naos.Protocol.Domain.Test
             /* Add any overriding or custom registrations here. */
         }
     }
+
+    /// <summary>
+    /// Delete this class after code gen.
+    /// </summary>
+    public class DefaultProtocolDummyFactory {}
 }

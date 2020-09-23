@@ -14,7 +14,7 @@ namespace Naos.Protocol.Domain
     /// <typeparam name="TOperation">Type of operation.</typeparam>
     /// <typeparam name="TReturn">Type of return.</typeparam>
     public abstract class SyncSpecificReturningProtocolBase<TOperation, TReturn> : ISyncAndAsyncReturningProtocol<TOperation, TReturn>
-        where TOperation : ReturningOperationBase<TReturn>
+        where TOperation : IReturningOperation<TReturn>
     {
         /// <inheritdoc />
         public abstract TReturn Execute(

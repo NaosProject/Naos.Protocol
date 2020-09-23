@@ -12,7 +12,7 @@ namespace Naos.Protocol.Domain
     /// <typeparam name="TOperation">Type of operation.</typeparam>
     /// <typeparam name="TReturn">The type of the return.</typeparam>
     public partial class GetReturningProtocolOp<TOperation, TReturn> : ReturningOperationBase<IReturningProtocol<TOperation, TReturn>>
-        where TOperation : ReturningOperationBase<TReturn>
+        where TOperation : IReturningOperation<TReturn>
     {
     }
 }

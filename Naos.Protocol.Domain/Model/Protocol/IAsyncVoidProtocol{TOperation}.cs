@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     public interface IAsyncVoidProtocol<TOperation> : IProtocol<TOperation>
-        where TOperation : VoidOperationBase
+        where TOperation : IVoidOperation
     {
         /// <summary>
         /// Executes the operation.

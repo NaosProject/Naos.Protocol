@@ -17,10 +17,8 @@ namespace Naos.Protocol.Serialization.Json
         /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForJson> TypesToRegisterForJson => new[]
                                                                                                 {
-                                                                                                    typeof(EventBase).ToTypeToRegisterForJson(),
-                                                                                                    typeof(VoidOperationBase).ToTypeToRegisterForJson(),
-                                                                                                    typeof(ReturningOperationBase<>).ToTypeToRegisterForJson(),
-                                                                                                    typeof(ResourceLocatorBase).ToTypeToRegisterForJson(),
+                                                                                                    typeof(IEvent<>).ToTypeToRegisterForJson(),
+                                                                                                    typeof(IOperation).ToTypeToRegisterForJson(),
                                                                                                 };
     }
 }

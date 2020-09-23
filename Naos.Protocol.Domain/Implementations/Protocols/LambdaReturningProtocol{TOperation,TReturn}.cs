@@ -17,7 +17,7 @@ namespace Naos.Protocol.Domain
     /// <typeparam name="TOperation">Type of operation.</typeparam>
     /// <typeparam name="TReturn">Type of the return.</typeparam>
     public class LambdaReturningProtocol<TOperation, TReturn> : ISyncAndAsyncReturningProtocol<TOperation, TReturn>
-    where TOperation : ReturningOperationBase<TReturn>
+    where TOperation : IReturningOperation<TReturn>
     {
         private readonly Func<TOperation, TReturn> synchronousLambda;
 

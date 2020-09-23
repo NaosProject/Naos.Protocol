@@ -48,8 +48,8 @@
     <Reference Include="OBeautifulCode.Serialization, Version=1.0.73.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Serialization.1.0.73\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.58.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.58\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.62.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.62\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -113,89 +113,14 @@
     <Compile Include=".recipes\Spritely.Redo\RetriableFunction.cs" />
     <Compile Include=".recipes\Spritely.Redo\RetriableFunctionAsync.cs" />
     <Compile Include=".recipes\Spritely.Redo\Using.cs" />
-    <Compile Include="Implementations\Events\Block.designer.cs">
-      <DependentUpon>Block.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Events\CancelBlock.designer.cs">
-      <DependentUpon>CancelBlock.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Events\Created{TObject}.designer.cs">
-      <DependentUpon>Created{TObject}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Events\Executed{TOperation}.designer.cs">
-      <DependentUpon>Executed{TOperation}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Events\Executing{TOperation}.designer.cs">
-      <DependentUpon>Executing{TOperation}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Events\Handled{TEvent}.designer.cs">
-      <DependentUpon>Handled{TEvent}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Events\Handling{TEvent}.designer.cs">
-      <DependentUpon>Handling{TEvent}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Events\Pruned.designer.cs">
-      <DependentUpon>Pruned.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Events\PruneRequested.designer.cs">
-      <DependentUpon>PruneRequested.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Events\Pruning.designer.cs">
-      <DependentUpon>Pruning.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\MemoryStream\MemoryRecord{TId}.designer.cs">
-      <DependentUpon>MemoryRecord{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\CreateStreamOp{TId}.designer.cs">
-      <DependentUpon>CreateStreamOp{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\DiscoverOp{TObject,TReturn}.designer.cs">
-      <DependentUpon>DiscoverOp{TObject,TReturn}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\GetAllResourceLocatorsOp.designer.cs">
-      <DependentUpon>GetAllResourceLocatorsOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\GetIdFromObjectOp{TId,TObject}.designer.cs">
-      <DependentUpon>GetIdFromObjectOp{TId,TObject}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\GetLatestByIdAndTypeOp{TId,TObject}.designer.cs">
-      <DependentUpon>GetLatestByIdAndTypeOp{TId,TObject}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\GetOp{TObject}.designer.cs">
-      <DependentUpon>GetOp{TObject}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\GetProtocolByTypeOp.designer.cs">
-      <DependentUpon>GetProtocolByTypeOp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\GetResourceLocatorByIdOp{TId}.designer.cs">
-      <DependentUpon>GetResourceLocatorByIdOp{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\GetReturningProtocolOp{TOperation,TReturn}.designer.cs">
-      <DependentUpon>GetReturningProtocolOp{TOperation,TReturn}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\GetStreamFromRepresentationOp{TId}.designer.cs">
-      <DependentUpon>GetStreamFromRepresentationOp{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\GetTagsFromObjectOp{TObject}.designer.cs">
-      <DependentUpon>GetTagsFromObjectOp{TObject}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\GetVoidProtocolOp{TOperation}.designer.cs">
-      <DependentUpon>GetVoidProtocolOp{TOperation}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\HandleEventOp{TEvent}.designer.cs">
-      <DependentUpon>HandleEventOp{TEvent}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\PutOp{TObject}.designer.cs">
-      <DependentUpon>PutOp{TObject}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Operations\ThrowIfResourceUnavailableOp.cs" />
     <Compile Include="Implementations\Operations\GetOp{TObject}.cs" />
-    <Compile Include="Implementations\Operations\ThrowIfResourceUnavailableOp.designer.cs">
-      <DependentUpon>ThrowIfResourceUnavailableOp.cs</DependentUpon>
+    <Compile Include="Model\Enum\TypeVersionMatchStrategy.cs" />
+    <Compile Include="Model\Event\EventBase{TId}.designer.cs">
+      <DependentUpon>EventBase{TId}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Event\EventBase.designer.cs">
-      <DependentUpon>EventBase.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Model\Event\IEvent{TId}.cs" />
+    <Compile Include="Model\Operation\IVoidOperation.cs" />
+    <Compile Include="Model\Operation\IReturningOperation{TReturn}.cs" />
     <Compile Include="Model\Operation\ReturningOperationBase{TReturn}.designer.cs">
       <DependentUpon>ReturningOperationBase{TReturn}.cs</DependentUpon>
     </Compile>
@@ -211,63 +136,31 @@
     <Compile Include="Model\Protocol\IGetProtocol{TOperation}.cs" />
     <Compile Include="Model\Protocol\IGetReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Model\Protocol\IGetVoidProtocol{TOperation}.cs" />
-    <Compile Include="Implementations\Events\Handled{TEvent}.cs" />
-    <Compile Include="Implementations\Events\Handling{TEvent}.cs" />
+    <Compile Include="Implementations\Events\HandledEventEvent{TId,TEvent,TEventId}.cs" />
+    <Compile Include="Implementations\Events\HandlingEventEvent{TId,TEvent,TEventId}.cs" />
     <Compile Include="Model\Protocol\IProtocol{TOperation}.cs" />
     <Compile Include="Model\Protocol\IProtocolFactory.cs" />
     <Compile Include="Model\Protocol\SyncSpecificReturningProtocolBase{TOperation,TReturn}.cs" />
     <Compile Include="Model\Protocol\SyncSpecificVoidProtocolBase{TOperation}.cs" />
-    <Compile Include="Model\ResourceLocation\IProtocolResourceLocator{TId}.cs" />
-    <Compile Include="Model\ResourceLocation\NullResourceLocator.cs" />
-    <Compile Include="Implementations\MemoryStream\MemoryRecord{TId}.cs" />
     <Compile Include="Model\Protocol\IReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Model\Protocol\ISyncAndAsyncReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Model\Protocol\ISyncAndAsyncVoidProtocol{TOperation}.cs" />
     <Compile Include="Model\Protocol\IVoidProtocol{TOperation}.cs" />
     <Compile Include="Model\Protocol\MissingProtocolStrategy.cs" />
     <Compile Include="Model\Protocol\ProtocolFactory.cs" />
-    <Compile Include="Model\ResourceLocation\NullResourceLocator.designer.cs">
-      <DependentUpon>NullResourceLocator.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Model\ResourceLocation\ResourceLocatorBase.designer.cs">
-      <DependentUpon>ResourceLocatorBase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Stream\IProtocolFactoryStreamObjectWriteOperations{TId}.cs" />
-    <Compile Include="Model\Stream\IProtocolStreamObjectReadOperations{TId,TObject}.cs" />
-    <Compile Include="Model\Stream\IReadOnlyStream{TId}.cs" />
-    <Compile Include="Model\Stream\StreamFactory{TId}.cs" />
-    <Compile Include="Model\Stream\StreamRepresentation{TId}.cs" />
-    <Compile Include="Model\Stream\StreamRepresentation{TId}.designer.cs">
-      <DependentUpon>StreamRepresentation{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Stream\TypeVersionMatchStrategy.cs" />
     <Compile Include="Model\Protocol\IGetProtocol.cs" />
-    <Compile Include="Implementations\Events\CancelBlock.cs" />
-    <Compile Include="Implementations\Events\Block.cs" />
-    <Compile Include="Implementations\Events\Pruned.cs" />
-    <Compile Include="Implementations\Events\Pruning.cs" />
-    <Compile Include="Implementations\Events\PruneRequested.cs" />
-    <Compile Include="Implementations\Events\Created{TObject}.cs" />
-    <Compile Include="Model\Event\EventBase.cs" />
-    <Compile Include="Model\Stream\IProtocolFactoryStreamObjectReadOperations{TId}.cs" />
-    <Compile Include="Model\Stream\ExistingStreamEncounteredStrategy.cs" />
-    <Compile Include="Model\Stream\IProtocolStreamObjectWriteOperations{TId,TObject}.cs" />
-    <Compile Include="Model\Stream\IStream{TId}.cs" />
-    <Compile Include="Model\ResourceLocation\ResourceLocatorBase.cs" />
-    <Compile Include="Implementations\Events\Executing{TOperation}.cs" />
-    <Compile Include="Implementations\Events\Executed{TOperation}.cs" />
-    <Compile Include="Implementations\Operations\CreateStreamOp{TId}.cs" />
+    <Compile Include="Implementations\Events\RecordedObjectEvent{TId,TObject}.cs" />
+    <Compile Include="Model\Event\EventBase{TId}.cs" />
+    <Compile Include="Implementations\Events\ExecutingOpEvent{TId,TOperation}.cs" />
+    <Compile Include="Implementations\Events\ExecutedOpEvent{TId,TOperation}.cs" />
     <Compile Include="Implementations\Operations\DiscoverOp{TObject,TReturn}.cs" />
     <Compile Include="Implementations\Operations\GetIdFromObjectOp{TId,TObject}.cs" />
     <Compile Include="Implementations\Operations\GetLatestByIdAndTypeOp{TId,TObject}.cs" />
     <Compile Include="Implementations\Operations\GetProtocolByTypeOp.cs" />
     <Compile Include="Implementations\Operations\GetReturningProtocolOp{TOperation,TReturn}.cs" />
-    <Compile Include="Implementations\Operations\GetStreamFromRepresentationOp{TId}.cs" />
-    <Compile Include="Implementations\Operations\GetResourceLocatorByIdOp{TId}.cs" />
     <Compile Include="Implementations\Operations\GetTagsFromObjectOp{TObject}.cs" />
-    <Compile Include="Implementations\Operations\GetAllResourceLocatorsOp.cs" />
     <Compile Include="Implementations\Operations\GetVoidProtocolOp{TOperation}.cs" />
-    <Compile Include="Implementations\Operations\HandleEventOp{TEvent}.cs" />
+    <Compile Include="Implementations\Operations\HandleEventOp{TEvent,TEventId}.cs" />
     <Compile Include="Implementations\Operations\PutOp{TObject}.cs" />
     <Compile Include="Model\Protocol\IProtocol.cs" />
     <Compile Include="Model\Operation\IOperation.cs" />
@@ -276,8 +169,6 @@
     <Compile Include="Implementations\Protocols\GetTagsFromObjectProtocol{TObject}.cs" />
     <Compile Include="Implementations\Protocols\LambdaReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Implementations\Protocols\LambdaVoidProtocol{TOperation}.cs" />
-    <Compile Include="Implementations\Protocols\SingleResourceLocatorProtocol{TId}.cs" />
-    <Compile Include="Implementations\MemoryStream\MemoryStream{TId}.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />

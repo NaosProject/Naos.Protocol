@@ -11,7 +11,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     public interface IGetVoidProtocol<TOperation> : IGetProtocol
-        where TOperation : VoidOperationBase
+        where TOperation : IVoidOperation
     {
         /// <summary>
         /// Gets the protocol.

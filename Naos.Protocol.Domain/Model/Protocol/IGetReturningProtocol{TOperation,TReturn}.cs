@@ -12,7 +12,7 @@ namespace Naos.Protocol.Domain
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     /// <typeparam name="TReturn">The type that the operation return.</typeparam>
     public interface IGetReturningProtocol<TOperation, TReturn> : IGetProtocol
-        where TOperation : ReturningOperationBase<TReturn>
+        where TOperation : IReturningOperation<TReturn>
     {
         /// <summary>
         /// Gets the protocol.

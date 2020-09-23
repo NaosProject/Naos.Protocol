@@ -12,7 +12,7 @@ namespace Naos.Protocol.Domain
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
     /// <typeparam name="TReturn">The type that the operation returns.</typeparam>
     public interface ISyncAndAsyncReturningProtocol<TOperation, TReturn> : IReturningProtocol<TOperation, TReturn>, IAsyncReturningProtocol<TOperation, TReturn>
-        where TOperation : ReturningOperationBase<TReturn>
+        where TOperation : IReturningOperation<TReturn>
     {
     }
 }

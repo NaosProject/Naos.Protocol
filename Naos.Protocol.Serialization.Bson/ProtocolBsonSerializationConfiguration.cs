@@ -17,10 +17,9 @@ namespace Naos.Protocol.Serialization.Bson
         /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForBson> TypesToRegisterForBson => new[]
                                                                                                 {
-                                                                                                    typeof(EventBase).ToTypeToRegisterForBson(),
-                                                                                                    typeof(VoidOperationBase).ToTypeToRegisterForBson(),
-                                                                                                    typeof(ReturningOperationBase<>).ToTypeToRegisterForBson(),
-                                                                                                    typeof(ResourceLocatorBase).ToTypeToRegisterForBson(),
+                                                                                                    typeof(IEvent<>).ToTypeToRegisterForBson(),
+                                                                                                    typeof(IVoidOperation).ToTypeToRegisterForBson(),
+                                                                                                    typeof(IReturningOperation<>).ToTypeToRegisterForBson(),
                                                                                                 };
     }
 }

@@ -104,8 +104,8 @@
     <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.73.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.73\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.58.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.58\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.62.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.62\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -229,149 +229,16 @@
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="BlockTest.cs" />
-    <Compile Include="BlockTest.designer.cs">
-      <DependentUpon>BlockTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CancelBlockTest.cs" />
-    <Compile Include="CancelBlockTest.designer.cs">
-      <DependentUpon>CancelBlockTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="ConsoleAbstraction.cs" />
-    <Compile Include="Created{TObject}Test.cs" />
-    <Compile Include="Created{TObject}Test.designer.cs">
-      <DependentUpon>Created{TObject}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CreateStreamOp{TId}Test.cs" />
-    <Compile Include="CreateStreamOp{TId}Test.designer.cs">
-      <DependentUpon>CreateStreamOp{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DiscoverOp{TObject,TReturn}Test.cs" />
-    <Compile Include="DiscoverOp{TObject,TReturn}Test.designer.cs">
-      <DependentUpon>DiscoverOp{TObject,TReturn}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EventBaseTest.cs" />
-    <Compile Include="EventBaseTest.designer.cs">
-      <DependentUpon>EventBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Executed{TOperation}Test.cs" />
-    <Compile Include="Executed{TOperation}Test.designer.cs">
-      <DependentUpon>Executed{TOperation}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Executing{TOperation}Test.cs" />
-    <Compile Include="Executing{TOperation}Test.designer.cs">
-      <DependentUpon>Executing{TOperation}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllResourceLocatorsOpTest.cs" />
-    <Compile Include="GetAllResourceLocatorsOpTest.designer.cs">
-      <DependentUpon>GetAllResourceLocatorsOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetIdFromObjectOp{TId,TObject}Test.cs" />
-    <Compile Include="GetIdFromObjectOp{TId,TObject}Test.designer.cs">
-      <DependentUpon>GetIdFromObjectOp{TId,TObject}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetLatestByIdAndTypeOp{TId,TObject}Test.cs" />
-    <Compile Include="GetLatestByIdAndTypeOp{TId,TObject}Test.designer.cs">
-      <DependentUpon>GetLatestByIdAndTypeOp{TId,TObject}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetOp{TObject}Test.cs" />
-    <Compile Include="GetOp{TObject}Test.designer.cs">
-      <DependentUpon>GetOp{TObject}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetProtocolByTypeOpTest.cs" />
-    <Compile Include="GetProtocolByTypeOpTest.designer.cs">
-      <DependentUpon>GetProtocolByTypeOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetResourceLocatorByIdOp{TId}Test.cs" />
-    <Compile Include="GetResourceLocatorByIdOp{TId}Test.designer.cs">
-      <DependentUpon>GetResourceLocatorByIdOp{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetReturningProtocolOp{TOperation,TReturn}Test.cs" />
-    <Compile Include="GetReturningProtocolOp{TOperation,TReturn}Test.designer.cs">
-      <DependentUpon>GetReturningProtocolOp{TOperation,TReturn}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetStreamFromRepresentationOp{TId}Test.cs" />
-    <Compile Include="GetStreamFromRepresentationOp{TId}Test.designer.cs">
-      <DependentUpon>GetStreamFromRepresentationOp{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetTagsFromObjectOp{TObject}Test.cs" />
-    <Compile Include="GetTagsFromObjectOp{TObject}Test.designer.cs">
-      <DependentUpon>GetTagsFromObjectOp{TObject}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetVoidProtocolOp{TOperation}Test.cs" />
-    <Compile Include="GetVoidProtocolOp{TOperation}Test.designer.cs">
-      <DependentUpon>GetVoidProtocolOp{TOperation}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Handled{TEvent}Test.cs" />
-    <Compile Include="Handled{TEvent}Test.designer.cs">
-      <DependentUpon>Handled{TEvent}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="HandleEventOp{TEvent}Test.cs" />
-    <Compile Include="HandleEventOp{TEvent}Test.designer.cs">
-      <DependentUpon>HandleEventOp{TEvent}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Handling{TEvent}Test.cs" />
-    <Compile Include="Handling{TEvent}Test.designer.cs">
-      <DependentUpon>Handling{TEvent}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MemoryRecord{TId}Test.cs" />
-    <Compile Include="MemoryRecord{TId}Test.designer.cs">
-      <DependentUpon>MemoryRecord{TId}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\SpecificProtocolBaseTests.cs" />
-    <Compile Include="NullResourceLocatorTest.cs" />
-    <Compile Include="NullResourceLocatorTest.designer.cs">
-      <DependentUpon>NullResourceLocatorTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProtocolDummyFactory.designer.cs">
-      <DependentUpon>ProtocolDummyFactory.cs</DependentUpon>
-    </Compile>
     <Compile Include="ProtocolDummyFactoryTest.designer.cs">
       <DependentUpon>ProtocolDummyFactoryTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="PrunedTest.cs" />
-    <Compile Include="PrunedTest.designer.cs">
-      <DependentUpon>PrunedTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PruneRequestedTest.cs" />
-    <Compile Include="PruneRequestedTest.designer.cs">
-      <DependentUpon>PruneRequestedTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PruningTest.cs" />
-    <Compile Include="PruningTest.designer.cs">
-      <DependentUpon>PruningTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PutOp{TObject}Test.cs" />
-    <Compile Include="PutOp{TObject}Test.designer.cs">
-      <DependentUpon>PutOp{TObject}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ResourceLocatorBaseTest.cs" />
-    <Compile Include="ResourceLocatorBaseTest.designer.cs">
-      <DependentUpon>ResourceLocatorBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ReturningOperationBase{TReturn}Test.cs" />
-    <Compile Include="ReturningOperationBase{TReturn}Test.designer.cs">
-      <DependentUpon>ReturningOperationBase{TReturn}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SerializationConfigurationTypes.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ProtocolDummyFactory.cs" />
     <Compile Include="ProtocolDummyFactoryTest.cs" />
     <AdditionalFiles Include=".analyzers\stylecop.json" />
-    <Compile Include="StreamRepresentation{TId}Test.cs" />
-    <Compile Include="StreamRepresentation{TId}Test.designer.cs">
-      <DependentUpon>StreamRepresentation{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ThrowIfResourceUnavailableOpTest.cs" />
-    <Compile Include="ThrowIfResourceUnavailableOpTest.designer.cs">
-      <DependentUpon>ThrowIfResourceUnavailableOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="VoidOperationBaseTest.cs" />
-    <Compile Include="VoidOperationBaseTest.designer.cs">
-      <DependentUpon>VoidOperationBaseTest.cs</DependentUpon>
-    </Compile>
     <None Include=".analyzers\test.ruleset" />
     <None Include="packages.config" />
     <None Include="ProtocolDummyFactory.recipe-nuspec" />
