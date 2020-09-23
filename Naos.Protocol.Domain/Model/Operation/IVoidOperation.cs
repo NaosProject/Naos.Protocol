@@ -6,7 +6,7 @@
 
 namespace Naos.Protocol.Domain
 {
-    using Naos.Protocol.Domain.Internal;
+    using Naos.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Interface necessary for a void operation to connect to a protocol.

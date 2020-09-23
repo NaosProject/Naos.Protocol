@@ -51,7 +51,7 @@ namespace Naos.Bootstrapper
         }
 
         /// <summary>
-        /// Runs all of the tests found (and not skipped) in the provided type.
+        /// Runs the type of all tests found (and not skipped) in the provided type.
         /// </summary>
         /// <param name="typeToRunTestsFrom">The type to run tests from.</param>
         /// <returns>A value indicating whether or not the run was successful.</returns>
@@ -63,25 +63,6 @@ namespace Naos.Bootstrapper
             var typeNameToRunTestsFrom = typeToRunTestsFrom.FullName;
 
             var testAssemblyPath = typeToRunTestsFrom.Assembly.GetCodeBaseAsPathInsteadOfUri();
-            return this.RunTests(testAssemblyPath, typeNameToRunTestsFrom);
-        }
-
-        /// <summary>
-        /// Runs all of the tests in the current assembly.
-        /// </summary>
-        /// <returns>A value indicating whether or not the run was successful.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Xunit", Justification = "Spelling/name is correct.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "ToRun", Justification = "Spelling/name is correct.")]
-        public bool RunAllTestsInAssemblyUsingXunit()
-        {
-            var assemblyPath = this.GetType().Assembly.GetCodeBaseAsPathInsteadOfUri();
-            return this.RunTests(assemblyPath);
-        }
-
-        private bool RunTests(
-            string testAssemblyPath,
-            string typeName = null)
-        {
             using (var runner = AssemblyRunner.WithAppDomain(testAssemblyPath))
             {
                 runner.OnDiscoveryComplete = this.OnDiscoveryComplete;
@@ -96,7 +77,7 @@ namespace Naos.Bootstrapper
                     this.announcer(" * Discovering tests in type.");
                 }
 
-                runner.Start(typeName, maxParallelThreads: 1);
+                runner.Start(typeNameToRunTestsFrom);
 
                 this.finished.WaitOne();
                 this.finished.Dispose();

@@ -8,7 +8,7 @@ namespace Naos.Protocol.Domain
 {
     using System;
     using System.Collections.Generic;
-    using Naos.Protocol.Domain.Internal;
+    using Naos.CodeAnalysis.Recipes;
 
     /// <summary>
     /// Event indicating that an event was handled.
