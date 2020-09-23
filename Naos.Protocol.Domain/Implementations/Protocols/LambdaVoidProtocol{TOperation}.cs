@@ -16,7 +16,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TOperation">Type of operation.</typeparam>
     public class LambdaVoidProtocol<TOperation> : ISyncAndAsyncVoidProtocol<TOperation>
-    where TOperation : VoidOperationBase
+    where TOperation : IVoidOperation
     {
         private readonly Action<TOperation> synchronousLambda;
 
