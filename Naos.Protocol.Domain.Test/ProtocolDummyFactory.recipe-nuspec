@@ -6,11 +6,11 @@
     <tags>dummyfactory dummy factory fakeiteasy autofixture snippet codeinclude utility shared recipe Protocol</tags>
     <dependencies>
       <dependency id="Naos.Protocol.Domain" version="$version$" />
+      <dependency id="Naos.CodeAnalysis.Recipes.SuppressBecause" version="1.0.125" />
       <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.129" />
     </dependencies>
   </metadata>
   <files>
-    <file src=".analyzers\SuppressBecause.cs" target="content\net462\.recipes\Naos.Protocol\SuppressBecause.cs" />
     <file src="ProtocolDummyFactory.cs" target="content\net462\.recipes\Naos.Protocol\ProtocolDummyFactory.cs" />
     <file src="ProtocolDummyFactory.designer.cs" target="content\net462\.recipes\Naos.Protocol\ProtocolDummyFactory.designer.cs" />
   </files>
