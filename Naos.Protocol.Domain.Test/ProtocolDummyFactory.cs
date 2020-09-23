@@ -54,6 +54,7 @@ namespace Naos.Protocol.Domain.Test
         }
 
         /// <inheritdoc />
+        [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = "This is a stub to be removed when code gen fix finished.")]
         public Priority Priority => throw new NotImplementedException();
     }
 }
