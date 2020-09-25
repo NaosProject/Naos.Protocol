@@ -107,7 +107,15 @@
     <Compile Include=".recipes\Spritely.Redo\RetriableFunction.cs" />
     <Compile Include=".recipes\Spritely.Redo\RetriableFunctionAsync.cs" />
     <Compile Include=".recipes\Spritely.Redo\Using.cs" />
+    <Compile Include="Implementations\Operations\GetAllResourceLocatorsOp.cs" />
+    <Compile Include="Implementations\Operations\GetAllResourceLocatorsOp.designer.cs">
+      <DependentUpon>GetAllResourceLocatorsOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Implementations\Operations\GetOp{TObject}.cs" />
+    <Compile Include="Implementations\Operations\GetResourceLocatorByIdOp{TId}.cs" />
+    <Compile Include="Implementations\Operations\GetResourceLocatorByIdOp{TId}.designer.cs">
+      <DependentUpon>GetResourceLocatorByIdOp{TId}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Enum\TypeVersionMatchStrategy.cs" />
     <Compile Include="Model\Event\EventBase{TId}.designer.cs">
       <DependentUpon>EventBase{TId}.cs</DependentUpon>
@@ -158,11 +166,21 @@
     <Compile Include="Implementations\Operations\PutOp{TObject}.cs" />
     <Compile Include="Model\Protocol\IProtocol.cs" />
     <Compile Include="Model\Operation\IOperation.cs" />
+    <Compile Include="Model\ResourceLocation\IResourceLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implementations\Protocols\GetIdFromObjectProtocol{TId,TObject}.cs" />
     <Compile Include="Implementations\Protocols\GetTagsFromObjectProtocol{TObject}.cs" />
     <Compile Include="Implementations\Protocols\LambdaReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Implementations\Protocols\LambdaVoidProtocol{TOperation}.cs" />
+    <Compile Include="Model\ResourceLocation\IProtocolResourceLocator{TId}.cs" />
+    <Compile Include="Model\ResourceLocation\NullResourceLocator.cs" />
+    <Compile Include="Model\ResourceLocation\NullResourceLocator.designer.cs">
+      <DependentUpon>NullResourceLocator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ResourceLocation\ResourceLocatorBase.cs" />
+    <Compile Include="Model\ResourceLocation\ResourceLocatorBase.designer.cs">
+      <DependentUpon>ResourceLocatorBase.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />
