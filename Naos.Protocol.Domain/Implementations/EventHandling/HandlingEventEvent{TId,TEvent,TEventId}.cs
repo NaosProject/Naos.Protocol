@@ -17,17 +17,17 @@ namespace Naos.Protocol.Domain
     /// <typeparam name="TEvent">The type of the event.</typeparam>
     /// <typeparam name="TEventId">The type of the identifier of the provided event.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1005:AvoidExcessiveParametersOnGenericTypes", Justification = NaosSuppressBecause.CA1005_AvoidExcessiveParametersOnGenericTypes_SpecifiedParametersRequiredForNeededFunctionality)]
-    public partial class Handling<TId, TEvent, TEventId> : EventBase<TId>
+    public partial class HandlingEventEvent<TId, TEvent, TEventId> : EventBase<TId>
         where TEvent : class, IEvent<TEventId>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Handling{TId, TEvent, TEventId}"/> class.
+        /// Initializes a new instance of the <see cref="HandlingEventEvent{TId,TEvent,TEventId}"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="timestampUtc">The timestamp in UTC.</param>
         /// <param name="handledEvent">The handled event.</param>
         /// <param name="tags">The optional tags.</param>
-        public Handling(
+        public HandlingEventEvent(
             TId id,
             DateTime timestampUtc,
             TEvent handledEvent,
