@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GetOp{TObject}.cs" company="Naos Project">
+// <copyright file="ClearCacheOp.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,15 +9,14 @@ namespace Naos.Protocol.Domain
     using static System.FormattableString;
 
     /// <summary>
-    /// Abstract base of an operation.
+    /// Clears the cache.
     /// </summary>
-    /// <typeparam name="TObject">Type of data being written.</typeparam>
-    public partial class GetOp<TObject> : ReturningOperationBase<TObject>
+    public partial class ClearCacheOp : VoidOperationBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetOp{TObject}"/> class.
+        /// Initializes a new instance of the <see cref="ClearCacheOp"/> class.
         /// </summary>
-        public GetOp()
+        public ClearCacheOp()
         {
         }
     }

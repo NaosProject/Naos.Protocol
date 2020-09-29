@@ -19,6 +19,7 @@ namespace Naos.Protocol.Serialization.Json
                                                                                                 {
                                                                                                     typeof(IEvent<>).ToTypeToRegisterForJson(),
                                                                                                     typeof(IOperation).ToTypeToRegisterForJson(),
+                                                                                                    typeof(IResourceLocator).ToTypeToRegisterForJson(),
                                                                                                 };
     }
 }
