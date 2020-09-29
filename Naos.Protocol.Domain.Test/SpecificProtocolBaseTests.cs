@@ -45,8 +45,8 @@ namespace Naos.Protocol.Domain.Test
 
             secondResult.MustForTest().NotBeNull().And().BeOfType<NullResourceLocator>();
             secondStatus.Size.MustForTest().BeEqualTo(1L);
-            secondStatus.DateRangeOfCachedObjectsUtc.StartDateTimeInUtc.MustForTest().BeGreaterThan(firstStop);
-            secondStatus.DateRangeOfCachedObjectsUtc.EndDateTimeInUtc.MustForTest().BeLessThan(secondStop);
+            secondStatus.DateRangeOfCachedObjectsUtc.StartDateTimeInUtc.MustForTest().BeGreaterThanOrEqualTo(firstStop);
+            secondStatus.DateRangeOfCachedObjectsUtc.EndDateTimeInUtc.MustForTest().BeLessThanOrEqualTo(secondStop);
             backingCalled.MustForTest().BeEqualTo(1L);
 
             // Third Act/Assert
