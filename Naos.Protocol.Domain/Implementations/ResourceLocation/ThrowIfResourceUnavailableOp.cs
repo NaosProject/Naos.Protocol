@@ -7,7 +7,6 @@
 namespace Naos.Protocol.Domain
 {
     using System;
-    using OBeautifulCode.Type;
 
     /// <summary>
     /// Checks to see if a resource is available and throws an exception if it is not.
@@ -19,7 +18,7 @@ namespace Naos.Protocol.Domain
         /// </summary>
         /// <param name="resourceLocator">The stream.</param>
         public ThrowIfResourceUnavailableOp(
-            IResourceLocator resourceLocator)
+            ResourceLocatorBase resourceLocator)
         {
             this.ResourceLocator = resourceLocator ?? throw new ArgumentNullException(nameof(resourceLocator));
         }
@@ -28,6 +27,6 @@ namespace Naos.Protocol.Domain
         /// Gets the stream.
         /// </summary>
         /// <value>The stream.</value>
-        public IResourceLocator ResourceLocator { get; private set; }
+        public ResourceLocatorBase ResourceLocator { get; private set; }
     }
 }

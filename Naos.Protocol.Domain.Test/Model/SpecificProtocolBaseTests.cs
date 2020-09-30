@@ -15,7 +15,7 @@ namespace Naos.Protocol.Domain.Test
     /// <summary>
     /// TODO: Starting point for new project.
     /// </summary>
-    public static partial class SpecificProtocolBaseTests
+    public static partial class SerializationConfigurationTypes
     {
         [Fact]
         public static async Task SyncOnlyVoidProtocol_ExecuteAsync()

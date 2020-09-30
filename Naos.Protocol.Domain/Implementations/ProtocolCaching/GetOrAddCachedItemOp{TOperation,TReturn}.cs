@@ -21,23 +21,15 @@ namespace Naos.Protocol.Domain
         /// Initializes a new instance of the <see cref="GetOrAddCachedItemOp{TOperation, TReturn}"/> class.
         /// </summary>
         /// <param name="operation">The operation.</param>
-        /// <param name="backingProtocol">The backing protocol if there is no item in the cache.</param>
         public GetOrAddCachedItemOp(
-            TOperation operation,
-            ISyncAndAsyncReturningProtocol<TOperation, TReturn> backingProtocol)
+            TOperation operation)
         {
             if (operation == null)
             {
                 throw new ArgumentNullException(nameof(operation));
             }
 
-            if (backingProtocol == null)
-            {
-                throw new ArgumentNullException(nameof(backingProtocol));
-            }
-
             this.Operation = operation;
-            this.BackingProtocol = backingProtocol;
         }
 
         /// <summary>
@@ -45,11 +37,5 @@ namespace Naos.Protocol.Domain
         /// </summary>
         /// <value>The operation.</value>
         public TOperation Operation { get; private set; }
-
-        /// <summary>
-        /// Gets the backing protocol.
-        /// </summary>
-        /// <value>The backing protocol.</value>
-        public ISyncAndAsyncReturningProtocol<TOperation, TReturn> BackingProtocol { get; private set; }
     }
 }

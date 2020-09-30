@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain
     /// Represents an operation that returns some object.
     /// </summary>
     /// <typeparam name="TReturn">The type of the object that the operation returns.</typeparam>
-    public abstract partial class ReturningOperationBase<TReturn> : IReturningOperation<TReturn>, IModelViaCodeGen
+    public abstract partial class ReturningOperationBase<TReturn> : OperationBase, IReturningOperation<TReturn>, IModelViaCodeGen
     {
     }
 }

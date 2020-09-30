@@ -101,6 +101,54 @@
     <Compile Include=".recipes\Spritely.Redo\RetriableFunction.cs" />
     <Compile Include=".recipes\Spritely.Redo\RetriableFunctionAsync.cs" />
     <Compile Include=".recipes\Spritely.Redo\Using.cs" />
+    <Compile Include="Implementations\EventHandling\ExecutedOpEvent{TId,TOperation}.designer.cs">
+      <DependentUpon>ExecutedOpEvent{TId,TOperation}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\EventHandling\ExecutingOpEvent{TId,TOperation}.designer.cs">
+      <DependentUpon>ExecutingOpEvent{TId,TOperation}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\EventHandling\HandledEventEvent{TId,TEvent,TEventId}.designer.cs">
+      <DependentUpon>HandledEventEvent{TId,TEvent,TEventId}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\EventHandling\HandleEventOp{TEvent,TEventId}.designer.cs">
+      <DependentUpon>HandleEventOp{TEvent,TEventId}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\EventHandling\HandlingEventEvent{TId,TEvent,TEventId}.designer.cs">
+      <DependentUpon>HandlingEventEvent{TId,TEvent,TEventId}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\EventHandling\RecordedObjectEvent{TId,TObject}.designer.cs">
+      <DependentUpon>RecordedObjectEvent{TId,TObject}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\ModelInspection\GetIdFromObjectOp{TId,TObject}.designer.cs">
+      <DependentUpon>GetIdFromObjectOp{TId,TObject}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\ModelInspection\GetTagsFromObjectOp{TObject}.designer.cs">
+      <DependentUpon>GetTagsFromObjectOp{TObject}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\ProtcolComposing\GetProtocolByTypeOp.designer.cs">
+      <DependentUpon>GetProtocolByTypeOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\ProtcolComposing\GetReturningProtocolOp{TOperation,TReturn}.designer.cs">
+      <DependentUpon>GetReturningProtocolOp{TOperation,TReturn}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\ProtcolComposing\GetVoidProtocolOp{TOperation}.designer.cs">
+      <DependentUpon>GetVoidProtocolOp{TOperation}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\ProtocolCaching\CacheResult{TOperation,TReturn}.designer.cs">
+      <DependentUpon>CacheResult{TOperation,TReturn}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\ProtocolCaching\CacheStatusResult.designer.cs">
+      <DependentUpon>CacheStatusResult.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\ProtocolCaching\ClearCacheOp.designer.cs">
+      <DependentUpon>ClearCacheOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\ProtocolCaching\GetCacheStatusOp.designer.cs">
+      <DependentUpon>GetCacheStatusOp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\ProtocolCaching\GetOrAddCachedItemOp{TOperation,TReturn}.designer.cs">
+      <DependentUpon>GetOrAddCachedItemOp{TOperation,TReturn}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Implementations\ProtocolCaching\MemoryCachingReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Implementations\ProtocolCaching\CacheResult{TOperation,TReturn}.cs" />
     <Compile Include="Implementations\ProtocolCaching\GetCacheStatusOp.cs" />
@@ -117,14 +165,24 @@
     <Compile Include="Implementations\ProtocolCaching\ClearCacheOp.cs" />
     <Compile Include="Implementations\ProtocolCaching\OperationResultCacheProtocolBase{TOperation,TReturn}.cs" />
     <Compile Include="Implementations\ResourceLocation\SingleResourceLocatorProtocol{TId}.cs" />
+    <Compile Include="Implementations\ResourceLocation\ThrowIfResourceUnavailableOp.designer.cs">
+      <DependentUpon>ThrowIfResourceUnavailableOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Enum\TypeVersionMatchStrategy.cs" />
+    <Compile Include="Model\Event\EventBase{TId}.designer.cs">
+      <DependentUpon>EventBase{TId}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Event\IEvent{TId}.cs" />
     <Compile Include="Model\Operation\IVoidOperation.cs" />
     <Compile Include="Model\Operation\IReturningOperation{TReturn}.cs" />
+    <Compile Include="Model\Operation\OperationBase.designer.cs">
+      <DependentUpon>OperationBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Operation\ReturningOperationBase{TReturn}.designer.cs">
       <DependentUpon>ReturningOperationBase{TReturn}.cs</DependentUpon>
     </Compile>
     <Compile Include="Implementations\ResourceLocation\ThrowIfResourceUnavailableOp.cs" />
+    <Compile Include="Model\Operation\OperationBase.cs" />
     <Compile Include="Model\Operation\VoidOperationBase.designer.cs">
       <DependentUpon>VoidOperationBase.cs</DependentUpon>
     </Compile>

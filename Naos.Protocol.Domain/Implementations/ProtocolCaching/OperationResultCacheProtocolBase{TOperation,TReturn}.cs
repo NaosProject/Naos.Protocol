@@ -23,8 +23,19 @@ namespace Naos.Protocol.Domain
         ISyncAndAsyncReturningProtocol<GetCacheStatusOp, CacheStatusResult>
     where TOperation : IReturningOperation<TReturn>
     {
+        private readonly ISyncAndAsyncReturningProtocol<TOperation, TReturn> protocol;
         private readonly object syncCache = new object();
         private readonly IDictionary<TOperation, CacheResult<TOperation, TReturn>> operationToCacheResultMap = new Dictionary<TOperation, CacheResult<TOperation, TReturn>>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OperationResultCacheProtocolBase{TOperation, TReturn}"/> class.
+        /// </summary>
+        /// <param name="protocol">The protocol.</param>
+        protected OperationResultCacheProtocolBase(
+            ISyncAndAsyncReturningProtocol<TOperation, TReturn> protocol)
+        {
+            this.protocol = protocol ?? throw new ArgumentNullException(nameof(protocol));
+        }
 
         /// <inheritdoc />
         public void Execute(
@@ -62,7 +73,7 @@ namespace Naos.Protocol.Domain
                 }
                 else
                 {
-                    var newResult = operation.BackingProtocol.Execute(operation.Operation);
+                    var newResult = this.protocol.Execute(operation.Operation);
                     var newCacheResult = new CacheResult<TOperation, TReturn>(operation.Operation, newResult, DateTime.UtcNow);
                     this.operationToCacheResultMap.Add(operation.Operation, newCacheResult);
                     return newCacheResult;

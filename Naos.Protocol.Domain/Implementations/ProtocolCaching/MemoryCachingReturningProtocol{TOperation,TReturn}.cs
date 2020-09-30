@@ -19,22 +19,20 @@ namespace Naos.Protocol.Domain
           ISyncAndAsyncReturningProtocol<TOperation, TReturn>
         where TOperation : IReturningOperation<TReturn>
     {
-        private readonly ISyncAndAsyncReturningProtocol<TOperation, TReturn> protocol;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryCachingReturningProtocol{TOperation,TReturn}"/> class.
         /// </summary>
         /// <param name="protocol">The protocol to cache.</param>
         public MemoryCachingReturningProtocol(
             ISyncAndAsyncReturningProtocol<TOperation, TReturn> protocol)
+            : base(protocol)
         {
-            this.protocol = protocol ?? throw new ArgumentNullException(nameof(protocol));
         }
 
         /// <inheritdoc />
         public TReturn Execute(TOperation operation)
         {
-            var getOrAddOp = new GetOrAddCachedItemOp<TOperation, TReturn>(operation, this.protocol);
+            var getOrAddOp = new GetOrAddCachedItemOp<TOperation, TReturn>(operation);
             var cacheResult = this.Execute(getOrAddOp);
             return cacheResult.CachedObject;
         }
