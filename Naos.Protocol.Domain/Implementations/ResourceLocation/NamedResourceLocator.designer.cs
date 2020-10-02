@@ -22,15 +22,15 @@ namespace Naos.Protocol.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class GetResourceLocatorByIdOp<TId> : IModel<GetResourceLocatorByIdOp<TId>>
+    public partial class NamedResourceLocator : IModel<NamedResourceLocator>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="GetResourceLocatorByIdOp{TId}"/> are equal.
+        /// Determines whether two objects of type <see cref="NamedResourceLocator"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(GetResourceLocatorByIdOp<TId> left, GetResourceLocatorByIdOp<TId> right)
+        public static bool operator ==(NamedResourceLocator left, NamedResourceLocator right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="GetResourceLocatorByIdOp{TId}"/> are not equal.
+        /// Determines whether two objects of type <see cref="NamedResourceLocator"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(GetResourceLocatorByIdOp<TId> left, GetResourceLocatorByIdOp<TId> right) => !(left == right);
+        public static bool operator !=(NamedResourceLocator left, NamedResourceLocator right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(GetResourceLocatorByIdOp<TId> other)
+        public bool Equals(NamedResourceLocator other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -68,27 +68,27 @@ namespace Naos.Protocol.Domain
                 return false;
             }
 
-            var result = this.Id.IsEqualTo(other.Id);
+            var result = this.Name.IsEqualTo(other.Name, StringComparer.Ordinal);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as GetResourceLocatorByIdOp<TId>);
+        public override bool Equals(object obj) => this == (obj as NamedResourceLocator);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Id)
+            .Hash(this.Name)
             .Value;
 
         /// <inheritdoc />
-        public new GetResourceLocatorByIdOp<TId> DeepClone() => (GetResourceLocatorByIdOp<TId>)this.DeepCloneInternal();
+        public new NamedResourceLocator DeepClone() => (NamedResourceLocator)this.DeepCloneInternal();
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="Id" />.
+        /// Deep clones this object with a new <see cref="Name" />.
         /// </summary>
-        /// <param name="id">The new <see cref="Id" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="GetResourceLocatorByIdOp{TId}" /> using the specified <paramref name="id" /> for <see cref="Id" /> and a deep clone of every other property.</returns>
+        /// <param name="name">The new <see cref="Name" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="NamedResourceLocator" /> using the specified <paramref name="name" /> for <see cref="Name" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
@@ -104,56 +104,19 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public GetResourceLocatorByIdOp<TId> DeepCloneWithId(TId id)
+        public NamedResourceLocator DeepCloneWithName(string name)
         {
-            var result = new GetResourceLocatorByIdOp<TId>(
-                                 id);
+            var result = new NamedResourceLocator(
+                                 name);
 
             return result;
         }
 
         /// <inheritdoc />
-        protected override OperationBase DeepCloneInternal()
+        protected override ResourceLocatorBase DeepCloneInternal()
         {
-            var result = new GetResourceLocatorByIdOp<TId>(
-                                 DeepCloneGeneric(this.Id));
-
-            return result;
-        }
-
-        private static TId DeepCloneGeneric(TId value)
-        {
-            TId result;
-
-            var type = typeof(TId);
-
-            if (type.IsValueType)
-            {
-                result = value;
-            }
-            else
-            {
-                if (ReferenceEquals(value, null))
-                {
-                    result = default;
-                }
-                else if (value is IDeepCloneable<TId> deepCloneableValue)
-                {
-                    result = deepCloneableValue.DeepClone();
-                }
-                else if (value is string valueAsString)
-                {
-                    result = (TId)(object)valueAsString.Clone().ToString();
-                }
-                else if (value is global::System.Version valueAsVersion)
-                {
-                    result = (TId)valueAsVersion.Clone();
-                }
-                else
-                {
-                    throw new NotSupportedException(Invariant($"I do not know how to deep clone an object of type '{type.ToStringReadable()}'"));
-                }
-            }
+            var result = new NamedResourceLocator(
+                                 this.Name?.Clone().ToString());
 
             return result;
         }
@@ -162,7 +125,7 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Protocol.Domain.NamedResourceLocator: Name = {this.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.");
 
             return result;
         }

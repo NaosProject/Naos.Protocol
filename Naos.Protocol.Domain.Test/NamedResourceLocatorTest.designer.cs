@@ -32,103 +32,117 @@ namespace Naos.Protocol.Domain.Test
 
     using static global::System.FormattableString;
 
-    public static partial class GetTagsFromObjectOpTest
+    public static partial class NamedResourceLocatorTest
     {
-        private static readonly StringRepresentationTestScenarios<GetTagsFromObjectOp<Version>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<GetTagsFromObjectOp<Version>>()
+        private static readonly StringRepresentationTestScenarios<NamedResourceLocator> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<NamedResourceLocator>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<GetTagsFromObjectOp<Version>>
+                new StringRepresentationTestScenario<NamedResourceLocator>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<GetTagsFromObjectOp<Version>>();
+                        var systemUnderTest = A.Dummy<NamedResourceLocator>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<GetTagsFromObjectOp<Version>>
+                        var result = new SystemUnderTestExpectedStringRepresentation<NamedResourceLocator>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.GetTagsFromObjectOp<Version>: ObjectToDetermineTagsFrom = {systemUnderTest.ObjectToDetermineTagsFrom?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.NamedResourceLocator: Name = {systemUnderTest.Name?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<GetTagsFromObjectOp<Version>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<GetTagsFromObjectOp<Version>>()
+        private static readonly ConstructorArgumentValidationTestScenarios<NamedResourceLocator> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<NamedResourceLocator>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<GetTagsFromObjectOp<Version>>
+                new ConstructorArgumentValidationTestScenario<NamedResourceLocator>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'objectToDetermineTagsFrom' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'name' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var result = new GetTagsFromObjectOp<Version>(
+                        var result = new NamedResourceLocator(
                                              null);
 
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "objectToDetermineTagsFrom" },
+                    ExpectedExceptionMessageContains = new[] { "name" },
+                })
+            .AddScenario(() =>
+                new ConstructorArgumentValidationTestScenario<NamedResourceLocator>
+                {
+                    Name = "constructor should throw ArgumentException when parameter 'name' is white space scenario",
+                    ConstructionFunc = () =>
+                    {
+                        var result = new NamedResourceLocator(
+                                             Invariant($"  {Environment.NewLine}  "));
+
+                        return result;
+                    },
+                    ExpectedExceptionType = typeof(ArgumentException),
+                    ExpectedExceptionMessageContains = new[] { "name", "white space" },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<GetTagsFromObjectOp<Version>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<GetTagsFromObjectOp<Version>>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<NamedResourceLocator> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<NamedResourceLocator>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<GetTagsFromObjectOp<Version>>
+                new ConstructorPropertyAssignmentTestScenario<NamedResourceLocator>
                 {
-                    Name = "ObjectToDetermineTagsFrom should return same 'objectToDetermineTagsFrom' parameter passed to constructor when getting",
+                    Name = "Name should return same 'name' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<GetTagsFromObjectOp<Version>>();
+                        var referenceObject = A.Dummy<NamedResourceLocator>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<GetTagsFromObjectOp<Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<NamedResourceLocator>
                         {
-                            SystemUnderTest = new GetTagsFromObjectOp<Version>(
-                                                      referenceObject.ObjectToDetermineTagsFrom),
-                            ExpectedPropertyValue = referenceObject.ObjectToDetermineTagsFrom,
+                            SystemUnderTest = new NamedResourceLocator(
+                                                      referenceObject.Name),
+                            ExpectedPropertyValue = referenceObject.Name,
                         };
 
                         return result;
                     },
-                    PropertyName = "ObjectToDetermineTagsFrom",
+                    PropertyName = "Name",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<GetTagsFromObjectOp<Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<GetTagsFromObjectOp<Version>>()
+        private static readonly DeepCloneWithTestScenarios<NamedResourceLocator> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<NamedResourceLocator>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<GetTagsFromObjectOp<Version>>
+                new DeepCloneWithTestScenario<NamedResourceLocator>
                 {
-                    Name = "DeepCloneWithObjectToDetermineTagsFrom should deep clone object and replace ObjectToDetermineTagsFrom with the provided objectToDetermineTagsFrom",
-                    WithPropertyName = "ObjectToDetermineTagsFrom",
+                    Name = "DeepCloneWithName should deep clone object and replace Name with the provided name",
+                    WithPropertyName = "Name",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<GetTagsFromObjectOp<Version>>();
+                        var systemUnderTest = A.Dummy<NamedResourceLocator>();
 
-                        var referenceObject = A.Dummy<GetTagsFromObjectOp<Version>>().ThatIs(_ => !systemUnderTest.ObjectToDetermineTagsFrom.IsEqualTo(_.ObjectToDetermineTagsFrom));
+                        var referenceObject = A.Dummy<NamedResourceLocator>().ThatIs(_ => !systemUnderTest.Name.IsEqualTo(_.Name));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<GetTagsFromObjectOp<Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<NamedResourceLocator>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.ObjectToDetermineTagsFrom,
+                            DeepCloneWithValue = referenceObject.Name,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly GetTagsFromObjectOp<Version> ReferenceObjectForEquatableTestScenarios = A.Dummy<GetTagsFromObjectOp<Version>>();
+        private static readonly NamedResourceLocator ReferenceObjectForEquatableTestScenarios = A.Dummy<NamedResourceLocator>();
 
-        private static readonly EquatableTestScenarios<GetTagsFromObjectOp<Version>> EquatableTestScenarios = new EquatableTestScenarios<GetTagsFromObjectOp<Version>>()
+        private static readonly EquatableTestScenarios<NamedResourceLocator> EquatableTestScenarios = new EquatableTestScenarios<NamedResourceLocator>()
             .AddScenario(() =>
-                new EquatableTestScenario<GetTagsFromObjectOp<Version>>
+                new EquatableTestScenario<NamedResourceLocator>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new GetTagsFromObjectOp<Version>[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new NamedResourceLocator[]
                     {
-                        new GetTagsFromObjectOp<Version>(
-                                ReferenceObjectForEquatableTestScenarios.ObjectToDetermineTagsFrom),
+                        new NamedResourceLocator(
+                                ReferenceObjectForEquatableTestScenarios.Name),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new GetTagsFromObjectOp<Version>[]
+                    ObjectsThatAreNotEqualToReferenceObject = new NamedResourceLocator[]
                     {
-                        new GetTagsFromObjectOp<Version>(
-                                A.Dummy<GetTagsFromObjectOp<Version>>().Whose(_ => !_.ObjectToDetermineTagsFrom.IsEqualTo(ReferenceObjectForEquatableTestScenarios.ObjectToDetermineTagsFrom)).ObjectToDetermineTagsFrom),
+                        new NamedResourceLocator(
+                                A.Dummy<NamedResourceLocator>().Whose(_ => !_.Name.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Name)).Name),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -137,17 +151,7 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<HandleEventOp<ExecutedOpEvent<Version, HandleEventOp<ExecutingOpEvent<Version, GetIdFromObjectOp<Version, Version>>, Version>>, Version>>(),
-                        A.Dummy<GetIdFromObjectOp<Version, Version>>(),
-                        A.Dummy<GetProtocolByTypeOp>(),
-                        A.Dummy<GetReturningProtocolOp<GetIdFromObjectOp<Version, Version>, Version>>(),
-                        A.Dummy<GetVoidProtocolOp<HandleEventOp<ExecutedOpEvent<Version, GetIdFromObjectOp<Version, Version>>, Version>>>(),
-                        A.Dummy<ClearCacheOp>(),
-                        A.Dummy<GetCacheStatusOp>(),
-                        A.Dummy<GetOrAddCachedItemOp<GetIdFromObjectOp<Version, Version>, Version>>(),
-                        A.Dummy<GetAllResourceLocatorsOp>(),
-                        A.Dummy<GetResourceLocatorByIdOp<Version>>(),
-                        A.Dummy<ThrowIfResourceUnavailableOp>(),
+                        A.Dummy<NullResourceLocator>(),
                     },
                 });
 
@@ -169,12 +173,12 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void GetTagsFromObjectOp___Should_implement_IModel_of_GetTagsFromObjectOp___When_reflecting()
+            public static void NamedResourceLocator___Should_implement_IModel_of_NamedResourceLocator___When_reflecting()
             {
                 // Arrange
-                var type = typeof(GetTagsFromObjectOp<Version>);
+                var type = typeof(NamedResourceLocator);
 
-                var expectedModelMethods = typeof(IModel<GetTagsFromObjectOp<Version>>)
+                var expectedModelMethods = typeof(IModel<NamedResourceLocator>)
                                           .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy)
                                           .ToList();
 
@@ -186,7 +190,7 @@ namespace Naos.Protocol.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<GetTagsFromObjectOp<Version>>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<NamedResourceLocator>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -204,10 +208,10 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void GetTagsFromObjectOp___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void NamedResourceLocator___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(GetTagsFromObjectOp<Version>);
+                var type = typeof(NamedResourceLocator);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -380,10 +384,10 @@ namespace Naos.Protocol.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<GetTagsFromObjectOp<Version>>();
+                var systemUnderTest = A.Dummy<NamedResourceLocator>();
 
                 // Act
-                var actual = (GetTagsFromObjectOp<Version>)systemUnderTest.Clone();
+                var actual = (NamedResourceLocator)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -407,7 +411,7 @@ namespace Naos.Protocol.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<GetTagsFromObjectOp<Version>>();
+                var systemUnderTest = A.Dummy<NamedResourceLocator>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -415,15 +419,6 @@ namespace Naos.Protocol.Domain.Test
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
                 actual.AsTest().Must().NotBeSameReferenceAs(systemUnderTest);
-
-                if (systemUnderTest.ObjectToDetermineTagsFrom == null)
-                {
-                    actual.ObjectToDetermineTagsFrom.AsTest().Must().BeNull();
-                }
-                else
-                {
-                    actual.ObjectToDetermineTagsFrom.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.ObjectToDetermineTagsFrom);
-                }
             }
 
             [Fact]
@@ -442,7 +437,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "ObjectToDetermineTagsFrom" };
+                var propertyNames = new string[] { "Name" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -459,12 +454,12 @@ namespace Naos.Protocol.Domain.Test
                     }
 
                     // Act
-                    var actual = (GetTagsFromObjectOp<Version>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (NamedResourceLocator)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var property = typeof(GetTagsFromObjectOp<Version>).GetProperty(propertyName);
+                        var property = typeof(NamedResourceLocator).GetProperty(propertyName);
 
                         var propertyType = property.PropertyType;
 
@@ -532,7 +527,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<GetTagsFromObjectOp<Version>>();
+                var expected = A.Dummy<NamedResourceLocator>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -561,7 +556,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<GetTagsFromObjectOp<Version>>();
+                var expected = A.Dummy<NamedResourceLocator>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -590,7 +585,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<GetTagsFromObjectOp<Version>>();
+                var expected = A.Dummy<NamedResourceLocator>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -619,7 +614,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<GetTagsFromObjectOp<Version>>();
+                var expected = A.Dummy<NamedResourceLocator>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -653,8 +648,8 @@ namespace Naos.Protocol.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                GetTagsFromObjectOp<Version> systemUnderTest1 = null;
-                GetTagsFromObjectOp<Version> systemUnderTest2 = null;
+                NamedResourceLocator systemUnderTest1 = null;
+                NamedResourceLocator systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -684,7 +679,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    GetTagsFromObjectOp<Version> systemUnderTest = null;
+                    NamedResourceLocator systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -833,8 +828,8 @@ namespace Naos.Protocol.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                GetTagsFromObjectOp<Version> systemUnderTest1 = null;
-                GetTagsFromObjectOp<Version> systemUnderTest2 = null;
+                NamedResourceLocator systemUnderTest1 = null;
+                NamedResourceLocator systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -864,7 +859,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    GetTagsFromObjectOp<Version> systemUnderTest = null;
+                    NamedResourceLocator systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1010,17 +1005,17 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_OperationBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_ResourceLocatorBase___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    OperationBase systemUnderTest = null;
+                    ResourceLocatorBase systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((OperationBase)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((ResourceLocatorBase)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1041,14 +1036,14 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_OperationBase___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_ResourceLocatorBase___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((OperationBase)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((ResourceLocatorBase)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1069,14 +1064,14 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_OperationBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_ResourceLocatorBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((OperationBase)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ResourceLocatorBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1097,14 +1092,14 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_OperationBase___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_ResourceLocatorBase___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((OperationBase)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ResourceLocatorBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1125,14 +1120,14 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_OperationBase___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_ResourceLocatorBase___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((OperationBase)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ResourceLocatorBase)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1153,157 +1148,14 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_NamedResourceLocator___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ReturningOperationBase<IReadOnlyDictionary<string, string>> systemUnderTest = null;
-
-                    // Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<IReadOnlyDictionary<string, string>>)systemUnderTest);
-
-                    // Assert
-                    actual.AsTest().Must().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase___Should_return_true___When_parameter_other_is_same_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<IReadOnlyDictionary<string, string>>)scenario.ReferenceObject);
-
-                    // Assert
-                    actual.AsTest().Must().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IReadOnlyDictionary<string, string>>)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase___Should_return_false___When_objects_being_compared_have_different_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IReadOnlyDictionary<string, string>>)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ReturningOperationBase___Should_return_true___When_objects_being_compared_have_same_property_values()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IReadOnlyDictionary<string, string>>)_)).ToList();
-
-                    // Assert
-                    actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
-                }
-            }
-
-            [Fact]
-            [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-            [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-            [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-            [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-            [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-            [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-            [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-            [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_GetTagsFromObjectOp___Should_return_false___When_parameter_other_is_null()
-            {
-                var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
-
-                foreach (var scenario in scenarios)
-                {
-                    // Arrange
-                    GetTagsFromObjectOp<Version> systemUnderTest = null;
+                    NamedResourceLocator systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1327,7 +1179,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_GetTagsFromObjectOp___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_NamedResourceLocator___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1355,7 +1207,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_GetTagsFromObjectOp___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_NamedResourceLocator___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1383,7 +1235,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_GetTagsFromObjectOp___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_NamedResourceLocator___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1411,7 +1263,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_GetTagsFromObjectOp___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_NamedResourceLocator___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 

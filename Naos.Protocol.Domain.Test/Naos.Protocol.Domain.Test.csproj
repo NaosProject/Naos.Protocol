@@ -297,6 +297,10 @@
       <DependentUpon>HandlingEventEvent{TId,TEvent,TEventId}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\SpecificProtocolBaseTests.cs" />
+    <Compile Include="NamedResourceLocatorTest.cs" />
+    <Compile Include="NamedResourceLocatorTest.designer.cs">
+      <DependentUpon>NamedResourceLocatorTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="NullResourceLocatorTest.cs" />
     <Compile Include="NullResourceLocatorTest.designer.cs">
       <DependentUpon>NullResourceLocatorTest.cs</DependentUpon>
