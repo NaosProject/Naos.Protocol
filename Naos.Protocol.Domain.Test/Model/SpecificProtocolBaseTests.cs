@@ -72,7 +72,7 @@ namespace Naos.Protocol.Domain.Test
             // Assert
             operation.OperationExecuted.MustForTest().BeTrue();
         }
-        
+
         [Fact]
         public static async Task SyncOnlyReturningProtocol_ExecuteAsync()
         {
