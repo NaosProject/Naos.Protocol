@@ -8,6 +8,7 @@
       <dependency id="Naos.Protocol.Domain" version="$version$" />
       <dependency id="Naos.CodeAnalysis.Recipes.SuppressBecause" version="1.0.125" />
       <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.129" />
+      <dependency id="OBeautifulCode.Representation.System.Recipes.DummyFactory" version="1.0.53" />
     </dependencies>
   </metadata>
   <files>
