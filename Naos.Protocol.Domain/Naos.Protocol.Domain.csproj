@@ -164,8 +164,8 @@
     </Compile>
     <Compile Include="Implementations\ProtocolCaching\ClearCacheOp.cs" />
     <Compile Include="Implementations\ProtocolCaching\OperationResultCacheProtocolBase{TOperation,TReturn}.cs" />
-    <Compile Include="Implementations\ResourceLocation\NamedResourceLocator.designer.cs">
-      <DependentUpon>NamedResourceLocator.cs</DependentUpon>
+    <Compile Include="Implementations\ResourceLocation\NullResourceLocator.designer.cs">
+      <DependentUpon>NullResourceLocator.cs</DependentUpon>
     </Compile>
     <Compile Include="Implementations\ResourceLocation\SingleResourceLocatorProtocol{TId}.cs" />
     <Compile Include="Implementations\ResourceLocation\ThrowIfResourceUnavailableOp.designer.cs">
@@ -208,7 +208,7 @@
     <Compile Include="Model\Protocol\ISyncAndAsyncReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Model\Protocol\ISyncAndAsyncVoidProtocol{TOperation}.cs" />
     <Compile Include="Model\Protocol\IVoidProtocol{TOperation}.cs" />
-    <Compile Include="Model\Protocol\MissingProtocolStrategy.cs" />
+    <Compile Include="Model\Enum\MissingProtocolStrategy.cs" />
     <Compile Include="Model\Protocol\ProtocolFactory.cs" />
     <Compile Include="Model\Protocol\IGetProtocol.cs" />
     <Compile Include="Implementations\EventHandling\RecordedObjectEvent{TId,TObject}.cs" />
@@ -224,21 +224,22 @@
     <Compile Include="Model\Protocol\IProtocol.cs" />
     <Compile Include="Model\Operation\IOperation.cs" />
     <Compile Include="Model\ResourceLocation\IResourceLocator.cs" />
-    <Compile Include="Implementations\ResourceLocation\NamedResourceLocator.cs" />
+    <Compile Include="Implementations\ResourceLocation\NullResourceLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implementations\ModelInspection\GetIdFromObjectProtocol{TId,TObject}.cs" />
     <Compile Include="Implementations\ModelInspection\GetTagsFromObjectProtocol{TObject}.cs" />
     <Compile Include="Implementations\ProtcolComposing\LambdaReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Implementations\ProtcolComposing\LambdaVoidProtocol{TOperation}.cs" />
     <Compile Include="Model\ResourceLocation\IProtocolResourceLocator{TId}.cs" />
-    <Compile Include="Implementations\ResourceLocation\NullResourceLocator.cs" />
-    <Compile Include="Implementations\ResourceLocation\NullResourceLocator.designer.cs">
-      <DependentUpon>NullResourceLocator.cs</DependentUpon>
+    <Compile Include="Implementations\ResourceLocation\NamedResourceLocator.cs" />
+    <Compile Include="Implementations\ResourceLocation\NamedResourceLocator.designer.cs">
+      <DependentUpon>NamedResourceLocator.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\ResourceLocation\ResourceLocatorBase.cs" />
     <Compile Include="Model\ResourceLocation\ResourceLocatorBase.designer.cs">
       <DependentUpon>ResourceLocatorBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\ProjectInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include=".analyzers\stylecop.json" />

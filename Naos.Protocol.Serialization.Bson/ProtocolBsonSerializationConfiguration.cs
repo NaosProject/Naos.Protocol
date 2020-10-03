@@ -10,16 +10,23 @@ namespace Naos.Protocol.Serialization.Bson
     using System.Collections.Generic;
     using Naos.Protocol.Domain;
     using OBeautifulCode.Serialization.Bson;
+    using OBeautifulCode.Type;
 
     /// <inheritdoc />
     public class ProtocolBsonSerializationConfiguration : BsonSerializationConfigurationBase
     {
         /// <inheritdoc />
+        protected override IReadOnlyCollection<string> TypeToRegisterNamespacePrefixFilters => new[]
+                                                                                               {
+                                                                                                   Naos.Protocol.Domain.ProjectInfo.Namespace,
+                                                                                               };
+
+        /// <inheritdoc />
         protected override IReadOnlyCollection<TypeToRegisterForBson> TypesToRegisterForBson => new[]
                                                                                                 {
-                                                                                                    typeof(EventBase<>).ToTypeToRegisterForBson(),
-                                                                                                    typeof(OperationBase).ToTypeToRegisterForBson(),
-                                                                                                    typeof(ResourceLocatorBase).ToTypeToRegisterForBson(),
+                                                                                                    typeof(IModel).ToTypeToRegisterForBson(),
+                                                                                                    typeof(MissingProtocolStrategy).ToTypeToRegisterForBson(),
+                                                                                                    typeof(TypeVersionMatchStrategy).ToTypeToRegisterForBson(),
                                                                                                 };
     }
 }
