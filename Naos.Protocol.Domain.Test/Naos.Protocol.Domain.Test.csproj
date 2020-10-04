@@ -128,9 +128,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include=".recipes\Naos.ShimBootstrapper\TestFailedException.cs" />
+    <Compile Include=".recipes\Naos.ShimBootstrapper\TestRunner.cs" />
     <Compile Include=".recipes\Naos.Bootstrapper\ConsoleAbstractionBase.cs" />
-    <Compile Include=".recipes\Naos.Bootstrapper\TestFailedException.cs" />
-    <Compile Include=".recipes\Naos.Bootstrapper\TestRunner.cs" />
     <Compile Include=".recipes\Naos.Bootstrapper\WellKnownConsoleVerb.cs" />
     <Compile Include=".recipes\Naos.CodeAnalysis\NaosSuppressBecause.cs" />
     <Compile Include=".recipes\Naos.Diagnostics\DomainFactory.cs" />
@@ -235,7 +235,6 @@
     <Compile Include="ClearCacheOpTest.designer.cs">
       <DependentUpon>ClearCacheOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConsoleAbstraction.cs" />
     <Compile Include="EventBase{TId}Test.cs" />
     <Compile Include="EventBase{TId}Test.designer.cs">
       <DependentUpon>EventBase{TId}Test.cs</DependentUpon>
