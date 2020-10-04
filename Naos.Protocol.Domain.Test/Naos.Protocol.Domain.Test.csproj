@@ -128,11 +128,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include=".recipes\Naos.ShimBootstrapper\TestFailedException.cs" />
-    <Compile Include=".recipes\Naos.ShimBootstrapper\TestRunner.cs" />
     <Compile Include=".recipes\Naos.Bootstrapper\ConsoleAbstractionBase.cs" />
     <Compile Include=".recipes\Naos.Bootstrapper\WellKnownConsoleVerb.cs" />
     <Compile Include=".recipes\Naos.CodeAnalysis\NaosSuppressBecause.cs" />
+    <Compile Include=".recipes\Naos.ShimBootstrapper\TestFailedException.cs" />
+    <Compile Include=".recipes\Naos.ShimBootstrapper\TestRunner.cs" />
     <Compile Include=".recipes\Naos.Diagnostics\DomainFactory.cs" />
     <Compile Include=".recipes\Naos.Diagnostics\MachineMemory.cs" />
     <Compile Include=".recipes\Naos.Diagnostics\MachineMemoryKind.cs" />
@@ -235,6 +235,7 @@
     <Compile Include="ClearCacheOpTest.designer.cs">
       <DependentUpon>ClearCacheOpTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConsoleAbstraction.cs" />
     <Compile Include="EventBase{TId}Test.cs" />
     <Compile Include="EventBase{TId}Test.designer.cs">
       <DependentUpon>EventBase{TId}Test.cs</DependentUpon>
@@ -332,7 +333,6 @@
       <DependentUpon>ReturningOperationBase{TReturn}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="CachingTests.cs" />
-    <AdditionalFiles Include=".analyzers\stylecop.json" />
     <Compile Include="SerializationConfigurationTypes.cs" />
     <Compile Include="ThrowIfResourceUnavailableOpTest.cs" />
     <Compile Include="ThrowIfResourceUnavailableOpTest.designer.cs">
@@ -342,6 +342,7 @@
     <Compile Include="VoidOperationBaseTest.designer.cs">
       <DependentUpon>VoidOperationBaseTest.cs</DependentUpon>
     </Compile>
+    <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\test.ruleset" />
     <None Include="packages.config" />
     <None Include="ProtocolDummyFactory.recipe-nuspec" />
@@ -375,8 +376,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
-    <Error Condition="!Exists('..\packages\Naos.Build.Analyzers.1.55.40\build\Naos.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Naos.Build.Analyzers.1.55.40\build\Naos.Build.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\Naos.Build.Analyzers.1.55.44\build\Naos.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Naos.Build.Analyzers.1.55.44\build\Naos.Build.Analyzers.targets'))" />
   </Target>
   <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
-  <Import Project="..\packages\Naos.Build.Analyzers.1.55.40\build\Naos.Build.Analyzers.targets" Condition="Exists('..\packages\Naos.Build.Analyzers.1.55.40\build\Naos.Build.Analyzers.targets')" />
+  <Import Project="..\packages\Naos.Build.Analyzers.1.55.44\build\Naos.Build.Analyzers.targets" Condition="Exists('..\packages\Naos.Build.Analyzers.1.55.44\build\Naos.Build.Analyzers.targets')" />
 </Project>

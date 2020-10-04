@@ -9,7 +9,7 @@
 
 namespace Naos.Protocol.Serialization.Json
 {
-    using System.Reflection;
+    using global::System.Reflection;
     
     /// <summary>
     /// Project-related information.

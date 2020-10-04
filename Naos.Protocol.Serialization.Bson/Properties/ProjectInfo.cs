@@ -9,7 +9,7 @@
 
 namespace Naos.Protocol.Serialization.Bson
 {
-    using System.Reflection;
+    using global::System.Reflection;
     
     /// <summary>
     /// Project-related information.
