@@ -28,6 +28,11 @@ namespace Naos.Protocol.Domain
             TReturn cachedObject,
             DateTime freshnessInUtc)
         {
+            if (operation == null)
+            {
+                throw new ArgumentNullException(nameof(operation));
+            }
+
             this.Operation = operation;
             this.CachedObject = cachedObject;
             this.FreshnessInUtc = freshnessInUtc;
