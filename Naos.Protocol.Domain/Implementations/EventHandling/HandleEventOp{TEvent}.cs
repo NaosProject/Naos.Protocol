@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HandleEventOp{TEvent,TEventId}.cs" company="Naos Project">
+// <copyright file="HandleEventOp{TEvent}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -9,16 +9,15 @@ namespace Naos.Protocol.Domain
     using System;
 
     /// <summary>
-    /// Abstract base of an operation.
+    /// Handle (perform specific logic on) an event of the specified <typeparamref name="TEvent"/>.
     /// </summary>
     /// <typeparam name="TEvent">Type of the event to be handled.</typeparam>
-    /// <typeparam name="TEventId">Type of the identifier of the event.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords", MessageId = "ExecuteScalar", Justification = "Name/Spelling is correct.")]
-    public partial class HandleEventOp<TEvent, TEventId> : VoidOperationBase
-        where TEvent : IEvent<TEventId>
+    public partial class HandleEventOp<TEvent> : VoidOperationBase
+        where TEvent : IEvent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HandleEventOp{TEvent, TEventId}"/> class.
+        /// Initializes a new instance of the <see cref="HandleEventOp{TEvent}"/> class.
         /// </summary>
         /// <param name="eventToHandle">The event to handle.</param>
         public HandleEventOp(

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="HandledEventEvent{TId,TEvent,TEventId}.cs" company="Naos Project">
+// <copyright file="HandlingEventEvent{TId,TEvent}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -8,39 +8,45 @@ namespace Naos.Protocol.Domain
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
     using Naos.CodeAnalysis.Recipes;
+    using OBeautifulCode.Type;
 
     /// <summary>
-    /// Event indicating that an event was handled.
+    /// Event indicating that an event was handling.
     /// </summary>
     /// <typeparam name="TId">The type of the identifier.</typeparam>
     /// <typeparam name="TEvent">The type of the event.</typeparam>
-    /// <typeparam name="TEventId">The type of the identifier for the provided event.</typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1005:AvoidExcessiveParametersOnGenericTypes", Justification = NaosSuppressBecause.CA1005_AvoidExcessiveParametersOnGenericTypes_SpecifiedParametersRequiredForNeededFunctionality)]
-    public partial class HandledEventEvent<TId, TEvent, TEventId> : EventBase<TId>
-        where TEvent : class, IEvent<TEventId>
+    public partial class HandlingEventEvent<TId, TEvent> : EventBase<TId>, IHaveTags
+        where TEvent : class, IEvent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="HandledEventEvent{TId, TEvent, TEventId}"/> class.
+        /// Initializes a new instance of the <see cref="HandlingEventEvent{TId, TEvent}"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="timestampUtc">The timestamp UTC.</param>
-        /// <param name="handledEvent">The handled event.</param>
+        /// <param name="handlingEvent">The handling event.</param>
         /// <param name="tags">The optional tags.</param>
-        public HandledEventEvent(
+        public HandlingEventEvent(
             TId id,
             DateTime timestampUtc,
-            TEvent handledEvent,
+            TEvent handlingEvent,
             IReadOnlyDictionary<string, string> tags = null)
-        : base(id, timestampUtc, tags)
+        : base(id, timestampUtc)
         {
-            this.HandledEvent = handledEvent ?? throw new ArgumentNullException(nameof(handledEvent));
+            this.HandlingEvent = handlingEvent ?? throw new ArgumentNullException(nameof(handlingEvent));
+            this.Tags = tags;
         }
 
         /// <summary>
-        /// Gets the Handled operation.
+        /// Gets the Handling operation.
         /// </summary>
-        /// <value>The Handled operation.</value>
-        public TEvent HandledEvent { get; private set; }
+        /// <value>The Handling operation.</value>
+        public TEvent HandlingEvent { get; private set; }
+
+        /// <inheritdoc />
+        public IReadOnlyDictionary<string, string> Tags { get; private set; }
     }
 }

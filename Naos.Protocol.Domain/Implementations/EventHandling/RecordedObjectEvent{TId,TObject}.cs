@@ -8,13 +8,14 @@ namespace Naos.Protocol.Domain
 {
     using System;
     using System.Collections.Generic;
+    using OBeautifulCode.Type;
 
     /// <summary>
     /// Event containing a specific moment in time of an object.
     /// </summary>
     /// <typeparam name="TId">The type of the identifier.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
-    public partial class RecordedObjectEvent<TId, TObject> : EventBase<TId>
+    public partial class RecordedObjectEvent<TId, TObject> : EventBase<TId>, IHaveTags
         where TObject : class
     {
         /// <summary>
@@ -29,9 +30,10 @@ namespace Naos.Protocol.Domain
             DateTime timestampUtc,
             TObject createdObject,
             IReadOnlyDictionary<string, string> tags = null)
-            : base(id, timestampUtc, tags)
+            : base(id, timestampUtc)
         {
             this.CreatedObject = createdObject ?? throw new ArgumentNullException(nameof(createdObject));
+            this.Tags = tags;
         }
 
         /// <summary>
@@ -39,5 +41,8 @@ namespace Naos.Protocol.Domain
         /// </summary>
         /// <value>The created object.</value>
         public TObject CreatedObject { get; private set; }
+
+        /// <inheritdoc />
+        public IReadOnlyDictionary<string, string> Tags { get; private set; }
     }
 }

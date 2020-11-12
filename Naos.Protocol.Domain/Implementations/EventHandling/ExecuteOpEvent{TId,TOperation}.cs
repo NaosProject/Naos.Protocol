@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ExecutingOpEvent{TId,TOperation}.cs" company="Naos Project">
+// <copyright file="ExecuteOpEvent{TId,TOperation}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -8,30 +8,32 @@ namespace Naos.Protocol.Domain
 {
     using System;
     using System.Collections.Generic;
+    using OBeautifulCode.Type;
 
     /// <summary>
-    /// Event indicating that an operation is being executed.
+    /// Event indicating that an operation needs to be executed.
     /// </summary>
-    /// <typeparam name="TId">The type of the identifier.</typeparam>
+    /// <typeparam name="TId">The type of identifier.</typeparam>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
-    public partial class ExecutingOpEvent<TId, TOperation> : EventBase<TId>
+    public partial class ExecuteOpEvent<TId, TOperation> : EventBase<TId>, IHaveTags
         where TOperation : class, IOperation
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExecutingOpEvent{TId, TOperation}"/> class.
+        /// Initializes a new instance of the <see cref="ExecuteOpEvent{TId, TOperation}"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="timestampUtc">The timestamp in UTC.</param>
         /// <param name="executedOperation">The executed operation.</param>
         /// <param name="tags">The optional tags.</param>
-        public ExecutingOpEvent(
+        public ExecuteOpEvent(
             TId id,
             DateTime timestampUtc,
             TOperation executedOperation,
             IReadOnlyDictionary<string, string> tags = null)
-        : base(id, timestampUtc, tags)
+        : base(id, timestampUtc)
         {
             this.ExecutedOperation = executedOperation ?? throw new ArgumentNullException(nameof(executedOperation));
+            this.Tags = tags;
         }
 
         /// <summary>
@@ -39,5 +41,8 @@ namespace Naos.Protocol.Domain
         /// </summary>
         /// <value>The executed operation.</value>
         public TOperation ExecutedOperation { get; private set; }
+
+        /// <inheritdoc />
+        public IReadOnlyDictionary<string, string> Tags { get; private set; }
     }
 }
