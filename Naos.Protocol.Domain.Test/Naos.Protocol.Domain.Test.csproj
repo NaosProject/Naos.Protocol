@@ -92,20 +92,20 @@
     <Reference Include="OBeautifulCode.Representation.System, Version=1.0.55.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.55\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization, Version=1.0.84.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.84\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization, Version=1.0.90.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.1.0.90\lib\net462\OBeautifulCode.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.84.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.84\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.Bson, Version=1.0.90.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Bson.1.0.90\lib\net462\OBeautifulCode.Serialization.Bson.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.Json, Version=1.0.84.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.Json.1.0.84\lib\net462\OBeautifulCode.Serialization.Json.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.Json, Version=1.0.90.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.Json.1.0.90\lib\net462\OBeautifulCode.Serialization.Json.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.84.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.84\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
+    <Reference Include="OBeautifulCode.Serialization.PropertyBag, Version=1.0.90.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Serialization.PropertyBag.1.0.90\lib\net462\OBeautifulCode.Serialization.PropertyBag.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.71.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.71\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.74.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.74\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -193,6 +193,7 @@
     <Compile Include=".recipes\OBeautifulCode.Compression\CompressorFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Compression\DotNetZipCompressor.cs" />
     <Compile Include=".recipes\OBeautifulCode.Compression\NullCompressor.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Enum\EnumExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\DateTimeEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\DictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Equality\EnumerableEqualityComparer.cs" />
@@ -203,10 +204,28 @@
     <Compile Include=".recipes\OBeautifulCode.Equality\ReadOnlyDictionaryEqualityComparer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Math\ThreadSafeRandom.cs" />
     <Compile Include=".recipes\OBeautifulCode.Process\ProcessHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\AccessModifier.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\AppDomainHelper.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\AssemblyHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\BindingFlagsFor.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\CompressionMethod.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ConstructorsMatchedToPropertiesStrategy.cs" />
     <Compile Include=".recipes\OBeautifulCode.Reflection\DisposableAppDomain.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberAccessModifiers.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberAttributes.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberKinds.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberMutability.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberOwners.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\MemberRelationships.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\OrderMembersBy.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Attribute.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Constructor.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Enum.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Field.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.MemberInfo.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Method.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Reflection\ReflectionHelper.Property.cs" />
     <Compile Include=".recipes\OBeautifulCode.Representation\RepresentationSystemDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Representation\RepresentationSystemDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Serialization\AppDomainScenarios.cs" />
@@ -218,6 +237,7 @@
     <Compile Include=".recipes\OBeautifulCode.Serialization\SerializerFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.String\StringExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ArrayKind.cs" />
+    <Compile Include=".recipes\OBeautifulCode.Type\DeepCloneExtensions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringReadableOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\ToStringXmlDocOptions.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
@@ -240,13 +260,13 @@
     <Compile Include="EventBase{TId}Test.designer.cs">
       <DependentUpon>EventBase{TId}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExecutedOpEvent{TId,TOperation}Test.cs" />
-    <Compile Include="ExecutedOpEvent{TId,TOperation}Test.designer.cs">
-      <DependentUpon>ExecutedOpEvent{TId,TOperation}Test.cs</DependentUpon>
+    <Compile Include="ExecuteDefaultOperationsOnProtocolOpTest.cs" />
+    <Compile Include="ExecuteDefaultOperationsOnProtocolOpTest.designer.cs">
+      <DependentUpon>ExecuteDefaultOperationsOnProtocolOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExecutingOpEvent{TId,TOperation}Test.cs" />
-    <Compile Include="ExecutingOpEvent{TId,TOperation}Test.designer.cs">
-      <DependentUpon>ExecutingOpEvent{TId,TOperation}Test.cs</DependentUpon>
+    <Compile Include="ExecuteOpEvent{TId,TOperation}Test.cs" />
+    <Compile Include="ExecuteOpEvent{TId,TOperation}Test.designer.cs">
+      <DependentUpon>ExecuteOpEvent{TId,TOperation}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="GetAllResourceLocatorsOpTest.cs" />
     <Compile Include="GetAllResourceLocatorsOpTest.designer.cs">
@@ -284,17 +304,17 @@
     <Compile Include="GetVoidProtocolOp{TOperation}Test.designer.cs">
       <DependentUpon>GetVoidProtocolOp{TOperation}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="HandledEventEvent{TId,TEvent,TEventId}Test.cs" />
-    <Compile Include="HandledEventEvent{TId,TEvent,TEventId}Test.designer.cs">
-      <DependentUpon>HandledEventEvent{TId,TEvent,TEventId}Test.cs</DependentUpon>
+    <Compile Include="HandledEventEvent{TId,TEvent}Test.cs" />
+    <Compile Include="HandledEventEvent{TId,TEvent}Test.designer.cs">
+      <DependentUpon>HandledEventEvent{TId,TEvent}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="HandleEventOp{TEvent,TEventId}Test.cs" />
-    <Compile Include="HandleEventOp{TEvent,TEventId}Test.designer.cs">
-      <DependentUpon>HandleEventOp{TEvent,TEventId}Test.cs</DependentUpon>
+    <Compile Include="HandleEventOp{TEvent}Test.cs" />
+    <Compile Include="HandleEventOp{TEvent}Test.designer.cs">
+      <DependentUpon>HandleEventOp{TEvent}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="HandlingEventEvent{TId,TEvent,TEventId}Test.cs" />
-    <Compile Include="HandlingEventEvent{TId,TEvent,TEventId}Test.designer.cs">
-      <DependentUpon>HandlingEventEvent{TId,TEvent,TEventId}Test.cs</DependentUpon>
+    <Compile Include="HandlingEventEvent{TId,TEvent}Test.cs" />
+    <Compile Include="HandlingEventEvent{TId,TEvent}Test.designer.cs">
+      <DependentUpon>HandlingEventEvent{TId,TEvent}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\SpecificProtocolBaseTests.cs" />
     <Compile Include="NamedResourceLocatorTest.cs" />
@@ -376,8 +396,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.props'))" />
     <Error Condition="!Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.1\build\xunit.core.targets'))" />
-    <Error Condition="!Exists('..\packages\Naos.Build.Analyzers.1.55.44\build\Naos.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Naos.Build.Analyzers.1.55.44\build\Naos.Build.Analyzers.targets'))" />
+    <Error Condition="!Exists('..\packages\Naos.Build.Analyzers.1.55.46\build\Naos.Build.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Naos.Build.Analyzers.1.55.46\build\Naos.Build.Analyzers.targets'))" />
   </Target>
   <Import Project="..\packages\xunit.core.2.4.1\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.4.1\build\xunit.core.targets')" />
-  <Import Project="..\packages\Naos.Build.Analyzers.1.55.44\build\Naos.Build.Analyzers.targets" Condition="Exists('..\packages\Naos.Build.Analyzers.1.55.44\build\Naos.Build.Analyzers.targets')" />
+  <Import Project="..\packages\Naos.Build.Analyzers.1.55.46\build\Naos.Build.Analyzers.targets" Condition="Exists('..\packages\Naos.Build.Analyzers.1.55.46\build\Naos.Build.Analyzers.targets')" />
 </Project>
