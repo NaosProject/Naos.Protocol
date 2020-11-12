@@ -182,7 +182,7 @@
     <Compile Include="Implementations\ResourceLocation\NullResourceLocator.designer.cs">
       <DependentUpon>NullResourceLocator.cs</DependentUpon>
     </Compile>
-    <Compile Include="Implementations\ResourceLocation\SingleResourceLocatorProtocol{TId}.cs" />
+    <Compile Include="Implementations\ResourceLocation\SingleResourceLocatorProtocol.cs" />
     <Compile Include="Implementations\ResourceLocation\ThrowIfResourceUnavailableOp.designer.cs">
       <DependentUpon>ThrowIfResourceUnavailableOp.cs</DependentUpon>
     </Compile>
@@ -248,7 +248,7 @@
     <Compile Include="Implementations\ModelInspection\GetTagsFromObjectProtocol{TObject}.cs" />
     <Compile Include="Implementations\ProtcolComposing\LambdaReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Implementations\ProtcolComposing\LambdaVoidProtocol{TOperation}.cs" />
-    <Compile Include="Model\ResourceLocation\IProtocolResourceLocator{TId}.cs" />
+    <Compile Include="Model\ResourceLocation\IProtocolResourceLocator.cs" />
     <Compile Include="Implementations\ResourceLocation\NamedResourceLocator.cs" />
     <Compile Include="Implementations\ResourceLocation\NamedResourceLocator.designer.cs">
       <DependentUpon>NamedResourceLocator.cs</DependentUpon>
