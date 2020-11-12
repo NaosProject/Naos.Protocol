@@ -118,9 +118,9 @@
     <Compile Include="Implementations\DefaultOperations\ExecuteDefaultOperationsOnProtocolOp.designer.cs">
       <DependentUpon>ExecuteDefaultOperationsOnProtocolOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Implementations\EventHandling\ExecuteOpEvent{TId,TOperation}.cs" />
-    <Compile Include="Implementations\EventHandling\ExecuteOpEvent{TId,TOperation}.designer.cs">
-      <DependentUpon>ExecuteOpEvent{TId,TOperation}.cs</DependentUpon>
+    <Compile Include="Implementations\EventHandling\ExecuteOpRequestedEvent{TId,TOperation}.cs" />
+    <Compile Include="Implementations\EventHandling\ExecuteOpRequestedEvent{TId,TOperation}.designer.cs">
+      <DependentUpon>ExecuteOpRequestedEvent{TId,TOperation}.cs</DependentUpon>
     </Compile>
     <Compile Include="Implementations\EventHandling\HandledEventEvent{TId,TEvent}.designer.cs">
       <DependentUpon>HandledEventEvent{TId,TEvent}.cs</DependentUpon>

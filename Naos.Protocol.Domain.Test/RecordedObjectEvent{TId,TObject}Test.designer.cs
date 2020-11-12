@@ -375,9 +375,9 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(),
-                        A.Dummy<HandledEventEvent<Version, ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>(),
-                        A.Dummy<HandlingEventEvent<Version, ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>(),
+                        A.Dummy<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(),
+                        A.Dummy<HandledEventEvent<Version, ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>(),
+                        A.Dummy<HandlingEventEvent<Version, ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>(),
                     },
                 });
 

@@ -35,33 +35,33 @@ namespace Naos.Protocol.Domain.Test
 
     public static partial class HandleEventOpTest
     {
-        private static readonly StringRepresentationTestScenarios<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>()
+        private static readonly StringRepresentationTestScenarios<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
+                new StringRepresentationTestScenario<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+                        var systemUnderTest = A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
+                        var result = new SystemUnderTestExpectedStringRepresentation<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>: EventToHandle = {systemUnderTest.EventToHandle?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>: EventToHandle = {systemUnderTest.EventToHandle?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>()
+        private static readonly ConstructorArgumentValidationTestScenarios<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
+                new ConstructorArgumentValidationTestScenario<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'eventToHandle' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var result = new HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
+                        var result = new HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
                                              null);
 
                         return result;
@@ -70,18 +70,18 @@ namespace Naos.Protocol.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "eventToHandle" },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
+                new ConstructorPropertyAssignmentTestScenario<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
                 {
                     Name = "EventToHandle should return same 'eventToHandle' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+                        var referenceObject = A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
+                        var result = new SystemUnderTestExpectedPropertyValue<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
                         {
-                            SystemUnderTest = new HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
+                            SystemUnderTest = new HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
                                                       referenceObject.EventToHandle),
                             ExpectedPropertyValue = referenceObject.EventToHandle,
                         };
@@ -91,19 +91,19 @@ namespace Naos.Protocol.Domain.Test
                     PropertyName = "EventToHandle",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>()
+        private static readonly DeepCloneWithTestScenarios<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
+                new DeepCloneWithTestScenario<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
                 {
                     Name = "DeepCloneWithEventToHandle should deep clone object and replace EventToHandle with the provided eventToHandle",
                     WithPropertyName = "EventToHandle",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+                        var systemUnderTest = A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
 
-                        var referenceObject = A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>().ThatIs(_ => !systemUnderTest.EventToHandle.IsEqualTo(_.EventToHandle));
+                        var referenceObject = A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>().ThatIs(_ => !systemUnderTest.EventToHandle.IsEqualTo(_.EventToHandle));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
+                        var result = new SystemUnderTestDeepCloneWithValue<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.EventToHandle,
@@ -113,23 +113,23 @@ namespace Naos.Protocol.Domain.Test
                     },
                 });
 
-        private static readonly HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> ReferenceObjectForEquatableTestScenarios = A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+        private static readonly HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> ReferenceObjectForEquatableTestScenarios = A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
 
-        private static readonly EquatableTestScenarios<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>> EquatableTestScenarios = new EquatableTestScenarios<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>()
+        private static readonly EquatableTestScenarios<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>> EquatableTestScenarios = new EquatableTestScenarios<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>()
             .AddScenario(() =>
-                new EquatableTestScenario<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
+                new EquatableTestScenario<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>[]
                     {
-                        new HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
+                        new HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
                                 ReferenceObjectForEquatableTestScenarios.EventToHandle),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>[]
+                    ObjectsThatAreNotEqualToReferenceObject = new HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>[]
                     {
-                        new HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
-                                A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>().Whose(_ => !_.EventToHandle.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EventToHandle)).EventToHandle),
+                        new HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
+                                A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>().Whose(_ => !_.EventToHandle.IsEqualTo(ReferenceObjectForEquatableTestScenarios.EventToHandle)).EventToHandle),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -174,9 +174,9 @@ namespace Naos.Protocol.Domain.Test
             public static void HandleEventOp___Should_implement_IModel_of_HandleEventOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>);
+                var type = typeof(HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>);
 
-                var expectedModelMethods = typeof(IModel<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -186,7 +186,7 @@ namespace Naos.Protocol.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -207,7 +207,7 @@ namespace Naos.Protocol.Domain.Test
             public static void HandleEventOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>);
+                var type = typeof(HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -380,10 +380,10 @@ namespace Naos.Protocol.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+                var systemUnderTest = A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
 
                 // Act
-                var actual = (HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>)systemUnderTest.Clone();
+                var actual = (HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -407,7 +407,7 @@ namespace Naos.Protocol.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+                var systemUnderTest = A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -459,12 +459,12 @@ namespace Naos.Protocol.Domain.Test
                     }
 
                     // Act
-                    var actual = (HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var propertyType = propertyInfo.PropertyType;
 
@@ -532,7 +532,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+                var expected = A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -561,7 +561,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+                var expected = A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -590,7 +590,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+                var expected = A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -619,7 +619,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+                var expected = A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -653,8 +653,8 @@ namespace Naos.Protocol.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest1 = null;
-                HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest2 = null;
+                HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest1 = null;
+                HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -684,7 +684,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest = null;
+                    HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -833,8 +833,8 @@ namespace Naos.Protocol.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest1 = null;
-                HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest2 = null;
+                HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest1 = null;
+                HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -864,7 +864,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest = null;
+                    HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1303,7 +1303,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest = null;
+                    HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>> systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);

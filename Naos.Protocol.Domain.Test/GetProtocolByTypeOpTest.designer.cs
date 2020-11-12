@@ -188,6 +188,7 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
                         A.Dummy<ExecuteDefaultOperationsOnProtocolOp>(),
+                        A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>(),
                         A.Dummy<GetIdFromObjectOp<Version, Version>>(),
                         A.Dummy<GetTagsFromObjectOp<Version>>(),
                         A.Dummy<GetReturningProtocolOp<GetIdFromObjectOp<Version, Version>, Version>>(),
@@ -198,7 +199,6 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<GetAllResourceLocatorsOp>(),
                         A.Dummy<GetResourceLocatorByIdOp<Version>>(),
                         A.Dummy<ThrowIfResourceUnavailableOp>(),
-                        A.Dummy<HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>(),
                     },
                 });
 
