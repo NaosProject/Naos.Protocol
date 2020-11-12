@@ -268,9 +268,9 @@
     <Compile Include="ExecuteDefaultOperationsOnProtocolOpTest.designer.cs">
       <DependentUpon>ExecuteDefaultOperationsOnProtocolOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExecuteOpRequestedEvent{TId,TOperation}Test.cs" />
-    <Compile Include="ExecuteOpRequestedEvent{TId,TOperation}Test.designer.cs">
-      <DependentUpon>ExecuteOpRequestedEvent{TId,TOperation}Test.cs</DependentUpon>
+    <Compile Include="ExecuteOperationRequestedEvent{TId,TOperation}Test.cs" />
+    <Compile Include="ExecuteOperationRequestedEvent{TId,TOperation}Test.designer.cs">
+      <DependentUpon>ExecuteOperationRequestedEvent{TId,TOperation}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="GetAllResourceLocatorsOpTest.cs" />
     <Compile Include="GetAllResourceLocatorsOpTest.designer.cs">
@@ -295,6 +295,10 @@
     <Compile Include="GetResourceLocatorByIdOp{TId}Test.cs" />
     <Compile Include="GetResourceLocatorByIdOp{TId}Test.designer.cs">
       <DependentUpon>GetResourceLocatorByIdOp{TId}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GetResourceLocatorForUniqueIdentifierOpTest.cs" />
+    <Compile Include="GetResourceLocatorForUniqueIdentifierOpTest.designer.cs">
+      <DependentUpon>GetResourceLocatorForUniqueIdentifierOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="GetReturningProtocolOp{TOperation,TReturn}Test.cs" />
     <Compile Include="GetReturningProtocolOp{TOperation,TReturn}Test.designer.cs">

@@ -152,7 +152,7 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>(),
+                        A.Dummy<HandleEventOp<ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>(),
                         A.Dummy<GetIdFromObjectOp<Version, Version>>(),
                         A.Dummy<GetTagsFromObjectOp<Version>>(),
                         A.Dummy<GetProtocolByTypeOp>(),
@@ -163,6 +163,7 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<GetOrAddCachedItemOp<GetIdFromObjectOp<Version, Version>, Version>>(),
                         A.Dummy<GetAllResourceLocatorsOp>(),
                         A.Dummy<GetResourceLocatorByIdOp<Version>>(),
+                        A.Dummy<GetResourceLocatorForUniqueIdentifierOp>(),
                         A.Dummy<ThrowIfResourceUnavailableOp>(),
                     },
                 });

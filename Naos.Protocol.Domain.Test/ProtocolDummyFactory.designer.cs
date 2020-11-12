@@ -42,28 +42,28 @@ namespace Naos.Protocol.Domain.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>(
+                () => new ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>(
                                  A.Dummy<Version>(),
                                  A.Dummy<DateTime>(),
                                  A.Dummy<ExecuteDefaultOperationsOnProtocolOp>(),
                                  A.Dummy<IReadOnlyDictionary<string, string>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new HandledEventEvent<Version, ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
+                () => new HandledEventEvent<Version, ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
                                  A.Dummy<Version>(),
                                  A.Dummy<DateTime>(),
-                                 A.Dummy<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(),
+                                 A.Dummy<ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(),
                                  A.Dummy<IReadOnlyDictionary<string, string>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
-                                 A.Dummy<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>()));
+                () => new HandleEventOp<ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
+                                 A.Dummy<ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new HandlingEventEvent<Version, ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
+                () => new HandlingEventEvent<Version, ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
                                  A.Dummy<Version>(),
                                  A.Dummy<DateTime>(),
-                                 A.Dummy<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(),
+                                 A.Dummy<ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(),
                                  A.Dummy<IReadOnlyDictionary<string, string>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -121,6 +121,9 @@ namespace Naos.Protocol.Domain.Test
                                  A.Dummy<Version>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new GetResourceLocatorForUniqueIdentifierOp());
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new NullResourceLocator());
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -132,9 +135,9 @@ namespace Naos.Protocol.Domain.Test
                 {
                     var availableTypes = new[]
                     {
-                        typeof(ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>),
-                        typeof(HandledEventEvent<Version, ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
-                        typeof(HandlingEventEvent<Version, ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
+                        typeof(ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>),
+                        typeof(HandledEventEvent<Version, ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
+                        typeof(HandlingEventEvent<Version, ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
                         typeof(RecordedObjectEvent<Version, Version>)
                     };
 
@@ -152,9 +155,9 @@ namespace Naos.Protocol.Domain.Test
                 {
                     var availableTypes = new[]
                     {
-                        typeof(ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>),
-                        typeof(HandledEventEvent<Version, ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
-                        typeof(HandlingEventEvent<Version, ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
+                        typeof(ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>),
+                        typeof(HandledEventEvent<Version, ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
+                        typeof(HandlingEventEvent<Version, ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
                         typeof(RecordedObjectEvent<Version, Version>)
                     };
 
@@ -173,7 +176,7 @@ namespace Naos.Protocol.Domain.Test
                     var availableTypes = new[]
                     {
                         typeof(ExecuteDefaultOperationsOnProtocolOp),
-                        typeof(HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
+                        typeof(HandleEventOp<ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
                         typeof(GetIdFromObjectOp<Version, Version>),
                         typeof(GetTagsFromObjectOp<Version>),
                         typeof(GetProtocolByTypeOp),
@@ -184,6 +187,7 @@ namespace Naos.Protocol.Domain.Test
                         typeof(GetOrAddCachedItemOp<GetIdFromObjectOp<Version, Version>, Version>),
                         typeof(GetAllResourceLocatorsOp),
                         typeof(GetResourceLocatorByIdOp<Version>),
+                        typeof(GetResourceLocatorForUniqueIdentifierOp),
                         typeof(ThrowIfResourceUnavailableOp)
                     };
 
@@ -219,7 +223,7 @@ namespace Naos.Protocol.Domain.Test
                     var availableTypes = new[]
                     {
                         typeof(ExecuteDefaultOperationsOnProtocolOp),
-                        typeof(HandleEventOp<ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
+                        typeof(HandleEventOp<ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
                         typeof(ClearCacheOp),
                         typeof(ThrowIfResourceUnavailableOp)
                     };
