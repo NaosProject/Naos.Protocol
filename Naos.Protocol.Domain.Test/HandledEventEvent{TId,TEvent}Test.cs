@@ -32,18 +32,18 @@ namespace Naos.Protocol.Domain.Test
                .AddScenario(
                     () =>
                         new ConstructorArgumentValidationTestScenario<
-                            HandledEventEvent<Version, ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
+                            HandledEventEvent<Version, ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
                         {
                             Name = "constructor should throw ArgumentNullException when parameter 'handledEvent' is null scenario",
                             ConstructionFunc = () =>
                                                {
                                                    var referenceObject =
                                                        A.Dummy<HandledEventEvent<Version,
-                                                           ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+                                                           ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
 
                                                    var result =
                                                        new HandledEventEvent<Version,
-                                                           ExecuteOpRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
+                                                           ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
                                                            referenceObject.Id,
                                                            referenceObject.TimestampUtc,
                                                            null,

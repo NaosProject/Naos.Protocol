@@ -22,15 +22,15 @@ namespace Naos.Protocol.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class ExecuteOpRequestedEvent<TId, TOperation> : IModel<ExecuteOpRequestedEvent<TId, TOperation>>
+    public partial class ExecuteOperationRequestedEvent<TId, TOperation> : IModel<ExecuteOperationRequestedEvent<TId, TOperation>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="ExecuteOpRequestedEvent{TId, TOperation}"/> are equal.
+        /// Determines whether two objects of type <see cref="ExecuteOperationRequestedEvent{TId, TOperation}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(ExecuteOpRequestedEvent<TId, TOperation> left, ExecuteOpRequestedEvent<TId, TOperation> right)
+        public static bool operator ==(ExecuteOperationRequestedEvent<TId, TOperation> left, ExecuteOperationRequestedEvent<TId, TOperation> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="ExecuteOpRequestedEvent{TId, TOperation}"/> are not equal.
+        /// Determines whether two objects of type <see cref="ExecuteOperationRequestedEvent{TId, TOperation}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(ExecuteOpRequestedEvent<TId, TOperation> left, ExecuteOpRequestedEvent<TId, TOperation> right) => !(left == right);
+        public static bool operator !=(ExecuteOperationRequestedEvent<TId, TOperation> left, ExecuteOperationRequestedEvent<TId, TOperation> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(ExecuteOpRequestedEvent<TId, TOperation> other)
+        public bool Equals(ExecuteOperationRequestedEvent<TId, TOperation> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -77,7 +77,7 @@ namespace Naos.Protocol.Domain
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as ExecuteOpRequestedEvent<TId, TOperation>);
+        public override bool Equals(object obj) => this == (obj as ExecuteOperationRequestedEvent<TId, TOperation>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
@@ -88,7 +88,7 @@ namespace Naos.Protocol.Domain
             .Value;
 
         /// <inheritdoc />
-        public new ExecuteOpRequestedEvent<TId, TOperation> DeepClone() => (ExecuteOpRequestedEvent<TId, TOperation>)this.DeepCloneInternal();
+        public new ExecuteOperationRequestedEvent<TId, TOperation> DeepClone() => (ExecuteOperationRequestedEvent<TId, TOperation>)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
@@ -108,7 +108,7 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventBase<TId> DeepCloneWithId(TId id)
         {
-            var result = new ExecuteOpRequestedEvent<TId, TOperation>(
+            var result = new ExecuteOperationRequestedEvent<TId, TOperation>(
                                  id,
                                  this.TimestampUtc,
                                  DeepCloneGeneric(this.OperationToExecute),
@@ -135,7 +135,7 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventBase<TId> DeepCloneWithTimestampUtc(DateTime timestampUtc)
         {
-            var result = new ExecuteOpRequestedEvent<TId, TOperation>(
+            var result = new ExecuteOperationRequestedEvent<TId, TOperation>(
                                  DeepCloneGeneric(this.Id),
                                  timestampUtc,
                                  DeepCloneGeneric(this.OperationToExecute),
@@ -148,7 +148,7 @@ namespace Naos.Protocol.Domain
         /// Deep clones this object with a new <see cref="OperationToExecute" />.
         /// </summary>
         /// <param name="operationToExecute">The new <see cref="OperationToExecute" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ExecuteOpRequestedEvent{TId, TOperation}" /> using the specified <paramref name="operationToExecute" /> for <see cref="OperationToExecute" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="ExecuteOperationRequestedEvent{TId, TOperation}" /> using the specified <paramref name="operationToExecute" /> for <see cref="OperationToExecute" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
@@ -164,9 +164,9 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ExecuteOpRequestedEvent<TId, TOperation> DeepCloneWithOperationToExecute(TOperation operationToExecute)
+        public ExecuteOperationRequestedEvent<TId, TOperation> DeepCloneWithOperationToExecute(TOperation operationToExecute)
         {
-            var result = new ExecuteOpRequestedEvent<TId, TOperation>(
+            var result = new ExecuteOperationRequestedEvent<TId, TOperation>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
                                  operationToExecute,
@@ -179,7 +179,7 @@ namespace Naos.Protocol.Domain
         /// Deep clones this object with a new <see cref="Tags" />.
         /// </summary>
         /// <param name="tags">The new <see cref="Tags" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ExecuteOpRequestedEvent{TId, TOperation}" /> using the specified <paramref name="tags" /> for <see cref="Tags" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="ExecuteOperationRequestedEvent{TId, TOperation}" /> using the specified <paramref name="tags" /> for <see cref="Tags" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
@@ -195,9 +195,9 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ExecuteOpRequestedEvent<TId, TOperation> DeepCloneWithTags(IReadOnlyDictionary<string, string> tags)
+        public ExecuteOperationRequestedEvent<TId, TOperation> DeepCloneWithTags(IReadOnlyDictionary<string, string> tags)
         {
-            var result = new ExecuteOpRequestedEvent<TId, TOperation>(
+            var result = new ExecuteOperationRequestedEvent<TId, TOperation>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
                                  DeepCloneGeneric(this.OperationToExecute),
@@ -209,7 +209,7 @@ namespace Naos.Protocol.Domain
         /// <inheritdoc />
         protected override EventBaseBase DeepCloneInternal()
         {
-            var result = new ExecuteOpRequestedEvent<TId, TOperation>(
+            var result = new ExecuteOperationRequestedEvent<TId, TOperation>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
                                  DeepCloneGeneric(this.OperationToExecute),

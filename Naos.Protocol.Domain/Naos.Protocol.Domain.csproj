@@ -118,9 +118,9 @@
     <Compile Include="Implementations\DefaultOperations\ExecuteDefaultOperationsOnProtocolOp.designer.cs">
       <DependentUpon>ExecuteDefaultOperationsOnProtocolOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Implementations\EventHandling\ExecuteOpRequestedEvent{TId,TOperation}.cs" />
-    <Compile Include="Implementations\EventHandling\ExecuteOpRequestedEvent{TId,TOperation}.designer.cs">
-      <DependentUpon>ExecuteOpRequestedEvent{TId,TOperation}.cs</DependentUpon>
+    <Compile Include="Implementations\EventHandling\ExecuteOperationRequestedEvent{TId,TOperation}.cs" />
+    <Compile Include="Implementations\EventHandling\ExecuteOperationRequestedEvent{TId,TOperation}.designer.cs">
+      <DependentUpon>ExecuteOperationRequestedEvent{TId,TOperation}.cs</DependentUpon>
     </Compile>
     <Compile Include="Implementations\EventHandling\HandledEventEvent{TId,TEvent}.designer.cs">
       <DependentUpon>HandledEventEvent{TId,TEvent}.cs</DependentUpon>
@@ -179,6 +179,10 @@
     </Compile>
     <Compile Include="Implementations\ProtocolCaching\ClearCacheOp.cs" />
     <Compile Include="Implementations\ProtocolCaching\OperationResultCacheProtocolBase{TOperation,TReturn}.cs" />
+    <Compile Include="Implementations\ResourceLocation\GetResourceLocatorForUniqueIdentifierOp.cs" />
+    <Compile Include="Implementations\ResourceLocation\GetResourceLocatorForUniqueIdentifierOp.designer.cs">
+      <DependentUpon>GetResourceLocatorForUniqueIdentifierOp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Implementations\ResourceLocation\NullResourceLocator.designer.cs">
       <DependentUpon>NullResourceLocator.cs</DependentUpon>
     </Compile>

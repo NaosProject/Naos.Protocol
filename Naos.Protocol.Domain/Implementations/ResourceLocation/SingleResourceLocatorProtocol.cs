@@ -49,5 +49,20 @@ namespace Naos.Protocol.Domain
         {
             return new LambdaReturningProtocol<GetResourceLocatorByIdOp<TId>, IResourceLocator>(_ => this.resourceLocator);
         }
+
+        /// <inheritdoc />
+        public IResourceLocator Execute(
+            GetResourceLocatorForUniqueIdentifierOp operation)
+        {
+            return this.resourceLocator;
+        }
+
+        /// <inheritdoc />
+        public async Task<IResourceLocator> ExecuteAsync(
+            GetResourceLocatorForUniqueIdentifierOp operation)
+        {
+            var syncResult = this.Execute(operation);
+            return await Task.FromResult(syncResult);
+        }
     }
 }

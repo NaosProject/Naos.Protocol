@@ -12,7 +12,8 @@ namespace Naos.Protocol.Domain
     /// Set of common protocols around <see cref="IResourceLocator" /> for use with protocols accessing communication or storage.
     /// </summary>
     public interface IProtocolResourceLocator
-        : ISyncAndAsyncReturningProtocol<GetAllResourceLocatorsOp, IReadOnlyCollection<IResourceLocator>>
+        : ISyncAndAsyncReturningProtocol<GetAllResourceLocatorsOp, IReadOnlyCollection<IResourceLocator>>,
+          ISyncAndAsyncReturningProtocol<GetResourceLocatorForUniqueIdentifierOp, IResourceLocator>
     {
         /// <summary>
         /// Gets the resource locator by identifier protocol.
