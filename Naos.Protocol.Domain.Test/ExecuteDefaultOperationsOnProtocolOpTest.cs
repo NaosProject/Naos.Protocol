@@ -13,8 +13,10 @@ namespace Naos.Protocol.Domain.Test
 
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
-
+    using OBeautifulCode.CodeGen.ModelObject.Recipes;
     using Xunit;
+
+    using static System.FormattableString;
 
     public static partial class ExecuteDefaultOperationsOnProtocolOpTest
     {
@@ -22,6 +24,9 @@ namespace Naos.Protocol.Domain.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static ExecuteDefaultOperationsOnProtocolOpTest()
         {
+            ConstructorArgumentValidationTestScenarios
+               .RemoveAllScenarios()
+               .AddScenario(ConstructorArgumentValidationTestScenario<ExecuteDefaultOperationsOnProtocolOp>.ConstructorCannotThrowScenario);
         }
     }
 }
