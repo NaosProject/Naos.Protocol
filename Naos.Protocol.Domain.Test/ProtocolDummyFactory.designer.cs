@@ -107,6 +107,46 @@ namespace Naos.Protocol.Domain.Test
                 {
                     var availableTypes = new[]
                     {
+                        typeof(ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>),
+                        typeof(HandledEventEvent<Version, ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
+                        typeof(HandlingEventEvent<Version, ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
+                        typeof(RecordedObjectEvent<Version, Version>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (EventBaseBase)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
+                        typeof(ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>),
+                        typeof(HandledEventEvent<Version, ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
+                        typeof(HandlingEventEvent<Version, ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
+                        typeof(RecordedObjectEvent<Version, Version>)
+                    };
+
+                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
+
+                    var randomType = availableTypes[randomIndex];
+
+                    var result = (EventBase<Version>)AD.ummy(randomType);
+
+                    return result;
+                });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () =>
+                {
+                    var availableTypes = new[]
+                    {
                         typeof(ExecuteDefaultOperationsOnProtocolOp),
                         typeof(GetIdFromObjectOp<Version, Version>),
                         typeof(GetTagsFromObjectOp<Version>),
@@ -188,26 +228,6 @@ namespace Naos.Protocol.Domain.Test
                                  A.Dummy<DateTime>(),
                                  A.Dummy<Version>(),
                                  A.Dummy<IReadOnlyDictionary<string, string>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>),
-                        typeof(HandledEventEvent<Version, ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
-                        typeof(HandlingEventEvent<Version, ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>),
-                        typeof(RecordedObjectEvent<Version, Version>)
-                    };
-
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
-
-                    var randomType = availableTypes[randomIndex];
-
-                    var result = (EventBase<Version>)AD.ummy(randomType);
-
-                    return result;
-                });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new HandleEventOp<ExecuteOpEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(

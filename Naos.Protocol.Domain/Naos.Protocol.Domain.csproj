@@ -187,6 +187,10 @@
       <DependentUpon>ThrowIfResourceUnavailableOp.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Enum\TypeVersionMatchStrategy.cs" />
+    <Compile Include="Model\Event\EventBaseBase.cs" />
+    <Compile Include="Model\Event\EventBaseBase.designer.cs">
+      <DependentUpon>EventBaseBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Event\EventBase{TId}.designer.cs">
       <DependentUpon>EventBase{TId}.cs</DependentUpon>
     </Compile>

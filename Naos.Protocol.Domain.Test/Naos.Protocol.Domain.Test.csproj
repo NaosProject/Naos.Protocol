@@ -256,6 +256,10 @@
       <DependentUpon>ClearCacheOpTest.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleAbstraction.cs" />
+    <Compile Include="EventBaseBaseTest.cs" />
+    <Compile Include="EventBaseBaseTest.designer.cs">
+      <DependentUpon>EventBaseBaseTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="EventBase{TId}Test.cs" />
     <Compile Include="EventBase{TId}Test.designer.cs">
       <DependentUpon>EventBase{TId}Test.cs</DependentUpon>

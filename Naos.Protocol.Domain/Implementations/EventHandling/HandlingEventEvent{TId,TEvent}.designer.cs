@@ -207,7 +207,7 @@ namespace Naos.Protocol.Domain
         }
 
         /// <inheritdoc />
-        protected override EventBase<TId> DeepCloneInternal()
+        protected override EventBaseBase DeepCloneInternal()
         {
             var result = new HandlingEventEvent<TId, TEvent>(
                                  DeepCloneGeneric(this.Id),
