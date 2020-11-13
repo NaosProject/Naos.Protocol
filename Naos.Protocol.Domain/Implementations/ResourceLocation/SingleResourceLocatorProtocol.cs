@@ -11,10 +11,10 @@ namespace Naos.Protocol.Domain
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Implements <see cref="IProtocolResourceLocator"/> using a single provided <see cref="ResourceLocatorBase"/>.
+    /// Implements <see cref="IResourceLocatorProtocols"/> using a single provided <see cref="ResourceLocatorBase"/>.
     /// </summary>
     public sealed partial class SingleResourceLocatorProtocol
-        : IProtocolResourceLocator
+        : IResourceLocatorProtocols
     {
         private readonly IResourceLocator resourceLocator;
 

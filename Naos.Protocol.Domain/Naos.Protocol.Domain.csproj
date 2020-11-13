@@ -247,12 +247,12 @@
     <Compile Include="Model\Operation\IOperation.cs" />
     <Compile Include="Model\ResourceLocation\IResourceLocator.cs" />
     <Compile Include="Implementations\ResourceLocation\NullResourceLocator.cs" />
+    <Compile Include="Model\ResourceLocation\IResourceLocatorProtocols.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Implementations\ModelInspection\GetIdFromObjectProtocol{TId,TObject}.cs" />
     <Compile Include="Implementations\ModelInspection\GetTagsFromObjectProtocol{TObject}.cs" />
     <Compile Include="Implementations\ProtcolComposing\LambdaReturningProtocol{TOperation,TReturn}.cs" />
     <Compile Include="Implementations\ProtcolComposing\LambdaVoidProtocol{TOperation}.cs" />
-    <Compile Include="Model\ResourceLocation\IProtocolResourceLocator.cs" />
     <Compile Include="Implementations\ResourceLocation\NamedResourceLocator.cs" />
     <Compile Include="Implementations\ResourceLocation\NamedResourceLocator.designer.cs">
       <DependentUpon>NamedResourceLocator.cs</DependentUpon>

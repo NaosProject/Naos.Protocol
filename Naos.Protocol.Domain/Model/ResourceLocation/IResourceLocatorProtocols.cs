@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IProtocolResourceLocator.cs" company="Naos Project">
+// <copyright file="IResourceLocatorProtocols.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,7 +11,7 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Set of common protocols around <see cref="IResourceLocator" /> for use with protocols accessing communication or storage.
     /// </summary>
-    public interface IProtocolResourceLocator
+    public interface IResourceLocatorProtocols
         : ISyncAndAsyncReturningProtocol<GetAllResourceLocatorsOp, IReadOnlyCollection<IResourceLocator>>,
           ISyncAndAsyncReturningProtocol<GetResourceLocatorForUniqueIdentifierOp, IResourceLocator>
     {
