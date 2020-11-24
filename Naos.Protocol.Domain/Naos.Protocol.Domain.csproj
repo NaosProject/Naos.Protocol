@@ -42,8 +42,8 @@
     <Reference Include="OBeautifulCode.Representation.System, Version=1.0.55.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OBeautifulCode.Representation.System.1.0.55\lib\net462\OBeautifulCode.Representation.System.dll</HintPath>
     </Reference>
-    <Reference Include="OBeautifulCode.Type, Version=1.0.74.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OBeautifulCode.Type.1.0.74\lib\net462\OBeautifulCode.Type.dll</HintPath>
+    <Reference Include="OBeautifulCode.Type, Version=1.0.76.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OBeautifulCode.Type.1.0.76\lib\net462\OBeautifulCode.Type.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
@@ -122,6 +122,7 @@
     <Compile Include="Implementations\EventHandling\ExecuteOperationRequestedEvent{TId,TOperation}.designer.cs">
       <DependentUpon>ExecuteOperationRequestedEvent{TId,TOperation}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Implementations\EventHandling\FailedToHandleEventEvent{TId,TEvent}.cs" />
     <Compile Include="Implementations\EventHandling\HandledEventEvent{TId,TEvent}.designer.cs">
       <DependentUpon>HandledEventEvent{TId,TEvent}.cs</DependentUpon>
     </Compile>
