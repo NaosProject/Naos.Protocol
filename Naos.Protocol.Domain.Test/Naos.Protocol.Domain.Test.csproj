@@ -272,6 +272,10 @@
     <Compile Include="ExecuteOperationRequestedEvent{TId,TOperation}Test.designer.cs">
       <DependentUpon>ExecuteOperationRequestedEvent{TId,TOperation}Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="FailedToHandleEventEvent{TId,TEvent}Test.cs" />
+    <Compile Include="FailedToHandleEventEvent{TId,TEvent}Test.designer.cs">
+      <DependentUpon>FailedToHandleEventEvent{TId,TEvent}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="GetAllResourceLocatorsOpTest.cs" />
     <Compile Include="GetAllResourceLocatorsOpTest.designer.cs">
       <DependentUpon>GetAllResourceLocatorsOpTest.cs</DependentUpon>
@@ -312,6 +316,7 @@
     <Compile Include="GetVoidProtocolOp{TOperation}Test.designer.cs">
       <DependentUpon>GetVoidProtocolOp{TOperation}Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HandledEventEvent{TId,TEvent}Test.cs" />
     <Compile Include="HandledEventEvent{TId,TEvent}Test.designer.cs">
       <DependentUpon>HandledEventEvent{TId,TEvent}Test.cs</DependentUpon>

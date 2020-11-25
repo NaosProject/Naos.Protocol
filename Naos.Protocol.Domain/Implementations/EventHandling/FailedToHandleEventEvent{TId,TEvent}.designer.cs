@@ -22,15 +22,15 @@ namespace Naos.Protocol.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class RecordedObjectEvent<TId, TObject> : IModel<RecordedObjectEvent<TId, TObject>>
+    public partial class FailedToHandleEventEvent<TId, TEvent> : IModel<FailedToHandleEventEvent<TId, TEvent>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="RecordedObjectEvent{TId, TObject}"/> are equal.
+        /// Determines whether two objects of type <see cref="FailedToHandleEventEvent{TId, TEvent}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(RecordedObjectEvent<TId, TObject> left, RecordedObjectEvent<TId, TObject> right)
+        public static bool operator ==(FailedToHandleEventEvent<TId, TEvent> left, FailedToHandleEventEvent<TId, TEvent> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="RecordedObjectEvent{TId, TObject}"/> are not equal.
+        /// Determines whether two objects of type <see cref="FailedToHandleEventEvent{TId, TEvent}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(RecordedObjectEvent<TId, TObject> left, RecordedObjectEvent<TId, TObject> right) => !(left == right);
+        public static bool operator !=(FailedToHandleEventEvent<TId, TEvent> left, FailedToHandleEventEvent<TId, TEvent> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(RecordedObjectEvent<TId, TObject> other)
+        public bool Equals(FailedToHandleEventEvent<TId, TEvent> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -70,25 +70,25 @@ namespace Naos.Protocol.Domain
 
             var result = this.Id.IsEqualTo(other.Id)
                       && this.TimestampUtc.IsEqualTo(other.TimestampUtc)
-                      && this.CreatedObject.IsEqualTo(other.CreatedObject)
+                      && this.ExceptionToString.IsEqualTo(other.ExceptionToString, StringComparer.Ordinal)
                       && this.Tags.IsEqualTo(other.Tags);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as RecordedObjectEvent<TId, TObject>);
+        public override bool Equals(object obj) => this == (obj as FailedToHandleEventEvent<TId, TEvent>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.Id)
             .Hash(this.TimestampUtc)
-            .Hash(this.CreatedObject)
+            .Hash(this.ExceptionToString)
             .Hash(this.Tags)
             .Value;
 
         /// <inheritdoc />
-        public new RecordedObjectEvent<TId, TObject> DeepClone() => (RecordedObjectEvent<TId, TObject>)this.DeepCloneInternal();
+        public new FailedToHandleEventEvent<TId, TEvent> DeepClone() => (FailedToHandleEventEvent<TId, TEvent>)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
@@ -108,10 +108,10 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventBase<TId> DeepCloneWithId(TId id)
         {
-            var result = new RecordedObjectEvent<TId, TObject>(
+            var result = new FailedToHandleEventEvent<TId, TEvent>(
                                  id,
+                                 this.ExceptionToString?.DeepClone(),
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.CreatedObject),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -135,20 +135,20 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventBase<TId> DeepCloneWithTimestampUtc(DateTime timestampUtc)
         {
-            var result = new RecordedObjectEvent<TId, TObject>(
+            var result = new FailedToHandleEventEvent<TId, TEvent>(
                                  DeepCloneGeneric(this.Id),
+                                 this.ExceptionToString?.DeepClone(),
                                  timestampUtc,
-                                 DeepCloneGeneric(this.CreatedObject),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="CreatedObject" />.
+        /// Deep clones this object with a new <see cref="ExceptionToString" />.
         /// </summary>
-        /// <param name="createdObject">The new <see cref="CreatedObject" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="RecordedObjectEvent{TId, TObject}" /> using the specified <paramref name="createdObject" /> for <see cref="CreatedObject" /> and a deep clone of every other property.</returns>
+        /// <param name="exceptionToString">The new <see cref="ExceptionToString" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="FailedToHandleEventEvent{TId, TEvent}" /> using the specified <paramref name="exceptionToString" /> for <see cref="ExceptionToString" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
@@ -164,12 +164,12 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public RecordedObjectEvent<TId, TObject> DeepCloneWithCreatedObject(TObject createdObject)
+        public FailedToHandleEventEvent<TId, TEvent> DeepCloneWithExceptionToString(string exceptionToString)
         {
-            var result = new RecordedObjectEvent<TId, TObject>(
+            var result = new FailedToHandleEventEvent<TId, TEvent>(
                                  DeepCloneGeneric(this.Id),
+                                 exceptionToString,
                                  this.TimestampUtc,
-                                 createdObject,
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -179,7 +179,7 @@ namespace Naos.Protocol.Domain
         /// Deep clones this object with a new <see cref="Tags" />.
         /// </summary>
         /// <param name="tags">The new <see cref="Tags" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="RecordedObjectEvent{TId, TObject}" /> using the specified <paramref name="tags" /> for <see cref="Tags" /> and a deep clone of every other property.</returns>
+        /// <returns>New <see cref="FailedToHandleEventEvent{TId, TEvent}" /> using the specified <paramref name="tags" /> for <see cref="Tags" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
@@ -195,12 +195,12 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public RecordedObjectEvent<TId, TObject> DeepCloneWithTags(IReadOnlyDictionary<string, string> tags)
+        public FailedToHandleEventEvent<TId, TEvent> DeepCloneWithTags(IReadOnlyDictionary<string, string> tags)
         {
-            var result = new RecordedObjectEvent<TId, TObject>(
+            var result = new FailedToHandleEventEvent<TId, TEvent>(
                                  DeepCloneGeneric(this.Id),
+                                 this.ExceptionToString?.DeepClone(),
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.CreatedObject),
                                  tags);
 
             return result;
@@ -209,10 +209,10 @@ namespace Naos.Protocol.Domain
         /// <inheritdoc />
         protected override EventBaseBase DeepCloneInternal()
         {
-            var result = new RecordedObjectEvent<TId, TObject>(
+            var result = new FailedToHandleEventEvent<TId, TEvent>(
                                  DeepCloneGeneric(this.Id),
+                                 this.ExceptionToString?.DeepClone(),
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.CreatedObject),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -259,11 +259,11 @@ namespace Naos.Protocol.Domain
             return (TId)result;
         }
 
-        private static TObject DeepCloneGeneric(TObject value)
+        private static TEvent DeepCloneGeneric(TEvent value)
         {
             object result;
 
-            var type = typeof(TObject);
+            var type = typeof(TEvent);
 
             if (type.IsValueType)
             {
@@ -275,7 +275,7 @@ namespace Naos.Protocol.Domain
                 {
                     result = default;
                 }
-                else if (value is IDeepCloneable<TObject> deepCloneableValue)
+                else if (value is IDeepCloneable<TEvent> deepCloneableValue)
                 {
                     result = deepCloneableValue.DeepClone();
                 }
@@ -297,14 +297,14 @@ namespace Naos.Protocol.Domain
                 }
             }
 
-            return (TObject)result;
+            return (TEvent)result;
         }
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString() ?? "<null>"}, TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, CreatedObject = {this.CreatedObject?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString() ?? "<null>"}, TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, ExceptionToString = {this.ExceptionToString?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}.");
 
             return result;
         }

@@ -27,16 +27,16 @@ namespace Naos.Protocol.Domain
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="timestampUtc">The timestamp UTC.</param>
-        /// <param name="handledEvent">The handled event.</param>
+        /// <param name="details">The handled event.</param>
         /// <param name="tags">The optional tags.</param>
         public HandledEventEvent(
             TId id,
             DateTime timestampUtc,
-            TEvent handledEvent,
+            string details,
             IReadOnlyDictionary<string, string> tags = null)
         : base(id, timestampUtc)
         {
-            this.HandledEvent = handledEvent ?? throw new ArgumentNullException(nameof(handledEvent));
+            this.Details = details ?? throw new ArgumentNullException(nameof(details));
             this.Tags = tags;
         }
 
@@ -44,7 +44,7 @@ namespace Naos.Protocol.Domain
         /// Gets the Handled operation.
         /// </summary>
         /// <value>The Handled operation.</value>
-        public TEvent HandledEvent { get; private set; }
+        public string Details { get; private set; }
 
         /// <inheritdoc />
         public IReadOnlyDictionary<string, string> Tags { get; private set; }

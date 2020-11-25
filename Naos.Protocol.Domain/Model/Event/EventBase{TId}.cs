@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain
     /// Abstract base class for an event that is both identifiable and UTC timestamped.
     /// </summary>
     /// <typeparam name="TId">The type of the identifier.</typeparam>
-    public abstract partial class EventBase<TId> : EventBaseBase, IIdentifiableBy<TId>, IHaveTimestampUtc, IModelViaCodeGen
+    public abstract partial class EventBase<TId> : EventBaseBase, IEvent<TId>, IHaveTimestampUtc, IModelViaCodeGen
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EventBase{TId}"/> class.

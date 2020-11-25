@@ -123,6 +123,9 @@
       <DependentUpon>ExecuteOperationRequestedEvent{TId,TOperation}.cs</DependentUpon>
     </Compile>
     <Compile Include="Implementations\EventHandling\FailedToHandleEventEvent{TId,TEvent}.cs" />
+    <Compile Include="Implementations\EventHandling\FailedToHandleEventEvent{TId,TEvent}.designer.cs">
+      <DependentUpon>FailedToHandleEventEvent{TId,TEvent}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Implementations\EventHandling\HandledEventEvent{TId,TEvent}.designer.cs">
       <DependentUpon>HandledEventEvent{TId,TEvent}.cs</DependentUpon>
     </Compile>
@@ -141,6 +144,7 @@
     <Compile Include="Implementations\ModelInspection\GetTagsFromObjectOp{TObject}.designer.cs">
       <DependentUpon>GetTagsFromObjectOp{TObject}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Implementations\ProtcolComposing\SyncAndAsyncCompositeVoidProtocol{TVoidOperation}.cs" />
     <Compile Include="Implementations\ProtcolComposing\GetProtocolByTypeOp.designer.cs">
       <DependentUpon>GetProtocolByTypeOp.cs</DependentUpon>
     </Compile>
@@ -199,6 +203,7 @@
     <Compile Include="Model\Event\EventBase{TId}.designer.cs">
       <DependentUpon>EventBase{TId}.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Event\IEvent{TId}.cs" />
     <Compile Include="Model\Event\IEvent.cs" />
     <Compile Include="Model\Operation\IVoidOperation.cs" />
     <Compile Include="Model\Operation\IReturningOperation{TReturn}.cs" />

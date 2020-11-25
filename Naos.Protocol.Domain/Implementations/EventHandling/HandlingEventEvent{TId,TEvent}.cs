@@ -8,9 +8,8 @@ namespace Naos.Protocol.Domain
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
     using Naos.CodeAnalysis.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -27,24 +26,26 @@ namespace Naos.Protocol.Domain
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="timestampUtc">The timestamp UTC.</param>
-        /// <param name="handlingEvent">The handling event.</param>
+        /// <param name="details">The details.</param>
         /// <param name="tags">The optional tags.</param>
         public HandlingEventEvent(
             TId id,
             DateTime timestampUtc,
-            TEvent handlingEvent,
+            string details,
             IReadOnlyDictionary<string, string> tags = null)
         : base(id, timestampUtc)
         {
-            this.HandlingEvent = handlingEvent ?? throw new ArgumentNullException(nameof(handlingEvent));
+            details.MustForArg(nameof(details)).NotBeNullNorWhiteSpace();
+
+            this.Details = details;
             this.Tags = tags;
         }
 
         /// <summary>
-        /// Gets the Handling operation.
+        /// Gets the details.
         /// </summary>
-        /// <value>The Handling operation.</value>
-        public TEvent HandlingEvent { get; private set; }
+        /// <value>The details.</value>
+        public string Details { get; private set; }
 
         /// <inheritdoc />
         public IReadOnlyDictionary<string, string> Tags { get; private set; }
