@@ -14,10 +14,10 @@ namespace Naos.Protocol.Domain.Test
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
     using Xunit;
 
-    public static partial class GetTagsFromObjectOpTest
+    public static partial class GetTagsFromObjectOpTObjectTest
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = NaosSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static GetTagsFromObjectOpTest()
+        static GetTagsFromObjectOpTObjectTest()
         {
             ConstructorArgumentValidationTestScenarios.RemoveAllScenarios();
             ConstructorArgumentValidationTestScenarios.AddScenario(

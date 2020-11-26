@@ -15,11 +15,11 @@ namespace Naos.Protocol.Domain.Test
     using Xunit;
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = NaosSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class RecordedObjectEventTest
+    public static partial class RecordedObjectEventTIdTObjectTest
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = NaosSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = NaosSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static RecordedObjectEventTest()
+        static RecordedObjectEventTIdTObjectTest()
         {
             ConstructorArgumentValidationTestScenarios.RemoveAllScenarios();
             ConstructorArgumentValidationTestScenarios

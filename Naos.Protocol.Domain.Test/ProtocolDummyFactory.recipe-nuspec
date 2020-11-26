@@ -6,8 +6,8 @@
     <tags>dummyfactory dummy factory fakeiteasy autofixture snippet codeinclude utility shared recipe Protocol</tags>
     <dependencies>
       <dependency id="Naos.Protocol.Domain" version="$version$" />
-      <dependency id="Naos.CodeAnalysis.Recipes.SuppressBecause" version="1.0.126" />
-      <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.129" />
+      <dependency id="Naos.CodeAnalysis.Recipes.SuppressBecause" version="1.0.128" />
+      <dependency id="OBeautifulCode.AutoFakeItEasy" version="1.0.130" />
       <dependency id="OBeautifulCode.Representation.System.Recipes.DummyFactory" version="1.0.55" />
     </dependencies>
   </metadata>

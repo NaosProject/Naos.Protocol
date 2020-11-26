@@ -11,6 +11,7 @@ namespace Naos.Protocol.Domain
     using System.Collections.ObjectModel;
     using System.Linq;
     using Naos.CodeAnalysis.Recipes;
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -27,7 +28,7 @@ namespace Naos.Protocol.Domain
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="timestampUtc">The timestamp UTC.</param>
-        /// <param name="details">The handled event.</param>
+        /// <param name="details">The details.</param>
         /// <param name="tags">The optional tags.</param>
         public HandledEventEvent(
             TId id,
@@ -36,14 +37,15 @@ namespace Naos.Protocol.Domain
             IReadOnlyDictionary<string, string> tags = null)
         : base(id, timestampUtc)
         {
-            this.Details = details ?? throw new ArgumentNullException(nameof(details));
+            details.MustForArg(nameof(details)).NotBeNullNorWhiteSpace();
+            this.Details = details;
             this.Tags = tags;
         }
 
         /// <summary>
-        /// Gets the Handled operation.
+        /// Gets the details.
         /// </summary>
-        /// <value>The Handled operation.</value>
+        /// <value>The details.</value>
         public string Details { get; private set; }
 
         /// <inheritdoc />

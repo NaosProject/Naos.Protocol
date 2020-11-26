@@ -29,6 +29,65 @@ namespace Naos.Protocol.Domain.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static FailedToHandleEventEventTIdTEventTest()
         {
+            ConstructorArgumentValidationTestScenarios
+               .RemoveAllScenarios()
+               .AddScenario(
+                    () =>
+                        new ConstructorArgumentValidationTestScenario<
+                            FailedToHandleEventEvent<Version, ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>>
+                        {
+                            Name = "constructor should throw ArgumentNullException when parameter 'exceptionToString' is null scenario",
+                            ConstructionFunc = () =>
+                                               {
+                                                   var referenceObject =
+                                                       A.Dummy<FailedToHandleEventEvent<Version,
+                                                           ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>>();
+
+                                                   var result =
+                                                       new FailedToHandleEventEvent<Version,
+                                                           ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>(
+                                                           referenceObject.Id,
+                                                           null,
+                                                           referenceObject.TimestampUtc,
+                                                           referenceObject.Tags);
+
+                                                   return result;
+                                               },
+                            ExpectedExceptionType = typeof(ArgumentNullException),
+                            ExpectedExceptionMessageContains = new[]
+                                                               {
+                                                                   "exceptionToString",
+                                                               },
+                        })
+               .AddScenario(
+                    () =>
+                        new ConstructorArgumentValidationTestScenario<
+                            FailedToHandleEventEvent<Version, ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>>
+                        {
+                            Name = "constructor should throw ArgumentException when parameter 'exceptionToString' is white space scenario",
+                            ConstructionFunc = () =>
+                                               {
+                                                   var referenceObject =
+                                                       A.Dummy<FailedToHandleEventEvent<Version,
+                                                           ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>>();
+
+                                                   var result =
+                                                       new FailedToHandleEventEvent<Version,
+                                                           ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>(
+                                                           referenceObject.Id,
+                                                           Invariant($"  {Environment.NewLine}  "),
+                                                           referenceObject.TimestampUtc,
+                                                           referenceObject.Tags);
+
+                                                   return result;
+                                               },
+                            ExpectedExceptionType = typeof(ArgumentException),
+                            ExpectedExceptionMessageContains = new[]
+                                                               {
+                                                                   "exceptionToString",
+                                                                   "white space",
+                                                               },
+                        });
         }
     }
 }

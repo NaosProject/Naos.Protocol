@@ -19,25 +19,24 @@ namespace Naos.Protocol.Domain.Test
     using Xunit;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = NaosSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class ExecuteOperationRequestedEventTest
+    public static partial class ExecuteOperationRequestedEventTIdTOperationTest
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static ExecuteOperationRequestedEventTest()
+        static ExecuteOperationRequestedEventTIdTOperationTest()
         {
             ConstructorArgumentValidationTestScenarios
                .RemoveAllScenarios()
                .AddScenario(
                     () =>
-                        new ConstructorArgumentValidationTestScenario<ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>
+                        new ConstructorArgumentValidationTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
                         {
                             Name = "constructor should throw ArgumentNullException when parameter 'operationToExecute' is null scenario",
                             ConstructionFunc = () =>
                                                {
-                                                   var referenceObject =
-                                                       A.Dummy<ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>();
+                                                   var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                                                   var result = new ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>(
+                                                   var result = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
                                                        referenceObject.Id,
                                                        referenceObject.TimestampUtc,
                                                        null,

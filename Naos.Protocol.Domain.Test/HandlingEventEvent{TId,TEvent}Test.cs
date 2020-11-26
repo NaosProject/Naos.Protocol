@@ -18,30 +18,31 @@ namespace Naos.Protocol.Domain.Test
     using OBeautifulCode.Math.Recipes;
     using Xunit;
 
+    using static System.FormattableString;
+
     [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class HandlingEventEventTest
+    public static partial class HandlingEventEventTIdTEventTest
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static HandlingEventEventTest()
+        static HandlingEventEventTIdTEventTest()
         {
             ConstructorArgumentValidationTestScenarios
                .RemoveAllScenarios()
                .AddScenario(
                     () =>
                         new ConstructorArgumentValidationTestScenario<
-                            HandlingEventEvent<Version, ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>
+                            HandlingEventEvent<Version, ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>>
                         {
-                            Name = "constructor should throw ArgumentNullException when parameter 'handlingEvent' is null scenario",
+                            Name = "constructor should throw ArgumentNullException when parameter 'details' is null scenario",
                             ConstructionFunc = () =>
                                                {
                                                    var referenceObject =
                                                        A.Dummy<HandlingEventEvent<Version,
-                                                           ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>>();
+                                                           ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>>();
 
                                                    var result =
-                                                       new HandlingEventEvent<Version,
-                                                           ExecuteOperationRequestedEvent<Version, ExecuteDefaultOperationsOnProtocolOp>>(
+                                                       new HandlingEventEvent<Version, ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>(
                                                            referenceObject.Id,
                                                            referenceObject.TimestampUtc,
                                                            null,
@@ -52,7 +53,35 @@ namespace Naos.Protocol.Domain.Test
                             ExpectedExceptionType = typeof(ArgumentNullException),
                             ExpectedExceptionMessageContains = new[]
                                                                {
-                                                                   "handlingEvent",
+                                                                   "details",
+                                                               },
+                        })
+               .AddScenario(
+                    () =>
+                        new ConstructorArgumentValidationTestScenario<
+                            HandlingEventEvent<Version, ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>>
+                        {
+                            Name = "constructor should throw ArgumentException when parameter 'details' is white space scenario",
+                            ConstructionFunc = () =>
+                                               {
+                                                   var referenceObject =
+                                                       A.Dummy<HandlingEventEvent<Version,
+                                                           ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>>();
+
+                                                   var result =
+                                                       new HandlingEventEvent<Version, ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>(
+                                                           referenceObject.Id,
+                                                           referenceObject.TimestampUtc,
+                                                           Invariant($"  {Environment.NewLine}  "),
+                                                           referenceObject.Tags);
+
+                                                   return result;
+                                               },
+                            ExpectedExceptionType = typeof(ArgumentException),
+                            ExpectedExceptionMessageContains = new[]
+                                                               {
+                                                                   "details",
+                                                                   "white space",
                                                                },
                         });
         }
