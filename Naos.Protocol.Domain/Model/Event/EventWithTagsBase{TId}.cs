@@ -26,17 +26,14 @@ namespace Naos.Protocol.Domain
             TId id,
             DateTime timestampUtc,
             IReadOnlyDictionary<string, string> tags = null)
+            : base(timestampUtc)
         {
             this.Id = id;
-            this.TimestampUtc = timestampUtc;
             this.Tags = tags;
         }
 
         /// <inheritdoc />
         public TId Id { get; private set; }
-
-        /// <inheritdoc />
-        public DateTime TimestampUtc { get; private set; }
 
         /// <inheritdoc />
         public IReadOnlyDictionary<string, string> Tags { get; private set; }

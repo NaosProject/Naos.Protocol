@@ -68,8 +68,8 @@ namespace Naos.Protocol.Domain
                 return false;
             }
 
-            var result = this.Id.IsEqualTo(other.Id)
-                      && this.TimestampUtc.IsEqualTo(other.TimestampUtc)
+            var result = this.TimestampUtc.IsEqualTo(other.TimestampUtc)
+                      && this.Id.IsEqualTo(other.Id)
                       && this.Tags.IsEqualTo(other.Tags)
                       && this.CancelContext.IsEqualTo(other.CancelContext);
 
@@ -81,8 +81,8 @@ namespace Naos.Protocol.Domain
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Id)
             .Hash(this.TimestampUtc)
+            .Hash(this.Id)
             .Hash(this.Tags)
             .Hash(this.CancelContext)
             .Value;
@@ -106,11 +106,11 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override EventWithTagsBase<TId> DeepCloneWithId(TId id)
+        public override EventBaseBase DeepCloneWithTimestampUtc(DateTime timestampUtc)
         {
             var result = new ExecutionRequestCanceledEvent<TId, TCancelContext>(
-                                 id,
-                                 this.TimestampUtc,
+                                 DeepCloneGeneric(this.Id),
+                                 timestampUtc,
                                  DeepCloneGeneric(this.CancelContext),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
@@ -133,11 +133,11 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override EventWithTagsBase<TId> DeepCloneWithTimestampUtc(DateTime timestampUtc)
+        public override EventWithTagsBase<TId> DeepCloneWithId(TId id)
         {
             var result = new ExecutionRequestCanceledEvent<TId, TCancelContext>(
-                                 DeepCloneGeneric(this.Id),
-                                 timestampUtc,
+                                 id,
+                                 this.TimestampUtc,
                                  DeepCloneGeneric(this.CancelContext),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
@@ -300,7 +300,7 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString() ?? "<null>"}, TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, CancelContext = {this.CancelContext?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, CancelContext = {this.CancelContext?.ToString() ?? "<null>"}.");
 
             return result;
         }

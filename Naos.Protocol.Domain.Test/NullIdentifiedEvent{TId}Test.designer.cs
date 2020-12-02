@@ -47,7 +47,7 @@ namespace Naos.Protocol.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<NullIdentifiedEvent<Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.NullIdentifiedEvent<Version>: Id = {systemUnderTest.Id?.ToString() ?? "<null>"}, TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.NullIdentifiedEvent<Version>: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {systemUnderTest.Id?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -119,26 +119,6 @@ namespace Naos.Protocol.Domain.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<NullIdentifiedEvent<Version>>
                 {
-                    Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
-                    WithPropertyName = "Id",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<NullIdentifiedEvent<Version>>();
-
-                        var referenceObject = A.Dummy<NullIdentifiedEvent<Version>>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<NullIdentifiedEvent<Version>>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Id,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<NullIdentifiedEvent<Version>>
-                {
                     Name = "DeepCloneWithTimestampUtc should deep clone object and replace TimestampUtc with the provided timestampUtc",
                     WithPropertyName = "TimestampUtc",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
@@ -151,6 +131,26 @@ namespace Naos.Protocol.Domain.Test
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.TimestampUtc,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<NullIdentifiedEvent<Version>>
+                {
+                    Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
+                    WithPropertyName = "Id",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<NullIdentifiedEvent<Version>>();
+
+                        var referenceObject = A.Dummy<NullIdentifiedEvent<Version>>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<NullIdentifiedEvent<Version>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Id,
                         };
 
                         return result;
@@ -174,11 +174,11 @@ namespace Naos.Protocol.Domain.Test
                     ObjectsThatAreNotEqualToReferenceObject = new NullIdentifiedEvent<Version>[]
                     {
                         new NullIdentifiedEvent<Version>(
-                                A.Dummy<NullIdentifiedEvent<Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc),
-                        new NullIdentifiedEvent<Version>(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 A.Dummy<NullIdentifiedEvent<Version>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc),
+                        new NullIdentifiedEvent<Version>(
+                                A.Dummy<NullIdentifiedEvent<Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
+                                ReferenceObjectForEquatableTestScenarios.TimestampUtc),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -189,8 +189,8 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<Guid>(),
                         A.Dummy<ExecutingEvent<Version, CancelExecutionAttemptOp<Version, Version>>>(),
                         A.Dummy<ExecutionAttemptCanceledEvent<Version, Version>>(),
-                        A.Dummy<ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>>(),
                         A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>(),
+                        A.Dummy<ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>>(),
                         A.Dummy<FailedEvent<Version, Version>>(),
                         A.Dummy<SucceededEvent<Version, Version>>(),
                         A.Dummy<NullEvent>(),
@@ -486,7 +486,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "TimestampUtc" };
+                var propertyNames = new string[] { "TimestampUtc", "Id" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

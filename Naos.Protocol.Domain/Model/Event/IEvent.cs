@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain
     /// Most basic declaration of an event.
     /// </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1040:AvoidEmptyInterfaces", Justification = NaosSuppressBecause.CA1040_AvoidEmptyInterfaces_NeedToIdentifyGroupOfTypesAndPreferInterfaceOverAttribute)]
-    public interface IEvent
+    public interface IEvent : IHaveTimestampUtc
     {
     }
 }

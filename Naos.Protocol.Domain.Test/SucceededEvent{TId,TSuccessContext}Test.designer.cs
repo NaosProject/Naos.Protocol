@@ -47,7 +47,7 @@ namespace Naos.Protocol.Domain.Test
                         var result = new SystemUnderTestExpectedStringRepresentation<SucceededEvent<Version, Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.SucceededEvent<Version, Version>: Id = {systemUnderTest.Id?.ToString() ?? "<null>"}, TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}, SuccessContext = {systemUnderTest.SuccessContext?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.SucceededEvent<Version, Version>: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {systemUnderTest.Id?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}, SuccessContext = {systemUnderTest.SuccessContext?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
@@ -251,26 +251,6 @@ namespace Naos.Protocol.Domain.Test
             .AddScenario(() =>
                 new DeepCloneWithTestScenario<SucceededEvent<Version, Version>>
                 {
-                    Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
-                    WithPropertyName = "Id",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<SucceededEvent<Version, Version>>();
-
-                        var referenceObject = A.Dummy<SucceededEvent<Version, Version>>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<SucceededEvent<Version, Version>>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.Id,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<SucceededEvent<Version, Version>>
-                {
                     Name = "DeepCloneWithTimestampUtc should deep clone object and replace TimestampUtc with the provided timestampUtc",
                     WithPropertyName = "TimestampUtc",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
@@ -283,6 +263,26 @@ namespace Naos.Protocol.Domain.Test
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.TimestampUtc,
+                        };
+
+                        return result;
+                    },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<SucceededEvent<Version, Version>>
+                {
+                    Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
+                    WithPropertyName = "Id",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<SucceededEvent<Version, Version>>();
+
+                        var referenceObject = A.Dummy<SucceededEvent<Version, Version>>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<SucceededEvent<Version, Version>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.Id,
                         };
 
                         return result;
@@ -348,13 +348,13 @@ namespace Naos.Protocol.Domain.Test
                     ObjectsThatAreNotEqualToReferenceObject = new SucceededEvent<Version, Version>[]
                     {
                         new SucceededEvent<Version, Version>(
-                                A.Dummy<SucceededEvent<Version, Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                A.Dummy<SucceededEvent<Version, Version>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.SuccessContext,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new SucceededEvent<Version, Version>(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                A.Dummy<SucceededEvent<Version, Version>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
+                                A.Dummy<SucceededEvent<Version, Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
+                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.SuccessContext,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                         new SucceededEvent<Version, Version>(
@@ -377,8 +377,8 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<Guid>(),
                         A.Dummy<ExecutingEvent<Version, CancelExecutionAttemptOp<Version, Version>>>(),
                         A.Dummy<ExecutionAttemptCanceledEvent<Version, Version>>(),
-                        A.Dummy<ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>>(),
                         A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>(),
+                        A.Dummy<ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>>(),
                         A.Dummy<FailedEvent<Version, Version>>(),
                         A.Dummy<NullEvent>(),
                         A.Dummy<NullIdentifiedEvent<Version>>(),
@@ -692,7 +692,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "TimestampUtc", "Tags", "SuccessContext" };
+                var propertyNames = new string[] { "TimestampUtc", "Id", "Tags", "SuccessContext" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 

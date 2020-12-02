@@ -53,8 +53,8 @@ namespace Naos.Protocol.Domain.Test
                         // when the derivative's constructor in-use (by code gen) does not have a parameter that
                         // corresponds with the property who's value is provided in the DeepCloneWith___() method.
                         // We do not know in advance if this will happen.  As such, the following objects are commented out.
+                        // (EventWithTagsBase<Version>)ReferenceObjectForEquatableTestScenarios.DeepCloneWithTimestampUtc(A.Dummy<EventWithTagsBase<Version>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithId(A.Dummy<EventWithTagsBase<Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id),
-                        // ReferenceObjectForEquatableTestScenarios.DeepCloneWithTimestampUtc(A.Dummy<EventWithTagsBase<Version>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithTags(A.Dummy<EventWithTagsBase<Version>>().Whose(_ => !_.Tags.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Tags)).Tags),
                     },
                     ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new EventWithTagsBase<Version>[]

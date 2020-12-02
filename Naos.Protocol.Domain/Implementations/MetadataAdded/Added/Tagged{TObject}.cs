@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Identified{TId,TObject}.cs" company="Naos Project">
+// <copyright file="Tagged{TObject}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -13,37 +13,38 @@ namespace Naos.Protocol.Domain
     /// <summary>
     /// Container to hold an object and tags.
     /// </summary>
-    /// <typeparam name="TId">The type of the identifier.</typeparam>
     /// <typeparam name="TObject">The type of the object.</typeparam>
-    /// <seealso cref="OBeautifulCode.Type.IIdentifiableBy{TId}" />
-    public partial class Identified<TId, TObject> : IIdentifiableBy<TId>
-        where TObject : IDeepCloneable<TObject>
+    /// <seealso cref="OBeautifulCode.Type.IHaveTags" />
+    public partial class Tagged<TObject> : IDeepCloneMergingInNewTags<Tagged<TObject>>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Identified{TId, TObject}"/> class.
+        /// Initializes a new instance of the <see cref="Tagged{TObject}"/> class.
         /// </summary>
-        /// <param name="id">The identifier.</param>
         /// <param name="object">The object.</param>
-        public Identified(
-            TId id,
-            TObject @object)
+        /// <param name="tags">The tags.</param>
+        public Tagged(
+            TObject @object,
+            IReadOnlyDictionary<string, string> tags)
         {
-            if (@object == null)
-            {
-                throw new ArgumentNullException(nameof(@object));
-            }
-
-            this.Id = id;
             this.Object = @object;
+            this.Tags = tags;
         }
-
-        /// <inheritdoc />
-        public TId Id { get; private set; }
 
         /// <summary>
         /// Gets the object.
         /// </summary>
         /// <value>The object.</value>
         public TObject Object { get; private set; }
+
+        /// <inheritdoc />
+        public IReadOnlyDictionary<string, string> Tags { get; private set; }
+
+        /// <inheritdoc />
+        public Tagged<TObject> DeepCloneMergingInNewTags(
+            IReadOnlyDictionary<string, string> newTags,
+            TagMergeStrategy tagMergeStrategy = TagMergeStrategy.ThrowOnExistingKey)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

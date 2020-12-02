@@ -68,17 +68,17 @@ namespace Naos.Protocol.Domain.Test
                                  A.Dummy<IReadOnlyDictionary<string, string>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>(
-                                 A.Dummy<Version>(),
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<CancelExecutionAttemptOp<Version, Version>>(),
-                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new ExecutionRequestCanceledEvent<Version, Version>(
                                  A.Dummy<Version>(),
                                  A.Dummy<DateTime>(),
                                  A.Dummy<Version>(),
+                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<CancelExecutionAttemptOp<Version, Version>>(),
                                  A.Dummy<IReadOnlyDictionary<string, string>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
@@ -159,8 +159,8 @@ namespace Naos.Protocol.Domain.Test
                     {
                         typeof(ExecutingEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
                         typeof(ExecutionAttemptCanceledEvent<Version, Version>),
-                        typeof(ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
                         typeof(ExecutionRequestCanceledEvent<Version, Version>),
+                        typeof(ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
                         typeof(FailedEvent<Version, Version>),
                         typeof(SucceededEvent<Version, Version>),
                         typeof(NullEvent),
@@ -177,7 +177,8 @@ namespace Naos.Protocol.Domain.Test
                 });
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new NullEvent());
+                () => new NullEvent(
+                                 A.Dummy<DateTime>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new NullIdentifiedEvent<Version>(
@@ -191,8 +192,8 @@ namespace Naos.Protocol.Domain.Test
                     {
                         typeof(ExecutingEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
                         typeof(ExecutionAttemptCanceledEvent<Version, Version>),
-                        typeof(ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
                         typeof(ExecutionRequestCanceledEvent<Version, Version>),
+                        typeof(ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
                         typeof(FailedEvent<Version, Version>),
                         typeof(SucceededEvent<Version, Version>)
                     };

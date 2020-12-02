@@ -22,15 +22,15 @@ namespace Naos.Protocol.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class ExecutionAttemptCanceledEvent<TId, TCancelContext> : IModel<ExecutionAttemptCanceledEvent<TId, TCancelContext>>
+    public partial class FailedEvent<TId, TFailureContext> : IModel<FailedEvent<TId, TFailureContext>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="ExecutionAttemptCanceledEvent{TId, TCancelContext}"/> are equal.
+        /// Determines whether two objects of type <see cref="FailedEvent{TId, TFailureContext}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(ExecutionAttemptCanceledEvent<TId, TCancelContext> left, ExecutionAttemptCanceledEvent<TId, TCancelContext> right)
+        public static bool operator ==(FailedEvent<TId, TFailureContext> left, FailedEvent<TId, TFailureContext> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="ExecutionAttemptCanceledEvent{TId, TCancelContext}"/> are not equal.
+        /// Determines whether two objects of type <see cref="FailedEvent{TId, TFailureContext}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(ExecutionAttemptCanceledEvent<TId, TCancelContext> left, ExecutionAttemptCanceledEvent<TId, TCancelContext> right) => !(left == right);
+        public static bool operator !=(FailedEvent<TId, TFailureContext> left, FailedEvent<TId, TFailureContext> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(ExecutionAttemptCanceledEvent<TId, TCancelContext> other)
+        public bool Equals(FailedEvent<TId, TFailureContext> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -68,27 +68,27 @@ namespace Naos.Protocol.Domain
                 return false;
             }
 
-            var result = this.Id.IsEqualTo(other.Id)
-                      && this.TimestampUtc.IsEqualTo(other.TimestampUtc)
+            var result = this.TimestampUtc.IsEqualTo(other.TimestampUtc)
+                      && this.Id.IsEqualTo(other.Id)
                       && this.Tags.IsEqualTo(other.Tags)
-                      && this.CancelContext.IsEqualTo(other.CancelContext);
+                      && this.FailureContext.IsEqualTo(other.FailureContext);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as ExecutionAttemptCanceledEvent<TId, TCancelContext>);
+        public override bool Equals(object obj) => this == (obj as FailedEvent<TId, TFailureContext>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
-            .Hash(this.Id)
             .Hash(this.TimestampUtc)
+            .Hash(this.Id)
             .Hash(this.Tags)
-            .Hash(this.CancelContext)
+            .Hash(this.FailureContext)
             .Value;
 
         /// <inheritdoc />
-        public new ExecutionAttemptCanceledEvent<TId, TCancelContext> DeepClone() => (ExecutionAttemptCanceledEvent<TId, TCancelContext>)this.DeepCloneInternal();
+        public new FailedEvent<TId, TFailureContext> DeepClone() => (FailedEvent<TId, TFailureContext>)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
@@ -106,12 +106,12 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override EventWithTagsBase<TId> DeepCloneWithId(TId id)
+        public override EventBaseBase DeepCloneWithTimestampUtc(DateTime timestampUtc)
         {
-            var result = new ExecutionAttemptCanceledEvent<TId, TCancelContext>(
-                                 id,
-                                 this.TimestampUtc,
-                                 DeepCloneGeneric(this.CancelContext),
+            var result = new FailedEvent<TId, TFailureContext>(
+                                 DeepCloneGeneric(this.Id),
+                                 timestampUtc,
+                                 DeepCloneGeneric(this.FailureContext),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -133,12 +133,12 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override EventWithTagsBase<TId> DeepCloneWithTimestampUtc(DateTime timestampUtc)
+        public override EventWithTagsBase<TId> DeepCloneWithId(TId id)
         {
-            var result = new ExecutionAttemptCanceledEvent<TId, TCancelContext>(
-                                 DeepCloneGeneric(this.Id),
-                                 timestampUtc,
-                                 DeepCloneGeneric(this.CancelContext),
+            var result = new FailedEvent<TId, TFailureContext>(
+                                 id,
+                                 this.TimestampUtc,
+                                 DeepCloneGeneric(this.FailureContext),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -162,20 +162,20 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventWithTagsBase<TId> DeepCloneWithTags(IReadOnlyDictionary<string, string> tags)
         {
-            var result = new ExecutionAttemptCanceledEvent<TId, TCancelContext>(
+            var result = new FailedEvent<TId, TFailureContext>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.CancelContext),
+                                 DeepCloneGeneric(this.FailureContext),
                                  tags);
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="CancelContext" />.
+        /// Deep clones this object with a new <see cref="FailureContext" />.
         /// </summary>
-        /// <param name="cancelContext">The new <see cref="CancelContext" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ExecutionAttemptCanceledEvent{TId, TCancelContext}" /> using the specified <paramref name="cancelContext" /> for <see cref="CancelContext" /> and a deep clone of every other property.</returns>
+        /// <param name="failureContext">The new <see cref="FailureContext" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="FailedEvent{TId, TFailureContext}" /> using the specified <paramref name="failureContext" /> for <see cref="FailureContext" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
@@ -191,12 +191,12 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ExecutionAttemptCanceledEvent<TId, TCancelContext> DeepCloneWithCancelContext(TCancelContext cancelContext)
+        public FailedEvent<TId, TFailureContext> DeepCloneWithFailureContext(TFailureContext failureContext)
         {
-            var result = new ExecutionAttemptCanceledEvent<TId, TCancelContext>(
+            var result = new FailedEvent<TId, TFailureContext>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
-                                 cancelContext,
+                                 failureContext,
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -205,10 +205,10 @@ namespace Naos.Protocol.Domain
         /// <inheritdoc />
         protected override EventBaseBase DeepCloneInternal()
         {
-            var result = new ExecutionAttemptCanceledEvent<TId, TCancelContext>(
+            var result = new FailedEvent<TId, TFailureContext>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.CancelContext),
+                                 DeepCloneGeneric(this.FailureContext),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -255,11 +255,11 @@ namespace Naos.Protocol.Domain
             return (TId)result;
         }
 
-        private static TCancelContext DeepCloneGeneric(TCancelContext value)
+        private static TFailureContext DeepCloneGeneric(TFailureContext value)
         {
             object result;
 
-            var type = typeof(TCancelContext);
+            var type = typeof(TFailureContext);
 
             if (type.IsValueType)
             {
@@ -271,7 +271,7 @@ namespace Naos.Protocol.Domain
                 {
                     result = default;
                 }
-                else if (value is IDeepCloneable<TCancelContext> deepCloneableValue)
+                else if (value is IDeepCloneable<TFailureContext> deepCloneableValue)
                 {
                     result = deepCloneableValue.DeepClone();
                 }
@@ -293,14 +293,14 @@ namespace Naos.Protocol.Domain
                 }
             }
 
-            return (TCancelContext)result;
+            return (TFailureContext)result;
         }
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: Id = {this.Id?.ToString() ?? "<null>"}, TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, CancelContext = {this.CancelContext?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, FailureContext = {this.FailureContext?.ToString() ?? "<null>"}.");
 
             return result;
         }
