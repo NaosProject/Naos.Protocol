@@ -22,15 +22,15 @@ namespace Naos.Protocol.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class SucceededEvent<TId, TSuccessContext> : IModel<SucceededEvent<TId, TSuccessContext>>
+    public partial class RunningExecutionEvent<TId, TExecutingContext> : IModel<RunningExecutionEvent<TId, TExecutingContext>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="SucceededEvent{TId, TSuccessContext}"/> are equal.
+        /// Determines whether two objects of type <see cref="RunningExecutionEvent{TId, TExecutingContext}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(SucceededEvent<TId, TSuccessContext> left, SucceededEvent<TId, TSuccessContext> right)
+        public static bool operator ==(RunningExecutionEvent<TId, TExecutingContext> left, RunningExecutionEvent<TId, TExecutingContext> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="SucceededEvent{TId, TSuccessContext}"/> are not equal.
+        /// Determines whether two objects of type <see cref="RunningExecutionEvent{TId, TExecutingContext}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(SucceededEvent<TId, TSuccessContext> left, SucceededEvent<TId, TSuccessContext> right) => !(left == right);
+        public static bool operator !=(RunningExecutionEvent<TId, TExecutingContext> left, RunningExecutionEvent<TId, TExecutingContext> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(SucceededEvent<TId, TSuccessContext> other)
+        public bool Equals(RunningExecutionEvent<TId, TExecutingContext> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -71,24 +71,24 @@ namespace Naos.Protocol.Domain
             var result = this.TimestampUtc.IsEqualTo(other.TimestampUtc)
                       && this.Id.IsEqualTo(other.Id)
                       && this.Tags.IsEqualTo(other.Tags)
-                      && this.SuccessContext.IsEqualTo(other.SuccessContext);
+                      && this.ExecutingContext.IsEqualTo(other.ExecutingContext);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as SucceededEvent<TId, TSuccessContext>);
+        public override bool Equals(object obj) => this == (obj as RunningExecutionEvent<TId, TExecutingContext>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.TimestampUtc)
             .Hash(this.Id)
             .Hash(this.Tags)
-            .Hash(this.SuccessContext)
+            .Hash(this.ExecutingContext)
             .Value;
 
         /// <inheritdoc />
-        public new SucceededEvent<TId, TSuccessContext> DeepClone() => (SucceededEvent<TId, TSuccessContext>)this.DeepCloneInternal();
+        public new RunningExecutionEvent<TId, TExecutingContext> DeepClone() => (RunningExecutionEvent<TId, TExecutingContext>)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
@@ -108,10 +108,10 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventBaseBase DeepCloneWithTimestampUtc(DateTime timestampUtc)
         {
-            var result = new SucceededEvent<TId, TSuccessContext>(
+            var result = new RunningExecutionEvent<TId, TExecutingContext>(
                                  DeepCloneGeneric(this.Id),
                                  timestampUtc,
-                                 DeepCloneGeneric(this.SuccessContext),
+                                 DeepCloneGeneric(this.ExecutingContext),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -135,10 +135,10 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventWithTagsBase<TId> DeepCloneWithId(TId id)
         {
-            var result = new SucceededEvent<TId, TSuccessContext>(
+            var result = new RunningExecutionEvent<TId, TExecutingContext>(
                                  id,
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.SuccessContext),
+                                 DeepCloneGeneric(this.ExecutingContext),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -162,20 +162,20 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventWithTagsBase<TId> DeepCloneWithTags(IReadOnlyDictionary<string, string> tags)
         {
-            var result = new SucceededEvent<TId, TSuccessContext>(
+            var result = new RunningExecutionEvent<TId, TExecutingContext>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.SuccessContext),
+                                 DeepCloneGeneric(this.ExecutingContext),
                                  tags);
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="SuccessContext" />.
+        /// Deep clones this object with a new <see cref="ExecutingContext" />.
         /// </summary>
-        /// <param name="successContext">The new <see cref="SuccessContext" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="SucceededEvent{TId, TSuccessContext}" /> using the specified <paramref name="successContext" /> for <see cref="SuccessContext" /> and a deep clone of every other property.</returns>
+        /// <param name="executingContext">The new <see cref="ExecutingContext" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="RunningExecutionEvent{TId, TExecutingContext}" /> using the specified <paramref name="executingContext" /> for <see cref="ExecutingContext" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
@@ -191,12 +191,12 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public SucceededEvent<TId, TSuccessContext> DeepCloneWithSuccessContext(TSuccessContext successContext)
+        public RunningExecutionEvent<TId, TExecutingContext> DeepCloneWithExecutingContext(TExecutingContext executingContext)
         {
-            var result = new SucceededEvent<TId, TSuccessContext>(
+            var result = new RunningExecutionEvent<TId, TExecutingContext>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
-                                 successContext,
+                                 executingContext,
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -205,10 +205,10 @@ namespace Naos.Protocol.Domain
         /// <inheritdoc />
         protected override EventBaseBase DeepCloneInternal()
         {
-            var result = new SucceededEvent<TId, TSuccessContext>(
+            var result = new RunningExecutionEvent<TId, TExecutingContext>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.SuccessContext),
+                                 DeepCloneGeneric(this.ExecutingContext),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -255,11 +255,11 @@ namespace Naos.Protocol.Domain
             return (TId)result;
         }
 
-        private static TSuccessContext DeepCloneGeneric(TSuccessContext value)
+        private static TExecutingContext DeepCloneGeneric(TExecutingContext value)
         {
             object result;
 
-            var type = typeof(TSuccessContext);
+            var type = typeof(TExecutingContext);
 
             if (type.IsValueType)
             {
@@ -271,7 +271,7 @@ namespace Naos.Protocol.Domain
                 {
                     result = default;
                 }
-                else if (value is IDeepCloneable<TSuccessContext> deepCloneableValue)
+                else if (value is IDeepCloneable<TExecutingContext> deepCloneableValue)
                 {
                     result = deepCloneableValue.DeepClone();
                 }
@@ -293,14 +293,14 @@ namespace Naos.Protocol.Domain
                 }
             }
 
-            return (TSuccessContext)result;
+            return (TExecutingContext)result;
         }
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, SuccessContext = {this.SuccessContext?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, ExecutingContext = {this.ExecutingContext?.ToString() ?? "<null>"}.");
 
             return result;
         }

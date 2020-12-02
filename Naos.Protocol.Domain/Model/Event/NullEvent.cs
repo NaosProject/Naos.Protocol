@@ -16,8 +16,8 @@ namespace Naos.Protocol.Domain
         /// <summary>
         /// Initializes a new instance of the <see cref="NullEvent"/> class.
         /// </summary>
-        /// <param name="timestampUtc">The optional timestamp in UTC; DEFAULT is default <see cref="DateTime"/>.</param>
-        public NullEvent(DateTime timestampUtc = default)
+        /// <param name="timestampUtc">The timestamp; probably best to put <see cref="DateTime.UtcNow"/> but cannot be defaulted do to framework limitations.</param>
+        public NullEvent(DateTime timestampUtc)
             : base(timestampUtc)
         {
         }

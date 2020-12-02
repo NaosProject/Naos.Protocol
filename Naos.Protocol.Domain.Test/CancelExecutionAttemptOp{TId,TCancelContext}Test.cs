@@ -29,6 +29,30 @@ namespace Naos.Protocol.Domain.Test
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
         static CancelExecutionAttemptOpTIdTCancelContextTest()
         {
+            ConstructorArgumentValidationTestScenarios
+               .RemoveAllScenarios()
+               .AddScenario(
+                    () =>
+                        new ConstructorArgumentValidationTestScenario<CancelExecutionAttemptOp<Version, Version>>
+                        {
+                            Name = "constructor should throw ArgumentNullException when parameter 'cancelContext' is null scenario",
+                            ConstructionFunc = () =>
+                                               {
+                                                   var referenceObject = A.Dummy<CancelExecutionAttemptOp<Version, Version>>();
+
+                                                   var result = new CancelExecutionAttemptOp<Version, Version>(
+                                                       referenceObject.Id,
+                                                       null,
+                                                       referenceObject.Tags);
+
+                                                   return result;
+                                               },
+                            ExpectedExceptionType = typeof(ArgumentNullException),
+                            ExpectedExceptionMessageContains = new[]
+                                                               {
+                                                                   "cancelContext",
+                                                               },
+                        });
         }
     }
 }

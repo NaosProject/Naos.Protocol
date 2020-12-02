@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ExecutionRequestCanceledEvent{TId,TCancelContext}.cs" company="Naos Project">
+// <copyright file="SelfCanceledRunningExecutionEvent{TId,TCancelContext}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -15,16 +15,16 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TId">The type of identifier of the event.</typeparam>
     /// <typeparam name="TCancelContext">The type of the context object for the cancel.</typeparam>
-    public partial class ExecutionRequestCanceledEvent<TId, TCancelContext> : EventWithTagsBase<TId>
+    public partial class SelfCanceledRunningExecutionEvent<TId, TCancelContext> : EventWithTagsBase<TId>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExecutionRequestCanceledEvent{TId,TCancelContext}"/> class.
+        /// Initializes a new instance of the <see cref="SelfCanceledRunningExecutionEvent{TId,TCancelContext}"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="timestampUtc">The timestamp in UTC.</param>
-        /// <param name="cancelContext">The context of the failure.</param>
+        /// <param name="cancelContext">The context of the cancellation.</param>
         /// <param name="tags">The optional tags.</param>
-        public ExecutionRequestCanceledEvent(
+        public SelfCanceledRunningExecutionEvent(
             TId id,
             DateTime timestampUtc,
             TCancelContext cancelContext,

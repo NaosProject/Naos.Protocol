@@ -22,15 +22,15 @@ namespace Naos.Protocol.Domain
     using static global::System.FormattableString;
 
     [Serializable]
-    public partial class ExecutionRequestedEvent<TId, TOperation> : IModel<ExecutionRequestedEvent<TId, TOperation>>
+    public partial class SelfCanceledRunningExecutionEvent<TId, TCancelContext> : IModel<SelfCanceledRunningExecutionEvent<TId, TCancelContext>>
     {
         /// <summary>
-        /// Determines whether two objects of type <see cref="ExecutionRequestedEvent{TId, TOperation}"/> are equal.
+        /// Determines whether two objects of type <see cref="SelfCanceledRunningExecutionEvent{TId, TCancelContext}"/> are equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are equal; otherwise false.</returns>
-        public static bool operator ==(ExecutionRequestedEvent<TId, TOperation> left, ExecutionRequestedEvent<TId, TOperation> right)
+        public static bool operator ==(SelfCanceledRunningExecutionEvent<TId, TCancelContext> left, SelfCanceledRunningExecutionEvent<TId, TCancelContext> right)
         {
             if (ReferenceEquals(left, right))
             {
@@ -48,15 +48,15 @@ namespace Naos.Protocol.Domain
         }
 
         /// <summary>
-        /// Determines whether two objects of type <see cref="ExecutionRequestedEvent{TId, TOperation}"/> are not equal.
+        /// Determines whether two objects of type <see cref="SelfCanceledRunningExecutionEvent{TId, TCancelContext}"/> are not equal.
         /// </summary>
         /// <param name="left">The object to the left of the equality operator.</param>
         /// <param name="right">The object to the right of the equality operator.</param>
         /// <returns>true if the two items are not equal; otherwise false.</returns>
-        public static bool operator !=(ExecutionRequestedEvent<TId, TOperation> left, ExecutionRequestedEvent<TId, TOperation> right) => !(left == right);
+        public static bool operator !=(SelfCanceledRunningExecutionEvent<TId, TCancelContext> left, SelfCanceledRunningExecutionEvent<TId, TCancelContext> right) => !(left == right);
 
         /// <inheritdoc />
-        public bool Equals(ExecutionRequestedEvent<TId, TOperation> other)
+        public bool Equals(SelfCanceledRunningExecutionEvent<TId, TCancelContext> other)
         {
             if (ReferenceEquals(this, other))
             {
@@ -71,24 +71,24 @@ namespace Naos.Protocol.Domain
             var result = this.TimestampUtc.IsEqualTo(other.TimestampUtc)
                       && this.Id.IsEqualTo(other.Id)
                       && this.Tags.IsEqualTo(other.Tags)
-                      && this.OperationToExecute.IsEqualTo(other.OperationToExecute);
+                      && this.CancelContext.IsEqualTo(other.CancelContext);
 
             return result;
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => this == (obj as ExecutionRequestedEvent<TId, TOperation>);
+        public override bool Equals(object obj) => this == (obj as SelfCanceledRunningExecutionEvent<TId, TCancelContext>);
 
         /// <inheritdoc />
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.TimestampUtc)
             .Hash(this.Id)
             .Hash(this.Tags)
-            .Hash(this.OperationToExecute)
+            .Hash(this.CancelContext)
             .Value;
 
         /// <inheritdoc />
-        public new ExecutionRequestedEvent<TId, TOperation> DeepClone() => (ExecutionRequestedEvent<TId, TOperation>)this.DeepCloneInternal();
+        public new SelfCanceledRunningExecutionEvent<TId, TCancelContext> DeepClone() => (SelfCanceledRunningExecutionEvent<TId, TCancelContext>)this.DeepCloneInternal();
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
@@ -108,10 +108,10 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventBaseBase DeepCloneWithTimestampUtc(DateTime timestampUtc)
         {
-            var result = new ExecutionRequestedEvent<TId, TOperation>(
+            var result = new SelfCanceledRunningExecutionEvent<TId, TCancelContext>(
                                  DeepCloneGeneric(this.Id),
                                  timestampUtc,
-                                 DeepCloneGeneric(this.OperationToExecute),
+                                 DeepCloneGeneric(this.CancelContext),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -135,10 +135,10 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventWithTagsBase<TId> DeepCloneWithId(TId id)
         {
-            var result = new ExecutionRequestedEvent<TId, TOperation>(
+            var result = new SelfCanceledRunningExecutionEvent<TId, TCancelContext>(
                                  id,
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.OperationToExecute),
+                                 DeepCloneGeneric(this.CancelContext),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -162,20 +162,20 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public override EventWithTagsBase<TId> DeepCloneWithTags(IReadOnlyDictionary<string, string> tags)
         {
-            var result = new ExecutionRequestedEvent<TId, TOperation>(
+            var result = new SelfCanceledRunningExecutionEvent<TId, TCancelContext>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.OperationToExecute),
+                                 DeepCloneGeneric(this.CancelContext),
                                  tags);
 
             return result;
         }
 
         /// <summary>
-        /// Deep clones this object with a new <see cref="OperationToExecute" />.
+        /// Deep clones this object with a new <see cref="CancelContext" />.
         /// </summary>
-        /// <param name="operationToExecute">The new <see cref="OperationToExecute" />.  This object will NOT be deep cloned; it is used as-is.</param>
-        /// <returns>New <see cref="ExecutionRequestedEvent{TId, TOperation}" /> using the specified <paramref name="operationToExecute" /> for <see cref="OperationToExecute" /> and a deep clone of every other property.</returns>
+        /// <param name="cancelContext">The new <see cref="CancelContext" />.  This object will NOT be deep cloned; it is used as-is.</param>
+        /// <returns>New <see cref="SelfCanceledRunningExecutionEvent{TId, TCancelContext}" /> using the specified <paramref name="cancelContext" /> for <see cref="CancelContext" /> and a deep clone of every other property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
@@ -191,12 +191,12 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public ExecutionRequestedEvent<TId, TOperation> DeepCloneWithOperationToExecute(TOperation operationToExecute)
+        public SelfCanceledRunningExecutionEvent<TId, TCancelContext> DeepCloneWithCancelContext(TCancelContext cancelContext)
         {
-            var result = new ExecutionRequestedEvent<TId, TOperation>(
+            var result = new SelfCanceledRunningExecutionEvent<TId, TCancelContext>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
-                                 operationToExecute,
+                                 cancelContext,
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -205,10 +205,10 @@ namespace Naos.Protocol.Domain
         /// <inheritdoc />
         protected override EventBaseBase DeepCloneInternal()
         {
-            var result = new ExecutionRequestedEvent<TId, TOperation>(
+            var result = new SelfCanceledRunningExecutionEvent<TId, TCancelContext>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.OperationToExecute),
+                                 DeepCloneGeneric(this.CancelContext),
                                  this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
 
             return result;
@@ -255,11 +255,11 @@ namespace Naos.Protocol.Domain
             return (TId)result;
         }
 
-        private static TOperation DeepCloneGeneric(TOperation value)
+        private static TCancelContext DeepCloneGeneric(TCancelContext value)
         {
             object result;
 
-            var type = typeof(TOperation);
+            var type = typeof(TCancelContext);
 
             if (type.IsValueType)
             {
@@ -271,7 +271,7 @@ namespace Naos.Protocol.Domain
                 {
                     result = default;
                 }
-                else if (value is IDeepCloneable<TOperation> deepCloneableValue)
+                else if (value is IDeepCloneable<TCancelContext> deepCloneableValue)
                 {
                     result = deepCloneableValue.DeepClone();
                 }
@@ -293,14 +293,14 @@ namespace Naos.Protocol.Domain
                 }
             }
 
-            return (TOperation)result;
+            return (TCancelContext)result;
         }
 
         /// <inheritdoc />
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, OperationToExecute = {this.OperationToExecute?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, CancelContext = {this.CancelContext?.ToString() ?? "<null>"}.");
 
             return result;
         }

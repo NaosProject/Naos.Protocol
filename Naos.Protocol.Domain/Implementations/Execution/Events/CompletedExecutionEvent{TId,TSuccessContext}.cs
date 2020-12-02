@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ExecutingEvent{TId,TExecutingContext}.cs" company="Naos Project">
+// <copyright file="CompletedExecutionEvent{TId,TSuccessContext}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,36 +11,35 @@ namespace Naos.Protocol.Domain
     using OBeautifulCode.Assertion.Recipes;
 
     /// <summary>
-    /// Event indicating that an operation is executing.
+    /// Event indicating that an operation was executed without exception.
     /// </summary>
     /// <typeparam name="TId">The type of identifier of the event.</typeparam>
-    /// <typeparam name="TExecutingContext">The type of the operation.</typeparam>
-    public partial class ExecutingEvent<TId, TExecutingContext> : EventWithTagsBase<TId>
-        where TExecutingContext : class, IOperation
+    /// <typeparam name="TSuccessContext">The type of the context object for success.</typeparam>
+    public partial class CompletedExecutionEvent<TId, TSuccessContext> : EventWithTagsBase<TId>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExecutingEvent{TId, TExecutingContext}"/> class.
+        /// Initializes a new instance of the <see cref="CompletedExecutionEvent{TId,TSuccessContext}"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="timestampUtc">The timestamp in UTC.</param>
-        /// <param name="executingContext">The context of the executing of the operation.</param>
+        /// <param name="successContext">The context object of the success.</param>
         /// <param name="tags">The optional tags.</param>
-        public ExecutingEvent(
+        public CompletedExecutionEvent(
             TId id,
             DateTime timestampUtc,
-            TExecutingContext executingContext,
+            TSuccessContext successContext,
             IReadOnlyDictionary<string, string> tags = null)
         : base(id, timestampUtc, tags)
         {
-            executingContext.MustForArg(nameof(executingContext)).NotBeNull();
+            successContext.MustForArg(nameof(successContext)).NotBeNull();
 
-            this.ExecutingContext = executingContext;
+            this.SuccessContext = successContext;
         }
 
         /// <summary>
-        /// Gets the executing context.
+        /// Gets the success context.
         /// </summary>
-        /// <value>The executing context.</value>
-        public TExecutingContext ExecutingContext { get; private set; }
+        /// <value>The success context.</value>
+        public TSuccessContext SuccessContext { get; private set; }
     }
 }

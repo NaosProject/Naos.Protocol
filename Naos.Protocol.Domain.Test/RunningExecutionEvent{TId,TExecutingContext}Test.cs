@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ExecuteOperationRequestedEvent{TId,TOperation}Test.cs" company="Naos Project">
+// <copyright file="RunningExecutionEvent{TId,TExecutingContext}Test.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -10,33 +10,38 @@ namespace Naos.Protocol.Domain.Test
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+
     using FakeItEasy;
-    using Naos.CodeAnalysis.Recipes;
+
     using OBeautifulCode.AutoFakeItEasy;
     using OBeautifulCode.CodeAnalysis.Recipes;
     using OBeautifulCode.CodeGen.ModelObject.Recipes;
     using OBeautifulCode.Math.Recipes;
+
     using Xunit;
 
-    [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = NaosSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class ExecuteOperationRequestedEventTIdTOperationTest
+    using static System.FormattableString;
+
+    [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
+    public static partial class RunningExecutionEventTIdTExecutingContextTest
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static ExecuteOperationRequestedEventTIdTOperationTest()
+        static RunningExecutionEventTIdTExecutingContextTest()
         {
             ConstructorArgumentValidationTestScenarios
                .RemoveAllScenarios()
                .AddScenario(
                     () =>
-                        new ConstructorArgumentValidationTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
+                        new ConstructorArgumentValidationTestScenario<RunningExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>>
                         {
-                            Name = "constructor should throw ArgumentNullException when parameter 'operationToExecute' is null scenario",
+                            Name = "constructor should throw ArgumentNullException when parameter 'executingContext' is null scenario",
                             ConstructionFunc = () =>
                                                {
-                                                   var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
+                                                   var referenceObject =
+                                                       A.Dummy<RunningExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>>();
 
-                                                   var result = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
+                                                   var result = new RunningExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>(
                                                        referenceObject.Id,
                                                        referenceObject.TimestampUtc,
                                                        null,
@@ -47,7 +52,7 @@ namespace Naos.Protocol.Domain.Test
                             ExpectedExceptionType = typeof(ArgumentNullException),
                             ExpectedExceptionMessageContains = new[]
                                                                {
-                                                                   "operationToExecute",
+                                                                   "executingContext",
                                                                },
                         });
         }

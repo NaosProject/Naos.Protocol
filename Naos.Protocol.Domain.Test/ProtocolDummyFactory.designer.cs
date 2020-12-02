@@ -42,6 +42,55 @@ namespace Naos.Protocol.Domain.Test
                                  A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CanceledRequestedExecutionEvent<Version, Version>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<Version>(),
+                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new SelfCanceledRunningExecutionEvent<Version, Version>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<Version>(),
+                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CanceledRunningExecutionEvent<Version, Version>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<Version>(),
+                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CompletedExecutionEvent<Version, Version>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<Version>(),
+                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new FailedExecutionEvent<Version, Version>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<Version>(),
+                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new RequestedExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<CancelExecutionAttemptOp<Version, Version>>(),
+                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new RunningExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<CancelExecutionAttemptOp<Version, Version>>(),
+                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CancelExecutionAttemptOp<Version, Version>(
                                  A.Dummy<Version>(),
                                  A.Dummy<Version>(),
@@ -50,48 +99,6 @@ namespace Naos.Protocol.Domain.Test
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CancelExecutionRequestOp<Version, Version>(
                                  A.Dummy<Version>(),
-                                 A.Dummy<Version>(),
-                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ExecutingEvent<Version, CancelExecutionAttemptOp<Version, Version>>(
-                                 A.Dummy<Version>(),
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<CancelExecutionAttemptOp<Version, Version>>(),
-                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ExecutionAttemptCanceledEvent<Version, Version>(
-                                 A.Dummy<Version>(),
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<Version>(),
-                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ExecutionRequestCanceledEvent<Version, Version>(
-                                 A.Dummy<Version>(),
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<Version>(),
-                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>(
-                                 A.Dummy<Version>(),
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<CancelExecutionAttemptOp<Version, Version>>(),
-                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new FailedEvent<Version, Version>(
-                                 A.Dummy<Version>(),
-                                 A.Dummy<DateTime>(),
-                                 A.Dummy<Version>(),
-                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new SucceededEvent<Version, Version>(
-                                 A.Dummy<Version>(),
-                                 A.Dummy<DateTime>(),
                                  A.Dummy<Version>(),
                                  A.Dummy<IReadOnlyDictionary<string, string>>()));
 
@@ -157,12 +164,13 @@ namespace Naos.Protocol.Domain.Test
                 {
                     var availableTypes = new[]
                     {
-                        typeof(ExecutingEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
-                        typeof(ExecutionAttemptCanceledEvent<Version, Version>),
-                        typeof(ExecutionRequestCanceledEvent<Version, Version>),
-                        typeof(ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
-                        typeof(FailedEvent<Version, Version>),
-                        typeof(SucceededEvent<Version, Version>),
+                        typeof(CanceledRequestedExecutionEvent<Version, Version>),
+                        typeof(SelfCanceledRunningExecutionEvent<Version, Version>),
+                        typeof(CanceledRunningExecutionEvent<Version, Version>),
+                        typeof(CompletedExecutionEvent<Version, Version>),
+                        typeof(FailedExecutionEvent<Version, Version>),
+                        typeof(RequestedExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
+                        typeof(RunningExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
                         typeof(NullEvent),
                         typeof(NullIdentifiedEvent<Version>)
                     };
@@ -190,12 +198,13 @@ namespace Naos.Protocol.Domain.Test
                 {
                     var availableTypes = new[]
                     {
-                        typeof(ExecutingEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
-                        typeof(ExecutionAttemptCanceledEvent<Version, Version>),
-                        typeof(ExecutionRequestCanceledEvent<Version, Version>),
-                        typeof(ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
-                        typeof(FailedEvent<Version, Version>),
-                        typeof(SucceededEvent<Version, Version>)
+                        typeof(CanceledRequestedExecutionEvent<Version, Version>),
+                        typeof(SelfCanceledRunningExecutionEvent<Version, Version>),
+                        typeof(CanceledRunningExecutionEvent<Version, Version>),
+                        typeof(CompletedExecutionEvent<Version, Version>),
+                        typeof(FailedExecutionEvent<Version, Version>),
+                        typeof(RequestedExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>),
+                        typeof(RunningExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>)
                     };
 
                     var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);

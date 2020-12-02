@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="CancelExecutionRequestOp{TId,TCancelContext}Test.cs" company="Naos Project">
+// <copyright file="RequestedExecutionEvent{TId,TOperation}Test.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -23,25 +23,27 @@ namespace Naos.Protocol.Domain.Test
     using static System.FormattableString;
 
     [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
-    public static partial class CancelExecutionRequestOpTIdTCancelContextTest
+    public static partial class RequestedExecutionEventTIdTOperationTest
     {
         [SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Justification = ObcSuppressBecause.CA1505_AvoidUnmaintainableCode_DisagreeWithAssessment)]
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", Justification = ObcSuppressBecause.CA1810_InitializeReferenceTypeStaticFieldsInline_FieldsDeclaredInCodeGeneratedPartialTestClass)]
-        static CancelExecutionRequestOpTIdTCancelContextTest()
+        static RequestedExecutionEventTIdTOperationTest()
         {
             ConstructorArgumentValidationTestScenarios
                .RemoveAllScenarios()
                .AddScenario(
                     () =>
-                        new ConstructorArgumentValidationTestScenario<CancelExecutionRequestOp<Version, Version>>
+                        new ConstructorArgumentValidationTestScenario<RequestedExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>>
                         {
-                            Name = "constructor should throw ArgumentNullException when parameter 'cancelContext' is null scenario",
+                            Name = "constructor should throw ArgumentNullException when parameter 'operationToExecute' is null scenario",
                             ConstructionFunc = () =>
                                                {
-                                                   var referenceObject = A.Dummy<CancelExecutionRequestOp<Version, Version>>();
+                                                   var referenceObject =
+                                                       A.Dummy<RequestedExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>>();
 
-                                                   var result = new CancelExecutionRequestOp<Version, Version>(
+                                                   var result = new RequestedExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>(
                                                        referenceObject.Id,
+                                                       referenceObject.TimestampUtc,
                                                        null,
                                                        referenceObject.Tags);
 
@@ -50,7 +52,7 @@ namespace Naos.Protocol.Domain.Test
                             ExpectedExceptionType = typeof(ArgumentNullException),
                             ExpectedExceptionMessageContains = new[]
                                                                {
-                                                                   "cancelContext",
+                                                                   "operationToExecute",
                                                                },
                         });
         }

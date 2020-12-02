@@ -251,6 +251,14 @@
     <Compile Include="CacheStatusResultTest.designer.cs">
       <DependentUpon>CacheStatusResultTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="CanceledRequestedExecutionEvent{TId,TCancelContext}Test.cs" />
+    <Compile Include="CanceledRequestedExecutionEvent{TId,TCancelContext}Test.designer.cs">
+      <DependentUpon>CanceledRequestedExecutionEvent{TId,TCancelContext}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CanceledRunningExecutionEvent{TId,TCancelContext}Test.cs" />
+    <Compile Include="CanceledRunningExecutionEvent{TId,TCancelContext}Test.designer.cs">
+      <DependentUpon>CanceledRunningExecutionEvent{TId,TCancelContext}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="CancelExecutionAttemptOp{TId,TCancelContext}Test.cs" />
     <Compile Include="CancelExecutionAttemptOp{TId,TCancelContext}Test.designer.cs">
       <DependentUpon>CancelExecutionAttemptOp{TId,TCancelContext}Test.cs</DependentUpon>
@@ -262,6 +270,10 @@
     <Compile Include="ClearCacheOpTest.cs" />
     <Compile Include="ClearCacheOpTest.designer.cs">
       <DependentUpon>ClearCacheOpTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CompletedExecutionEvent{TId,TSuccessContext}Test.cs" />
+    <Compile Include="CompletedExecutionEvent{TId,TSuccessContext}Test.designer.cs">
+      <DependentUpon>CompletedExecutionEvent{TId,TSuccessContext}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleAbstraction.cs" />
     <Compile Include="EventBaseBaseTest.cs" />
@@ -280,29 +292,9 @@
     <Compile Include="ExecuteDefaultOperationsOnProtocolOpTest.designer.cs">
       <DependentUpon>ExecuteDefaultOperationsOnProtocolOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="ExecuteOperationRequestedEvent{TId,TOperation}Test.cs" />
-    <Compile Include="ExecuteOperationRequestedEvent{TId,TOperation}Test.designer.cs">
-      <DependentUpon>ExecuteOperationRequestedEvent{TId,TOperation}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ExecutingEvent{TId,TExecutingContext}Test.cs" />
-    <Compile Include="ExecutingEvent{TId,TExecutingContext}Test.designer.cs">
-      <DependentUpon>ExecutingEvent{TId,TExecutingContext}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ExecutionAttemptCanceledEvent{TId,TCancelContext}Test.cs" />
-    <Compile Include="ExecutionAttemptCanceledEvent{TId,TCancelContext}Test.designer.cs">
-      <DependentUpon>ExecutionAttemptCanceledEvent{TId,TCancelContext}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ExecutionRequestCanceledEvent{TId,TCancelContext}Test.cs" />
-    <Compile Include="ExecutionRequestCanceledEvent{TId,TCancelContext}Test.designer.cs">
-      <DependentUpon>ExecutionRequestCanceledEvent{TId,TCancelContext}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ExecutionRequestedEvent{TId,TOperation}Test.cs" />
-    <Compile Include="ExecutionRequestedEvent{TId,TOperation}Test.designer.cs">
-      <DependentUpon>ExecutionRequestedEvent{TId,TOperation}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FailedEvent{TId,TFailureContext}Test.cs" />
-    <Compile Include="FailedEvent{TId,TFailureContext}Test.designer.cs">
-      <DependentUpon>FailedEvent{TId,TFailureContext}Test.cs</DependentUpon>
+    <Compile Include="FailedExecutionEvent{TId,TFailureContext}Test.cs" />
+    <Compile Include="FailedExecutionEvent{TId,TFailureContext}Test.designer.cs">
+      <DependentUpon>FailedExecutionEvent{TId,TFailureContext}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="GetAllResourceLocatorsOpTest.cs" />
     <Compile Include="GetAllResourceLocatorsOpTest.designer.cs">
@@ -377,6 +369,10 @@
     </Compile>
     <Compile Include="ProtocolDummyFactory.cs" />
     <Compile Include="ProtocolDummyFactoryTest.cs" />
+    <Compile Include="RequestedExecutionEvent{TId,TOperation}Test.cs" />
+    <Compile Include="RequestedExecutionEvent{TId,TOperation}Test.designer.cs">
+      <DependentUpon>RequestedExecutionEvent{TId,TOperation}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="ResourceLocatorBaseTest.cs" />
     <Compile Include="ResourceLocatorBaseTest.designer.cs">
       <DependentUpon>ResourceLocatorBaseTest.cs</DependentUpon>
@@ -386,11 +382,15 @@
       <DependentUpon>ReturningOperationBase{TReturn}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="CachingTests.cs" />
-    <Compile Include="SerializationConfigurationTypes.cs" />
-    <Compile Include="SucceededEvent{TId,TSuccessContext}Test.cs" />
-    <Compile Include="SucceededEvent{TId,TSuccessContext}Test.designer.cs">
-      <DependentUpon>SucceededEvent{TId,TSuccessContext}Test.cs</DependentUpon>
+    <Compile Include="RunningExecutionEvent{TId,TExecutingContext}Test.cs" />
+    <Compile Include="RunningExecutionEvent{TId,TExecutingContext}Test.designer.cs">
+      <DependentUpon>RunningExecutionEvent{TId,TExecutingContext}Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="SelfCanceledRunningExecutionEvent{TId,TCancelContext}Test.cs" />
+    <Compile Include="SelfCanceledRunningExecutionEvent{TId,TCancelContext}Test.designer.cs">
+      <DependentUpon>SelfCanceledRunningExecutionEvent{TId,TCancelContext}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SerializationConfigurationTypes.cs" />
     <Compile Include="ThrowIfResourceUnavailableOpTest.cs" />
     <Compile Include="ThrowIfResourceUnavailableOpTest.designer.cs">
       <DependentUpon>ThrowIfResourceUnavailableOpTest.cs</DependentUpon>

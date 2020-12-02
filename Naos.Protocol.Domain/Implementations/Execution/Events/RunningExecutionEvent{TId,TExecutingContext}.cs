@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FailedEvent{TId,TFailureContext}.cs" company="Naos Project">
+// <copyright file="RunningExecutionEvent{TId,TExecutingContext}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,35 +11,36 @@ namespace Naos.Protocol.Domain
     using OBeautifulCode.Assertion.Recipes;
 
     /// <summary>
-    /// Event indicating that an operation failed to execute.
+    /// Event indicating that an operation is executing.
     /// </summary>
     /// <typeparam name="TId">The type of identifier of the event.</typeparam>
-    /// <typeparam name="TFailureContext">The type of the context object for the failure.</typeparam>
-    public partial class FailedEvent<TId, TFailureContext> : EventWithTagsBase<TId>
+    /// <typeparam name="TExecutingContext">The type of the operation.</typeparam>
+    public partial class RunningExecutionEvent<TId, TExecutingContext> : EventWithTagsBase<TId>
+        where TExecutingContext : class, IOperation
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="FailedEvent{TId, TFailureContext}"/> class.
+        /// Initializes a new instance of the <see cref="RunningExecutionEvent{TId,TExecutingContext}"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="timestampUtc">The timestamp in UTC.</param>
-        /// <param name="failureContext">The context of the failure.</param>
+        /// <param name="executingContext">The context of the executing of the operation.</param>
         /// <param name="tags">The optional tags.</param>
-        public FailedEvent(
+        public RunningExecutionEvent(
             TId id,
             DateTime timestampUtc,
-            TFailureContext failureContext,
+            TExecutingContext executingContext,
             IReadOnlyDictionary<string, string> tags = null)
         : base(id, timestampUtc, tags)
         {
-            failureContext.MustForArg(nameof(failureContext)).NotBeNull();
+            executingContext.MustForArg(nameof(executingContext)).NotBeNull();
 
-            this.FailureContext = failureContext;
+            this.ExecutingContext = executingContext;
         }
 
         /// <summary>
-        /// Gets the failure context.
+        /// Gets the executing context.
         /// </summary>
-        /// <value>The failure context.</value>
-        public TFailureContext FailureContext { get; private set; }
+        /// <value>The executing context.</value>
+        public TExecutingContext ExecutingContext { get; private set; }
     }
 }

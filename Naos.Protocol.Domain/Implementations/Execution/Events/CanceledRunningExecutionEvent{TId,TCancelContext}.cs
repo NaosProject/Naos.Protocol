@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SucceededEvent{TId,TSuccessContext}.cs" company="Naos Project">
+// <copyright file="CanceledRunningExecutionEvent{TId,TCancelContext}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -11,35 +11,35 @@ namespace Naos.Protocol.Domain
     using OBeautifulCode.Assertion.Recipes;
 
     /// <summary>
-    /// Event indicating that an operation was executed successfully.
+    /// Event indicating that an operation CancelExecution to execute.
     /// </summary>
     /// <typeparam name="TId">The type of identifier of the event.</typeparam>
-    /// <typeparam name="TSuccessContext">The type of the context object for success.</typeparam>
-    public partial class SucceededEvent<TId, TSuccessContext> : EventWithTagsBase<TId>
+    /// <typeparam name="TCancelContext">The type of the context object for the cancel.</typeparam>
+    public partial class CanceledRunningExecutionEvent<TId, TCancelContext> : EventWithTagsBase<TId>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SucceededEvent{TId, TSuccessContext}"/> class.
+        /// Initializes a new instance of the <see cref="CanceledRunningExecutionEvent{TId,TCancelContext}"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="timestampUtc">The timestamp in UTC.</param>
-        /// <param name="successContext">The context object of the success.</param>
+        /// <param name="cancelContext">The context of the cancellation.</param>
         /// <param name="tags">The optional tags.</param>
-        public SucceededEvent(
+        public CanceledRunningExecutionEvent(
             TId id,
             DateTime timestampUtc,
-            TSuccessContext successContext,
+            TCancelContext cancelContext,
             IReadOnlyDictionary<string, string> tags = null)
         : base(id, timestampUtc, tags)
         {
-            successContext.MustForArg(nameof(successContext)).NotBeNull();
+            cancelContext.MustForArg(nameof(cancelContext)).NotBeNull();
 
-            this.SuccessContext = successContext;
+            this.CancelContext = cancelContext;
         }
 
         /// <summary>
-        /// Gets the success context.
+        /// Gets the cancel context.
         /// </summary>
-        /// <value>The success context.</value>
-        public TSuccessContext SuccessContext { get; private set; }
+        /// <value>The cancel context.</value>
+        public TCancelContext CancelContext { get; private set; }
     }
 }

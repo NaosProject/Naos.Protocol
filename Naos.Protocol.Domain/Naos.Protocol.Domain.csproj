@@ -118,6 +118,29 @@
     <Compile Include="Implementations\DefaultOperations\ExecuteDefaultOperationsOnProtocolOp.designer.cs">
       <DependentUpon>ExecuteDefaultOperationsOnProtocolOp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Implementations\Execution\CancelRunningExecutionException{TCancelContext}.cs" />
+    <Compile Include="Implementations\Execution\Events\CanceledRequestedExecutionEvent{TId,TCancelContext}.designer.cs">
+      <DependentUpon>CanceledRequestedExecutionEvent{TId,TCancelContext}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\Execution\Events\SelfCanceledRunningExecutionEvent{TId,TCancelContext}.cs" />
+    <Compile Include="Implementations\Execution\Events\CanceledRunningExecutionEvent{TId,TCancelContext}.designer.cs">
+      <DependentUpon>CanceledRunningExecutionEvent{TId,TCancelContext}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\Execution\Events\CompletedExecutionEvent{TId,TSuccessContext}.designer.cs">
+      <DependentUpon>CompletedExecutionEvent{TId,TSuccessContext}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\Execution\Events\FailedExecutionEvent{TId,TFailureContext}.designer.cs">
+      <DependentUpon>FailedExecutionEvent{TId,TFailureContext}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\Execution\Events\RequestedExecutionEvent{TId,TOperation}.designer.cs">
+      <DependentUpon>RequestedExecutionEvent{TId,TOperation}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\Execution\Events\RunningExecutionEvent{TId,TExecutingContext}.designer.cs">
+      <DependentUpon>RunningExecutionEvent{TId,TExecutingContext}.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\Execution\Events\SelfCanceledRunningExecutionEvent{TId,TCancelContext}.designer.cs">
+      <DependentUpon>SelfCanceledRunningExecutionEvent{TId,TCancelContext}.cs</DependentUpon>
+    </Compile>
     <Compile Include="Implementations\Execution\Operations\CancelExecutionAttemptOp{TId,TCancelContext}.cs" />
     <Compile Include="Implementations\Execution\Operations\CancelExecutionAttemptOp{TId,TCancelContext}.designer.cs">
       <DependentUpon>CancelExecutionAttemptOp{TId,TCancelContext}.cs</DependentUpon>
@@ -125,26 +148,11 @@
     <Compile Include="Implementations\Execution\Operations\CancelExecutionRequestOp{TId,TCancelContext}.designer.cs">
       <DependentUpon>CancelExecutionRequestOp{TId,TCancelContext}.cs</DependentUpon>
     </Compile>
-    <Compile Include="Implementations\Execution\Events\ExecutingEvent{TId,TExecutingContext}.cs" />
+    <Compile Include="Implementations\Execution\Events\RunningExecutionEvent{TId,TExecutingContext}.cs" />
     <Compile Include="Implementations\Execution\ExceptionToStringFailureContext.cs" />
-    <Compile Include="Implementations\Execution\Events\ExecutingEvent{TId,TExecutingContext}.designer.cs">
-      <DependentUpon>ExecutingEvent{TId,TExecutingContext}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Events\ExecutionAttemptCanceledEvent{TId,TCancelContext}.cs" />
+    <Compile Include="Implementations\Execution\Events\CanceledRunningExecutionEvent{TId,TCancelContext}.cs" />
     <Compile Include="Implementations\Execution\Operations\CancelExecutionRequestOp{TId,TCancelContext}.cs" />
-    <Compile Include="Implementations\Execution\Events\ExecutionAttemptCanceledEvent{TId,TCancelContext}.designer.cs">
-      <DependentUpon>ExecutionAttemptCanceledEvent{TId,TCancelContext}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Events\ExecutionRequestCanceledEvent{TId,TCancelContext}.designer.cs">
-      <DependentUpon>ExecutionRequestCanceledEvent{TId,TCancelContext}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Events\ExecutionRequestedEvent{TId,TOperation}.designer.cs">
-      <DependentUpon>ExecutionRequestedEvent{TId,TOperation}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Events\ExecutionRequestCanceledEvent{TId,TCancelContext}.cs" />
-    <Compile Include="Implementations\Execution\Events\FailedEvent{TId,TFailureContext}.designer.cs">
-      <DependentUpon>FailedEvent{TId,TFailureContext}.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Implementations\Execution\Events\CanceledRequestedExecutionEvent{TId,TCancelContext}.cs" />
     <Compile Include="Implementations\MetadataAdded\Added\IdentifiedTimestampedTagged{TId,TObject}.cs" />
     <Compile Include="Implementations\MetadataAdded\Self\SelfTimestampedTagged{TId,TObject}.cs" />
     <Compile Include="Implementations\MetadataAdded\Self\SelfIdentifiedTimestamped{TId,TObject}.cs" />
@@ -154,14 +162,11 @@
     <Compile Include="Implementations\MetadataAdded\Self\SelfTagged{TObject}.cs" />
     <Compile Include="Implementations\MetadataAdded\Self\SelfIdentified{TId,TObject}.cs" />
     <Compile Include="Implementations\MetadataAdded\Added\Timestamped{TObject}.cs" />
-    <Compile Include="Implementations\Execution\Events\SucceededEvent{TId,TSuccessContext}.cs" />
-    <Compile Include="Implementations\Execution\Events\FailedEvent{TId,TFailureContext}.cs" />
-    <Compile Include="Implementations\Execution\Events\SucceededEvent{TId,TSuccessContext}.designer.cs">
-      <DependentUpon>SucceededEvent{TId,TSuccessContext}.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Implementations\Execution\Events\CompletedExecutionEvent{TId,TSuccessContext}.cs" />
+    <Compile Include="Implementations\Execution\Events\FailedExecutionEvent{TId,TFailureContext}.cs" />
     <Compile Include="Implementations\MetadataAdded\Added\Identified{TId,TObject}.cs" />
     <Compile Include="Implementations\MetadataAdded\Added\Tagged{TObject}.cs" />
-    <Compile Include="Implementations\Execution\Events\ExecutionRequestedEvent{TId,TOperation}.cs" />
+    <Compile Include="Implementations\Execution\Events\RequestedExecutionEvent{TId,TOperation}.cs" />
     <Compile Include="Implementations\ModelInspection\GetIdFromObjectOp{TId,TObject}.designer.cs">
       <DependentUpon>GetIdFromObjectOp{TId,TObject}.cs</DependentUpon>
     </Compile>

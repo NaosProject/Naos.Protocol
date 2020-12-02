@@ -18,9 +18,11 @@ namespace Naos.Protocol.Domain
         /// Initializes a new instance of the <see cref="NullIdentifiedEvent{TId}"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="timestampUtc">The optional timestamp; DEFAULT is default <see cref="DateTime"/>.</param>
-        public NullIdentifiedEvent(TId id = default, DateTime timestampUtc = default)
-        : base(id, timestampUtc)
+        /// <param name="timestampUtc">The timestamp; probably best to put <see cref="DateTime.UtcNow"/> but cannot be defaulted do to framework limitations.</param>
+        public NullIdentifiedEvent(
+            TId id,
+            DateTime timestampUtc)
+            : base(id, timestampUtc)
         {
         }
     }

@@ -33,40 +33,40 @@ namespace Naos.Protocol.Domain.Test
 
     using static global::System.FormattableString;
 
-    public static partial class ExecutionRequestCanceledEventTIdTCancelContextTest
+    public static partial class FailedExecutionEventTIdTFailureContextTest
     {
-        private static readonly StringRepresentationTestScenarios<ExecutionRequestCanceledEvent<Version, Version>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<ExecutionRequestCanceledEvent<Version, Version>>()
+        private static readonly StringRepresentationTestScenarios<FailedExecutionEvent<Version, Version>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<FailedExecutionEvent<Version, Version>>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new StringRepresentationTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var systemUnderTest = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<ExecutionRequestCanceledEvent<Version, Version>>
+                        var result = new SystemUnderTestExpectedStringRepresentation<FailedExecutionEvent<Version, Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.ExecutionRequestCanceledEvent<Version, Version>: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {systemUnderTest.Id?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}, CancelContext = {systemUnderTest.CancelContext?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.FailedExecutionEvent<Version, Version>: TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {systemUnderTest.Id?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}, FailureContext = {systemUnderTest.FailureContext?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<ExecutionRequestCanceledEvent<Version, Version>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ExecutionRequestCanceledEvent<Version, Version>>()
+        private static readonly ConstructorArgumentValidationTestScenarios<FailedExecutionEvent<Version, Version>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<FailedExecutionEvent<Version, Version>>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new ConstructorArgumentValidationTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var result = new ExecutionRequestCanceledEvent<Version, Version>(
+                        var result = new FailedExecutionEvent<Version, Version>(
                                              null,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.CancelContext,
+                                             referenceObject.FailureContext,
                                              referenceObject.Tags);
 
                         return result;
@@ -75,14 +75,14 @@ namespace Naos.Protocol.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "id", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new ConstructorArgumentValidationTestScenario<FailedExecutionEvent<Version, Version>>
                 {
-                    Name = "constructor should throw ArgumentNullException when parameter 'cancelContext' is null scenario",
+                    Name = "constructor should throw ArgumentNullException when parameter 'failureContext' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var result = new ExecutionRequestCanceledEvent<Version, Version>(
+                        var result = new FailedExecutionEvent<Version, Version>(
                                              referenceObject.Id,
                                              referenceObject.TimestampUtc,
                                              null,
@@ -91,20 +91,20 @@ namespace Naos.Protocol.Domain.Test
                         return result;
                     },
                     ExpectedExceptionType = typeof(ArgumentNullException),
-                    ExpectedExceptionMessageContains = new[] { "cancelContext", },
+                    ExpectedExceptionMessageContains = new[] { "failureContext", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new ConstructorArgumentValidationTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'tags' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var result = new ExecutionRequestCanceledEvent<Version, Version>(
+                        var result = new FailedExecutionEvent<Version, Version>(
                                              referenceObject.Id,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.CancelContext,
+                                             referenceObject.FailureContext,
                                              null);
 
                         return result;
@@ -113,17 +113,17 @@ namespace Naos.Protocol.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "tags", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new ConstructorArgumentValidationTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'tags' is an empty dictionary scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var result = new ExecutionRequestCanceledEvent<Version, Version>(
+                        var result = new FailedExecutionEvent<Version, Version>(
                                              referenceObject.Id,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.CancelContext,
+                                             referenceObject.FailureContext,
                                              new Dictionary<string, string>());
 
                         return result;
@@ -132,12 +132,12 @@ namespace Naos.Protocol.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "tags", "is an empty dictionary", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new ConstructorArgumentValidationTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'tags' contains a key-value pair with a null value scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
                         var dictionaryWithNullValue = referenceObject.Tags.ToDictionary(_ => _.Key, _ => _.Value);
 
@@ -145,10 +145,10 @@ namespace Naos.Protocol.Domain.Test
 
                         dictionaryWithNullValue[randomKey] = null;
 
-                        var result = new ExecutionRequestCanceledEvent<Version, Version>(
+                        var result = new FailedExecutionEvent<Version, Version>(
                                              referenceObject.Id,
                                              referenceObject.TimestampUtc,
-                                             referenceObject.CancelContext,
+                                             referenceObject.FailureContext,
                                              dictionaryWithNullValue);
 
                         return result;
@@ -157,21 +157,21 @@ namespace Naos.Protocol.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "tags", "contains at least one key-value pair with a null value", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<ExecutionRequestCanceledEvent<Version, Version>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ExecutionRequestCanceledEvent<Version, Version>>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<FailedExecutionEvent<Version, Version>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<FailedExecutionEvent<Version, Version>>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new ConstructorPropertyAssignmentTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "Id should return same 'id' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ExecutionRequestCanceledEvent<Version, Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<FailedExecutionEvent<Version, Version>>
                         {
-                            SystemUnderTest = new ExecutionRequestCanceledEvent<Version, Version>(
+                            SystemUnderTest = new FailedExecutionEvent<Version, Version>(
                                                       referenceObject.Id,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.CancelContext,
+                                                      referenceObject.FailureContext,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.Id,
                         };
@@ -181,19 +181,19 @@ namespace Naos.Protocol.Domain.Test
                     PropertyName = "Id",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new ConstructorPropertyAssignmentTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "TimestampUtc should return same 'timestampUtc' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ExecutionRequestCanceledEvent<Version, Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<FailedExecutionEvent<Version, Version>>
                         {
-                            SystemUnderTest = new ExecutionRequestCanceledEvent<Version, Version>(
+                            SystemUnderTest = new FailedExecutionEvent<Version, Version>(
                                                       referenceObject.Id,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.CancelContext,
+                                                      referenceObject.FailureContext,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.TimestampUtc,
                         };
@@ -203,41 +203,41 @@ namespace Naos.Protocol.Domain.Test
                     PropertyName = "TimestampUtc",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new ConstructorPropertyAssignmentTestScenario<FailedExecutionEvent<Version, Version>>
                 {
-                    Name = "CancelContext should return same 'cancelContext' parameter passed to constructor when getting",
+                    Name = "FailureContext should return same 'failureContext' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ExecutionRequestCanceledEvent<Version, Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<FailedExecutionEvent<Version, Version>>
                         {
-                            SystemUnderTest = new ExecutionRequestCanceledEvent<Version, Version>(
+                            SystemUnderTest = new FailedExecutionEvent<Version, Version>(
                                                       referenceObject.Id,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.CancelContext,
+                                                      referenceObject.FailureContext,
                                                       referenceObject.Tags),
-                            ExpectedPropertyValue = referenceObject.CancelContext,
+                            ExpectedPropertyValue = referenceObject.FailureContext,
                         };
 
                         return result;
                     },
-                    PropertyName = "CancelContext",
+                    PropertyName = "FailureContext",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new ConstructorPropertyAssignmentTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "Tags should return same 'tags' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ExecutionRequestCanceledEvent<Version, Version>>
+                        var result = new SystemUnderTestExpectedPropertyValue<FailedExecutionEvent<Version, Version>>
                         {
-                            SystemUnderTest = new ExecutionRequestCanceledEvent<Version, Version>(
+                            SystemUnderTest = new FailedExecutionEvent<Version, Version>(
                                                       referenceObject.Id,
                                                       referenceObject.TimestampUtc,
-                                                      referenceObject.CancelContext,
+                                                      referenceObject.FailureContext,
                                                       referenceObject.Tags),
                             ExpectedPropertyValue = referenceObject.Tags,
                         };
@@ -247,19 +247,19 @@ namespace Naos.Protocol.Domain.Test
                     PropertyName = "Tags",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<ExecutionRequestCanceledEvent<Version, Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ExecutionRequestCanceledEvent<Version, Version>>()
+        private static readonly DeepCloneWithTestScenarios<FailedExecutionEvent<Version, Version>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<FailedExecutionEvent<Version, Version>>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new DeepCloneWithTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "DeepCloneWithTimestampUtc should deep clone object and replace TimestampUtc with the provided timestampUtc",
                     WithPropertyName = "TimestampUtc",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var systemUnderTest = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ExecutionRequestCanceledEvent<Version, Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<FailedExecutionEvent<Version, Version>>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.TimestampUtc,
@@ -269,17 +269,17 @@ namespace Naos.Protocol.Domain.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new DeepCloneWithTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
                     WithPropertyName = "Id",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var systemUnderTest = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ExecutionRequestCanceledEvent<Version, Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<FailedExecutionEvent<Version, Version>>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Id,
@@ -289,17 +289,17 @@ namespace Naos.Protocol.Domain.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new DeepCloneWithTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "DeepCloneWithTags should deep clone object and replace Tags with the provided tags",
                     WithPropertyName = "Tags",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var systemUnderTest = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>().ThatIs(_ => !systemUnderTest.Tags.IsEqualTo(_.Tags));
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>().ThatIs(_ => !systemUnderTest.Tags.IsEqualTo(_.Tags));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ExecutionRequestCanceledEvent<Version, Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<FailedExecutionEvent<Version, Version>>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Tags,
@@ -309,63 +309,63 @@ namespace Naos.Protocol.Domain.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new DeepCloneWithTestScenario<FailedExecutionEvent<Version, Version>>
                 {
-                    Name = "DeepCloneWithCancelContext should deep clone object and replace CancelContext with the provided cancelContext",
-                    WithPropertyName = "CancelContext",
+                    Name = "DeepCloneWithFailureContext should deep clone object and replace FailureContext with the provided failureContext",
+                    WithPropertyName = "FailureContext",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                        var systemUnderTest = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-                        var referenceObject = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>().ThatIs(_ => !systemUnderTest.CancelContext.IsEqualTo(_.CancelContext));
+                        var referenceObject = A.Dummy<FailedExecutionEvent<Version, Version>>().ThatIs(_ => !systemUnderTest.FailureContext.IsEqualTo(_.FailureContext));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ExecutionRequestCanceledEvent<Version, Version>>
+                        var result = new SystemUnderTestDeepCloneWithValue<FailedExecutionEvent<Version, Version>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.CancelContext,
+                            DeepCloneWithValue = referenceObject.FailureContext,
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ExecutionRequestCanceledEvent<Version, Version> ReferenceObjectForEquatableTestScenarios = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+        private static readonly FailedExecutionEvent<Version, Version> ReferenceObjectForEquatableTestScenarios = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
-        private static readonly EquatableTestScenarios<ExecutionRequestCanceledEvent<Version, Version>> EquatableTestScenarios = new EquatableTestScenarios<ExecutionRequestCanceledEvent<Version, Version>>()
+        private static readonly EquatableTestScenarios<FailedExecutionEvent<Version, Version>> EquatableTestScenarios = new EquatableTestScenarios<FailedExecutionEvent<Version, Version>>()
             .AddScenario(() =>
-                new EquatableTestScenario<ExecutionRequestCanceledEvent<Version, Version>>
+                new EquatableTestScenario<FailedExecutionEvent<Version, Version>>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ExecutionRequestCanceledEvent<Version, Version>[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new FailedExecutionEvent<Version, Version>[]
                     {
-                        new ExecutionRequestCanceledEvent<Version, Version>(
+                        new FailedExecutionEvent<Version, Version>(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.CancelContext,
+                                ReferenceObjectForEquatableTestScenarios.FailureContext,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new ExecutionRequestCanceledEvent<Version, Version>[]
+                    ObjectsThatAreNotEqualToReferenceObject = new FailedExecutionEvent<Version, Version>[]
                     {
-                        new ExecutionRequestCanceledEvent<Version, Version>(
+                        new FailedExecutionEvent<Version, Version>(
                                 ReferenceObjectForEquatableTestScenarios.Id,
-                                A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.CancelContext,
+                                A.Dummy<FailedExecutionEvent<Version, Version>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
+                                ReferenceObjectForEquatableTestScenarios.FailureContext,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
-                        new ExecutionRequestCanceledEvent<Version, Version>(
-                                A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
+                        new FailedExecutionEvent<Version, Version>(
+                                A.Dummy<FailedExecutionEvent<Version, Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.CancelContext,
+                                ReferenceObjectForEquatableTestScenarios.FailureContext,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
-                        new ExecutionRequestCanceledEvent<Version, Version>(
+                        new FailedExecutionEvent<Version, Version>(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                ReferenceObjectForEquatableTestScenarios.CancelContext,
-                                A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>().Whose(_ => !_.Tags.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Tags)).Tags),
-                        new ExecutionRequestCanceledEvent<Version, Version>(
+                                ReferenceObjectForEquatableTestScenarios.FailureContext,
+                                A.Dummy<FailedExecutionEvent<Version, Version>>().Whose(_ => !_.Tags.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Tags)).Tags),
+                        new FailedExecutionEvent<Version, Version>(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>().Whose(_ => !_.CancelContext.IsEqualTo(ReferenceObjectForEquatableTestScenarios.CancelContext)).CancelContext,
+                                A.Dummy<FailedExecutionEvent<Version, Version>>().Whose(_ => !_.FailureContext.IsEqualTo(ReferenceObjectForEquatableTestScenarios.FailureContext)).FailureContext,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -375,11 +375,12 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<ExecutingEvent<Version, CancelExecutionAttemptOp<Version, Version>>>(),
-                        A.Dummy<ExecutionAttemptCanceledEvent<Version, Version>>(),
-                        A.Dummy<ExecutionRequestedEvent<Version, CancelExecutionAttemptOp<Version, Version>>>(),
-                        A.Dummy<FailedEvent<Version, Version>>(),
-                        A.Dummy<SucceededEvent<Version, Version>>(),
+                        A.Dummy<CanceledRequestedExecutionEvent<Version, Version>>(),
+                        A.Dummy<SelfCanceledRunningExecutionEvent<Version, Version>>(),
+                        A.Dummy<CanceledRunningExecutionEvent<Version, Version>>(),
+                        A.Dummy<CompletedExecutionEvent<Version, Version>>(),
+                        A.Dummy<RequestedExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>>(),
+                        A.Dummy<RunningExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>>(),
                         A.Dummy<NullEvent>(),
                         A.Dummy<NullIdentifiedEvent<Version>>(),
                     },
@@ -403,12 +404,12 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void ExecutionRequestCanceledEvent___Should_implement_IModel_of_ExecutionRequestCanceledEvent___When_reflecting()
+            public static void FailedExecutionEvent___Should_implement_IModel_of_FailedExecutionEvent___When_reflecting()
             {
                 // Arrange
-                var type = typeof(ExecutionRequestCanceledEvent<Version, Version>);
+                var type = typeof(FailedExecutionEvent<Version, Version>);
 
-                var expectedModelMethods = typeof(IModel<ExecutionRequestCanceledEvent<Version, Version>>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<FailedExecutionEvent<Version, Version>>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -418,7 +419,7 @@ namespace Naos.Protocol.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<ExecutionRequestCanceledEvent<Version, Version>>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<FailedExecutionEvent<Version, Version>>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -436,10 +437,10 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void ExecutionRequestCanceledEvent___Should_be_attributed_with_Serializable____When_reflecting()
+            public static void FailedExecutionEvent___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(ExecutionRequestCanceledEvent<Version, Version>);
+                var type = typeof(FailedExecutionEvent<Version, Version>);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -612,10 +613,10 @@ namespace Naos.Protocol.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                var systemUnderTest = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
                 // Act
-                var actual = (ExecutionRequestCanceledEvent<Version, Version>)systemUnderTest.Clone();
+                var actual = (FailedExecutionEvent<Version, Version>)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -639,7 +640,7 @@ namespace Naos.Protocol.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                var systemUnderTest = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -666,13 +667,13 @@ namespace Naos.Protocol.Domain.Test
                     actual.Tags.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Tags);
                 }
 
-                if (systemUnderTest.CancelContext == null)
+                if (systemUnderTest.FailureContext == null)
                 {
-                    actual.CancelContext.AsTest().Must().BeNull();
+                    actual.FailureContext.AsTest().Must().BeNull();
                 }
                 else
                 {
-                    actual.CancelContext.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.CancelContext);
+                    actual.FailureContext.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.FailureContext);
                 }
             }
 
@@ -692,7 +693,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "TimestampUtc", "Id", "Tags", "CancelContext" };
+                var propertyNames = new string[] { "TimestampUtc", "Id", "Tags", "FailureContext" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -709,12 +710,12 @@ namespace Naos.Protocol.Domain.Test
                     }
 
                     // Act
-                    var actual = (ExecutionRequestCanceledEvent<Version, Version>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (FailedExecutionEvent<Version, Version>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(ExecutionRequestCanceledEvent<Version, Version>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(FailedExecutionEvent<Version, Version>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var propertyType = propertyInfo.PropertyType;
 
@@ -782,7 +783,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                var expected = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -811,7 +812,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                var expected = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -840,7 +841,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                var expected = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -869,7 +870,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ExecutionRequestCanceledEvent<Version, Version>>();
+                var expected = A.Dummy<FailedExecutionEvent<Version, Version>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -903,8 +904,8 @@ namespace Naos.Protocol.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                ExecutionRequestCanceledEvent<Version, Version> systemUnderTest1 = null;
-                ExecutionRequestCanceledEvent<Version, Version> systemUnderTest2 = null;
+                FailedExecutionEvent<Version, Version> systemUnderTest1 = null;
+                FailedExecutionEvent<Version, Version> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -934,7 +935,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ExecutionRequestCanceledEvent<Version, Version> systemUnderTest = null;
+                    FailedExecutionEvent<Version, Version> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -1083,8 +1084,8 @@ namespace Naos.Protocol.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                ExecutionRequestCanceledEvent<Version, Version> systemUnderTest1 = null;
-                ExecutionRequestCanceledEvent<Version, Version> systemUnderTest2 = null;
+                FailedExecutionEvent<Version, Version> systemUnderTest1 = null;
+                FailedExecutionEvent<Version, Version> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -1114,7 +1115,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ExecutionRequestCanceledEvent<Version, Version> systemUnderTest = null;
+                    FailedExecutionEvent<Version, Version> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1546,14 +1547,14 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ExecutionRequestCanceledEvent___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_FailedExecutionEvent___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ExecutionRequestCanceledEvent<Version, Version> systemUnderTest = null;
+                    FailedExecutionEvent<Version, Version> systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);
@@ -1577,7 +1578,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ExecutionRequestCanceledEvent___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_FailedExecutionEvent___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1605,7 +1606,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ExecutionRequestCanceledEvent___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_FailedExecutionEvent___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1633,7 +1634,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ExecutionRequestCanceledEvent___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_FailedExecutionEvent___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
@@ -1661,7 +1662,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_ExecutionRequestCanceledEvent___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_FailedExecutionEvent___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
