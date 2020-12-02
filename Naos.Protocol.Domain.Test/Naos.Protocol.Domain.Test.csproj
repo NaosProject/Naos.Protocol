@@ -251,6 +251,14 @@
     <Compile Include="CacheStatusResultTest.designer.cs">
       <DependentUpon>CacheStatusResultTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="CancelExecutionAttemptOp{TId,TCancelContext}Test.cs" />
+    <Compile Include="CancelExecutionAttemptOp{TId,TCancelContext}Test.designer.cs">
+      <DependentUpon>CancelExecutionAttemptOp{TId,TCancelContext}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CancelExecutionRequestOp{TId,TCancelContext}Test.cs" />
+    <Compile Include="CancelExecutionRequestOp{TId,TCancelContext}Test.designer.cs">
+      <DependentUpon>CancelExecutionRequestOp{TId,TCancelContext}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="ClearCacheOpTest.cs" />
     <Compile Include="ClearCacheOpTest.designer.cs">
       <DependentUpon>ClearCacheOpTest.cs</DependentUpon>
@@ -264,6 +272,10 @@
     <Compile Include="EventBase{TId}Test.designer.cs">
       <DependentUpon>EventBase{TId}Test.cs</DependentUpon>
     </Compile>
+    <Compile Include="EventWithTagsBase{TId}Test.cs" />
+    <Compile Include="EventWithTagsBase{TId}Test.designer.cs">
+      <DependentUpon>EventWithTagsBase{TId}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="ExecuteDefaultOperationsOnProtocolOpTest.cs" />
     <Compile Include="ExecuteDefaultOperationsOnProtocolOpTest.designer.cs">
       <DependentUpon>ExecuteDefaultOperationsOnProtocolOpTest.cs</DependentUpon>
@@ -272,9 +284,25 @@
     <Compile Include="ExecuteOperationRequestedEvent{TId,TOperation}Test.designer.cs">
       <DependentUpon>ExecuteOperationRequestedEvent{TId,TOperation}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="FailedToHandleEventEvent{TId,TEvent}Test.cs" />
-    <Compile Include="FailedToHandleEventEvent{TId,TEvent}Test.designer.cs">
-      <DependentUpon>FailedToHandleEventEvent{TId,TEvent}Test.cs</DependentUpon>
+    <Compile Include="ExecutingEvent{TId,TExecutingContext}Test.cs" />
+    <Compile Include="ExecutingEvent{TId,TExecutingContext}Test.designer.cs">
+      <DependentUpon>ExecutingEvent{TId,TExecutingContext}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExecutionAttemptCanceledEvent{TId,TCancelContext}Test.cs" />
+    <Compile Include="ExecutionAttemptCanceledEvent{TId,TCancelContext}Test.designer.cs">
+      <DependentUpon>ExecutionAttemptCanceledEvent{TId,TCancelContext}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExecutionRequestCanceledEvent{TId,TCancelContext}Test.cs" />
+    <Compile Include="ExecutionRequestCanceledEvent{TId,TCancelContext}Test.designer.cs">
+      <DependentUpon>ExecutionRequestCanceledEvent{TId,TCancelContext}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExecutionRequestedEvent{TId,TOperation}Test.cs" />
+    <Compile Include="ExecutionRequestedEvent{TId,TOperation}Test.designer.cs">
+      <DependentUpon>ExecutionRequestedEvent{TId,TOperation}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FailedEvent{TId,TFailureContext}Test.cs" />
+    <Compile Include="FailedEvent{TId,TFailureContext}Test.designer.cs">
+      <DependentUpon>FailedEvent{TId,TFailureContext}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="GetAllResourceLocatorsOpTest.cs" />
     <Compile Include="GetAllResourceLocatorsOpTest.designer.cs">
@@ -317,22 +345,18 @@
       <DependentUpon>GetVoidProtocolOp{TOperation}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="HandledEventEvent{TId,TEvent}Test.cs" />
-    <Compile Include="HandledEventEvent{TId,TEvent}Test.designer.cs">
-      <DependentUpon>HandledEventEvent{TId,TEvent}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="HandleEventOp{TEvent}Test.cs" />
-    <Compile Include="HandleEventOp{TEvent}Test.designer.cs">
-      <DependentUpon>HandleEventOp{TEvent}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="HandlingEventEvent{TId,TEvent}Test.cs" />
-    <Compile Include="HandlingEventEvent{TId,TEvent}Test.designer.cs">
-      <DependentUpon>HandlingEventEvent{TId,TEvent}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\SpecificProtocolBaseTests.cs" />
     <Compile Include="NamedResourceLocatorTest.cs" />
     <Compile Include="NamedResourceLocatorTest.designer.cs">
       <DependentUpon>NamedResourceLocatorTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NullEventTest.cs" />
+    <Compile Include="NullEventTest.designer.cs">
+      <DependentUpon>NullEventTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NullIdentifiedEvent{TId}Test.cs" />
+    <Compile Include="NullIdentifiedEvent{TId}Test.designer.cs">
+      <DependentUpon>NullIdentifiedEvent{TId}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="NullResourceLocatorTest.cs" />
     <Compile Include="NullResourceLocatorTest.designer.cs">
@@ -353,10 +377,6 @@
     </Compile>
     <Compile Include="ProtocolDummyFactory.cs" />
     <Compile Include="ProtocolDummyFactoryTest.cs" />
-    <Compile Include="RecordedObjectEvent{TId,TObject}Test.cs" />
-    <Compile Include="RecordedObjectEvent{TId,TObject}Test.designer.cs">
-      <DependentUpon>RecordedObjectEvent{TId,TObject}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="ResourceLocatorBaseTest.cs" />
     <Compile Include="ResourceLocatorBaseTest.designer.cs">
       <DependentUpon>ResourceLocatorBaseTest.cs</DependentUpon>
@@ -367,6 +387,10 @@
     </Compile>
     <Compile Include="CachingTests.cs" />
     <Compile Include="SerializationConfigurationTypes.cs" />
+    <Compile Include="SucceededEvent{TId,TSuccessContext}Test.cs" />
+    <Compile Include="SucceededEvent{TId,TSuccessContext}Test.designer.cs">
+      <DependentUpon>SucceededEvent{TId,TSuccessContext}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThrowIfResourceUnavailableOpTest.cs" />
     <Compile Include="ThrowIfResourceUnavailableOpTest.designer.cs">
       <DependentUpon>ThrowIfResourceUnavailableOpTest.cs</DependentUpon>

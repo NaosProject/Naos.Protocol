@@ -35,35 +35,35 @@ namespace Naos.Protocol.Domain.Test
 
     public static partial class ExecuteOperationRequestedEventTIdTOperationTest
     {
-        private static readonly StringRepresentationTestScenarios<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>()
+        private static readonly StringRepresentationTestScenarios<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new StringRepresentationTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var systemUnderTest = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                        var result = new SystemUnderTestExpectedStringRepresentation<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>: Id = {systemUnderTest.Id?.ToString() ?? "<null>"}, TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, OperationToExecute = {systemUnderTest.OperationToExecute?.ToString() ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>: Id = {systemUnderTest.Id?.ToString() ?? "<null>"}, TimestampUtc = {systemUnderTest.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Tags = {systemUnderTest.Tags?.ToString() ?? "<null>"}, OperationToExecute = {systemUnderTest.OperationToExecute?.ToString() ?? "<null>"}."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly ConstructorArgumentValidationTestScenarios<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>()
+        private static readonly ConstructorArgumentValidationTestScenarios<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>> ConstructorArgumentValidationTestScenarios = new ConstructorArgumentValidationTestScenarios<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>()
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new ConstructorArgumentValidationTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'id' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var result = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                        var result = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                              null,
                                              referenceObject.TimestampUtc,
                                              referenceObject.OperationToExecute,
@@ -75,14 +75,14 @@ namespace Naos.Protocol.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "id", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new ConstructorArgumentValidationTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'operationToExecute' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var result = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                        var result = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                              referenceObject.Id,
                                              referenceObject.TimestampUtc,
                                              null,
@@ -94,14 +94,14 @@ namespace Naos.Protocol.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "operationToExecute", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new ConstructorArgumentValidationTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "constructor should throw ArgumentNullException when parameter 'tags' is null scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var result = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                        var result = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                              referenceObject.Id,
                                              referenceObject.TimestampUtc,
                                              referenceObject.OperationToExecute,
@@ -113,14 +113,14 @@ namespace Naos.Protocol.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "tags", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new ConstructorArgumentValidationTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'tags' is an empty dictionary scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var result = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                        var result = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                              referenceObject.Id,
                                              referenceObject.TimestampUtc,
                                              referenceObject.OperationToExecute,
@@ -132,12 +132,12 @@ namespace Naos.Protocol.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "tags", "is an empty dictionary", },
                 })
             .AddScenario(() =>
-                new ConstructorArgumentValidationTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new ConstructorArgumentValidationTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "constructor should throw ArgumentException when parameter 'tags' contains a key-value pair with a null value scenario",
                     ConstructionFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
                         var dictionaryWithNullValue = referenceObject.Tags.ToDictionary(_ => _.Key, _ => _.Value);
 
@@ -145,7 +145,7 @@ namespace Naos.Protocol.Domain.Test
 
                         dictionaryWithNullValue[randomKey] = null;
 
-                        var result = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                        var result = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                              referenceObject.Id,
                                              referenceObject.TimestampUtc,
                                              referenceObject.OperationToExecute,
@@ -157,18 +157,18 @@ namespace Naos.Protocol.Domain.Test
                     ExpectedExceptionMessageContains = new[] { "tags", "contains at least one key-value pair with a null value", },
                 });
 
-        private static readonly ConstructorPropertyAssignmentTestScenarios<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>()
+        private static readonly ConstructorPropertyAssignmentTestScenarios<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>> ConstructorPropertyAssignmentTestScenarios = new ConstructorPropertyAssignmentTestScenarios<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>()
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new ConstructorPropertyAssignmentTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "Id should return same 'id' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                        var result = new SystemUnderTestExpectedPropertyValue<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                         {
-                            SystemUnderTest = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                            SystemUnderTest = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                                       referenceObject.Id,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.OperationToExecute,
@@ -181,16 +181,16 @@ namespace Naos.Protocol.Domain.Test
                     PropertyName = "Id",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new ConstructorPropertyAssignmentTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "TimestampUtc should return same 'timestampUtc' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                        var result = new SystemUnderTestExpectedPropertyValue<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                         {
-                            SystemUnderTest = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                            SystemUnderTest = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                                       referenceObject.Id,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.OperationToExecute,
@@ -203,16 +203,16 @@ namespace Naos.Protocol.Domain.Test
                     PropertyName = "TimestampUtc",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new ConstructorPropertyAssignmentTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "OperationToExecute should return same 'operationToExecute' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                        var result = new SystemUnderTestExpectedPropertyValue<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                         {
-                            SystemUnderTest = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                            SystemUnderTest = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                                       referenceObject.Id,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.OperationToExecute,
@@ -225,16 +225,16 @@ namespace Naos.Protocol.Domain.Test
                     PropertyName = "OperationToExecute",
                 })
             .AddScenario(() =>
-                new ConstructorPropertyAssignmentTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new ConstructorPropertyAssignmentTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "Tags should return same 'tags' parameter passed to constructor when getting",
                     SystemUnderTestExpectedPropertyValueFunc = () =>
                     {
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var result = new SystemUnderTestExpectedPropertyValue<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                        var result = new SystemUnderTestExpectedPropertyValue<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                         {
-                            SystemUnderTest = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                            SystemUnderTest = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                                       referenceObject.Id,
                                                       referenceObject.TimestampUtc,
                                                       referenceObject.OperationToExecute,
@@ -247,19 +247,19 @@ namespace Naos.Protocol.Domain.Test
                     PropertyName = "Tags",
                 });
 
-        private static readonly DeepCloneWithTestScenarios<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>()
+        private static readonly DeepCloneWithTestScenarios<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>> DeepCloneWithTestScenarios = new DeepCloneWithTestScenarios<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>()
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new DeepCloneWithTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "DeepCloneWithId should deep clone object and replace Id with the provided id",
                     WithPropertyName = "Id",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var systemUnderTest = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>().ThatIs(_ => !systemUnderTest.Id.IsEqualTo(_.Id));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                        var result = new SystemUnderTestDeepCloneWithValue<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Id,
@@ -269,17 +269,17 @@ namespace Naos.Protocol.Domain.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new DeepCloneWithTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "DeepCloneWithTimestampUtc should deep clone object and replace TimestampUtc with the provided timestampUtc",
                     WithPropertyName = "TimestampUtc",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var systemUnderTest = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>().ThatIs(_ => !systemUnderTest.TimestampUtc.IsEqualTo(_.TimestampUtc));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                        var result = new SystemUnderTestDeepCloneWithValue<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.TimestampUtc,
@@ -289,37 +289,17 @@ namespace Naos.Protocol.Domain.Test
                     },
                 })
             .AddScenario(() =>
-                new DeepCloneWithTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
-                {
-                    Name = "DeepCloneWithOperationToExecute should deep clone object and replace OperationToExecute with the provided operationToExecute",
-                    WithPropertyName = "OperationToExecute",
-                    SystemUnderTestDeepCloneWithValueFunc = () =>
-                    {
-                        var systemUnderTest = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
-
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>().ThatIs(_ => !systemUnderTest.OperationToExecute.IsEqualTo(_.OperationToExecute));
-
-                        var result = new SystemUnderTestDeepCloneWithValue<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
-                        {
-                            SystemUnderTest = systemUnderTest,
-                            DeepCloneWithValue = referenceObject.OperationToExecute,
-                        };
-
-                        return result;
-                    },
-                })
-            .AddScenario(() =>
-                new DeepCloneWithTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new DeepCloneWithTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "DeepCloneWithTags should deep clone object and replace Tags with the provided tags",
                     WithPropertyName = "Tags",
                     SystemUnderTestDeepCloneWithValueFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                        var systemUnderTest = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-                        var referenceObject = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>().ThatIs(_ => !systemUnderTest.Tags.IsEqualTo(_.Tags));
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>().ThatIs(_ => !systemUnderTest.Tags.IsEqualTo(_.Tags));
 
-                        var result = new SystemUnderTestDeepCloneWithValue<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                        var result = new SystemUnderTestDeepCloneWithValue<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                         {
                             SystemUnderTest = systemUnderTest,
                             DeepCloneWithValue = referenceObject.Tags,
@@ -327,46 +307,66 @@ namespace Naos.Protocol.Domain.Test
 
                         return result;
                     },
+                })
+            .AddScenario(() =>
+                new DeepCloneWithTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
+                {
+                    Name = "DeepCloneWithOperationToExecute should deep clone object and replace OperationToExecute with the provided operationToExecute",
+                    WithPropertyName = "OperationToExecute",
+                    SystemUnderTestDeepCloneWithValueFunc = () =>
+                    {
+                        var systemUnderTest = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
+
+                        var referenceObject = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>().ThatIs(_ => !systemUnderTest.OperationToExecute.IsEqualTo(_.OperationToExecute));
+
+                        var result = new SystemUnderTestDeepCloneWithValue<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
+                        {
+                            SystemUnderTest = systemUnderTest,
+                            DeepCloneWithValue = referenceObject.OperationToExecute,
+                        };
+
+                        return result;
+                    },
                 });
 
-        private static readonly ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp> ReferenceObjectForEquatableTestScenarios = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+        private static readonly ExecutionRequestedEvent<Version, GetProtocolByTypeOp> ReferenceObjectForEquatableTestScenarios = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
-        private static readonly EquatableTestScenarios<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>> EquatableTestScenarios = new EquatableTestScenarios<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>()
+        private static readonly EquatableTestScenarios<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>> EquatableTestScenarios = new EquatableTestScenarios<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>()
             .AddScenario(() =>
-                new EquatableTestScenario<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>
+                new EquatableTestScenario<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>[]
                     {
-                        new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                        new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>[]
+                    ObjectsThatAreNotEqualToReferenceObject = new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>[]
                     {
-                        new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
-                                A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
+                        new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
+                                A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
-                        new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                        new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                 ReferenceObjectForEquatableTestScenarios.Id,
-                                A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
+                                A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
                                 ReferenceObjectForEquatableTestScenarios.Tags),
-                        new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
-                                ReferenceObjectForEquatableTestScenarios.Id,
-                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
-                                A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>().Whose(_ => !_.OperationToExecute.IsEqualTo(ReferenceObjectForEquatableTestScenarios.OperationToExecute)).OperationToExecute,
-                                ReferenceObjectForEquatableTestScenarios.Tags),
-                        new ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>(
+                        new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
                                 ReferenceObjectForEquatableTestScenarios.Id,
                                 ReferenceObjectForEquatableTestScenarios.TimestampUtc,
                                 ReferenceObjectForEquatableTestScenarios.OperationToExecute,
-                                A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>().Whose(_ => !_.Tags.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Tags)).Tags),
+                                A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>().Whose(_ => !_.Tags.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Tags)).Tags),
+                        new ExecutionRequestedEvent<Version, GetProtocolByTypeOp>(
+                                ReferenceObjectForEquatableTestScenarios.Id,
+                                ReferenceObjectForEquatableTestScenarios.TimestampUtc,
+                                A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>().Whose(_ => !_.OperationToExecute.IsEqualTo(ReferenceObjectForEquatableTestScenarios.OperationToExecute)).OperationToExecute,
+                                ReferenceObjectForEquatableTestScenarios.Tags),
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
@@ -375,10 +375,6 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
-                        A.Dummy<FailedToHandleEventEvent<Version, ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>>(),
-                        A.Dummy<RecordedObjectEvent<Version, Version>>(),
-                        A.Dummy<HandledEventEvent<Version, ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>>(),
-                        A.Dummy<HandlingEventEvent<Version, ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>>(),
                     },
                 });
 
@@ -403,9 +399,9 @@ namespace Naos.Protocol.Domain.Test
             public static void ExecuteOperationRequestedEvent___Should_implement_IModel_of_ExecuteOperationRequestedEvent___When_reflecting()
             {
                 // Arrange
-                var type = typeof(ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>);
+                var type = typeof(ExecutionRequestedEvent<Version, GetProtocolByTypeOp>);
 
-                var expectedModelMethods = typeof(IModel<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -415,7 +411,7 @@ namespace Naos.Protocol.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -436,7 +432,7 @@ namespace Naos.Protocol.Domain.Test
             public static void ExecuteOperationRequestedEvent___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>);
+                var type = typeof(ExecutionRequestedEvent<Version, GetProtocolByTypeOp>);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -609,10 +605,10 @@ namespace Naos.Protocol.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                var systemUnderTest = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
                 // Act
-                var actual = (ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>)systemUnderTest.Clone();
+                var actual = (ExecutionRequestedEvent<Version, GetProtocolByTypeOp>)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -636,7 +632,7 @@ namespace Naos.Protocol.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                var systemUnderTest = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -654,15 +650,6 @@ namespace Naos.Protocol.Domain.Test
                     actual.Id.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Id);
                 }
 
-                if (systemUnderTest.OperationToExecute == null)
-                {
-                    actual.OperationToExecute.AsTest().Must().BeNull();
-                }
-                else
-                {
-                    actual.OperationToExecute.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.OperationToExecute);
-                }
-
                 if (systemUnderTest.Tags == null)
                 {
                     actual.Tags.AsTest().Must().BeNull();
@@ -670,6 +657,15 @@ namespace Naos.Protocol.Domain.Test
                 else
                 {
                     actual.Tags.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.Tags);
+                }
+
+                if (systemUnderTest.OperationToExecute == null)
+                {
+                    actual.OperationToExecute.AsTest().Must().BeNull();
+                }
+                else
+                {
+                    actual.OperationToExecute.AsTest().Must().NotBeSameReferenceAs(systemUnderTest.OperationToExecute);
                 }
             }
 
@@ -689,7 +685,7 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
             public static void DeepCloneWith___Should_deep_clone_object_and_replace_the_associated_property_with_the_provided_value___When_called()
             {
-                var propertyNames = new string[] { "Id", "TimestampUtc", "OperationToExecute", "Tags" };
+                var propertyNames = new string[] { "Id", "TimestampUtc", "Tags", "OperationToExecute" };
 
                 var scenarios = DeepCloneWithTestScenarios.ValidateAndPrepareForTesting();
 
@@ -706,12 +702,12 @@ namespace Naos.Protocol.Domain.Test
                     }
 
                     // Act
-                    var actual = (ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
+                    var actual = (ExecutionRequestedEvent<Version, GetProtocolByTypeOp>)scenario.DeepCloneWithMethod.Invoke(scenario.SystemUnderTest, new[] { scenario.WithValue });
 
                     // Assert
                     foreach(var propertyName in propertyNames)
                     {
-                        var propertyInfo = typeof(ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
+                        var propertyInfo = typeof(ExecutionRequestedEvent<Version, GetProtocolByTypeOp>).GetPropertyFiltered(propertyName, MemberRelationships.DeclaredOrInherited, MemberOwners.Instance, MemberAccessModifiers.Public);
 
                         var propertyType = propertyInfo.PropertyType;
 
@@ -779,7 +775,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                var expected = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -808,7 +804,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                var expected = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -837,7 +833,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                var expected = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -866,7 +862,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp>>();
+                var expected = A.Dummy<ExecutionRequestedEvent<Version, GetProtocolByTypeOp>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -900,8 +896,8 @@ namespace Naos.Protocol.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest1 = null;
-                ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest2 = null;
+                ExecutionRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest1 = null;
+                ExecutionRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -931,7 +927,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest = null;
+                    ExecutionRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -1080,8 +1076,8 @@ namespace Naos.Protocol.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest1 = null;
-                ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest2 = null;
+                ExecutionRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest1 = null;
+                ExecutionRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -1111,7 +1107,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest = null;
+                    ExecutionRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -1400,17 +1396,17 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_false___When_parameter_other_is_null()
+            public static void Equals_with_EventWithTagsBase___Should_return_false___When_parameter_other_is_null()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    EventBase<Version> systemUnderTest = null;
+                    EventWithTagsBase<Version> systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((EventBase<Version>)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((EventWithTagsBase<Version>)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -1431,14 +1427,14 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_true___When_parameter_other_is_same_object()
+            public static void Equals_with_EventWithTagsBase___Should_return_true___When_parameter_other_is_same_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((EventBase<Version>)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((EventWithTagsBase<Version>)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -1459,14 +1455,14 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
+            public static void Equals_with_EventWithTagsBase___Should_return_false___When_parameter_other_is_derived_from_the_same_type_but_is_not_of_the_same_type_as_this_object()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase<Version>)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventWithTagsBase<Version>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1487,14 +1483,14 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_false___When_objects_being_compared_have_different_property_values()
+            public static void Equals_with_EventWithTagsBase___Should_return_false___When_objects_being_compared_have_different_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase<Version>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventWithTagsBase<Version>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1515,14 +1511,14 @@ namespace Naos.Protocol.Domain.Test
             [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
             [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
             [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-            public static void Equals_with_EventBase___Should_return_true___When_objects_being_compared_have_same_property_values()
+            public static void Equals_with_EventWithTagsBase___Should_return_true___When_objects_being_compared_have_same_property_values()
             {
                 var scenarios = EquatableTestScenarios.ValidateAndPrepareForTesting();
 
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventBase<Version>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((EventWithTagsBase<Version>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1550,7 +1546,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ExecuteOperationRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest = null;
+                    ExecutionRequestedEvent<Version, GetProtocolByTypeOp> systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);

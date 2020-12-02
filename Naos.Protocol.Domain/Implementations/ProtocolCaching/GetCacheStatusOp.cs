@@ -6,9 +6,7 @@
 
 namespace Naos.Protocol.Domain
 {
-    using System;
-    using OBeautifulCode.Type;
-    using static System.FormattableString;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Clears the cache.

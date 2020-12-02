@@ -6,6 +6,7 @@
 
 namespace Naos.Protocol.Domain
 {
+    using System.Collections.Generic;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -13,5 +14,11 @@ namespace Naos.Protocol.Domain
     /// </summary>
     public abstract partial class VoidOperationBase : OperationBase, IVoidOperation, IModelViaCodeGen
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VoidOperationBase"/> class.
+        /// </summary>
+        protected VoidOperationBase()
+        {
+        }
     }
 }

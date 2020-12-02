@@ -11,10 +11,10 @@ namespace Naos.Protocol.Domain.Test
     using FakeItEasy;
 
     using OBeautifulCode.AutoFakeItEasy;
-
+    using OBeautifulCode.CodeGen.ModelObject.Recipes;
     using Xunit;
 
-    public static partial class GetVoidProtocolOpTest
+    public static partial class GetVoidProtocolOpTOperationTest
     {
     }
 }

@@ -7,6 +7,7 @@
 namespace Naos.Protocol.Domain
 {
     using System;
+    using System.Collections.Generic;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -15,5 +16,11 @@ namespace Naos.Protocol.Domain
     /// <typeparam name="TReturn">The type of the object that the operation returns.</typeparam>
     public abstract partial class ReturningOperationBase<TReturn> : OperationBase, IReturningOperation<TReturn>, IModelViaCodeGen
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReturningOperationBase{TReturn}"/> class.
+        /// </summary>
+        protected ReturningOperationBase()
+        {
+        }
     }
 }

@@ -6,6 +6,8 @@
 
 namespace Naos.Protocol.Domain
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Operation to get a void protocol by type of operation.
     /// </summary>
@@ -13,5 +15,11 @@ namespace Naos.Protocol.Domain
     public partial class GetVoidProtocolOp<TOperation> : ReturningOperationBase<IVoidProtocol<TOperation>>
         where TOperation : IVoidOperation
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetVoidProtocolOp{TOperation}"/> class.
+        /// </summary>
+        public GetVoidProtocolOp()
+        {
+        }
     }
 }

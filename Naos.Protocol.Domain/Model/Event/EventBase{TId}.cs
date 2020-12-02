@@ -7,6 +7,7 @@
 namespace Naos.Protocol.Domain
 {
     using System;
+    using System.Collections.Generic;
     using OBeautifulCode.Type;
 
     /// <summary>

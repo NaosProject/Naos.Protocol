@@ -13,7 +13,7 @@ namespace Naos.Protocol.Domain.Test
     using System.CodeDom.Compiler;
     using System.Diagnostics.CodeAnalysis;
     using FakeItEasy;
-
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.AutoFakeItEasy;
 
     /// <summary>

@@ -6,6 +6,8 @@
 
 namespace Naos.Protocol.Domain
 {
+    using System;
+    using System.Collections.Generic;
     using OBeautifulCode.Type;
 
     /// <summary>
@@ -13,5 +15,11 @@ namespace Naos.Protocol.Domain
     /// </summary>
     public abstract partial class EventBaseBase : IEvent, IModelViaCodeGen
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventBaseBase"/> class.
+        /// </summary>
+        protected EventBaseBase()
+        {
+        }
     }
 }

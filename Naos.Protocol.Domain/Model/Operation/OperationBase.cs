@@ -13,5 +13,11 @@ namespace Naos.Protocol.Domain
     /// </summary>
     public abstract partial class OperationBase : IOperation, IModelViaCodeGen
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OperationBase"/> class.
+        /// </summary>
+        protected OperationBase()
+        {
+        }
     }
 }

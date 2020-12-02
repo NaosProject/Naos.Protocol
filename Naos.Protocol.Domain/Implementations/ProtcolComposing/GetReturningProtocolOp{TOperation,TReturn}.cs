@@ -6,6 +6,8 @@
 
 namespace Naos.Protocol.Domain
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Operation to get a returning protocol by type of operation.
     /// </summary>
@@ -14,5 +16,11 @@ namespace Naos.Protocol.Domain
     public partial class GetReturningProtocolOp<TOperation, TReturn> : ReturningOperationBase<IReturningProtocol<TOperation, TReturn>>
         where TOperation : IReturningOperation<TReturn>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetReturningProtocolOp{TOperation, TReturn}"/> class.
+        /// </summary>
+        public GetReturningProtocolOp()
+        {
+        }
     }
 }

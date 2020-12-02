@@ -6,6 +6,7 @@
 
 namespace Naos.Protocol.Domain
 {
+    using System.Collections.Generic;
     using static System.FormattableString;
 
     /// <summary>
@@ -13,11 +14,5 @@ namespace Naos.Protocol.Domain
     /// </summary>
     public partial class ClearCacheOp : VoidOperationBase
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ClearCacheOp"/> class.
-        /// </summary>
-        public ClearCacheOp()
-        {
-        }
     }
 }

@@ -7,11 +7,13 @@
 namespace Naos.Protocol.Domain.Test
 {
     using System;
-
+    using System.Collections.Generic;
+    using System.Linq;
     using FakeItEasy;
 
     using OBeautifulCode.AutoFakeItEasy;
-
+    using OBeautifulCode.CodeGen.ModelObject.Recipes;
+    using OBeautifulCode.Math.Recipes;
     using Xunit;
 
     public static partial class ClearCacheOpTest
