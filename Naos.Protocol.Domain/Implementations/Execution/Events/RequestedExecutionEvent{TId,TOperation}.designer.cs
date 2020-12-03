@@ -70,7 +70,6 @@ namespace Naos.Protocol.Domain
 
             var result = this.TimestampUtc.IsEqualTo(other.TimestampUtc)
                       && this.Id.IsEqualTo(other.Id)
-                      && this.Tags.IsEqualTo(other.Tags)
                       && this.OperationToExecute.IsEqualTo(other.OperationToExecute);
 
             return result;
@@ -83,7 +82,6 @@ namespace Naos.Protocol.Domain
         public override int GetHashCode() => HashCodeHelper.Initialize()
             .Hash(this.TimestampUtc)
             .Hash(this.Id)
-            .Hash(this.Tags)
             .Hash(this.OperationToExecute)
             .Value;
 
@@ -111,8 +109,7 @@ namespace Naos.Protocol.Domain
             var result = new RequestedExecutionEvent<TId, TOperation>(
                                  DeepCloneGeneric(this.Id),
                                  timestampUtc,
-                                 DeepCloneGeneric(this.OperationToExecute),
-                                 this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
+                                 DeepCloneGeneric(this.OperationToExecute));
 
             return result;
         }
@@ -133,40 +130,12 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
         [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override EventWithTagsBase<TId> DeepCloneWithId(TId id)
+        public override EventBase<TId> DeepCloneWithId(TId id)
         {
             var result = new RequestedExecutionEvent<TId, TOperation>(
                                  id,
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.OperationToExecute),
-                                 this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
-
-            return result;
-        }
-
-        /// <inheritdoc />
-        [SuppressMessage("Microsoft.Design", "CA1002: DoNotExposeGenericLists")]
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly")]
-        [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix")]
-        [SuppressMessage("Microsoft.Naming", "CA1715:IdentifiersShouldHaveCorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1716:IdentifiersShouldNotMatchKeywords")]
-        [SuppressMessage("Microsoft.Naming", "CA1719:ParameterNamesShouldNotMatchMemberNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames")]
-        [SuppressMessage("Microsoft.Naming", "CA1722:IdentifiersShouldNotHaveIncorrectPrefix")]
-        [SuppressMessage("Microsoft.Naming", "CA1725:ParameterNamesShouldMatchBaseDeclaration")]
-        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms")]
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly")]
-        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
-        public override EventWithTagsBase<TId> DeepCloneWithTags(IReadOnlyDictionary<string, string> tags)
-        {
-            var result = new RequestedExecutionEvent<TId, TOperation>(
-                                 DeepCloneGeneric(this.Id),
-                                 this.TimestampUtc,
-                                 DeepCloneGeneric(this.OperationToExecute),
-                                 tags);
+                                 DeepCloneGeneric(this.OperationToExecute));
 
             return result;
         }
@@ -196,8 +165,7 @@ namespace Naos.Protocol.Domain
             var result = new RequestedExecutionEvent<TId, TOperation>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
-                                 operationToExecute,
-                                 this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
+                                 operationToExecute);
 
             return result;
         }
@@ -208,8 +176,7 @@ namespace Naos.Protocol.Domain
             var result = new RequestedExecutionEvent<TId, TOperation>(
                                  DeepCloneGeneric(this.Id),
                                  this.TimestampUtc,
-                                 DeepCloneGeneric(this.OperationToExecute),
-                                 this.Tags?.ToDictionary(k => k.Key?.DeepClone(), v => v.Value?.DeepClone()));
+                                 DeepCloneGeneric(this.OperationToExecute));
 
             return result;
         }
@@ -300,7 +267,7 @@ namespace Naos.Protocol.Domain
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
         public override string ToString()
         {
-            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString() ?? "<null>"}, Tags = {this.Tags?.ToString() ?? "<null>"}, OperationToExecute = {this.OperationToExecute?.ToString() ?? "<null>"}.");
+            var result = Invariant($"Naos.Protocol.Domain.{this.GetType().ToStringReadable()}: TimestampUtc = {this.TimestampUtc.ToString(CultureInfo.InvariantCulture) ?? "<null>"}, Id = {this.Id?.ToString() ?? "<null>"}, OperationToExecute = {this.OperationToExecute?.ToString() ?? "<null>"}.");
 
             return result;
         }

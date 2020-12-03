@@ -14,7 +14,7 @@ namespace Naos.Protocol.Domain
     /// </summary>
     /// <typeparam name="TId">The type of identifier of the event.</typeparam>
     /// <typeparam name="TOperation">The type of the operation.</typeparam>
-    public partial class RequestedExecutionEvent<TId, TOperation> : EventWithTagsBase<TId>
+    public partial class RequestedExecutionEvent<TId, TOperation> : EventBase<TId>
         where TOperation : class, IOperation
     {
         /// <summary>
@@ -23,13 +23,11 @@ namespace Naos.Protocol.Domain
         /// <param name="id">The identifier.</param>
         /// <param name="timestampUtc">The timestamp in UTC.</param>
         /// <param name="operationToExecute">The operation to execute.</param>
-        /// <param name="tags">The optional tags.</param>
         public RequestedExecutionEvent(
             TId id,
             DateTime timestampUtc,
-            TOperation operationToExecute,
-            IReadOnlyDictionary<string, string> tags = null)
-        : base(id, timestampUtc, tags)
+            TOperation operationToExecute)
+        : base(id, timestampUtc)
         {
             this.OperationToExecute = operationToExecute ?? throw new ArgumentNullException(nameof(operationToExecute));
         }

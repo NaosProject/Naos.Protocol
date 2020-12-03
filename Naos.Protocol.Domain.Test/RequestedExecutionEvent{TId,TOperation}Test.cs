@@ -33,19 +33,17 @@ namespace Naos.Protocol.Domain.Test
                .RemoveAllScenarios()
                .AddScenario(
                     () =>
-                        new ConstructorArgumentValidationTestScenario<RequestedExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>>
+                        new ConstructorArgumentValidationTestScenario<RequestedExecutionEvent<Version, FailRunningExecutionOp<Version>>>
                         {
                             Name = "constructor should throw ArgumentNullException when parameter 'operationToExecute' is null scenario",
                             ConstructionFunc = () =>
                                                {
-                                                   var referenceObject =
-                                                       A.Dummy<RequestedExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>>();
+                                                   var referenceObject = A.Dummy<RequestedExecutionEvent<Version, FailRunningExecutionOp<Version>>>();
 
-                                                   var result = new RequestedExecutionEvent<Version, CancelExecutionAttemptOp<Version, Version>>(
+                                                   var result = new RequestedExecutionEvent<Version, FailRunningExecutionOp<Version>>(
                                                        referenceObject.Id,
                                                        referenceObject.TimestampUtc,
-                                                       null,
-                                                       referenceObject.Tags);
+                                                       null);
 
                                                    return result;
                                                },
