@@ -65,10 +65,10 @@ namespace Naos.Protocol.Domain.Test
                                  A.Dummy<DateTime>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new RequestedExecutionEvent<Version, FailRunningExecutionOp<Version>>(
+                () => new RequestedExecutionEvent<Version, CancelExecutionRequestOp<Version>>(
                                  A.Dummy<Version>(),
                                  A.Dummy<DateTime>(),
-                                 A.Dummy<FailRunningExecutionOp<Version>>()));
+                                 A.Dummy<CancelExecutionRequestOp<Version>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RunningExecutionEvent<Version>(
@@ -80,6 +80,18 @@ namespace Naos.Protocol.Domain.Test
                                  A.Dummy<Version>(),
                                  A.Dummy<string>(),
                                  A.Dummy<DateTime>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CancelExecutionRequestOp<Version>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new CancelRunningExecutionOp<Version>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<string>(),
+                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CompleteRunningExecutionOp<Version>(
@@ -94,18 +106,6 @@ namespace Naos.Protocol.Domain.Test
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new SelfCancelRunningExecutionOp<Version>(
-                                 A.Dummy<Version>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new CancelRunningExecutionOp<Version>(
-                                 A.Dummy<Version>(),
-                                 A.Dummy<string>(),
-                                 A.Dummy<IReadOnlyDictionary<string, string>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new CancelExecutionRequestOp<Version>(
                                  A.Dummy<Version>(),
                                  A.Dummy<string>(),
                                  A.Dummy<IReadOnlyDictionary<string, string>>()));
@@ -127,7 +127,7 @@ namespace Naos.Protocol.Domain.Test
                 () => new GetReturningProtocolOp<GetIdFromObjectOp<Version, Version>, Version>());
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new GetVoidProtocolOp<FailRunningExecutionOp<Version>>());
+                () => new GetVoidProtocolOp<CancelExecutionRequestOp<Version>>());
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CacheResult<Version, Version>(
@@ -176,7 +176,7 @@ namespace Naos.Protocol.Domain.Test
                         typeof(CanceledRunningExecutionEvent<Version>),
                         typeof(CompletedExecutionEvent<Version>),
                         typeof(FailedExecutionEvent<Version>),
-                        typeof(RequestedExecutionEvent<Version, FailRunningExecutionOp<Version>>),
+                        typeof(RequestedExecutionEvent<Version, CancelExecutionRequestOp<Version>>),
                         typeof(RunningExecutionEvent<Version>),
                         typeof(SelfCanceledRunningExecutionEvent<Version>),
                         typeof(NullEvent),
@@ -210,7 +210,7 @@ namespace Naos.Protocol.Domain.Test
                         typeof(CanceledRunningExecutionEvent<Version>),
                         typeof(CompletedExecutionEvent<Version>),
                         typeof(FailedExecutionEvent<Version>),
-                        typeof(RequestedExecutionEvent<Version, FailRunningExecutionOp<Version>>),
+                        typeof(RequestedExecutionEvent<Version, CancelExecutionRequestOp<Version>>),
                         typeof(RunningExecutionEvent<Version>),
                         typeof(SelfCanceledRunningExecutionEvent<Version>),
                         typeof(NullIdentifiedEvent<Version>)
@@ -231,16 +231,16 @@ namespace Naos.Protocol.Domain.Test
                     var availableTypes = new[]
                     {
                         typeof(ExecuteDefaultOperationsOnProtocolOp),
+                        typeof(CancelExecutionRequestOp<Version>),
+                        typeof(CancelRunningExecutionOp<Version>),
                         typeof(CompleteRunningExecutionOp<Version>),
                         typeof(FailRunningExecutionOp<Version>),
                         typeof(SelfCancelRunningExecutionOp<Version>),
-                        typeof(CancelRunningExecutionOp<Version>),
-                        typeof(CancelExecutionRequestOp<Version>),
                         typeof(GetIdFromObjectOp<Version, Version>),
                         typeof(GetTagsFromObjectOp<Version>),
                         typeof(GetProtocolByTypeOp),
                         typeof(GetReturningProtocolOp<GetIdFromObjectOp<Version, Version>, Version>),
-                        typeof(GetVoidProtocolOp<FailRunningExecutionOp<Version>>),
+                        typeof(GetVoidProtocolOp<CancelExecutionRequestOp<Version>>),
                         typeof(ClearCacheOp),
                         typeof(GetCacheStatusOp),
                         typeof(GetOrAddCachedItemOp<GetIdFromObjectOp<Version, Version>, Version>),
@@ -282,11 +282,11 @@ namespace Naos.Protocol.Domain.Test
                     var availableTypes = new[]
                     {
                         typeof(ExecuteDefaultOperationsOnProtocolOp),
+                        typeof(CancelExecutionRequestOp<Version>),
+                        typeof(CancelRunningExecutionOp<Version>),
                         typeof(CompleteRunningExecutionOp<Version>),
                         typeof(FailRunningExecutionOp<Version>),
                         typeof(SelfCancelRunningExecutionOp<Version>),
-                        typeof(CancelRunningExecutionOp<Version>),
-                        typeof(CancelExecutionRequestOp<Version>),
                         typeof(ClearCacheOp),
                         typeof(ThrowIfResourceUnavailableOp)
                     };

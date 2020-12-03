@@ -35,38 +35,38 @@ namespace Naos.Protocol.Domain.Test
 
     public static partial class GetVoidProtocolOpTOperationTest
     {
-        private static readonly StringRepresentationTestScenarios<GetVoidProtocolOp<FailRunningExecutionOp<Version>>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>()
+        private static readonly StringRepresentationTestScenarios<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>> StringRepresentationTestScenarios = new StringRepresentationTestScenarios<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>()
             .AddScenario(() =>
-                new StringRepresentationTestScenario<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>
+                new StringRepresentationTestScenario<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>
                 {
                     Name = "Default Code Generated Scenario",
                     SystemUnderTestExpectedStringRepresentationFunc = () =>
                     {
-                        var systemUnderTest = A.Dummy<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>();
+                        var systemUnderTest = A.Dummy<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>();
 
-                        var result = new SystemUnderTestExpectedStringRepresentation<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>
+                        var result = new SystemUnderTestExpectedStringRepresentation<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>
                         {
                             SystemUnderTest = systemUnderTest,
-                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.GetVoidProtocolOp<FailRunningExecutionOp<Version>>: <no properties>."),
+                            ExpectedStringRepresentation = Invariant($"Naos.Protocol.Domain.GetVoidProtocolOp<CancelExecutionRequestOp<Version>>: <no properties>."),
                         };
 
                         return result;
                     },
                 });
 
-        private static readonly GetVoidProtocolOp<FailRunningExecutionOp<Version>> ReferenceObjectForEquatableTestScenarios = A.Dummy<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>();
+        private static readonly GetVoidProtocolOp<CancelExecutionRequestOp<Version>> ReferenceObjectForEquatableTestScenarios = A.Dummy<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>();
 
-        private static readonly EquatableTestScenarios<GetVoidProtocolOp<FailRunningExecutionOp<Version>>> EquatableTestScenarios = new EquatableTestScenarios<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>()
+        private static readonly EquatableTestScenarios<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>> EquatableTestScenarios = new EquatableTestScenarios<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>()
             .AddScenario(() =>
-                new EquatableTestScenario<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>
+                new EquatableTestScenario<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>
                 {
                     Name = "Default Code Generated Scenario",
                     ReferenceObject = ReferenceObjectForEquatableTestScenarios,
-                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new GetVoidProtocolOp<FailRunningExecutionOp<Version>>[]
+                    ObjectsThatAreEqualToButNotTheSameAsReferenceObject = new GetVoidProtocolOp<CancelExecutionRequestOp<Version>>[]
                     {
-                        new GetVoidProtocolOp<FailRunningExecutionOp<Version>>(),
+                        new GetVoidProtocolOp<CancelExecutionRequestOp<Version>>(),
                     },
-                    ObjectsThatAreNotEqualToReferenceObject = new GetVoidProtocolOp<FailRunningExecutionOp<Version>>[]
+                    ObjectsThatAreNotEqualToReferenceObject = new GetVoidProtocolOp<CancelExecutionRequestOp<Version>>[]
                     {
                     },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
@@ -77,11 +77,11 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
                         A.Dummy<ExecuteDefaultOperationsOnProtocolOp>(),
+                        A.Dummy<CancelExecutionRequestOp<Version>>(),
+                        A.Dummy<CancelRunningExecutionOp<Version>>(),
                         A.Dummy<CompleteRunningExecutionOp<Version>>(),
                         A.Dummy<FailRunningExecutionOp<Version>>(),
                         A.Dummy<SelfCancelRunningExecutionOp<Version>>(),
-                        A.Dummy<CancelRunningExecutionOp<Version>>(),
-                        A.Dummy<CancelExecutionRequestOp<Version>>(),
                         A.Dummy<GetIdFromObjectOp<Version, Version>>(),
                         A.Dummy<GetTagsFromObjectOp<Version>>(),
                         A.Dummy<GetProtocolByTypeOp>(),
@@ -117,9 +117,9 @@ namespace Naos.Protocol.Domain.Test
             public static void GetVoidProtocolOp___Should_implement_IModel_of_GetVoidProtocolOp___When_reflecting()
             {
                 // Arrange
-                var type = typeof(GetVoidProtocolOp<FailRunningExecutionOp<Version>>);
+                var type = typeof(GetVoidProtocolOp<CancelExecutionRequestOp<Version>>);
 
-                var expectedModelMethods = typeof(IModel<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>).GetInterfaceDeclaredAndImplementedMethods();
+                var expectedModelMethods = typeof(IModel<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>).GetInterfaceDeclaredAndImplementedMethods();
 
                 var expectedModelMethodHashes = expectedModelMethods.Select(_ => _.GetSignatureHash());
 
@@ -129,7 +129,7 @@ namespace Naos.Protocol.Domain.Test
                 var actualModelMethodHashes = actualModelMethods.Select(_ => _.GetSignatureHash());
 
                 // Assert
-                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>));
+                actualInterfaces.AsTest().Must().ContainElement(typeof(IModel<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>));
                 expectedModelMethodHashes.Except(actualModelMethodHashes).AsTest().Must().BeEmptyEnumerable();
             }
 
@@ -150,7 +150,7 @@ namespace Naos.Protocol.Domain.Test
             public static void GetVoidProtocolOp___Should_be_attributed_with_Serializable____When_reflecting()
             {
                 // Arrange
-                var type = typeof(GetVoidProtocolOp<FailRunningExecutionOp<Version>>);
+                var type = typeof(GetVoidProtocolOp<CancelExecutionRequestOp<Version>>);
 
                 // Act
                 var actualAttributes = type.GetCustomAttributes(typeof(SerializableAttribute), false);
@@ -214,10 +214,10 @@ namespace Naos.Protocol.Domain.Test
             public static void Clone___Should_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>();
+                var systemUnderTest = A.Dummy<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>();
 
                 // Act
-                var actual = (GetVoidProtocolOp<FailRunningExecutionOp<Version>>)systemUnderTest.Clone();
+                var actual = (GetVoidProtocolOp<CancelExecutionRequestOp<Version>>)systemUnderTest.Clone();
 
                 // Assert
                 actual.AsTest().Must().BeEqualTo(systemUnderTest);
@@ -241,7 +241,7 @@ namespace Naos.Protocol.Domain.Test
             public static void DeepClone___Should_deep_clone_object___When_called()
             {
                 // Arrange
-                var systemUnderTest = A.Dummy<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>();
+                var systemUnderTest = A.Dummy<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>();
 
                 // Act
                 var actual = systemUnderTest.DeepClone();
@@ -273,7 +273,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>();
+                var expected = A.Dummy<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -302,7 +302,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcBsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>();
+                var expected = A.Dummy<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.BsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -331,7 +331,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_string_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>();
+                var expected = A.Dummy<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -360,7 +360,7 @@ namespace Naos.Protocol.Domain.Test
             public static void Deserialize___Should_roundtrip_object___When_serializing_to_and_deserializing_from_bytes_using_ObcJsonSerializer()
             {
                 // Arrange
-                var expected = A.Dummy<GetVoidProtocolOp<FailRunningExecutionOp<Version>>>();
+                var expected = A.Dummy<GetVoidProtocolOp<CancelExecutionRequestOp<Version>>>();
 
                 var serializationConfigurationType = SerializationConfigurationTypes.JsonSerializationConfigurationType.ConcreteSerializationConfigurationDerivativeType;
 
@@ -394,8 +394,8 @@ namespace Naos.Protocol.Domain.Test
             public static void EqualsOperator___Should_return_true___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                GetVoidProtocolOp<FailRunningExecutionOp<Version>> systemUnderTest1 = null;
-                GetVoidProtocolOp<FailRunningExecutionOp<Version>> systemUnderTest2 = null;
+                GetVoidProtocolOp<CancelExecutionRequestOp<Version>> systemUnderTest1 = null;
+                GetVoidProtocolOp<CancelExecutionRequestOp<Version>> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 == systemUnderTest2;
@@ -425,7 +425,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    GetVoidProtocolOp<FailRunningExecutionOp<Version>> systemUnderTest = null;
+                    GetVoidProtocolOp<CancelExecutionRequestOp<Version>> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest == scenario.ReferenceObject;
@@ -574,8 +574,8 @@ namespace Naos.Protocol.Domain.Test
             public static void NotEqualsOperator___Should_return_false___When_both_sides_of_operator_are_null()
             {
                 // Arrange
-                GetVoidProtocolOp<FailRunningExecutionOp<Version>> systemUnderTest1 = null;
-                GetVoidProtocolOp<FailRunningExecutionOp<Version>> systemUnderTest2 = null;
+                GetVoidProtocolOp<CancelExecutionRequestOp<Version>> systemUnderTest1 = null;
+                GetVoidProtocolOp<CancelExecutionRequestOp<Version>> systemUnderTest2 = null;
 
                 // Act
                 var actual = systemUnderTest1 != systemUnderTest2;
@@ -605,7 +605,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    GetVoidProtocolOp<FailRunningExecutionOp<Version>> systemUnderTest = null;
+                    GetVoidProtocolOp<CancelExecutionRequestOp<Version>> systemUnderTest = null;
 
                     // Act
                     var actual1 = systemUnderTest != scenario.ReferenceObject;
@@ -901,10 +901,10 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    ReturningOperationBase<IVoidProtocol<FailRunningExecutionOp<Version>>> systemUnderTest = null;
+                    ReturningOperationBase<IVoidProtocol<CancelExecutionRequestOp<Version>>> systemUnderTest = null;
 
                     // Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<IVoidProtocol<FailRunningExecutionOp<Version>>>)systemUnderTest);
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<IVoidProtocol<CancelExecutionRequestOp<Version>>>)systemUnderTest);
 
                     // Assert
                     actual.AsTest().Must().BeFalse(because: scenario.Id);
@@ -932,7 +932,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<IVoidProtocol<FailRunningExecutionOp<Version>>>)scenario.ReferenceObject);
+                    var actual = scenario.ReferenceObject.Equals((ReturningOperationBase<IVoidProtocol<CancelExecutionRequestOp<Version>>>)scenario.ReferenceObject);
 
                     // Assert
                     actual.AsTest().Must().BeTrue(because: scenario.Id);
@@ -960,7 +960,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IVoidProtocol<FailRunningExecutionOp<Version>>>)_)).ToList();
+                    var actuals = scenario.ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IVoidProtocol<CancelExecutionRequestOp<Version>>>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -988,7 +988,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IVoidProtocol<FailRunningExecutionOp<Version>>>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreNotEqualToReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IVoidProtocol<CancelExecutionRequestOp<Version>>>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeFalse(because: scenario.Id);
@@ -1016,7 +1016,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange, Act
-                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IVoidProtocol<FailRunningExecutionOp<Version>>>)_)).ToList();
+                    var actuals = scenario.ObjectsThatAreEqualToButNotTheSameAsReferenceObject.Select(_ => scenario.ReferenceObject.Equals((ReturningOperationBase<IVoidProtocol<CancelExecutionRequestOp<Version>>>)_)).ToList();
 
                     // Assert
                     actuals.AsTest().Must().Each().BeTrue(because: scenario.Id);
@@ -1044,7 +1044,7 @@ namespace Naos.Protocol.Domain.Test
                 foreach (var scenario in scenarios)
                 {
                     // Arrange
-                    GetVoidProtocolOp<FailRunningExecutionOp<Version>> systemUnderTest = null;
+                    GetVoidProtocolOp<CancelExecutionRequestOp<Version>> systemUnderTest = null;
 
                     // Act
                     var actual = scenario.ReferenceObject.Equals(systemUnderTest);

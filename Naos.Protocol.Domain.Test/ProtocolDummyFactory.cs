@@ -40,12 +40,6 @@ namespace Naos.Protocol.Domain.Test
                     A.Dummy<DateTime>().ToUniversalTime()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new RequestedExecutionEvent<Version, FailRunningExecutionOp<Version>>(
-                    A.Dummy<Version>(),
-                    A.Dummy<DateTime>().ToUniversalTime(),
-                    A.Dummy<FailRunningExecutionOp<Version>>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new CanceledRunningExecutionEvent<Version>(
                                  A.Dummy<Version>(),
                                  A.Dummy<string>(),
@@ -67,6 +61,18 @@ namespace Naos.Protocol.Domain.Test
                                  A.Dummy<Version>(),
                                  A.Dummy<DateTime>().ToUniversalTime(),
                                  A.Dummy<CancelRunningExecutionOp<Version>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new RequestedExecutionEvent<Version, FailRunningExecutionOp<Version>>(
+                    A.Dummy<Version>(),
+                    A.Dummy<DateTime>().ToUniversalTime(),
+                    A.Dummy<FailRunningExecutionOp<Version>>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new RequestedExecutionEvent<Version, CancelExecutionRequestOp<Version>>(
+                    A.Dummy<Version>(),
+                    A.Dummy<DateTime>().ToUniversalTime(),
+                    A.Dummy<CancelExecutionRequestOp<Version>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new RunningExecutionEvent<Version>(

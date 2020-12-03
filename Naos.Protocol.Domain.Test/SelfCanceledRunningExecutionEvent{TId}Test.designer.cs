@@ -278,7 +278,7 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<CanceledRunningExecutionEvent<Version>>(),
                         A.Dummy<CompletedExecutionEvent<Version>>(),
                         A.Dummy<FailedExecutionEvent<Version>>(),
-                        A.Dummy<RequestedExecutionEvent<Version, FailRunningExecutionOp<Version>>>(),
+                        A.Dummy<RequestedExecutionEvent<Version, CancelExecutionRequestOp<Version>>>(),
                         A.Dummy<RunningExecutionEvent<Version>>(),
                         A.Dummy<NullEvent>(),
                         A.Dummy<NullIdentifiedEvent<Version>>(),
