@@ -251,33 +251,9 @@
     <Compile Include="CacheStatusResultTest.designer.cs">
       <DependentUpon>CacheStatusResultTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="CanceledRequestedExecutionEvent{TId}Test.cs" />
-    <Compile Include="CanceledRequestedExecutionEvent{TId}Test.designer.cs">
-      <DependentUpon>CanceledRequestedExecutionEvent{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CanceledRunningExecutionEvent{TId}Test.cs" />
-    <Compile Include="CanceledRunningExecutionEvent{TId}Test.designer.cs">
-      <DependentUpon>CanceledRunningExecutionEvent{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CancelExecutionRequestOp{TId}Test.cs" />
-    <Compile Include="CancelExecutionRequestOp{TId}Test.designer.cs">
-      <DependentUpon>CancelExecutionRequestOp{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CancelRunningExecutionOp{TId}Test.cs" />
-    <Compile Include="CancelRunningExecutionOp{TId}Test.designer.cs">
-      <DependentUpon>CancelRunningExecutionOp{TId}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="ClearCacheOpTest.cs" />
     <Compile Include="ClearCacheOpTest.designer.cs">
       <DependentUpon>ClearCacheOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CompletedExecutionEvent{TId}Test.cs" />
-    <Compile Include="CompletedExecutionEvent{TId}Test.designer.cs">
-      <DependentUpon>CompletedExecutionEvent{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CompleteRunningExecutionOp{TId}Test.cs" />
-    <Compile Include="CompleteRunningExecutionOp{TId}Test.designer.cs">
-      <DependentUpon>CompleteRunningExecutionOp{TId}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleAbstraction.cs" />
     <Compile Include="EventBaseBaseTest.cs" />
@@ -291,14 +267,6 @@
     <Compile Include="ExecuteDefaultOperationsOnProtocolOpTest.cs" />
     <Compile Include="ExecuteDefaultOperationsOnProtocolOpTest.designer.cs">
       <DependentUpon>ExecuteDefaultOperationsOnProtocolOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FailedExecutionEvent{TId}Test.cs" />
-    <Compile Include="FailedExecutionEvent{TId}Test.designer.cs">
-      <DependentUpon>FailedExecutionEvent{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FailRunningExecutionOp{TId}Test.cs" />
-    <Compile Include="FailRunningExecutionOp{TId}Test.designer.cs">
-      <DependentUpon>FailRunningExecutionOp{TId}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="GetAllResourceLocatorsOpTest.cs" />
     <Compile Include="GetAllResourceLocatorsOpTest.designer.cs">
@@ -373,10 +341,6 @@
     </Compile>
     <Compile Include="ProtocolDummyFactory.cs" />
     <Compile Include="ProtocolDummyFactoryTest.cs" />
-    <Compile Include="RequestedExecutionEvent{TId,TOperation}Test.cs" />
-    <Compile Include="RequestedExecutionEvent{TId,TOperation}Test.designer.cs">
-      <DependentUpon>RequestedExecutionEvent{TId,TOperation}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="ResourceLocatorBaseTest.cs" />
     <Compile Include="ResourceLocatorBaseTest.designer.cs">
       <DependentUpon>ResourceLocatorBaseTest.cs</DependentUpon>
@@ -386,18 +350,6 @@
       <DependentUpon>ReturningOperationBase{TReturn}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="CachingTests.cs" />
-    <Compile Include="RunningExecutionEvent{TId}Test.cs" />
-    <Compile Include="RunningExecutionEvent{TId}Test.designer.cs">
-      <DependentUpon>RunningExecutionEvent{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SelfCanceledRunningExecutionEvent{TId}Test.cs" />
-    <Compile Include="SelfCanceledRunningExecutionEvent{TId}Test.designer.cs">
-      <DependentUpon>SelfCanceledRunningExecutionEvent{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SelfCancelRunningExecutionOp{TId}Test.cs" />
-    <Compile Include="SelfCancelRunningExecutionOp{TId}Test.designer.cs">
-      <DependentUpon>SelfCancelRunningExecutionOp{TId}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="SerializationConfigurationTypes.cs" />
     <Compile Include="ThrowIfResourceUnavailableOpTest.cs" />
     <Compile Include="ThrowIfResourceUnavailableOpTest.designer.cs">

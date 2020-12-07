@@ -118,52 +118,6 @@
     <Compile Include="Implementations\DefaultOperations\ExecuteDefaultOperationsOnProtocolOp.designer.cs">
       <DependentUpon>ExecuteDefaultOperationsOnProtocolOp.cs</DependentUpon>
     </Compile>
-    <Compile Include="Implementations\Execution\Events\CanceledRequestedExecutionEvent{TId}.designer.cs">
-      <DependentUpon>CanceledRequestedExecutionEvent{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Events\CanceledRunningExecutionEvent{TId}.designer.cs">
-      <DependentUpon>CanceledRunningExecutionEvent{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Events\CompletedExecutionEvent{TId}.designer.cs">
-      <DependentUpon>CompletedExecutionEvent{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Events\FailedExecutionEvent{TId}.designer.cs">
-      <DependentUpon>FailedExecutionEvent{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Events\RequestedExecutionEvent{TId,TOperation}.designer.cs">
-      <DependentUpon>RequestedExecutionEvent{TId,TOperation}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Events\RunningExecutionEvent{TId}.designer.cs">
-      <DependentUpon>RunningExecutionEvent{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Events\SelfCanceledRunningExecutionEvent{TId}.designer.cs">
-      <DependentUpon>SelfCanceledRunningExecutionEvent{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Operations\CancelExecutionRequestOp{TId}.designer.cs">
-      <DependentUpon>CancelExecutionRequestOp{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Operations\CancelRunningExecutionOp{TId}.designer.cs">
-      <DependentUpon>CancelRunningExecutionOp{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Operations\CompleteRunningExecutionOp{TId}.cs" />
-    <Compile Include="Implementations\Execution\Operations\CompleteRunningExecutionOp{TId}.designer.cs">
-      <DependentUpon>CompleteRunningExecutionOp{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Operations\FailRunningExecutionOp{TId}.cs" />
-    <Compile Include="Implementations\Execution\Operations\FailRunningExecutionOp{TId}.designer.cs">
-      <DependentUpon>FailRunningExecutionOp{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\Operations\SelfCancelRunningExecutionOp{TId}.cs" />
-    <Compile Include="Implementations\Execution\Operations\SelfCancelRunningExecutionOp{TId}.designer.cs">
-      <DependentUpon>SelfCancelRunningExecutionOp{TId}.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Implementations\Execution\SelfCancelRunningExecutionException.cs" />
-    <Compile Include="Implementations\Execution\Events\SelfCanceledRunningExecutionEvent{TId}.cs" />
-    <Compile Include="Implementations\Execution\Operations\CancelRunningExecutionOp{TId}.cs" />
-    <Compile Include="Implementations\Execution\Events\RunningExecutionEvent{TId}.cs" />
-    <Compile Include="Implementations\Execution\Events\CanceledRunningExecutionEvent{TId}.cs" />
-    <Compile Include="Implementations\Execution\Operations\CancelExecutionRequestOp{TId}.cs" />
-    <Compile Include="Implementations\Execution\Events\CanceledRequestedExecutionEvent{TId}.cs" />
     <Compile Include="Implementations\MetadataAdded\Added\IdentifiedTimestampedTagged{TId,TObject}.cs" />
     <Compile Include="Implementations\MetadataAdded\Self\SelfTimestampedTagged{TId,TObject}.cs" />
     <Compile Include="Implementations\MetadataAdded\Self\SelfIdentifiedTimestamped{TId,TObject}.cs" />
@@ -173,11 +127,8 @@
     <Compile Include="Implementations\MetadataAdded\Self\SelfTagged{TObject}.cs" />
     <Compile Include="Implementations\MetadataAdded\Self\SelfIdentified{TId,TObject}.cs" />
     <Compile Include="Implementations\MetadataAdded\Added\Timestamped{TObject}.cs" />
-    <Compile Include="Implementations\Execution\Events\CompletedExecutionEvent{TId}.cs" />
-    <Compile Include="Implementations\Execution\Events\FailedExecutionEvent{TId}.cs" />
     <Compile Include="Implementations\MetadataAdded\Added\Identified{TId,TObject}.cs" />
     <Compile Include="Implementations\MetadataAdded\Added\Tagged{TObject}.cs" />
-    <Compile Include="Implementations\Execution\Events\RequestedExecutionEvent{TId,TOperation}.cs" />
     <Compile Include="Implementations\ModelInspection\GetIdFromObjectOp{TId,TObject}.designer.cs">
       <DependentUpon>GetIdFromObjectOp{TId,TObject}.cs</DependentUpon>
     </Compile>
