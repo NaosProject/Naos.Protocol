@@ -191,6 +191,8 @@
     <Compile Include="Model\Event\EventBaseBase.designer.cs">
       <DependentUpon>EventBaseBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Event\ExecuteOpRequestedEvent{TOperation}.cs" />
+    <Compile Include="Model\Event\ExecuteOpRequestedEvent{TId,TOperation}.cs" />
     <Compile Include="Model\Event\NullEvent.cs" />
     <Compile Include="Model\Event\NullEvent.designer.cs">
       <DependentUpon>NullEvent.cs</DependentUpon>
