@@ -1,13 +1,12 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ExecuteOpRequested{TId,TOperation}.cs" company="Naos Project">
+// <copyright file="ExecuteOpRequestedEvent{TId,TOperation}.cs" company="Naos Project">
 //    Copyright (c) Naos Project 2019. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Naos.Reporting.Domain
+namespace Naos.Protocol.Domain
 {
     using System;
-    using Naos.Protocol.Domain;
     using OBeautifulCode.Assertion.Recipes;
 
     /// <summary>

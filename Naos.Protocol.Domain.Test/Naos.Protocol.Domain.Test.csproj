@@ -268,6 +268,14 @@
     <Compile Include="ExecuteDefaultOperationsOnProtocolOpTest.designer.cs">
       <DependentUpon>ExecuteDefaultOperationsOnProtocolOpTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExecuteOpRequestedEvent{TId,TOperation}Test.cs" />
+    <Compile Include="ExecuteOpRequestedEvent{TId,TOperation}Test.designer.cs">
+      <DependentUpon>ExecuteOpRequestedEvent{TId,TOperation}Test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExecuteOpRequestedEvent{TOperation}Test.cs" />
+    <Compile Include="ExecuteOpRequestedEvent{TOperation}Test.designer.cs">
+      <DependentUpon>ExecuteOpRequestedEvent{TOperation}Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="GetAllResourceLocatorsOpTest.cs" />
     <Compile Include="GetAllResourceLocatorsOpTest.designer.cs">
       <DependentUpon>GetAllResourceLocatorsOpTest.cs</DependentUpon>

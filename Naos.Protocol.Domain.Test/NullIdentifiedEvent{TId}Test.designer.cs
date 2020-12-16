@@ -187,6 +187,8 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<int>(),
                         A.Dummy<int?>(),
                         A.Dummy<Guid>(),
+                        A.Dummy<ExecuteOpRequestedEvent<GetProtocolByTypeOp>>(),
+                        A.Dummy<ExecuteOpRequestedEvent<Version, GetProtocolByTypeOp>>(),
                         A.Dummy<NullEvent>(),
                     },
                 });

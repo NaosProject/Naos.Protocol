@@ -103,6 +103,8 @@ namespace Naos.Protocol.Domain.Test
                 {
                     var availableTypes = new[]
                     {
+                        typeof(ExecuteOpRequestedEvent<GetProtocolByTypeOp>),
+                        typeof(ExecuteOpRequestedEvent<Version, GetProtocolByTypeOp>),
                         typeof(NullEvent),
                         typeof(NullIdentifiedEvent<Version>)
                     };
@@ -115,6 +117,19 @@ namespace Naos.Protocol.Domain.Test
 
                     return result;
                 });
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExecuteOpRequestedEvent<GetProtocolByTypeOp>(
+                                 A.Dummy<GetProtocolByTypeOp>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExecuteOpRequestedEvent<Version, GetProtocolByTypeOp>(
+                                 A.Dummy<Version>(),
+                                 A.Dummy<GetProtocolByTypeOp>(),
+                                 A.Dummy<DateTime>(),
+                                 A.Dummy<string>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () => new NullEvent(
@@ -130,6 +145,7 @@ namespace Naos.Protocol.Domain.Test
                 {
                     var availableTypes = new[]
                     {
+                        typeof(ExecuteOpRequestedEvent<Version, GetProtocolByTypeOp>),
                         typeof(NullIdentifiedEvent<Version>)
                     };
 

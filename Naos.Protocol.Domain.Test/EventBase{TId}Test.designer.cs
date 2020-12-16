@@ -56,6 +56,10 @@ namespace Naos.Protocol.Domain.Test
                         // (EventBase<Version>)ReferenceObjectForEquatableTestScenarios.DeepCloneWithTimestampUtc(A.Dummy<EventBase<Version>>().Whose(_ => !_.TimestampUtc.IsEqualTo(ReferenceObjectForEquatableTestScenarios.TimestampUtc)).TimestampUtc),
                         // ReferenceObjectForEquatableTestScenarios.DeepCloneWithId(A.Dummy<EventBase<Version>>().Whose(_ => !_.Id.IsEqualTo(ReferenceObjectForEquatableTestScenarios.Id)).Id),
                     },
+                    ObjectsThatDeriveFromScenarioTypeButAreNotOfTheSameTypeAsReferenceObject = new EventBase<Version>[]
+                    {
+                        A.Dummy<EventBase<Version>>().Whose(_ => _.GetType() != ReferenceObjectForEquatableTestScenarios.GetType()),
+                    },
                     ObjectsThatAreNotOfTheSameTypeAsReferenceObject = new object[]
                     {
                         A.Dummy<object>(),

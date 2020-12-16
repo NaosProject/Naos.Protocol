@@ -47,6 +47,19 @@ namespace Naos.Protocol.Domain.Test
                 () => new NullIdentifiedEvent<Version>(
                                  A.Dummy<Version>(),
                                  A.Dummy<DateTime>().ToUniversalTime()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExecuteOpRequestedEvent<GetProtocolByTypeOp>(
+                    A.Dummy<GetProtocolByTypeOp>(),
+                    A.Dummy<DateTime>().ToUniversalTime(),
+                    A.Dummy<string>()));
+
+            AutoFixtureBackedDummyFactory.AddDummyCreator(
+                () => new ExecuteOpRequestedEvent<Version, GetProtocolByTypeOp>(
+                    A.Dummy<Version>(),
+                    A.Dummy<GetProtocolByTypeOp>(),
+                    A.Dummy<DateTime>().ToUniversalTime(),
+                    A.Dummy<string>()));
         }
     }
 }
