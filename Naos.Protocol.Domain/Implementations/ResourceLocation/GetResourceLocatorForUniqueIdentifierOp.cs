@@ -7,7 +7,7 @@
 namespace Naos.Protocol.Domain
 {
     /// <summary>
-    /// Null object implementation of <see cref="ResourceLocatorBase"/>.
+    /// Operation to get the <see cref="IResourceLocator"/> used for managing unique identifiers.
     /// </summary>
     public partial class GetResourceLocatorForUniqueIdentifierOp : ReturningOperationBase<IResourceLocator>
     {
