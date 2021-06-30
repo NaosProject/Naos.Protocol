@@ -40,7 +40,7 @@ namespace Naos.Protocol.Domain
         public TId Id => this.Object.Id;
 
         /// <inheritdoc />
-        public IReadOnlyDictionary<string, string> Tags => this.Object.Tags;
+        public IReadOnlyCollection<KeyValuePair<string, string>> Tags => this.Object.Tags;
 
         /// <summary>
         /// Gets the object.

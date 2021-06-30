@@ -34,7 +34,7 @@ namespace Naos.Protocol.Domain
         }
 
         /// <inheritdoc />
-        public IReadOnlyDictionary<string, string> Tags => this.Object.Tags;
+        public IReadOnlyCollection<KeyValuePair<string, string>> Tags => this.Object.Tags;
 
         /// <summary>
         /// Gets the object.

@@ -23,7 +23,7 @@ namespace Naos.Protocol.Domain
         /// <param name="tagMergeStrategy">The tag merging strategy.</param>
         /// <returns>Deep cloned object with new tags merged in.</returns>
         TReturn DeepCloneMergingInNewTags(
-            IReadOnlyDictionary<string, string> newTags,
+            IReadOnlyCollection<KeyValuePair<string, string>> newTags,
             TagMergeStrategy tagMergeStrategy = TagMergeStrategy.ThrowOnExistingKey);
     }
 }

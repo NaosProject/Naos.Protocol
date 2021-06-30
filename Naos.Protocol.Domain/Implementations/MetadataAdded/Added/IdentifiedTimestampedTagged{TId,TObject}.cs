@@ -32,7 +32,7 @@ namespace Naos.Protocol.Domain
         public IdentifiedTimestampedTagged(
             TId id,
             DateTime timestampUtc,
-            IReadOnlyDictionary<string, string> tags,
+            IReadOnlyCollection<KeyValuePair<string, string>> tags,
             TObject @object)
         {
             timestampUtc.Kind.MustForArg(Invariant($"{nameof(timestampUtc)}.{nameof(timestampUtc.Kind)}")).BeEqualTo(DateTimeKind.Utc);
@@ -56,11 +56,11 @@ namespace Naos.Protocol.Domain
         public DateTime TimestampUtc { get; }
 
         /// <inheritdoc />
-        public IReadOnlyDictionary<string, string> Tags { get; private set; }
+        public IReadOnlyCollection<KeyValuePair<string, string>> Tags { get; private set; }
 
         /// <inheritdoc />
         public IdentifiedTimestampedTagged<TId, TObject> DeepCloneMergingInNewTags(
-            IReadOnlyDictionary<string, string> newTags,
+            IReadOnlyCollection<KeyValuePair<string, string>> newTags,
             TagMergeStrategy tagMergeStrategy = TagMergeStrategy.ThrowOnExistingKey)
         {
             throw new NotImplementedException();

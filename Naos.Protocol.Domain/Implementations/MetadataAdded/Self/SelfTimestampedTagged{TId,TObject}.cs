@@ -39,7 +39,7 @@ namespace Naos.Protocol.Domain
         public DateTime TimestampUtc => this.Object.TimestampUtc;
 
         /// <inheritdoc />
-        public IReadOnlyDictionary<string, string> Tags => this.Object.Tags;
+        public IReadOnlyCollection<KeyValuePair<string, string>> Tags => this.Object.Tags;
 
         /// <summary>
         /// Gets the object.

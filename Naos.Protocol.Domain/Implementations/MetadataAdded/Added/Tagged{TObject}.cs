@@ -24,7 +24,7 @@ namespace Naos.Protocol.Domain
         /// <param name="tags">The tags.</param>
         public Tagged(
             TObject @object,
-            IReadOnlyDictionary<string, string> tags)
+            IReadOnlyCollection<KeyValuePair<string, string>> tags)
         {
             this.Object = @object;
             this.Tags = tags;
@@ -37,11 +37,11 @@ namespace Naos.Protocol.Domain
         public TObject Object { get; private set; }
 
         /// <inheritdoc />
-        public IReadOnlyDictionary<string, string> Tags { get; private set; }
+        public IReadOnlyCollection<KeyValuePair<string, string>> Tags { get; private set; }
 
         /// <inheritdoc />
         public Tagged<TObject> DeepCloneMergingInNewTags(
-            IReadOnlyDictionary<string, string> newTags,
+            IReadOnlyCollection<KeyValuePair<string, string>> newTags,
             TagMergeStrategy tagMergeStrategy = TagMergeStrategy.ThrowOnExistingKey)
         {
             throw new NotImplementedException();

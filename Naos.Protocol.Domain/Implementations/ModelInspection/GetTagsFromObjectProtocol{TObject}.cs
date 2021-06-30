@@ -16,10 +16,10 @@ namespace Naos.Protocol.Domain
     /// Event container.
     /// </summary>
     /// <typeparam name="TObject">Type of object to inspect.</typeparam>
-    public class GetTagsFromObjectProtocol<TObject> : ISyncAndAsyncReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyDictionary<string, string>>
+    public class GetTagsFromObjectProtocol<TObject> : ISyncAndAsyncReturningProtocol<GetTagsFromObjectOp<TObject>, IReadOnlyCollection<KeyValuePair<string, string>>>
     {
         /// <inheritdoc />
-        public IReadOnlyDictionary<string, string> Execute(
+        public IReadOnlyCollection<KeyValuePair<string, string>> Execute(
             GetTagsFromObjectOp<TObject> operation)
         {
             if (operation.ObjectToDetermineTagsFrom is IHaveTags hasTagsObject)
@@ -31,7 +31,7 @@ namespace Naos.Protocol.Domain
         }
 
         /// <inheritdoc />
-        public async Task<IReadOnlyDictionary<string, string>> ExecuteAsync(
+        public async Task<IReadOnlyCollection<KeyValuePair<string, string>>> ExecuteAsync(
             GetTagsFromObjectOp<TObject> operation)
         {
             return await Task.FromResult(this.Execute(operation));

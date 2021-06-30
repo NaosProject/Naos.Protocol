@@ -12,7 +12,7 @@ namespace Naos.Protocol.Domain
     /// Gets the tags from an object.
     /// </summary>
     /// <typeparam name="TObject">Type of object.</typeparam>
-    public partial class GetTagsFromObjectOp<TObject> : ReturningOperationBase<IReadOnlyDictionary<string, string>>
+    public partial class GetTagsFromObjectOp<TObject> : ReturningOperationBase<IReadOnlyCollection<KeyValuePair<string, string>>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetTagsFromObjectOp{TObject}"/> class.
