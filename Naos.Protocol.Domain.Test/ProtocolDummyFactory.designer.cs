@@ -82,23 +82,6 @@ namespace Naos.Protocol.Domain.Test
                                  A.Dummy<GetIdFromObjectOp<Version, Version>>()));
 
             AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new GetAllResourceLocatorsOp());
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new GetResourceLocatorByIdOp<Version>(
-                                 A.Dummy<Version>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new GetResourceLocatorForUniqueIdentifierOp());
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new NullResourceLocator());
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new ThrowIfResourceUnavailableOp(
-                                 A.Dummy<ResourceLocatorBase>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
                 () =>
                 {
                     var availableTypes = new[]
@@ -172,10 +155,6 @@ namespace Naos.Protocol.Domain.Test
                         typeof(ClearCacheOp),
                         typeof(GetCacheStatusOp),
                         typeof(GetOrAddCachedItemOp<GetIdFromObjectOp<Version, Version>, Version>),
-                        typeof(GetAllResourceLocatorsOp),
-                        typeof(GetResourceLocatorByIdOp<Version>),
-                        typeof(GetResourceLocatorForUniqueIdentifierOp),
-                        typeof(ThrowIfResourceUnavailableOp)
                     };
 
                     var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
@@ -211,7 +190,6 @@ namespace Naos.Protocol.Domain.Test
                     {
                         typeof(ExecuteDefaultOperationsOnProtocolOp),
                         typeof(ClearCacheOp),
-                        typeof(ThrowIfResourceUnavailableOp)
                     };
 
                     var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
@@ -219,28 +197,6 @@ namespace Naos.Protocol.Domain.Test
                     var randomType = availableTypes[randomIndex];
 
                     var result = (VoidOperationBase)AD.ummy(randomType);
-
-                    return result;
-                });
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () => new NamedResourceLocator(
-                                 A.Dummy<string>()));
-
-            AutoFixtureBackedDummyFactory.AddDummyCreator(
-                () =>
-                {
-                    var availableTypes = new[]
-                    {
-                        typeof(NullResourceLocator),
-                        typeof(NamedResourceLocator)
-                    };
-
-                    var randomIndex = ThreadSafeRandom.Next(0, availableTypes.Length);
-
-                    var randomType = availableTypes[randomIndex];
-
-                    var result = (ResourceLocatorBase)AD.ummy(randomType);
 
                     return result;
                 });

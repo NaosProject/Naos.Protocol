@@ -195,10 +195,6 @@ namespace Naos.Protocol.Domain.Test
                         A.Dummy<ClearCacheOp>(),
                         A.Dummy<GetCacheStatusOp>(),
                         A.Dummy<GetOrAddCachedItemOp<GetIdFromObjectOp<Version, Version>, Version>>(),
-                        A.Dummy<GetAllResourceLocatorsOp>(),
-                        A.Dummy<GetResourceLocatorByIdOp<Version>>(),
-                        A.Dummy<GetResourceLocatorForUniqueIdentifierOp>(),
-                        A.Dummy<ThrowIfResourceUnavailableOp>(),
                     },
                 });
 

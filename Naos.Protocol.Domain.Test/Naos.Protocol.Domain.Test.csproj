@@ -278,10 +278,6 @@
     <Compile Include="ExecuteOpRequestedEvent{TOperation}Test.designer.cs">
       <DependentUpon>ExecuteOpRequestedEvent{TOperation}Test.cs</DependentUpon>
     </Compile>
-    <Compile Include="GetAllResourceLocatorsOpTest.cs" />
-    <Compile Include="GetAllResourceLocatorsOpTest.designer.cs">
-      <DependentUpon>GetAllResourceLocatorsOpTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="GetCacheStatusOpTest.cs" />
     <Compile Include="GetCacheStatusOpTest.designer.cs">
       <DependentUpon>GetCacheStatusOpTest.cs</DependentUpon>
@@ -298,14 +294,6 @@
     <Compile Include="GetProtocolByTypeOpTest.designer.cs">
       <DependentUpon>GetProtocolByTypeOpTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="GetResourceLocatorByIdOp{TId}Test.cs" />
-    <Compile Include="GetResourceLocatorByIdOp{TId}Test.designer.cs">
-      <DependentUpon>GetResourceLocatorByIdOp{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetResourceLocatorForUniqueIdentifierOpTest.cs" />
-    <Compile Include="GetResourceLocatorForUniqueIdentifierOpTest.designer.cs">
-      <DependentUpon>GetResourceLocatorForUniqueIdentifierOpTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="GetReturningProtocolOp{TOperation,TReturn}Test.cs" />
     <Compile Include="GetReturningProtocolOp{TOperation,TReturn}Test.designer.cs">
       <DependentUpon>GetReturningProtocolOp{TOperation,TReturn}Test.cs</DependentUpon>
@@ -320,10 +308,6 @@
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Model\SpecificProtocolBaseTests.cs" />
-    <Compile Include="NamedResourceLocatorTest.cs" />
-    <Compile Include="NamedResourceLocatorTest.designer.cs">
-      <DependentUpon>NamedResourceLocatorTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="NullEventTest.cs" />
     <Compile Include="NullEventTest.designer.cs">
       <DependentUpon>NullEventTest.cs</DependentUpon>
@@ -331,10 +315,6 @@
     <Compile Include="NullIdentifiedEvent{TId}Test.cs" />
     <Compile Include="NullIdentifiedEvent{TId}Test.designer.cs">
       <DependentUpon>NullIdentifiedEvent{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NullResourceLocatorTest.cs" />
-    <Compile Include="NullResourceLocatorTest.designer.cs">
-      <DependentUpon>NullResourceLocatorTest.cs</DependentUpon>
     </Compile>
     <Compile Include="OperationBaseTest.cs" />
     <Compile Include="OperationBaseTest.designer.cs">
@@ -351,20 +331,12 @@
     </Compile>
     <Compile Include="ProtocolDummyFactory.cs" />
     <Compile Include="ProtocolDummyFactoryTest.cs" />
-    <Compile Include="ResourceLocatorBaseTest.cs" />
-    <Compile Include="ResourceLocatorBaseTest.designer.cs">
-      <DependentUpon>ResourceLocatorBaseTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="ReturningOperationBase{TReturn}Test.cs" />
     <Compile Include="ReturningOperationBase{TReturn}Test.designer.cs">
       <DependentUpon>ReturningOperationBase{TReturn}Test.cs</DependentUpon>
     </Compile>
     <Compile Include="CachingTests.cs" />
     <Compile Include="SerializationConfigurationTypes.cs" />
-    <Compile Include="ThrowIfResourceUnavailableOpTest.cs" />
-    <Compile Include="ThrowIfResourceUnavailableOpTest.designer.cs">
-      <DependentUpon>ThrowIfResourceUnavailableOpTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="VoidOperationBaseTest.cs" />
     <Compile Include="VoidOperationBaseTest.designer.cs">
       <DependentUpon>VoidOperationBaseTest.cs</DependentUpon>
