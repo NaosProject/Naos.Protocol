@@ -25,8 +25,6 @@ namespace Naos.Protocol.Serialization.Json
         protected override IReadOnlyCollection<TypeToRegisterForJson> TypesToRegisterForJson => new[]
                                                                                                 {
                                                                                                     typeof(IModel).ToTypeToRegisterForJson(),
-                                                                                                    typeof(MissingProtocolStrategy).ToTypeToRegisterForJson(),
-                                                                                                    typeof(TypeVersionMatchStrategy).ToTypeToRegisterForJson(),
                                                                                                 };
     }
 }

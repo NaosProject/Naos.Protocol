@@ -25,8 +25,6 @@ namespace Naos.Protocol.Serialization.Bson
         protected override IReadOnlyCollection<TypeToRegisterForBson> TypesToRegisterForBson => new[]
                                                                                                 {
                                                                                                     typeof(IModel).ToTypeToRegisterForBson(),
-                                                                                                    typeof(MissingProtocolStrategy).ToTypeToRegisterForBson(),
-                                                                                                    typeof(TypeVersionMatchStrategy).ToTypeToRegisterForBson(),
                                                                                                 };
     }
 }

@@ -245,115 +245,22 @@
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeDummyFactory.designer.cs" />
     <Compile Include=".recipes\OBeautifulCode.Type\TypeExtensions.cs" />
-    <Compile Include="CacheResult{TOperation,TReturn}Test.cs" />
-    <Compile Include="CacheResult{TOperation,TReturn}Test.designer.cs">
-      <DependentUpon>CacheResult{TOperation,TReturn}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CacheStatusResultTest.cs" />
-    <Compile Include="CacheStatusResultTest.designer.cs">
-      <DependentUpon>CacheStatusResultTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ClearCacheOpTest.cs" />
-    <Compile Include="ClearCacheOpTest.designer.cs">
-      <DependentUpon>ClearCacheOpTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="ConsoleAbstraction.cs" />
-    <Compile Include="EventBaseBaseTest.cs" />
-    <Compile Include="EventBaseBaseTest.designer.cs">
-      <DependentUpon>EventBaseBaseTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EventBase{TId}Test.cs" />
-    <Compile Include="EventBase{TId}Test.designer.cs">
-      <DependentUpon>EventBase{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ExecuteDefaultOperationsOnProtocolOpTest.cs" />
-    <Compile Include="ExecuteDefaultOperationsOnProtocolOpTest.designer.cs">
-      <DependentUpon>ExecuteDefaultOperationsOnProtocolOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ExecuteOpRequestedEvent{TId,TOperation}Test.cs" />
-    <Compile Include="ExecuteOpRequestedEvent{TId,TOperation}Test.designer.cs">
-      <DependentUpon>ExecuteOpRequestedEvent{TId,TOperation}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ExecuteOpRequestedEvent{TOperation}Test.cs" />
-    <Compile Include="ExecuteOpRequestedEvent{TOperation}Test.designer.cs">
-      <DependentUpon>ExecuteOpRequestedEvent{TOperation}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetCacheStatusOpTest.cs" />
-    <Compile Include="GetCacheStatusOpTest.designer.cs">
-      <DependentUpon>GetCacheStatusOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetIdFromObjectOp{TId,TObject}Test.cs" />
-    <Compile Include="GetIdFromObjectOp{TId,TObject}Test.designer.cs">
-      <DependentUpon>GetIdFromObjectOp{TId,TObject}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetOrAddCachedItemOp{TOperation,TReturn}Test.cs" />
-    <Compile Include="GetOrAddCachedItemOp{TOperation,TReturn}Test.designer.cs">
-      <DependentUpon>GetOrAddCachedItemOp{TOperation,TReturn}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetProtocolByTypeOpTest.cs" />
-    <Compile Include="GetProtocolByTypeOpTest.designer.cs">
-      <DependentUpon>GetProtocolByTypeOpTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetReturningProtocolOp{TOperation,TReturn}Test.cs" />
-    <Compile Include="GetReturningProtocolOp{TOperation,TReturn}Test.designer.cs">
-      <DependentUpon>GetReturningProtocolOp{TOperation,TReturn}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetTagsFromObjectOp{TObject}Test.cs" />
-    <Compile Include="GetTagsFromObjectOp{TObject}Test.designer.cs">
-      <DependentUpon>GetTagsFromObjectOp{TObject}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GetVoidProtocolOp{TOperation}Test.cs" />
-    <Compile Include="GetVoidProtocolOp{TOperation}Test.designer.cs">
-      <DependentUpon>GetVoidProtocolOp{TOperation}Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Model\SpecificProtocolBaseTests.cs" />
-    <Compile Include="NullEventTest.cs" />
-    <Compile Include="NullEventTest.designer.cs">
-      <DependentUpon>NullEventTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NullIdentifiedEvent{TId}Test.cs" />
-    <Compile Include="NullIdentifiedEvent{TId}Test.designer.cs">
-      <DependentUpon>NullIdentifiedEvent{TId}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="OperationBaseTest.cs" />
-    <Compile Include="OperationBaseTest.designer.cs">
-      <DependentUpon>OperationBaseTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\ProjectInfo.cs" />
-    <Compile Include="ProtocolDummyFactory.designer.cs">
-      <DependentUpon>ProtocolDummyFactory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ProtocolDummyFactoryTest.designer.cs">
-      <DependentUpon>ProtocolDummyFactoryTest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ProtocolDummyFactory.cs" />
-    <Compile Include="ProtocolDummyFactoryTest.cs" />
-    <Compile Include="ReturningOperationBase{TReturn}Test.cs" />
-    <Compile Include="ReturningOperationBase{TReturn}Test.designer.cs">
-      <DependentUpon>ReturningOperationBase{TReturn}Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CachingTests.cs" />
     <Compile Include="SerializationConfigurationTypes.cs" />
-    <Compile Include="VoidOperationBaseTest.cs" />
-    <Compile Include="VoidOperationBaseTest.designer.cs">
-      <DependentUpon>VoidOperationBaseTest.cs</DependentUpon>
-    </Compile>
     <AdditionalFiles Include=".analyzers\stylecop.json" />
     <None Include=".analyzers\test.ruleset" />
     <None Include="packages.config" />
-    <None Include="ProtocolDummyFactory.recipe-nuspec" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.1.118\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
     <Analyzer Include="..\packages\xunit.analyzers.0.10.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Execution\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include=".analyzers\dictionary.xml" />
   </ItemGroup>
